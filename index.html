@@ -1137,6 +1137,32 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  outline:2px solid #38c1b7;outline-offset:2px;
 }
 </style>
+
+<style id="admin-org-panel-clear-contrast">
+/* Make the global administrator's 36-department management panel distinct from the page background. */
+#adminOrgPanel.panel{
+  background:linear-gradient(145deg,#f2f6fa 0%,#e3edf4 100%)!important;
+  border:3px solid #315f7c!important;
+  border-top:7px solid #d49a35!important;
+  border-radius:17px!important;
+  box-shadow:0 10px 26px rgba(24,52,76,.22),0 0 0 3px rgba(49,95,124,.10)!important;
+  color:#19364d!important;
+}
+#adminOrgPanel.panel h2,
+#adminOrgPanel.panel h3{color:#193f5a!important}
+#adminOrgPanel.panel>p.muted{color:#405a70!important}
+#adminOrgPanel #adminCreateOrgForm>.grid{
+  background:linear-gradient(145deg,#e2ebf2 0%,#d5e1eb 100%)!important;
+  border:2px solid #8ba5ba!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 9px rgba(25,55,79,.08)!important;
+}
+#adminOrgPanel #adminOrgList{
+  background:#e6eef4!important;
+  border:1px solid #a6bacb!important;
+  border-radius:10px!important;
+  padding:12px!important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
