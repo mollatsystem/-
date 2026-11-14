@@ -1791,4 +1791,69 @@ html body:has(#signup:not(.hidden)) #signup #signupMsg{
 }
 </style>
 
+
+<style id="department-signup-final-darker-theme">
+/* Darker, calm slate-blue colors: public department account creation only */
+html body:has(section#signup:not(.hidden)){
+  background:linear-gradient(135deg,#788b9f 0%,#687e93 52%,#5d748a 100%)!important;
+  color:#edf2f7!important;
+}
+html body:has(section#signup:not(.hidden)) .wrap{
+  background:transparent!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup.login{
+  background:linear-gradient(145deg,#71869a 0%,#62798e 100%)!important;
+  color:#f2f5f8!important;
+  border:1px solid #50677d!important;
+  border-top:5px solid #244d69!important;
+  border-radius:16px!important;
+  box-shadow:0 15px 34px rgba(15,31,48,.32),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup h2{
+  color:#fff!important;
+  text-shadow:0 1px 2px rgba(18,38,57,.18)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup>p.muted{
+  color:#e0e8ef!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup .field label{
+  color:#f1f5f8!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup .field input{
+  background:#c7d2dd!important;
+  color:#172d42!important;
+  border:1.5px solid #526b82!important;
+  border-radius:9px!important;
+  box-shadow:inset 0 2px 4px rgba(20,39,58,.13)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup .field input::placeholder{
+  color:#536a80!important;opacity:1!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup .field input:focus{
+  background:#d8e1e9!important;
+  border-color:#174f70!important;
+  box-shadow:0 0 0 3px rgba(24,75,105,.24)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup #signupSubmit{
+  background:linear-gradient(135deg,#174c70,#17646b)!important;
+  color:#fff!important;
+  border:1px solid #123e5a!important;
+  box-shadow:0 3px 9px rgba(14,35,53,.28)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup #signupSubmit:hover{
+  background:linear-gradient(135deg,#123d5c,#12545b)!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup #backToLogin{
+  background:#526b81!important;
+  color:#fff!important;
+  border:1px solid #3e596f!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup #backToLogin:hover{
+  background:#435d74!important;
+}
+html body:has(section#signup:not(.hidden)) section#signup #signupMsg{
+  color:#f0f4f7!important;
+}
+</style>
+
 </body></html>
