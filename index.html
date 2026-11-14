@@ -917,6 +917,13 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
 .global-delete-btn{background:#a83232!important;color:#fff!important;border-radius:10px!important;padding:11px 22px!important}
 .global-delete-btn:hover{background:#842626!important}
 
+
+/* Login credentials: left-to-right input and password visibility control */
+#login .login-ltr-field input{direction:ltr!important;text-align:left!important;unicode-bidi: plaintext}
+#login .password-input-wrap{position:relative;width:100%}
+#login .password-input-wrap input{width:100%;box-sizing:border-box}
+#login .password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;border-radius:6px;background:#eaf1f8;color:#173b60;padding:6px 9px;font-size:12px;font-weight:700;cursor:pointer}
+#login .password-toggle:focus-visible{outline:2px solid #176bba;outline-offset:2px}
 </style>
 <style>
 /* Final signed-in header layout: title, centered logo, then a wider email frame. */
@@ -998,7 +1005,7 @@ body:has(#app:not(.hidden)) #app #who{
   </div>
 </div>
 <section id="login" class="login"><h2>چوونەژوورەوە</h2><p class="muted">بە ئیمەیڵی فەرمی فەرمانگەکەت بچۆ ژوورەوە.</p>
-<form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field"><label>ناونیشانی ئیمەیڵ</label><input id="email" type="email" required autocomplete="username" placeholder="name@organization.com"></div><div class="field"><label>وشەی نهێنی</label><input id="password" type="password" required autocomplete="current-password"></div><button class="btn" type="submit">چوونەژوورەوە</button></form>
+<form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field login-ltr-field"><label for="email">ناونیشانی ئیمەیڵ</label><input id="email" type="email" dir="ltr" style="direction:ltr;text-align:left" required autocomplete="username" placeholder="name@organization.com"></div><div class="field login-ltr-field"><label for="password">وشەی نهێنی</label><div class="password-input-wrap"><input id="password" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-right:82px" required autocomplete="current-password"><button type="button" id="togglePassword" class="password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" type="submit">چوونەژوورەوە</button></form>
 <button type="button" class="btn gray" id="showSignup" style="margin-top:10px">دروستکردنی هەژماری نوێ بۆ فەرمانگە</button>
 <button type="button" class="btn gray" id="forgotPassword" style="margin-top:10px">وشەی نهێنیم لەبیرچووە</button><p id="loginMsg" class="muted" role="status"></p></section>
 <section id="signup" class="login hidden"><h2>دروستکردنی هەژماری فەرمانگە</h2><p class="muted">هەر فەرمانگەیەک دەتوانێت بە ئیمەیڵی فەرمی خۆی هەژمارێکی سەربەخۆ دروست بکات.</p>
@@ -1084,6 +1091,9 @@ body:has(#app:not(.hidden)) #app #who{
 <script>
 const SUPABASE_URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';const TARGET_ACCOUNT_EMAIL='info.milakat@gmail.com';
 try{const oldSession=localStorage.getItem('employee-leave-system-auth'),authKey='sb-znomldkvmhbvvbzqldmi-auth-token';if(oldSession&&!localStorage.getItem(authKey))localStorage.setItem(authKey,oldSession)}catch(e){}const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id);
+const loginPasswordToggle=$('togglePassword');
+if(loginPasswordToggle)loginPasswordToggle.addEventListener('click',()=>{const field=$('password'),show=field.type==='password';field.type=show?'text':'password';loginPasswordToggle.textContent=show?'شاردنەوە':'نیشاندان';loginPasswordToggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');loginPasswordToggle.setAttribute('aria-pressed',show?'true':'false');field.focus();});
+
 window.__loginHandlerReady=true;
 $('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('loginForm').querySelector('button[type=submit],button:not([type])');if(btn){btn.disabled=true;btn.textContent='چاوەڕێ بکە...'}$('loginMsg').textContent='پەیوەندی بە سیستەمەوە...';try{const {data,error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){$('loginMsg').textContent='چوونەژوورەوە سەرکەوتوو نەبوو: '+error.message;return}if(!data||!data.session){$('loginMsg').textContent='هەژمارەکە پشتڕاست نەکرایەوە. تکایە دووبارە هەوڵ بدە.';return}await enter(data.session)}catch(e){$('loginMsg').textContent='پەیوەندی بە سیستەمەوە سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{if(btn){btn.disabled=false;btn.textContent='چوونەژوورەوە'}}});window.__mollatDb=db;let CURRENT_PROFILE=null,ADMIN_OFFICE_COUNT=0;let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
 document.addEventListener('click',function(ev){const b=ev.target.closest('[data-search-action]');if(!b)return;ev.preventDefault();const inputId=b.getAttribute('data-search-input');let focusField=null;if(b.getAttribute('data-search-action')==='clear'){focusField=document.getElementById(inputId);if(focusField)focusField.value='';}try{render();if(focusField)focusField.focus();}catch(err){console.error('Search action failed:',err);say('گەڕان سەرکەوتوو نەبوو. تکایە پەڕەکە نوێ بکەرەوە. '+(err&&err.message?err.message:''));}});
