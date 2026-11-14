@@ -1423,7 +1423,7 @@ $('longLeaveForm').onsubmit=async ev=>{ev.preventDefault();let e=ltEmployeeByCod
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&T.length)renderLongLeaves()});window.addEventListener('focus',()=>{if(T.length)renderLongLeaves()});setInterval(()=>{if(T.length)renderLongLeaves()},60000);
 
 let isPasswordRecoveryFlow=false;
-function showAuthPanel(panel){isPasswordRecoveryFlow=panel==='recovery';document.body.classList.toggle('signup-panel-open',panel==='signup');$('app').classList.add('hidden');['login','signup','recovery'].forEach(id=>$(id).classList.toggle('hidden',id!==panel));}
+function showAuthPanel(panel){isPasswordRecoveryFlow=panel==='recovery';document.body.classList.toggle('signup-panel-open',panel==='signup');$('app').classList.add('hidden');['login','signup','recovery'].forEach(id=>$(id).classList.toggle('hidden',id!==panel));if(panel==='signup')$('signupOrgName').focus();}
 $('showSignup').onclick=()=>{showAuthPanel('signup');$('signupMsg').textContent='';};
 $('backToLogin').onclick=()=>showAuthPanel('login');
 document.addEventListener('click',ev=>{
