@@ -1558,7 +1558,7 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  <div class="panel long-watch-heading">
   <div class="long-watch-title"><div><h2>چاودێری مۆڵەتی درێژخایەن</h2><p class="muted">لیستی جیاکراوەی مۆڵەتە درێژخایەنەکان لە هەموو فەرمانگەکان، لەگەڵ تەواوی زانیاریی فەرمانبەر و وردەکاریی مۆڵەت.</p></div><span class="long-watch-shield">تەنها بەڕێوەبەری گشتی</span></div>
   <div class="long-watch-search">
-   <input id="longLeaveWatchSearch" type="search" autocomplete="off" placeholder="بگەڕێ بە کۆدی سەرەکی یان ناوی فەرمانبەر...">
+   <input id="longLeaveWatchSearch" type="search" autocomplete="off" placeholder="بگەڕێ بە کۆدی سەرەکی، ژمارەی دۆسیە یان ناوی فەرمانبەر...">
    <button class="btn" type="button" id="longLeaveWatchSearchBtn">گەڕان</button>
    <button class="btn gray" type="button" id="longLeaveWatchClearBtn">پاککردنەوە</button>
   </div>
@@ -1770,7 +1770,7 @@ function renderLongTermLeaveWatch(){
  const query=normalizeLongWatchText($('longLeaveWatchSearch')?.value||'');
  const codeQuery=normalizeMainCode(query);
  const categoryOrder={'پێش مناڵبوون':0,'مناڵبوون':1,'دایکایەتی':2,'بێ مووچە':3,'جۆری تری مۆڵەتی درێژخایەن':4};
- const matches=T.filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
+ const matches=T.filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeMainCode(x.case_number).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
  const counts={'پێش مناڵبوون':0,'مناڵبوون':0,'دایکایەتی':0,'بێ مووچە':0,'جۆری تری مۆڵەتی درێژخایەن':0};
  T.forEach(x=>counts[longWatchCategory(x.leave_type)]++);
  $('longLeaveWatchStats').innerHTML=Object.entries(counts).map(([label,count])=>'<div class="long-watch-stat"><span>'+esc(label)+'</span><strong>'+arabicDigits(count)+'</strong></div>').join('');
@@ -1788,11 +1788,11 @@ function renderLongTermLeaveWatch(){
    detail('ماوەی ماوە',longWatchPeriod(x,'unused'))+detail('تێبینی',x.notes)+'</div></article>';
  }).join('');
  const msg=$('longLeaveWatchMsg');
- if(msg)msg.textContent=query?(matches.length?'ژمارەی '+arabicDigits(matches.length)+' تۆمار دۆزرایەوە؛ ناوی فەرمانبەری هاوتا بە ڕەنگ دیارە.':'هیچ تۆمارێک بەو کۆد یان ناوە نەدۆزرایەوە.'):'هەموو مۆڵەتە درێژخایەنەکان بە جۆرەکانیان لە خوارەوە پیشان دەدرێن.';
+ if(msg)msg.textContent=query?(matches.length?'ژمارەی '+arabicDigits(matches.length)+' تۆمار دۆزرایەوە؛ ناوی فەرمانبەری هاوتا بە ڕەنگ دیارە.':'هیچ تۆمارێک بەو کۆدی سەرەکی، ژمارەی دۆسیە یان ناوە نەدۆزرایەوە.'):'هەموو مۆڵەتە درێژخایەنەکان بە جۆرەکانیان لە خوارەوە پیشان دەدرێن.';
 }
 function runLongLeaveWatchSearch(){
  const input=$('longLeaveWatchSearch'),msg=$('longLeaveWatchMsg');if(!input)return;
- if(!input.value.trim()){if(msg)msg.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە.';input.focus();return}
+ if(!input.value.trim()){if(msg)msg.textContent='تکایە کۆدی سەرەکی، ژمارەی دۆسیە یان ناوی فەرمانبەر بنووسە.';input.focus();return}
  renderLongTermLeaveWatch();input.focus();
 }
 $('longLeaveWatchSearchBtn').addEventListener('click',runLongLeaveWatchSearch);
