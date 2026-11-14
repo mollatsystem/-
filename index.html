@@ -1397,6 +1397,31 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
   pointer-events:none!important;
 }
 </style>
+
+<style id="long-leave-watch-styles">
+#longLeaveWatch .long-watch-heading{background:linear-gradient(135deg,#f7fbff 0%,#e6f0f8 100%)!important;border:1px solid #9db5cc!important;border-top:5px solid #176b78!important}
+#longLeaveWatch .long-watch-title,#longLeaveWatch .long-watch-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#longLeaveWatch .long-watch-title h2{margin-bottom:5px}
+#longLeaveWatch .long-watch-shield{background:#d8e9f2;color:#164b67;border:1px solid #9ebdce;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;white-space:nowrap}
+#longLeaveWatch .long-watch-search{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;gap:9px;margin-top:15px}
+#longLeaveWatch .long-watch-search input{width:100%;min-width:0;padding:12px 14px;border:2px solid #8299b4;border-radius:10px;background:#fff;color:#142b45;font:inherit}
+#longLeaveWatch .long-watch-search input:focus{outline:0;border-color:#087e8b;box-shadow:0 0 0 3px rgba(8,126,139,.17)}
+#longLeaveWatch .long-watch-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
+#longLeaveWatch .long-watch-stat{background:linear-gradient(145deg,#fff,#edf4fa);border:1px solid #b8c9da;border-radius:12px;padding:12px;box-shadow:0 3px 10px rgba(25,49,78,.07)}
+#longLeaveWatch .long-watch-stat span{display:block;font-size:12px;color:#53677e}
+#longLeaveWatch .long-watch-stat strong{display:block;font-size:23px;color:#155b78;margin-top:3px}
+#longLeaveWatch .long-watch-table{min-width:1900px;font-size:11px}
+#longLeaveWatch .long-watch-table th{white-space:nowrap;position:sticky;top:0;z-index:1}
+#longLeaveWatch .long-watch-table td{vertical-align:top;white-space:nowrap}
+#longLeaveWatch .long-watch-table .long-watch-name-hit{background:#fff0a8!important;color:#543b08!important;font-weight:900!important;box-shadow:inset 0 0 0 2px #d6a52b}
+#longLeaveWatch .long-watch-type{display:inline-block;border-radius:7px;padding:4px 7px;background:#e2edf7;color:#214c70;font-weight:800}
+#longLeaveWatch .long-watch-status{display:inline-block;border-radius:7px;padding:4px 7px;font-weight:800}
+#longLeaveWatch .long-watch-status.active{background:#e0f4e8;color:#17613a}
+#longLeaveWatch .long-watch-status.expired{background:#fde8e7;color:#a32620}
+#longLeaveWatch .long-watch-empty{padding:18px;text-align:center;color:#53677e}
+#longLeaveWatch #longLeaveWatchMsg{margin-top:9px;min-height:20px}
+@media(max-width:700px){#longLeaveWatch .long-watch-search{grid-template-columns:1fr 1fr}#longLeaveWatch .long-watch-search input{grid-column:1/-1}#longLeaveWatch .long-watch-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1420,7 +1445,7 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
 <form id="signupForm"><div class="field signup-org-field"><label for="signupOrgName">ناوی تەواوی فەرمانگە</label><input id="signupOrgName" dir="rtl" style="direction:rtl;text-align:right" required maxlength="160" autocomplete="organization" placeholder="ناوی فەرمانگە"></div><div class="field signup-email-field"><label for="signupEmail">ناونیشانی ئیمەیڵی فەرمی</label><input id="signupEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" required autocomplete="email" placeholder="name@organization.com"></div><div class="field signup-password-field"><label for="signupPassword">وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPassword" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field signup-password-field"><label for="signupPasswordConfirm">دووبارەکردنەوەی وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPasswordConfirm" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPasswordConfirm" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" type="submit" id="signupSubmit">دروستکردنی هەژمار</button></form><button type="button" class="btn gray" id="backToLogin" style="margin-top:10px">گەڕانەوە بۆ چوونەژوورەوە</button><p id="signupMsg" class="muted" role="status"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><form id="recoveryForm"><div class="field"><label for="newPassword">وشەی نهێنی نوێ</label><div class="recovery-password-wrap"><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="newPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field"><label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی</label><div class="recovery-password-wrap"><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="confirmPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn">پاشەکەوتکردنی وشەی نهێنی</button></form><button type="button" class="btn gray" id="recoveryBackToLogin" style="margin-top:10px;width:100%">گەڕانەوە بۆ پەڕەی چوونەژوورەوە</button><p id="recoveryMsg" class="muted"></p></section>
 <section id="app" class="hidden">
 <header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="manageDepartmentAccounts" type="button" class="btn gray" style="display:none;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
-<div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="registeredOrganizations" id="registeredOrganizationsNav" style="display:none">فەرمانگە تۆمارکراوەکان</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button></nav>
+<div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="registeredOrganizations" id="registeredOrganizationsNav" style="display:none">فەرمانگە تۆمارکراوەکان</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button><button data-page="longLeaveWatch" id="longLeaveWatchNav" style="display:none">چاودێری مۆڵەتی درێژخایەن</button></nav>
 <main>
 <section id="home" class="page active"><div id="adminOrgPanel" class="panel" style="display:none;background:linear-gradient(135deg,#cbd8e6 0%,#bdcddd 100%);border:2px solid #829bb5;border-top:5px solid #315f83;border-radius:16px;box-shadow:0 8px 22px rgba(26,52,79,.16);color:#1b3550"><h2>بەڕێوەبردنی ٣٦ فەرمانگە</h2><p class="muted">تەنها بەڕێوەبەری گشتی دەتوانێت هەژماری فەرمانگە دروست بکات. بۆ هەر فەرمانگەیەک ئیمەیل و وشەی نهێنی جیاواز دابنێ.</p><form id="adminCreateOrgForm"><div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;background:linear-gradient(145deg,#dce5ee 0%,#d2deea 100%);border:1px solid #9eb2c7;border-radius:13px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)"><div class="field org-name-field"><label for="newOrgName">ناوی تەواوی فەرمانگە</label><input id="newOrgName" dir="rtl" style="direction:rtl;text-align:right" required placeholder="ناوی تەواوی فەرمانگە"></div><div class="field org-email-field"><label for="newOrgEmail">ئیمەیلی چوونەژوورەوە</label><input id="newOrgEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" required autocomplete="off" placeholder="name@example.com"></div><div class="field org-password-field"><label for="newOrgPassword">وشەی نهێنی (لانیکەم ٨ پیت)</label><div class="org-password-wrap"><input id="newOrgPassword" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-left:92px" minlength="8" required autocomplete="new-password" placeholder="وشەی نهێنی"><button type="button" id="toggleNewOrgPassword" class="org-password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div></div><div class="actions"><button class="btn" type="submit" id="createOrgBtn">دروستکردنی هەژماری فەرمانگە</button></div><div id="adminOrgMsg" class="msg hidden" role="status"></div></form>
 <div id="adminOrgSearchBox" class="admin-org-search-box">
@@ -1520,6 +1545,25 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
 </form></div>
 <div class="panel"><h2>لیستی مۆڵەتی درێژخایەن</h2><div id="longLeaveSearchForm" class="search-form"><input id="searchLongLeave" class="search" placeholder="گەڕان بە کۆدی سەرەکی یان ناوی فەرمانبەر" autocomplete="off"><div class="actions"><button class="btn" type="button" id="searchLongLeaveNow" data-search-action="search" data-search-input="searchLongLeave">گەڕان</button><button class="btn gray" type="button" id="clearSearchLongLeave" data-search-action="clear" data-search-input="searchLongLeave">پاککردنەوە</button></div></div>
 <div class="tablewrap"><table><thead><tr><th>کۆدی سەرەکی</th><th>فەرمانبەر</th><th>جۆری مۆڵەت</th><th>ماوەی مۆڵەت</th><th>تێکڕای ماوەی مۆڵەت</th><th>تێکڕای کۆتایی ماوەی مۆڵەت</th><th>لە بەرواری</th><th>تاکو بەرواری</th><th>دۆخ</th><th>کردار</th></tr></thead><tbody id="longLeaveRows"></tbody></table></div></div>
+</section>
+<section id="longLeaveWatch" class="page">
+ <div class="panel long-watch-heading">
+  <div class="long-watch-title"><div><h2>چاودێری مۆڵەتی درێژخایەن</h2><p class="muted">لیستی جیاکراوەی مۆڵەتە درێژخایەنەکان لە هەموو فەرمانگەکان، لەگەڵ تەواوی زانیاریی فەرمانبەر و وردەکاریی مۆڵەت.</p></div><span class="long-watch-shield">تەنها بەڕێوەبەری گشتی</span></div>
+  <div class="long-watch-search">
+   <input id="longLeaveWatchSearch" type="search" autocomplete="off" placeholder="بگەڕێ بە کۆدی سەرەکی یان ناوی فەرمانبەر...">
+   <button class="btn" type="button" id="longLeaveWatchSearchBtn">گەڕان</button>
+   <button class="btn gray" type="button" id="longLeaveWatchClearBtn">پاککردنەوە</button>
+  </div>
+  <div id="longLeaveWatchMsg" class="muted" aria-live="polite"></div>
+ </div>
+ <div class="long-watch-stats" id="longLeaveWatchStats"></div>
+ <div class="panel">
+  <div class="long-watch-list-head"><h2>لیستی مۆڵەتە درێژخایەنەکان</h2><span id="longLeaveWatchCount" class="muted"></span></div>
+  <div class="tablewrap"><table class="long-watch-table"><thead><tr>
+   <th>کۆدی سەرەکی</th><th>ناوی فەرمانبەر</th><th>ناونیشانی فەرمانبەری</th><th>ڕەگەز</th><th>جۆری میلاک</th><th>هۆبە</th><th>جۆری مۆڵەت</th><th>مەبەستی مۆڵەت</th><th>ماوەی مۆڵەت</th><th>بەرواری دەستپێک</th><th>بەرواری کۆتایی</th><th>ژمارەی دۆسیە</th><th>جۆری دۆسیە</th><th>بەرواری دۆسیە</th><th>بەسەربردوو</th><th>ماوەی ماوە</th><th>تێبینی</th><th>دۆخ</th>
+  </tr></thead><tbody id="longLeaveWatchRows"></tbody></table></div>
+  <div id="longLeaveWatchEmpty" class="long-watch-empty" style="display:none">هیچ تۆمارێکی مۆڵەتی درێژخایەن بۆ پیشاندان نییە.</div>
+ </div>
 </section><section id="permissions" class="page"><div class="panel"><h2>تۆمارکردنی سەماحی ڕۆژانە</h2><form id="permForm"><input type="hidden" id="permId"><div class="grid"><div class="field"><label>کۆدی سەرەکی *</label><input id="permMainCode" autocomplete="off" required><div class="actions"><button type="button" class="btn" id="findPermEmployee">گەڕان</button></div></div><div class="field"><label>ناوی فەرمانبەر</label><input id="permEmployeeName" readonly></div><div class="field"><label>ناونیشانی فەرمانبەری</label><input id="permJobTitle" readonly></div><div class="field"><label>ڕەگەز</label><select id="permGender"><option value="">هەڵبژێرە</option><option>نێر</option><option>مێ</option></select></div><div class="field"><label>جۆری میلاک</label><select id="permEmploymentType"><option value="">هەڵبژێرە</option><option>هەمیشەیی</option><option>گرێبەست</option><option>کرێی ڕۆژانە</option></select></div><div class="field"><label>ناوی هۆبە</label><select id="permDepartment"><option value="">هەڵبژێرە</option></select></div><div class="field"><label>ژمارەی زنجیرە *</label><input id="permSeq" type="text" inputmode="numeric" placeholder="ژمارەی خۆکار؛ دەتوانیت دەستکاری بکەیت" required></div><div class="field"><label>بەروار *</label><input id="permDate" class="date-iso" type="text" inputmode="numeric" placeholder="١٢/١١/٢٠٢٦" maxlength="10" autocomplete="off" required></div><div class="field"><label>لە کاتژمێر *</label><input id="timeFrom" type="text" inputmode="numeric" placeholder="٠٩:٠٠" maxlength="5" required></div><div class="field"><label>بۆ کاتژمێر *</label><input id="timeTo" type="text" inputmode="numeric" placeholder="١٧:٠٠" maxlength="5" required></div><div class="field"><label>جۆری سەماح *</label><input id="permType" required></div><div class="field"><label>تێبینی</label><input id="permNotes"></div></div><div class="actions"><button type="button" class="btn" id="savePerm">پاشەکەوتکردن</button><button type="button" class="btn" id="editPerm">دەستکاری</button><button type="button" class="btn gray" id="clearPerm" onclick="return window.clearPermForm()">پاککردنەوە</button><button type="button" class="btn gray" id="cancelPerm">پاشگەزبوونەوە</button></div></form></div><div class="panel"><h2>کۆی سەماحی فەرمانبەران (هەر ٦ کاتژمێر = ١ ڕۆژ)</h2><div class="tablewrap"><table><thead><tr><th>فەرمانبەر</th><th>کۆی کات</th><th>ڕۆژی هاوتا</th><th>ماوەی ماوە</th></tr></thead><tbody id="permTotals"></tbody></table></div></div><div class="panel"><h2>تۆمارەکانی سەماح</h2><div id="permSearchForm" class="search-form"><input id="searchPerm" class="search" placeholder="گەڕان" autocomplete="off"><div class="actions"><button class="btn" type="button" id="searchPermNow" data-search-action="search" data-search-input="searchPerm">گەڕان</button><button class="btn gray" type="button" id="clearSearchPerm" data-search-action="clear" data-search-input="searchPerm">پاککردنەوە</button></div></div><div class="tablewrap"><table><thead><tr><th>زنجیرە</th><th>فەرمانبەر</th><th>بەروار</th><th>لە کات</th><th>بۆ کات</th><th>جۆر</th><th>تێبینی</th><th>کردار</th></tr></thead><tbody id="permRows"></tbody></table></div></div></section>
 <div id="msg" class="msg hidden"></div></main></div></section></div>
 <script>
@@ -1537,7 +1581,7 @@ document.addEventListener('click',function(ev){const b=ev.target.closest('[data-
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
-function page(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id))}
+function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id))}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>page(b.dataset.page));
 
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
@@ -1659,6 +1703,7 @@ function arabicDigits(v){return String(v??'').replace(/[0-9]/g,c=>'٠١٢٣٤٥�
 function formatTimeHHMM(v){let t=latinDigits(v||'').trim();return t.length>=5?t.slice(0,5):t}function durationMinutes(a,b){let p=String(a||'').slice(0,5).split(':'),q=String(b||'').slice(0,5).split(':');if(p.length!==2||q.length!==2)return 0;let h1=Number(p[0]),m1=Number(p[1]),h2=Number(q[0]),m2=Number(q[1]);if(![h1,m1,h2,m2].every(Number.isFinite)||h1<0||h1>23||h2<0||h2>23||m1<0||m1>59||m2<0||m2>59)return 0;let start=h1*60+m1,end=h2*60+m2;if(end<start)end+=1440;return end-start}
 function render(){
 const isGlobalAdmin=CURRENT_PROFILE?.role==='super_admin';
+const longWatchNav=$('longLeaveWatchNav');if(longWatchNav)longWatchNav.style.display=isGlobalAdmin?'block':'none';
 $('departmentSummary').style.display=isGlobalAdmin?'none':'grid';
 $('adminSummary').style.display=isGlobalAdmin?'block':'none';
 $('adminEmployeeSearches').style.display=isGlobalAdmin?'block':'none';
@@ -1678,6 +1723,7 @@ if(isGlobalAdmin){
  $('nLeaveEmp').textContent=arabicDigits(EL.length);$('nLeave').textContent=arabicDigits(L.length);$('nPermEmp').textContent=arabicDigits(EP.length);$('nPerm').textContent=arabicDigits(P.length);$('nLongEmp').textContent=arabicDigits(ET.length);$('nLong').textContent=arabicDigits(T.length);
 }
 renderLongLeaves();
+if(isGlobalAdmin)renderLongTermLeaveWatch();
 let employeeLists=[['empLeave',EL,'searchLeaveEmp','leaveEmpRows'],['empPerm',EP,'searchPermEmp','permEmpRows'],['empLong',ET,'searchLongEmp','longEmpRows']];
 for(let [kind,rows,searchId,targetId] of employeeLists){let raw=String($(searchId).value||'').trim().toLowerCase(),q=normalizeMainCode(raw),show=raw?rows.filter(x=>normalizeMainCode(x.main_code).includes(q)||String(x.full_name||'').toLowerCase().includes(raw)):[];$(targetId).innerHTML=show.map(x=>{let leaveExtra=kind==='empLeave'?'<td>'+esc(x.default_leave_type||'—')+'</td>':'';return '<tr><td>'+esc(arabicDigits(x.main_code))+'</td><td>'+esc(x.full_name)+'</td><td>'+esc(x.job_title||'—')+'</td><td>'+esc(x.gender||'—')+'</td><td>'+esc(x.employment_type||'—')+'</td>'+leaveExtra+'<td>'+esc(x.department||'—')+'</td><td>'+editButton(kind,x.id)+' '+deleteButton(kind,x.id)+'</td></tr>'}).join('')}
 let q=normalizeMainCode($('searchLeave').value),leaveMatches=q?L.filter(x=>normalizeMainCode(x.employee_main_code)===q):[];
@@ -1702,6 +1748,50 @@ function ltTotalLeaveDays(x){if(!x.start_date||!x.end_date||x.end_date<x.start_d
 function ltDurationLabel(x){let p=[['years','ساڵ'],['months','مانگ'],['days','ڕۆژ']].map(([k,l])=>({n:Math.max(0,Number(x['duration_'+k])||0),l})).filter(v=>v.n>0);return p.length?p.map(v=>arabicDigits(v.n)+' '+v.l).join(' و '):'٠ ڕۆژ'}
 function ltRemainingDays(x,today=ltToday()){if(!x.end_date||today>x.end_date)return 0;return Math.max(0,Math.round((Date.parse(x.end_date+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000)+1)}
 function renderLongLeaves(){let today=ltToday(),expired=T.filter(x=>x.end_date<today),q=normalizeMainCode($('searchLongLeave').value),matched=q?T.filter(x=>normalizeMainCode(x.employee_main_code)===q):[];$('longLeaveAlerts').innerHTML=expired.length?'<div class="msg" style="background:#fff5e5;color:#8a4b08"><b>ئاگاداری: '+arabicDigits(expired.length)+' مۆڵەتی درێژخایەن کۆتایی هاتووە.</b>'+(q?'<ul>'+expired.filter(x=>normalizeMainCode(x.employee_main_code)===q).map(x=>'<li>'+esc(x.employee_name)+' — ماوەی مۆڵەت: '+esc(ltDurationLabel(x))+' — تێکڕای ماوە: '+esc(arabicDigits(ltTotalLeaveDays(x)))+' ڕۆژ — <b>'+esc(arabicDigits(ltExpiredDays(x.end_date)))+' ڕۆژە کۆتایی هاتووە</b></li>').join('')+'</ul>':'<div>بۆ بینینی وردەکاری، کۆدی سەرەکی فەرمانبەر بنووسە.</div>')+'</div>':'<div class="msg" style="background:#e8f6ed;color:#17613a">هیچ مۆڵەتێکی درێژخایەن کۆتایی نەهاتووە.</div>';$('longLeaveRows').innerHTML=matched.slice().sort((a,b)=>a.end_date.localeCompare(b.end_date)).map(x=>{let expiredDays=ltExpiredDays(x.end_date),remaining=ltRemainingDays(x,today),isExpired=x.end_date<today,status=isExpired?'<span style="color:#b42318;font-weight:bold">کۆتایی هاتووە بۆ '+arabicDigits(expiredDays)+' ڕۆژ</span>':'<span style="color:#167342;font-weight:bold">چالاک</span>';return '<tr><td>'+esc(arabicDigits(x.employee_main_code))+'</td><td>'+esc(x.employee_name)+'</td><td>'+esc(x.leave_type||'—')+'</td><td>'+esc(ltDurationLabel(x))+'</td><td>'+esc(arabicDigits(ltTotalLeaveDays(x))+' ڕۆژ')+'</td><td>'+esc(arabicDigits(remaining)+' ڕۆژ')+'</td><td>'+esc(displayDate(x.start_date))+'</td><td>'+esc(displayDate(x.end_date))+'</td><td>'+status+'</td><td>'+editButton('long',x.id)+' '+deleteButton('long',x.id)+'</td></tr>'}).join('');}
+
+function normalizeLongWatchText(value){return String(value||'').toLocaleLowerCase().replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]+/g,' ').trim()}
+function longWatchCategory(value){
+ const v=normalizeLongWatchText(value);
+ if((v.includes('پێش')||v.includes('قبل'))&&(v.includes('مناڵ')||v.includes('منداڵ')||v.includes('دایک')))return 'پێش مناڵبوون';
+ if(v.includes('مناڵبوون')||v.includes('منداڵبوون')||v.includes('وضع')||v.includes('وڵادە'))return 'مناڵبوون';
+ if(v.includes('دایکایەتی')||v.includes('دایکایه‌تی')||v.includes('ئومومە')||v.includes('مومة'))return 'دایکایەتی';
+ if(v.includes('بێ مووچە')||v.includes('بێمووچە')||v.includes('بدون راتب')||v.includes('بلاموچە'))return 'بێ مووچە';
+ return 'جۆری تری مۆڵەتی درێژخایەن';
+}
+function longWatchPeriod(x,prefix){const parts=[['years','ساڵ'],['months','مانگ'],['days','ڕۆژ']].map(([key,label])=>({n:Math.max(0,Number(x[prefix+'_'+key])||0),label})).filter(v=>v.n>0);return parts.length?parts.map(v=>arabicDigits(v.n)+' '+v.label).join(' و '):'—'}
+function renderLongTermLeaveWatch(){
+ const body=$('longLeaveWatchRows');if(!body||CURRENT_PROFILE?.role!=='super_admin')return;
+ const query=normalizeLongWatchText($('longLeaveWatchSearch')?.value||'');
+ const codeQuery=normalizeMainCode(query);
+ const matches=T.filter(x=>{
+  const type=longWatchCategory(x.leave_type);
+  return type!=='جۆری تری مۆڵەتی درێژخایەن' || true;
+ }).filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
+ const counts={'پێش مناڵبوون':0,'مناڵبوون':0,'دایکایەتی':0,'بێ مووچە':0,'جۆری تری مۆڵەتی درێژخایەن':0};
+ T.forEach(x=>counts[longWatchCategory(x.leave_type)]++);
+ $('longLeaveWatchStats').innerHTML=Object.entries(counts).map(([label,count])=>'<div class="long-watch-stat"><span>'+esc(label)+'</span><strong>'+arabicDigits(count)+'</strong></div>').join('');
+ $('longLeaveWatchCount').textContent='ژمارەی تۆمارەکان: '+arabicDigits(matches.length);
+ $('longLeaveWatchEmpty').style.display=matches.length?'none':'block';
+ $('longLeaveWatchRows').innerHTML=matches.slice().sort((a,b)=>String(b.start_date||'').localeCompare(String(a.start_date||''))).map(x=>{
+  const category=longWatchCategory(x.leave_type),expired=!!(x.end_date&&x.end_date<ltToday()),status=expired?'<span class="long-watch-status expired">کۆتایی هاتووە</span>':'<span class="long-watch-status active">چالاک</span>';
+  const nameClass=query?' class="long-watch-name-hit"':'';
+  const code=esc(arabicDigits(x.employee_main_code||'—')),name=esc(x.employee_name||'—');
+  const notes=esc(x.notes||'—'),purpose=esc(x.leave_purpose||'—');
+  return '<tr><td>'+code+'</td><td'+nameClass+'>'+name+'</td><td>'+esc(x.employee_job_title||'—')+'</td><td>'+esc(x.employee_gender||'—')+'</td><td>'+esc(x.employee_employment_type||'—')+'</td><td>'+esc(x.employee_department||'—')+'</td><td><span class="long-watch-type">'+esc(x.leave_type||category)+'</span></td><td>'+purpose+'</td><td>'+esc(longWatchPeriod(x,'duration'))+'</td><td>'+esc(displayDate(x.start_date))+'</td><td>'+esc(displayDate(x.end_date))+'</td><td>'+esc(x.case_number||'—')+'</td><td>'+esc(x.case_type||'—')+'</td><td>'+esc(displayDate(x.case_date))+'</td><td>'+esc(longWatchPeriod(x,'used'))+'</td><td>'+esc(longWatchPeriod(x,'unused'))+'</td><td>'+notes+'</td><td>'+status+'</td></tr>';
+ }).join('');
+ const msg=$('longLeaveWatchMsg');
+ if(msg)msg.textContent=query?(matches.length?'ژمارەی '+arabicDigits(matches.length)+' تۆمار دۆزرایەوە؛ ناوی فەرمانبەری هاوتا بە ڕەنگ دیارە.':'هیچ تۆمارێک بەو کۆد یان ناوە نەدۆزرایەوە.'):'هەموو مۆڵەتە درێژخایەنەکان بە جۆرەکانیان لە خوارەوە پیشان دەدرێن.';
+}
+function runLongLeaveWatchSearch(){
+ const input=$('longLeaveWatchSearch'),msg=$('longLeaveWatchMsg');if(!input)return;
+ if(!input.value.trim()){if(msg)msg.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە.';input.focus();return}
+ renderLongTermLeaveWatch();input.focus();
+}
+$('longLeaveWatchSearchBtn').addEventListener('click',runLongLeaveWatchSearch);
+$('longLeaveWatchSearch').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();runLongLeaveWatchSearch()}});
+$('longLeaveWatchSearch').addEventListener('input',()=>{const msg=$('longLeaveWatchMsg');if(msg)msg.textContent='';});
+$('longLeaveWatchClearBtn').addEventListener('click',()=>{const input=$('longLeaveWatchSearch');input.value='';renderLongTermLeaveWatch();input.focus();});
+
 function fillLongLeaveForm(x){clear(['longLeaveId','ltMainCode','ltEmployeeName','ltJobTitle','ltGender','ltEmploymentType','ltDepartment','ltPurpose','ltStartDate','ltEndDate','ltLeaveType','ltCaseNumber','ltCaseType','ltCaseDate','ltUsedYears','ltUsedMonths','ltUsedDays','ltUnusedYears','ltUnusedMonths','ltUnusedDays','ltNotes']);set('longLeaveId',x.id);set('ltMainCode',x.employee_main_code);set('ltEmployeeName',x.employee_name);set('ltJobTitle',x.employee_job_title);set('ltGender',x.employee_gender);set('ltEmploymentType',x.employee_employment_type);set('ltDepartment',x.employee_department);set('ltPurpose',x.leave_purpose);set('ltStartDate',isoToDisplay(x.start_date));set('ltEndDate',isoToDisplay(x.end_date));set('ltLeaveType',x.leave_type);set('ltCaseNumber',x.case_number);set('ltCaseType',x.case_type);set('ltCaseDate',isoToDisplay(x.case_date||''));set('ltDurationYears',arabicDigits(x.duration_years??0));set('ltDurationMonths',arabicDigits(x.duration_months??0));set('ltDurationDays',arabicDigits(x.duration_days??0));['Used','Unused'].forEach(k=>['Years','Months','Days'].forEach(u=>set('lt'+k+u,x[k.toLowerCase()+'_'+u.toLowerCase()])));set('ltNotes',x.notes);page('longLeaves')}
 function clearLongLeaveForm(){clear(['longLeaveId','ltMainCode','ltEmployeeName','ltJobTitle','ltGender','ltEmploymentType','ltDepartment','ltPurpose','ltStartDate','ltEndDate','ltLeaveType','ltCaseNumber','ltCaseType','ltCaseDate','ltNotes']);['ltUsedYears','ltUsedMonths','ltUsedDays','ltUnusedYears','ltUnusedMonths','ltUnusedDays'].forEach(id=>set(id,'0'));['ltDurationYears','ltDurationMonths','ltDurationDays'].forEach(id=>set(id,'0'));$('ltEmployeeMsg').textContent='';$('ltMainCode').focus()}
 $('ltFindEmployee').onclick=ltEmployeeByCode;$('ltClearEmployeeSearch').onclick=()=>{$('ltMainCode').value='';['ltEmploymentType','ltEmployeeName','ltJobTitle','ltGender','ltDepartment'].forEach(id=>set(id,''));$('ltEmployeeMsg').textContent='';$('ltMainCode').focus();};['ltStartDate','ltEndDate','ltCaseDate'].forEach(id=>{ $(id).addEventListener('input',()=>formatISODateInput(id));$(id).addEventListener('blur',()=>{let iso=displayToISO($(id).value);if(iso)$(id).value=isoToDisplay(iso)})});['ltUsedYears','ltUsedMonths','ltUsedDays','ltUnusedYears','ltUnusedMonths','ltUnusedDays'].forEach(id=>$(id).addEventListener('input',()=>{$(id).value=arabicDigits(latinDigits($(id).value).replace(/\D/g,''))}));$('ltClear').onclick=clearLongLeaveForm;
