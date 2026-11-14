@@ -1047,6 +1047,65 @@ body:has(#app:not(.hidden)) #app #who{
 }
 </style>
 
+
+<style id="signup-panel-open-class-fix">
+/* This stylesheet is deliberately placed in HEAD and uses an explicit class toggled by showAuthPanel(). */
+body.signup-panel-open {
+  min-height:100vh!important;
+  background:#53677b!important;
+  background-image:linear-gradient(145deg,#64798d 0%,#53677b 55%,#465b70 100%)!important;
+  color:#f7f9fc!important;
+}
+body.signup-panel-open .wrap { background:transparent!important; }
+body.signup-panel-open #signup.login {
+  display:block!important;
+  background:#344b61!important;
+  background-image:linear-gradient(145deg,#405970 0%,#30465b 100%)!important;
+  color:#fff!important;
+  border:2px solid #243b50!important;
+  border-top:6px solid #142f49!important;
+  border-radius:16px!important;
+  box-shadow:0 18px 42px rgba(8,20,32,.48)!important;
+}
+body.signup-panel-open #signup h2 { color:#fff!important; }
+body.signup-panel-open #signup p.muted { color:#e6edf3!important; }
+body.signup-panel-open #signup label { color:#fff!important; }
+body.signup-panel-open #signup input {
+  background:#c2ced9!important;
+  color:#14283b!important;
+  border:2px solid #263f55!important;
+  border-radius:8px!important;
+}
+body.signup-panel-open #signup input::placeholder { color:#52677b!important; opacity:1!important; }
+body.signup-panel-open #signup #signupSubmit {
+  background:#123e60!important;
+  color:#fff!important;
+  border:2px solid #0c2e49!important;
+  font-weight:700!important;
+}
+body.signup-panel-open #signup #backToLogin {
+  display:block!important;
+  width:100%!important;
+  min-height:44px!important;
+  margin-top:12px!important;
+  background:#f1f4f7!important;
+  background-image:none!important;
+  color:#172b40!important;
+  -webkit-text-fill-color:#172b40!important;
+  border:2px solid #8b9bab!important;
+  border-radius:8px!important;
+  font-weight:800!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  box-shadow:0 2px 6px rgba(0,0,0,.2)!important;
+}
+body.signup-panel-open #signup #backToLogin:hover {
+  background:#dbe3ea!important;
+  color:#10263a!important;
+  -webkit-text-fill-color:#10263a!important;
+}
+body.signup-panel-open #signup #signupMsg { color:#fff!important; }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1333,7 +1392,7 @@ $('longLeaveForm').onsubmit=async ev=>{ev.preventDefault();let e=ltEmployeeByCod
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&T.length)renderLongLeaves()});window.addEventListener('focus',()=>{if(T.length)renderLongLeaves()});setInterval(()=>{if(T.length)renderLongLeaves()},60000);
 
 let isPasswordRecoveryFlow=false;
-function showAuthPanel(panel){isPasswordRecoveryFlow=panel==='recovery';$('app').classList.add('hidden');['login','signup','recovery'].forEach(id=>$(id).classList.toggle('hidden',id!==panel));}
+function showAuthPanel(panel){isPasswordRecoveryFlow=panel==='recovery';document.body.classList.toggle('signup-panel-open',panel==='signup');$('app').classList.add('hidden');['login','signup','recovery'].forEach(id=>$(id).classList.toggle('hidden',id!==panel));}
 $('showSignup').onclick=()=>{showAuthPanel('signup');$('signupMsg').textContent='';};
 $('backToLogin').onclick=()=>showAuthPanel('login');
 $('signupForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('signupSubmit'),msg=$('signupMsg');const name=$('signupOrgName').value.trim(),email=$('signupEmail').value.trim().toLowerCase(),password=$('signupPassword').value,confirmPassword=$('signupPasswordConfirm').value;if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';return}if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';return}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.textContent='دروستکردنی هەژمار و ناردنی ئیمەیڵی پشتڕاستکردنەوە...';try{const {data,error}=await db.auth.signUp({email,password,options:{data:{organization_name:name},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data?.session){await db.auth.signOut();throw new Error('پشتڕاستکردنەوەی ئیمەیڵ چالاک نییە. تکایە پەیوەندی بە بەڕێوەبەری سیستەم بکە.')}msg.textContent='داواکاری هەژمار نێردرا. تکایە سندوقی ئیمەیڵەکەت بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە؛ پاشان دەتوانیت بە ئیمەیڵ و وشەی نهێنی خۆت بچیتە ژوورەوە.';$('signupForm').reset()}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.context?.status?('HTTP '+e.context.status+' — '):'')+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژمار'}});
