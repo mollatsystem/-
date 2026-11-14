@@ -1856,4 +1856,47 @@ html body:has(section#signup:not(.hidden)) section#signup #signupMsg{
 }
 </style>
 
+
+<style id="signup-panel-contrast-fix">
+/* Explicit high-contrast correction for the signup screen shown from the main login page */
+body:has(#signup:not(.hidden)) #signup.login{
+  background:#526a80!important;
+  background-image:linear-gradient(145deg,#60788e 0%,#4e657b 100%)!important;
+  border:2px solid #3b536a!important;
+  border-top:6px solid #183f5d!important;
+  box-shadow:0 16px 36px rgba(10,26,43,.38)!important;
+}
+body:has(#signup:not(.hidden)) #signup h2{color:#fff!important}
+body:has(#signup:not(.hidden)) #signup>p.muted{color:#f0f4f7!important}
+body:has(#signup:not(.hidden)) #signup .field label{color:#fff!important}
+body:has(#signup:not(.hidden)) #signup .field input{
+  background:#d4dde6!important;
+  color:#172b40!important;
+  border:2px solid #354f67!important;
+}
+body:has(#signup:not(.hidden)) #signup #signupSubmit{
+  background:#174b70!important;color:#fff!important;
+  border:1px solid #103b5a!important;
+}
+/* Keep the return button text dark and clearly readable */
+body:has(#signup:not(.hidden)) #signup button#backToLogin,
+body:has(#signup:not(.hidden)) #signup #backToLogin.btn,
+body:has(#signup:not(.hidden)) #signup #backToLogin.btn.gray{
+  background:#e0e6ec!important;
+  background-image:none!important;
+  color:#142c43!important;
+  -webkit-text-fill-color:#142c43!important;
+  border:2px solid #71869a!important;
+  font-weight:800!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  box-shadow:0 2px 5px rgba(12,30,48,.18)!important;
+}
+body:has(#signup:not(.hidden)) #signup button#backToLogin:hover{
+  background:#cbd6e0!important;
+  color:#10283d!important;
+  -webkit-text-fill-color:#10283d!important;
+}
+</style>
+
 </body></html>
