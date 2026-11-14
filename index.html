@@ -1112,6 +1112,31 @@ body.signup-panel-open #signup #backToLogin:hover {
 }
 body.signup-panel-open #signup #signupMsg { color:#fff!important; }
 </style>
+
+<style id="signup-field-direction-and-password-controls">
+body.signup-panel-open #signup .signup-org-field input{
+ direction:rtl!important;text-align:right!important;unicode-bidi:plaintext;
+}
+body.signup-panel-open #signup .signup-email-field input,
+body.signup-panel-open #signup .signup-password-wrap input{
+ direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;
+}
+body.signup-panel-open #signup .signup-password-wrap{
+ position:relative;display:block;width:100%;direction:ltr;
+}
+body.signup-panel-open #signup .signup-password-wrap input{
+ width:100%;box-sizing:border-box;padding-left:92px!important;padding-right:12px!important;
+}
+body.signup-panel-open #signup .signup-password-toggle{
+ position:absolute;left:8px;top:50%;transform:translateY(-50%);z-index:3;
+ border:1px solid #8fa8bb;border-radius:7px;background:#e8f0f8;color:#173b60;
+ padding:6px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;min-width:76px;
+}
+body.signup-panel-open #signup .signup-password-toggle:hover{background:#d5e3ef}
+body.signup-panel-open #signup .signup-password-toggle:focus-visible{
+ outline:2px solid #38c1b7;outline-offset:2px;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1132,7 +1157,7 @@ body.signup-panel-open #signup #signupMsg { color:#fff!important; }
 <button type="button" class="btn gray" id="forgotPassword" style="margin-top:10px">وشەی نهێنیم لەبیرچووە</button>
 <button type="button" class="btn gray" id="deleteDepartmentFromLogin" style="margin-top:10px;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button><p class="muted">ئەم دوگمەیە تەنها بۆ سڕینەوەی هەژماری فەرمانگەیە و پێویستی بە ئیمەیڵ و وشەی نهێنی هەیە.</p><p id="loginMsg" class="muted" role="status"></p></section>
 <section id="signup" class="login hidden"><h2>دروستکردنی هەژماری فەرمانگە</h2><p class="muted">هەر فەرمانگەیەک دەتوانێت بە ئیمەیڵی فەرمی خۆی هەژمارێکی سەربەخۆ دروست بکات.</p>
-<form id="signupForm"><div class="field"><label for="signupOrgName">ناوی تەواوی فەرمانگە</label><input id="signupOrgName" required maxlength="160" autocomplete="organization" placeholder="ناوی فەرمانگە"></div><div class="field"><label for="signupEmail">ناونیشانی ئیمەیڵی فەرمی</label><input id="signupEmail" type="email" required autocomplete="email" placeholder="name@organization.com"></div><div class="field"><label for="signupPassword">وشەی نهێنی</label><input id="signupPassword" type="password" minlength="8" required autocomplete="new-password"></div><div class="field"><label for="signupPasswordConfirm">دووبارەکردنەوەی وشەی نهێنی</label><input id="signupPasswordConfirm" type="password" minlength="8" required autocomplete="new-password"></div><button class="btn" type="submit" id="signupSubmit">دروستکردنی هەژمار</button></form><button type="button" class="btn gray" id="backToLogin" style="margin-top:10px">گەڕانەوە بۆ چوونەژوورەوە</button><p id="signupMsg" class="muted" role="status"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><form id="recoveryForm"><div class="field"><label for="newPassword">وشەی نهێنی نوێ</label><div class="recovery-password-wrap"><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="newPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field"><label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی</label><div class="recovery-password-wrap"><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="confirmPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn">پاشەکەوتکردنی وشەی نهێنی</button></form><button type="button" class="btn gray" id="recoveryBackToLogin" style="margin-top:10px;width:100%">گەڕانەوە بۆ پەڕەی چوونەژوورەوە</button><p id="recoveryMsg" class="muted"></p></section>
+<form id="signupForm"><div class="field signup-org-field"><label for="signupOrgName">ناوی تەواوی فەرمانگە</label><input id="signupOrgName" dir="rtl" style="direction:rtl;text-align:right" required maxlength="160" autocomplete="organization" placeholder="ناوی فەرمانگە"></div><div class="field signup-email-field"><label for="signupEmail">ناونیشانی ئیمەیڵی فەرمی</label><input id="signupEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" required autocomplete="email" placeholder="name@organization.com"></div><div class="field signup-password-field"><label for="signupPassword">وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPassword" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field signup-password-field"><label for="signupPasswordConfirm">دووبارەکردنەوەی وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPasswordConfirm" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPasswordConfirm" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" type="submit" id="signupSubmit">دروستکردنی هەژمار</button></form><button type="button" class="btn gray" id="backToLogin" style="margin-top:10px">گەڕانەوە بۆ چوونەژوورەوە</button><p id="signupMsg" class="muted" role="status"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><form id="recoveryForm"><div class="field"><label for="newPassword">وشەی نهێنی نوێ</label><div class="recovery-password-wrap"><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="newPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field"><label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی</label><div class="recovery-password-wrap"><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="confirmPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn">پاشەکەوتکردنی وشەی نهێنی</button></form><button type="button" class="btn gray" id="recoveryBackToLogin" style="margin-top:10px;width:100%">گەڕانەوە بۆ پەڕەی چوونەژوورەوە</button><p id="recoveryMsg" class="muted"></p></section>
 <section id="app" class="hidden">
 <header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="manageDepartmentAccounts" type="button" class="btn gray" style="display:none;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button></nav>
@@ -1401,6 +1426,18 @@ let isPasswordRecoveryFlow=false;
 function showAuthPanel(panel){isPasswordRecoveryFlow=panel==='recovery';document.body.classList.toggle('signup-panel-open',panel==='signup');$('app').classList.add('hidden');['login','signup','recovery'].forEach(id=>$(id).classList.toggle('hidden',id!==panel));}
 $('showSignup').onclick=()=>{showAuthPanel('signup');$('signupMsg').textContent='';};
 $('backToLogin').onclick=()=>showAuthPanel('login');
+document.addEventListener('click',ev=>{
+ const toggle=ev.target.closest('[data-signup-password-target]');
+ if(!toggle)return;
+ const input=$(toggle.getAttribute('data-signup-password-target'));
+ if(!input)return;
+ const show=input.type==='password';
+ input.type=show?'text':'password';
+ toggle.textContent=show?'شاردنەوە':'نیشاندان';
+ toggle.setAttribute('aria-pressed',show?'true':'false');
+ toggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');
+});
+
 $('signupForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('signupSubmit'),msg=$('signupMsg');const name=$('signupOrgName').value.trim(),email=$('signupEmail').value.trim().toLowerCase(),password=$('signupPassword').value,confirmPassword=$('signupPasswordConfirm').value;if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';return}if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';return}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.textContent='دروستکردنی هەژمار و ناردنی ئیمەیڵی پشتڕاستکردنەوە...';try{const {data,error}=await db.auth.signUp({email,password,options:{data:{organization_name:name},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data?.session){await db.auth.signOut();throw new Error('پشتڕاستکردنەوەی ئیمەیڵ چالاک نییە. تکایە پەیوەندی بە بەڕێوەبەری سیستەم بکە.')}msg.textContent='داواکاری هەژمار نێردرا. تکایە سندوقی ئیمەیڵەکەت بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە؛ پاشان دەتوانیت بە ئیمەیڵ و وشەی نهێنی خۆت بچیتە ژوورەوە.';$('signupForm').reset()}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.context?.status?('HTTP '+e.context.status+' — '):'')+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژمار'}});
 
 $('forgotPassword').onclick=async()=>{let email=$('email').value.trim();if(!email){$('loginMsg').textContent='سەرەتا ئیمەیڵەکەت بنووسە.';return} $('loginMsg').textContent='ناردنی داواکاری...';let r=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});$('loginMsg').textContent=r.error?'ناردنی ئیمەیڵ سەرکەوتوو نەبوو: '+r.error.message:'ئەگەر ئەم ئیمەیڵە لە سیستەمدا تۆمارکرابێت، لینکی گۆڕینی وشەی نهێنی بۆ دەنێردرێت.'};
