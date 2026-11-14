@@ -1559,7 +1559,7 @@ db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'){show
 async function enter(s){if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(!s||!s.user){$('loginMsg').textContent='زانیاری هەژمار وەرنەگیرا. تکایە دووبارە بچۆ ژوورەوە.';return}let email=s.user.email||'';if(!email){try{let current=await db.auth.getUser();email=current?.data?.user?.email||''}catch(e){}}const pr=await db.from('user_profiles').select('role,organization_id,display_name').eq('user_id',s.user.id).single();if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(pr.error||!pr.data){await db.auth.signOut();$('loginMsg').textContent='ئەم هەژمارە لە هیچ فەرمانگەیەکدا تۆمار نەکراوە. تکایە پەیوەندی بە بەڕێوەبەری گشتی بکە.';return}CURRENT_PROFILE=pr.data;$('who').textContent=(email||'هەژماری بەکارهێنەر')+(pr.data.role==='super_admin'?' — بەڕێوەبەری گشتی':' — '+(pr.data.display_name||'فەرمانگە'));$('who').style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;color:#173b60!important;font-weight:700!important;margin-inline-end:10px';$('login').classList.add('hidden');$('app').classList.remove('hidden');$('adminOrgPanel').style.display=pr.data.role==='super_admin'?'block':'none';const delPanel=document.querySelector('.global-delete-panel');if(delPanel)delPanel.style.display=pr.data.role==='super_admin'?'none':'block';const manageDepartmentAccounts=$('manageDepartmentAccounts');if(manageDepartmentAccounts)manageDepartmentAccounts.style.display=pr.data.role==='super_admin'?'inline-block':'none';await load();if(pr.data.role==='super_admin')await refreshOrganizations()}
 $('changeAccountEmail').onclick=async()=>{try{const {data,error}=await db.auth.getUser();if(error||!data?.user)return say('تکایە سەرەتا بچۆ ژوورەوە.');if((data.user.email||'').toLowerCase()===TARGET_ACCOUNT_EMAIL)return say('ئەم ئیمەیڵە پێشتر لە هەژمارەکەتدا بەکاردەهێنرێت.');if(!confirm('ئایا دڵنیایت ئیمەیڵی چوونەژوورەوە بگۆڕیت بۆ '+TARGET_ACCOUNT_EMAIL+'؟ لینکی پشتڕاستکردنەوە بۆ ئیمەیڵە نوێیەکە دەنێردرێت.'))return;const r=await db.auth.updateUser({email:TARGET_ACCOUNT_EMAIL},{emailRedirectTo:location.origin+location.pathname});if(r.error)return say('داواکاری گۆڕینی ئیمەیڵ سەرکەوتوو نەبوو: '+r.error.message);say('داواکاری گۆڕینی ئیمەیڵ نێردرا. تکایە سندوقی پۆستی '+TARGET_ACCOUNT_EMAIL+' بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە. تا پشتڕاستکردنەوە تەواو نەبێت، ئیمەیڵی هەژمار ناگۆڕێت.')}catch(e){say('هەڵە لە گۆڕینی ئیمەیڵ: '+(e?.message||String(e)))}};
 $('logout').onclick=async()=>{await db.auth.signOut();location.reload()};
-async function refreshOrganizations(){const box=$('adminOrgList');if(!box)return;const r=await db.from('organizations').select('id,name,is_active,created_at').neq('name','بەڕێوەبەرایەتی گشتی').order('created_at',{ascending:true});if(r.error){box.textContent='هەڵە لە وەرگرتنی لیست: '+r.error.message;return}window.ADMIN_ORGANIZATIONS=r.data||[];ADMIN_OFFICE_COUNT=r.data.length;const officeCountNode=$('adminOfficeCount');if(officeCountNode)officeCountNode.textContent=arabicDigits(ADMIN_OFFICE_COUNT);box.innerHTML=r.data.length?r.data.map((o,i)=>'<div class="stat" style="margin:6px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><strong>'+String(i+1)+'. '+esc(o.name)+'</strong><div class="muted">'+(o.is_active?'چالاک':'ناچالاک')+'</div></div><button type="button" class="btn" style="background:#a32929!important" data-delete-org="'+esc(o.id)+'" data-org-name="'+esc(o.name)+'">سڕینەوەی هەژمار</button></div>').join(''):'هیچ فەرمانگەیەکی تر تۆمار نەکراوە.'}
+async function refreshOrganizations(){const box=$('adminOrgList');if(!box)return;const r=await db.from('organizations').select('id,name,is_active,created_at').neq('name','بەڕێوەبەرایەتی گشتی').order('created_at',{ascending:true});if(r.error){box.textContent='هەڵە لە وەرگرتنی لیست: '+r.error.message;return}window.ADMIN_ORGANIZATIONS=r.data||[];ADMIN_OFFICE_COUNT=r.data.length;const officeCountNode=$('adminOfficeCount');if(officeCountNode)officeCountNode.textContent=arabicDigits(ADMIN_OFFICE_COUNT);box.innerHTML=r.data.length?r.data.map(o=>'<div class="stat admin-org-delete-item"><button type="button" class="btn" data-delete-org="'+esc(o.id)+'" data-org-name="'+esc(o.name)+'">سڕینەوەی هەژمار</button></div>').join(''):'هیچ فەرمانگەیەکی تر تۆمار نەکراوە.'}
 $('adminCreateOrgForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('createOrgBtn'),msg=$('adminOrgMsg');if(CURRENT_PROFILE?.role!=='super_admin'){msg.classList.remove('hidden');msg.textContent='تەنها بەڕێوەبەری گشتی مۆڵەتی دروستکردنی هەژماری فەرمانگەی هەیە.';return;}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.classList.remove('hidden');msg.textContent='دروستکردنی هەژمار...';try{const {data,error}=await db.functions.invoke('create-department-account',{body:{organization_name:$('newOrgName').value.trim(),email:$('newOrgEmail').value.trim(),password:$('newOrgPassword').value}});if(error)throw error;if(data?.error)throw new Error(data.error);msg.textContent='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا. ئیمەیل: '+data.email+' — وشەی نهێنییەکە بە شێوەیەکی پارێزراو بگەیەنە بە فەرمانگەکە.';$('adminCreateOrgForm').reset();await refreshOrganizations()}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژماری فەرمانگە'}});
 async function deleteDepartmentAccount(organizationId, organizationName, ownAccount){
  if(CURRENT_PROFILE?.role!=='super_admin' && !ownAccount)return say('ڕێگەت پێنەدراوە.');
@@ -2212,5 +2212,37 @@ html body:has(#signup:not(.hidden)) #signup button#backToLogin:hover{
 html body:has(section#signup:not(.hidden)) section#signup #signupMsg,
 html body:has(#signup:not(.hidden)) #signup #signupMsg{
   color:#f4f7fa!important;
+}
+</style>
+
+
+<style id="admin-org-compact-delete-only">
+/* Compact department management list: hide department names/status, retain delete actions. */
+#adminOrgPanel{height:auto!important;min-height:0!important;align-self:start!important}
+#adminOrgPanel #adminOrgList{
+ display:grid!important;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
+ gap:8px!important;
+ padding:9px!important;
+ min-height:0!important;
+}
+#adminOrgPanel #adminOrgList>.admin-org-delete-item{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ margin:0!important;
+ min-height:54px!important;
+ padding:7px!important;
+}
+#adminOrgPanel #adminOrgList>.admin-org-delete-item button[data-delete-org]{
+ width:100%!important;
+ min-height:38px!important;
+ margin:0!important;
+ background:#a32929!important;
+ color:#fff!important;
+ border:1px solid #7f1e1e!important;
+}
+@media(max-width:540px){
+ #adminOrgPanel #adminOrgList{grid-template-columns:1fr!important}
 }
 </style>
