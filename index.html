@@ -1218,6 +1218,12 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  background:#245b78!important;color:#fff!important;border:2px solid #17435d!important;
  white-space:nowrap;
 }
+#adminOrgPanel .admin-org-search-row button.admin-org-search-clear{
+ background:#667789!important;color:#fff!important;border:2px solid #465a6d!important;
+}
+#adminOrgPanel .admin-org-search-row button.admin-org-search-clear:hover{
+ background:#4c6073!important;
+}
 #adminOrgPanel .admin-org-search-message{
  margin-top:10px;padding:12px 14px;border-radius:9px;
  font-weight:700;line-height:1.8;border:2px solid;
@@ -1263,6 +1269,7 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  <div class="admin-org-search-row">
   <input id="adminOrgSearchInput" type="search" dir="rtl" placeholder="ناوی فەرمانگە بنووسە..." autocomplete="off">
   <button type="button" id="adminOrgSearchBtn" class="btn">گەڕان</button>
+  <button type="button" id="adminOrgSearchClearBtn" class="btn admin-org-search-clear">پاککردنەوە</button>
  </div>
  <div id="adminOrgSearchMsg" class="admin-org-search-message hidden" role="status" aria-live="polite"></div>
 </div>
@@ -1654,8 +1661,16 @@ function searchAdminOrganization(){
   msg.textContent='هیچ فەرمانگەیەک بەو ناوە نەدۆزرایەوە؛ هەژماری ئەم فەرمانگەیە لە لیستی تۆمارکراوەکاندا نییە.';
  }
 }
-$('adminOrgSearchBtn').addEventListener('click',searchAdminOrganization);
-$('adminOrgSearchInput').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();searchAdminOrganization();}});
+$('adminOrgSearchBtn').addEventListener('click',()=>{searchAdminOrganization();$('adminOrgSearchInput').focus();});
+$('adminOrgSearchClearBtn').addEventListener('click',()=>{
+ const input=$('adminOrgSearchInput'),msg=$('adminOrgSearchMsg');
+ input.value='';
+ msg.classList.add('hidden');
+ msg.classList.remove('is-found','is-missing');
+ msg.textContent='';
+ input.focus();
+});
+$('adminOrgSearchInput').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();searchAdminOrganization();$('adminOrgSearchInput').focus();}});
 $('adminOrgSearchInput').addEventListener('input',()=>{$('adminOrgSearchMsg').classList.add('hidden');});
 $('adminOrgList').addEventListener('click',ev=>{
  const button=ev.target.closest('[data-delete-org]');
