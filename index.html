@@ -1820,6 +1820,8 @@ document.addEventListener('click',ev=>{
  toggle.textContent=show?'شاردنەوە':'نیشاندان';
  toggle.setAttribute('aria-pressed',show?'true':'false');
  toggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');
+ input.focus();
+ try{input.setSelectionRange(0,0)}catch(e){}
 });
 
 $('signupForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('signupSubmit'),msg=$('signupMsg');const name=$('signupOrgName').value.trim(),email=$('signupEmail').value.trim().toLowerCase(),password=$('signupPassword').value,confirmPassword=$('signupPasswordConfirm').value;if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';return}if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';return}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.textContent='دروستکردنی هەژمار و ناردنی ئیمەیڵی پشتڕاستکردنەوە...';try{const {data,error}=await db.auth.signUp({email,password,options:{data:{organization_name:name},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data?.session){await db.auth.signOut();throw new Error('پشتڕاستکردنەوەی ئیمەیڵ چالاک نییە. تکایە پەیوەندی بە بەڕێوەبەری سیستەم بکە.')}msg.textContent='داواکاری هەژمار نێردرا. تکایە سندوقی ئیمەیڵەکەت بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە؛ پاشان دەتوانیت بە ئیمەیڵ و وشەی نهێنی خۆت بچیتە ژوورەوە.';$('signupForm').reset()}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.context?.status?('HTTP '+e.context.status+' — '):'')+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژمار'}});
