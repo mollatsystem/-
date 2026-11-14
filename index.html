@@ -1650,4 +1650,51 @@ document.addEventListener('click',function(ev){
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script>
 
+
+<style id="department-account-form-visible-theme">
+/* Strong final override for the department-account creation panel */
+html body #app #home #adminOrgPanel{
+  background:linear-gradient(135deg,#cbd8e6 0%,#bdcddd 100%)!important;
+  border:2px solid #829bb5!important;
+  border-top:5px solid #315f83!important;
+  border-radius:16px!important;
+  box-shadow:0 8px 22px rgba(26,52,79,.16)!important;
+  color:#1b3550!important;
+}
+html body #app #home #adminOrgPanel>h2,
+html body #app #home #adminOrgPanel>h3{color:#153b5d!important}
+html body #app #home #adminOrgPanel>p{color:#344e68!important}
+html body #app #home #adminOrgPanel #adminCreateOrgForm>.grid{
+  background:linear-gradient(145deg,#dce5ee 0%,#d2deea 100%)!important;
+  border:1px solid #9eb2c7!important;
+  border-radius:13px!important;
+  padding:16px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+html body #app #home #adminOrgPanel #adminCreateOrgForm .field label{color:#1e405f!important}
+html body #app #home #adminOrgPanel #adminCreateOrgForm .field input{
+  background:#f7f9fc!important;
+  color:#172d45!important;
+  border:2px solid #8da4bc!important;
+  border-radius:9px!important;
+  box-shadow:inset 0 1px 3px rgba(23,45,69,.08)!important;
+}
+html body #app #home #adminOrgPanel #adminCreateOrgForm .field input:focus{
+  background:#fff!important;
+  border-color:#27658f!important;
+  box-shadow:0 0 0 3px rgba(39,101,143,.19)!important;
+}
+html body #app #home #adminOrgPanel .org-password-toggle{
+  background:#c8d7e6!important;color:#173f60!important;border:1px solid #8da6bf!important;
+}
+html body #app #home #adminOrgPanel .actions .btn{
+  background:linear-gradient(135deg,#285b83,#287782)!important;
+  border:1px solid #1e526f!important;
+  box-shadow:0 3px 8px rgba(25,60,88,.18)!important;
+}
+html body #app #home #adminOrgPanel #adminOrgMsg{
+  background:#e5edf5!important;color:#203f5d!important;border:1px solid #9fb3c7!important;
+}
+</style>
+
 </body></html>
