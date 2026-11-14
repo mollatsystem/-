@@ -1763,16 +1763,14 @@ function renderLongTermLeaveWatch(){
  const body=$('longLeaveWatchRows');if(!body||CURRENT_PROFILE?.role!=='super_admin')return;
  const query=normalizeLongWatchText($('longLeaveWatchSearch')?.value||'');
  const codeQuery=normalizeMainCode(query);
- const matches=T.filter(x=>{
-  const type=longWatchCategory(x.leave_type);
-  return type!=='جۆری تری مۆڵەتی درێژخایەن' || true;
- }).filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
+ const categoryOrder={'پێش مناڵبوون':0,'مناڵبوون':1,'دایکایەتی':2,'بێ مووچە':3,'جۆری تری مۆڵەتی درێژخایەن':4};
+ const matches=T.filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
  const counts={'پێش مناڵبوون':0,'مناڵبوون':0,'دایکایەتی':0,'بێ مووچە':0,'جۆری تری مۆڵەتی درێژخایەن':0};
  T.forEach(x=>counts[longWatchCategory(x.leave_type)]++);
  $('longLeaveWatchStats').innerHTML=Object.entries(counts).map(([label,count])=>'<div class="long-watch-stat"><span>'+esc(label)+'</span><strong>'+arabicDigits(count)+'</strong></div>').join('');
  $('longLeaveWatchCount').textContent='ژمارەی تۆمارەکان: '+arabicDigits(matches.length);
  $('longLeaveWatchEmpty').style.display=matches.length?'none':'block';
- $('longLeaveWatchRows').innerHTML=matches.slice().sort((a,b)=>String(b.start_date||'').localeCompare(String(a.start_date||''))).map(x=>{
+ $('longLeaveWatchRows').innerHTML=matches.slice().sort((a,b)=>(categoryOrder[longWatchCategory(a.leave_type)]-categoryOrder[longWatchCategory(b.leave_type)])||String(b.start_date||'').localeCompare(String(a.start_date||''))).map(x=>{
   const category=longWatchCategory(x.leave_type),expired=!!(x.end_date&&x.end_date<ltToday()),status=expired?'<span class="long-watch-status expired">کۆتایی هاتووە</span>':'<span class="long-watch-status active">چالاک</span>';
   const nameClass=query?' class="long-watch-name-hit"':'';
   const code=esc(arabicDigits(x.employee_main_code||'—')),name=esc(x.employee_name||'—');
