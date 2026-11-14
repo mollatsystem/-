@@ -2213,6 +2213,27 @@ document.addEventListener('click',function(ev){
  }
  window.runGlobalDelete(ev);
 },true);
+// F2: activate editing/renaming for the currently focused form field.
+document.addEventListener('keydown',ev=>{
+ if(ev.key!=='F2'||ev.altKey||ev.ctrlKey||ev.metaKey)return;
+ const el=ev.target;
+ if(!el||!el.matches||!el.matches('input,textarea,select,[contenteditable="true"]'))return;
+ if(el.disabled||el.readOnly)return;
+ if(el.tagName==='INPUT'&&/^(button|submit|reset|checkbox|radio|file|image|hidden)$/i.test(el.type))return;
+ ev.preventDefault();
+ el.focus();
+ if(el.tagName==='SELECT'){
+  try{if(typeof el.showPicker==='function')el.showPicker();else el.click()}catch(e){try{el.click()}catch(_){}}
+  return;
+ }
+ if(el.isContentEditable){
+  try{const range=document.createRange();range.selectNodeContents(el);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range)}catch(e){}
+  return;
+ }
+ try{el.select()}catch(e){
+  try{el.setSelectionRange(0,String(el.value||'').length)}catch(_){}
+ }
+},true);
 db.auth.getSession().then(r=>{if(r.data.session)enter(r.data.session)});
 </script>
 
