@@ -1410,12 +1410,20 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
 #longLeaveWatch .long-watch-stat{background:linear-gradient(145deg,#fff,#edf4fa);border:1px solid #b8c9da;border-radius:12px;padding:12px;box-shadow:0 3px 10px rgba(25,49,78,.07)}
 #longLeaveWatch .long-watch-stat span{display:block;font-size:12px;color:#53677e}
 #longLeaveWatch .long-watch-stat strong{display:block;font-size:23px;color:#155b78;margin-top:3px}
-#longLeaveWatch .long-watch-table{min-width:1900px;font-size:11px}
-#longLeaveWatch .long-watch-table th{white-space:nowrap;position:sticky;top:0;z-index:1}
-#longLeaveWatch .long-watch-table td{vertical-align:top;white-space:nowrap}
-#longLeaveWatch .long-watch-table .long-watch-name-hit{background:#fff0a8!important;color:#543b08!important;font-weight:900!important;box-shadow:inset 0 0 0 2px #d6a52b}
-#longLeaveWatch .long-watch-type{display:inline-block;border-radius:7px;padding:4px 7px;background:#e2edf7;color:#214c70;font-weight:800}
-#longLeaveWatch .long-watch-status{display:inline-block;border-radius:7px;padding:4px 7px;font-weight:800}
+#longLeaveWatch .long-watch-list{display:grid;gap:13px}
+#longLeaveWatch .long-watch-card{background:linear-gradient(145deg,#fff 0%,#f5f9fd 100%);border:1px solid #b8c9da;border-right:5px solid #28718a;border-radius:13px;padding:15px;box-shadow:0 4px 13px rgba(25,49,78,.07)}
+#longLeaveWatch .long-watch-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid #d6e1ec}
+#longLeaveWatch .long-watch-employee{font-size:15px;font-weight:900;color:#173b5c;margin:0}
+#longLeaveWatch .long-watch-code{font-size:12px;color:#53677e;margin-top:4px}
+#longLeaveWatch .long-watch-name-hit{display:inline-block;background:#fff0a8!important;color:#543b08!important;border:1px solid #d6a52b;border-radius:6px;padding:2px 7px;font-weight:900!important;box-shadow:0 0 0 3px rgba(214,165,43,.14)}
+#longLeaveWatch .long-watch-type{display:inline-block;border-radius:7px;padding:6px 10px;background:#e2edf7;color:#214c70;font-weight:800}
+#longLeaveWatch .long-watch-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+#longLeaveWatch .long-watch-detail{background:#edf3f9;border:1px solid #d3dfeb;border-radius:9px;padding:9px;min-width:0}
+#longLeaveWatch .long-watch-detail span{display:block;color:#5b6f84;font-size:11px;margin-bottom:3px}
+#longLeaveWatch .long-watch-detail strong{display:block;color:#203b59;font-size:12px;overflow-wrap:anywhere}
+#longLeaveWatch .long-watch-status{display:inline-block;border-radius:7px;padding:5px 9px;font-weight:800}
+@media(max-width:900px){#longLeaveWatch .long-watch-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){#longLeaveWatch .long-watch-details{grid-template-columns:1fr}#longLeaveWatch .long-watch-card{padding:11px}}
 #longLeaveWatch .long-watch-status.active{background:#e0f4e8;color:#17613a}
 #longLeaveWatch .long-watch-status.expired{background:#fde8e7;color:#a32620}
 #longLeaveWatch .long-watch-empty{padding:18px;text-align:center;color:#53677e}
@@ -1559,9 +1567,7 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  <div class="long-watch-stats" id="longLeaveWatchStats"></div>
  <div class="panel">
   <div class="long-watch-list-head"><h2>لیستی مۆڵەتە درێژخایەنەکان</h2><span id="longLeaveWatchCount" class="muted"></span></div>
-  <div class="tablewrap"><table class="long-watch-table"><thead><tr>
-   <th>کۆدی سەرەکی</th><th>ناوی فەرمانبەر</th><th>ناونیشانی فەرمانبەری</th><th>ڕەگەز</th><th>جۆری میلاک</th><th>هۆبە</th><th>جۆری مۆڵەت</th><th>مەبەستی مۆڵەت</th><th>ماوەی مۆڵەت</th><th>بەرواری دەستپێک</th><th>بەرواری کۆتایی</th><th>ژمارەی دۆسیە</th><th>جۆری دۆسیە</th><th>بەرواری دۆسیە</th><th>بەسەربردوو</th><th>ماوەی ماوە</th><th>تێبینی</th><th>دۆخ</th>
-  </tr></thead><tbody id="longLeaveWatchRows"></tbody></table></div>
+  <div id="longLeaveWatchRows" class="long-watch-list" aria-live="polite"></div>
   <div id="longLeaveWatchEmpty" class="long-watch-empty" style="display:none">هیچ تۆمارێکی مۆڵەتی درێژخایەن بۆ پیشاندان نییە.</div>
  </div>
 </section><section id="permissions" class="page"><div class="panel"><h2>تۆمارکردنی سەماحی ڕۆژانە</h2><form id="permForm"><input type="hidden" id="permId"><div class="grid"><div class="field"><label>کۆدی سەرەکی *</label><input id="permMainCode" autocomplete="off" required><div class="actions"><button type="button" class="btn" id="findPermEmployee">گەڕان</button></div></div><div class="field"><label>ناوی فەرمانبەر</label><input id="permEmployeeName" readonly></div><div class="field"><label>ناونیشانی فەرمانبەری</label><input id="permJobTitle" readonly></div><div class="field"><label>ڕەگەز</label><select id="permGender"><option value="">هەڵبژێرە</option><option>نێر</option><option>مێ</option></select></div><div class="field"><label>جۆری میلاک</label><select id="permEmploymentType"><option value="">هەڵبژێرە</option><option>هەمیشەیی</option><option>گرێبەست</option><option>کرێی ڕۆژانە</option></select></div><div class="field"><label>ناوی هۆبە</label><select id="permDepartment"><option value="">هەڵبژێرە</option></select></div><div class="field"><label>ژمارەی زنجیرە *</label><input id="permSeq" type="text" inputmode="numeric" placeholder="ژمارەی خۆکار؛ دەتوانیت دەستکاری بکەیت" required></div><div class="field"><label>بەروار *</label><input id="permDate" class="date-iso" type="text" inputmode="numeric" placeholder="١٢/١١/٢٠٢٦" maxlength="10" autocomplete="off" required></div><div class="field"><label>لە کاتژمێر *</label><input id="timeFrom" type="text" inputmode="numeric" placeholder="٠٩:٠٠" maxlength="5" required></div><div class="field"><label>بۆ کاتژمێر *</label><input id="timeTo" type="text" inputmode="numeric" placeholder="١٧:٠٠" maxlength="5" required></div><div class="field"><label>جۆری سەماح *</label><input id="permType" required></div><div class="field"><label>تێبینی</label><input id="permNotes"></div></div><div class="actions"><button type="button" class="btn" id="savePerm">پاشەکەوتکردن</button><button type="button" class="btn" id="editPerm">دەستکاری</button><button type="button" class="btn gray" id="clearPerm" onclick="return window.clearPermForm()">پاککردنەوە</button><button type="button" class="btn gray" id="cancelPerm">پاشگەزبوونەوە</button></div></form></div><div class="panel"><h2>کۆی سەماحی فەرمانبەران (هەر ٦ کاتژمێر = ١ ڕۆژ)</h2><div class="tablewrap"><table><thead><tr><th>فەرمانبەر</th><th>کۆی کات</th><th>ڕۆژی هاوتا</th><th>ماوەی ماوە</th></tr></thead><tbody id="permTotals"></tbody></table></div></div><div class="panel"><h2>تۆمارەکانی سەماح</h2><div id="permSearchForm" class="search-form"><input id="searchPerm" class="search" placeholder="گەڕان" autocomplete="off"><div class="actions"><button class="btn" type="button" id="searchPermNow" data-search-action="search" data-search-input="searchPerm">گەڕان</button><button class="btn gray" type="button" id="clearSearchPerm" data-search-action="clear" data-search-input="searchPerm">پاککردنەوە</button></div></div><div class="tablewrap"><table><thead><tr><th>زنجیرە</th><th>فەرمانبەر</th><th>بەروار</th><th>لە کات</th><th>بۆ کات</th><th>جۆر</th><th>تێبینی</th><th>کردار</th></tr></thead><tbody id="permRows"></tbody></table></div></div></section>
@@ -1772,10 +1778,14 @@ function renderLongTermLeaveWatch(){
  $('longLeaveWatchEmpty').style.display=matches.length?'none':'block';
  $('longLeaveWatchRows').innerHTML=matches.slice().sort((a,b)=>(categoryOrder[longWatchCategory(a.leave_type)]-categoryOrder[longWatchCategory(b.leave_type)])||String(b.start_date||'').localeCompare(String(a.start_date||''))).map(x=>{
   const category=longWatchCategory(x.leave_type),expired=!!(x.end_date&&x.end_date<ltToday()),status=expired?'<span class="long-watch-status expired">کۆتایی هاتووە</span>':'<span class="long-watch-status active">چالاک</span>';
-  const nameClass=query?' class="long-watch-name-hit"':'';
-  const code=esc(arabicDigits(x.employee_main_code||'—')),name=esc(x.employee_name||'—');
-  const notes=esc(x.notes||'—'),purpose=esc(x.leave_purpose||'—');
-  return '<tr><td>'+code+'</td><td'+nameClass+'>'+name+'</td><td>'+esc(x.employee_job_title||'—')+'</td><td>'+esc(x.employee_gender||'—')+'</td><td>'+esc(x.employee_employment_type||'—')+'</td><td>'+esc(x.employee_department||'—')+'</td><td><span class="long-watch-type">'+esc(x.leave_type||category)+'</span></td><td>'+purpose+'</td><td>'+esc(longWatchPeriod(x,'duration'))+'</td><td>'+esc(displayDate(x.start_date))+'</td><td>'+esc(displayDate(x.end_date))+'</td><td>'+esc(x.case_number||'—')+'</td><td>'+esc(x.case_type||'—')+'</td><td>'+esc(displayDate(x.case_date))+'</td><td>'+esc(longWatchPeriod(x,'used'))+'</td><td>'+esc(longWatchPeriod(x,'unused'))+'</td><td>'+notes+'</td><td>'+status+'</td></tr>';
+  const nameClass=query?'long-watch-name-hit':'';
+  const detail=(label,value)=>'<div class="long-watch-detail"><span>'+label+'</span><strong>'+esc(value||'—')+'</strong></div>';
+  const name='<span'+(nameClass?' class="'+nameClass+'"':'')+'>'+esc(x.employee_name||'—')+'</span>';
+  return '<article class="long-watch-card"><div class="long-watch-card-head"><div><h3 class="long-watch-employee">'+name+'</h3><div class="long-watch-code">کۆدی سەرەکی: '+esc(arabicDigits(x.employee_main_code||'—'))+'</div></div><div><span class="long-watch-type">'+esc(x.leave_type||category)+'</span> '+status+'</div></div><div class="long-watch-details">'+
+   detail('ناونیشانی فەرمانبەری',x.employee_job_title)+detail('ڕەگەز',x.employee_gender)+detail('جۆری میلاک',x.employee_employment_type)+detail('هۆبە',x.employee_department)+
+   detail('مەبەستی مۆڵەت',x.leave_purpose)+detail('ماوەی مۆڵەت',longWatchPeriod(x,'duration'))+detail('بەرواری دەستپێک',displayDate(x.start_date))+detail('بەرواری کۆتایی',displayDate(x.end_date))+
+   detail('ژمارەی دۆسیە',x.case_number)+detail('جۆری دۆسیە',x.case_type)+detail('بەرواری دۆسیە',displayDate(x.case_date))+detail('ماوەی بەسەربردوو',longWatchPeriod(x,'used'))+
+   detail('ماوەی ماوە',longWatchPeriod(x,'unused'))+detail('تێبینی',x.notes)+'</div></article>';
  }).join('');
  const msg=$('longLeaveWatchMsg');
  if(msg)msg.textContent=query?(matches.length?'ژمارەی '+arabicDigits(matches.length)+' تۆمار دۆزرایەوە؛ ناوی فەرمانبەری هاوتا بە ڕەنگ دیارە.':'هیچ تۆمارێک بەو کۆد یان ناوە نەدۆزرایەوە.'):'هەموو مۆڵەتە درێژخایەنەکان بە جۆرەکانیان لە خوارەوە پیشان دەدرێن.';
