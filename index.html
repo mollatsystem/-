@@ -1238,6 +1238,122 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
  #adminOrgPanel .admin-org-search-row{flex-direction:column}
 }
 </style>
+
+<style id="registered-organizations-search-polish">
+/* Cleaner, modern search controls for the registered-organizations page */
+#registeredOrganizations .registered-org-search{
+  position:relative!important;
+  padding:18px!important;
+  margin:16px 0 20px!important;
+  background:linear-gradient(135deg,#edf4fa 0%,#dce8f2 100%)!important;
+  border:1px solid #b5c7d8!important;
+  border-radius:16px!important;
+  box-shadow:0 5px 14px rgba(25,53,78,.08),inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+#registeredOrganizations .registered-org-search>label{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin:0 0 11px!important;
+  color:#183f60!important;
+  font-size:14px!important;
+  font-weight:800!important;
+}
+#registeredOrganizations .registered-org-search>label:before{
+  content:"⌕";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:27px;height:27px;
+  border-radius:8px;
+  background:#d0e1ef;
+  color:#1c6480;
+  font-size:22px;
+  line-height:1;
+}
+#registeredOrganizations .registered-org-search-row{
+  display:grid!important;
+  grid-template-columns:minmax(180px,1fr) 112px 126px!important;
+  gap:10px!important;
+  align-items:center!important;
+}
+#registeredOrganizations .registered-org-search-row input{
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+  padding:12px 44px 12px 14px!important;
+  direction:rtl!important;
+  text-align:right!important;
+  color:#193b55!important;
+  background-color:#fff!important;
+  border:1.5px solid #9eb4c8!important;
+  border-radius:11px!important;
+  font-size:14px!important;
+  box-shadow:inset 0 1px 3px rgba(25,53,78,.05),0 1px 2px rgba(25,53,78,.04)!important;
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+}
+#registeredOrganizations .registered-org-search-row input::placeholder{
+  color:#8293a5!important;opacity:1!important;
+}
+#registeredOrganizations .registered-org-search-row input:focus{
+  outline:0!important;
+  border-color:#24758a!important;
+  background:#fff!important;
+  box-shadow:0 0 0 4px rgba(36,117,138,.15),0 2px 6px rgba(25,53,78,.07)!important;
+}
+#registeredOrganizations .registered-org-search-row button{
+  min-width:0!important;
+  min-height:46px!important;
+  padding:9px 12px!important;
+  border-radius:10px!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  white-space:nowrap!important;
+  transition:transform .16s ease,filter .16s ease,box-shadow .16s ease!important;
+}
+#registeredOrganizations #registeredOrgSearchBtn{
+  background:linear-gradient(135deg,#245d87,#187785)!important;
+  border:1px solid #1b607b!important;
+  box-shadow:0 3px 8px rgba(24,88,119,.17)!important;
+}
+#registeredOrganizations #registeredOrgSearchClearBtn{
+  background:#e8eef4!important;
+  color:#29465f!important;
+  border:1px solid #afc1d1!important;
+  box-shadow:0 2px 5px rgba(25,53,78,.06)!important;
+}
+#registeredOrganizations .registered-org-search-row button:hover{
+  filter:brightness(.97);
+  transform:translateY(-1px);
+}
+#registeredOrganizations .registered-org-search-row button:focus-visible{
+  outline:3px solid rgba(36,117,138,.25)!important;
+  outline-offset:2px!important;
+}
+#registeredOrganizations .registered-org-message{
+  margin-top:12px!important;
+  padding:11px 13px!important;
+  border-radius:10px!important;
+  line-height:1.8!important;
+}
+@media(max-width:600px){
+  #registeredOrganizations .registered-org-search{padding:13px!important}
+  #registeredOrganizations .registered-org-search-row{
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+  }
+  #registeredOrganizations .registered-org-search-row input{
+    grid-column:1/-1!important;
+    min-height:46px!important;
+  }
+  #registeredOrganizations .registered-org-search-row button{width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #registeredOrganizations .registered-org-search-row input,
+  #registeredOrganizations .registered-org-search-row button{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
