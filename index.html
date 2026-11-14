@@ -2439,3 +2439,22 @@ html body:has(#signup:not(.hidden)) #signup #signupMsg{
  #registeredOrganizations .registered-org-search-row input{grid-column:1/-1}
 }
 </style>
+
+
+<style id="registered-organizations-two-column-layout">
+/* Show the registered department list in two side-by-side columns to reduce page height. */
+#registeredOrganizations .registered-org-list ol{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch;
+}
+#registeredOrganizations .registered-org-list li{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+@media(max-width:520px){
+  #registeredOrganizations .registered-org-list{padding:9px}
+  #registeredOrganizations .registered-org-list ol{gap:7px; padding-inline-start:27px}
+  #registeredOrganizations .registered-org-list li{padding:9px 8px;font-size:13px}
+}
+</style>
+
