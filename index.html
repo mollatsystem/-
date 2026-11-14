@@ -1354,6 +1354,18 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
 }
 </style>
 
+
+<style id="registered-organizations-search-highlight">
+/* Highlight matching departments while keeping the complete registered list visible. */
+#registeredOrganizations .registered-org-list li.is-search-match{
+ background:linear-gradient(110deg,#fff2b8 0%,#ffe28a 100%)!important;
+ border:1.5px solid #d6a52b!important;
+ border-right:5px solid #c58b13!important;
+ color:#563b08!important;
+ box-shadow:0 0 0 3px rgba(226,174,43,.18),0 4px 11px rgba(112,79,13,.12)!important;
+ font-weight:800!important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1820,10 +1832,10 @@ $('adminOrgSearchClearBtn').addEventListener('click',()=>{
 $('adminOrgSearchInput').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();searchAdminOrganization();$('adminOrgSearchInput').focus();}});
 $('adminOrgSearchInput').addEventListener('input',()=>{$('adminOrgSearchMsg').classList.add('hidden');});
 
-function renderRegisteredOrganizations(rows){
+function renderRegisteredOrganizations(rows,highlightIds){
  const list=$('registeredOrgNamesList');if(!list)return;
  const offices=rows||window.ADMIN_ORGANIZATIONS||[];
- list.innerHTML=offices.length?'<ol>'+offices.map(o=>'<li>'+esc(o.name)+'</li>').join('')+'</ol>':'<div class="registered-org-empty">هیچ فەرمانگەیەکی تۆمارکراو نییە.</div>';
+ list.innerHTML=offices.length?'<ol>'+offices.map(o=>'<li'+(highlightIds&&highlightIds.has(String(o.id))?' class="is-search-match"':'')+'>'+esc(o.name)+'</li>').join('')+'</ol>':'<div class="registered-org-empty">هیچ فەرمانگەیەکی تۆمارکراو نییە.</div>';
 }
 function searchRegisteredOrganization(){
  const input=$('registeredOrgSearchInput'),msg=$('registeredOrgSearchMsg');if(!input||!msg)return;
@@ -1832,7 +1844,7 @@ function searchRegisteredOrganization(){
  if(!term){msg.classList.add('is-missing');msg.textContent='تکایە ناوی فەرمانگە بنووسە بۆ گەڕان.';renderRegisteredOrganizations();return;}
  const offices=window.ADMIN_ORGANIZATIONS||[];
  const matches=offices.filter(o=>(o.name||'').toLocaleLowerCase().includes(term));
- renderRegisteredOrganizations(matches);
+ renderRegisteredOrganizations(offices,new Set(matches.map(o=>String(o.id))));
  if(matches.length){
   msg.classList.add('is-found');
   msg.textContent=matches.length===1?'فەرمانگەکە لە لیستی تۆمارکراوەکاندا دۆزرایەوە.':matches.length+' فەرمانگە لە لیستی تۆمارکراوەکاندا دۆزرایەوە.';
