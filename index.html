@@ -1297,29 +1297,38 @@ async function refreshOrganizations(){const box=$('adminOrgList');if(!box)return
 $('adminCreateOrgForm').addEventListener('submit',async ev=>{ev.preventDefault();if(CURRENT_PROFILE?.role!=='super_admin')return;const btn=$('createOrgBtn'),msg=$('adminOrgMsg');btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.classList.remove('hidden');msg.textContent='دروستکردنی هەژمار...';try{const {data,error}=await db.functions.invoke('create-department-account',{body:{organization_name:$('newOrgName').value.trim(),email:$('newOrgEmail').value.trim(),password:$('newOrgPassword').value}});if(error)throw error;if(data?.error)throw new Error(data.error);msg.textContent='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا. ئیمەیل: '+data.email+' — وشەی نهێنییەکە بە شێوەیەکی پارێزراو بگەیەنە بە فەرمانگەکە.';$('adminCreateOrgForm').reset();await refreshOrganizations()}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژماری فەرمانگە'}});
 async function deleteDepartmentAccount(organizationId, organizationName, ownAccount){
  if(CURRENT_PROFILE?.role!=='super_admin' && !ownAccount)return say('ڕێگەت پێنەدراوە.');
- const warning='ئاگاداری: بە سڕینەوەی هەژماری «'+organizationName+'»، هەموو زانیارییەکانی فەرمانگەکەش (فەرمانبەران، مۆڵەت، سەماح، هەڵبژاردەکان و تۆماری چاودێری) بە تەواوی دەسڕدرێنەوە. ئەم کردارە ناگەڕێتەوە. دڵنیایت؟';
- if(!window.confirm(warning))return;
- const typed=window.prompt('بۆ پشتڕاستکردنەوە ناوی فەرمانگەکە بنووسە: '+organizationName);
- if(typed!==organizationName)return say('ناوی فەرمانگەکە وەک خۆی نەنووسرا؛ هیچ شتێک نەسڕدرایەوە.');
- const button=ownAccount?$('deleteMyDepartment'):document.querySelector('[data-delete-org="'+organizationId+'"]');
- if(button){button.disabled=true;button.textContent='چاوەڕێ بکە...'}
+ if(!organizationId)return say('ناسنامەی فەرمانگە نەدۆزرایەوە.');
  try{
-  const {data,error}=await db.functions.invoke('delete-department-account',{body:ownAccount?{}:{organization_id:organizationId}});
-  if(error)throw error;
-  if(data?.error)throw new Error(data.error);
-  if(data?.auth_cleanup_pending)throw new Error(data.error||'داتاکان سڕدرانەوە، بەڵام پاککردنەوەی هەژماری چوونەژوورەوە تەواو نەبوو. تکایە پەیوەندی بە بەڕێوەبەری گشتی بکە.');
-  if(ownAccount){
-   alert('هەژمار و هەموو زانیارییەکانی فەرمانگەکە بە سەرکەوتوویی سڕدرانەوە. ئێستا دەچیتە دەرەوە.');
-   await db.auth.signOut();location.reload();return;
+  // Always use the canonical organization name from the database, not the header text or a button label.
+  const orgResult=await db.from('organizations').select('id,name').eq('id',organizationId).single();
+  if(orgResult.error||!orgResult.data)throw new Error('زانیاری فەرمانگە نەدۆزرایەوە: '+(orgResult.error?.message||''));
+  const canonicalName=String(orgResult.data.name||'').trim();
+  if(!canonicalName)throw new Error('ناوی فەرمانگە لە داتابەیسدا بەتاڵە.');
+  const warning='ئاگاداری: بە سڕینەوەی هەژماری «'+canonicalName+'»، هەموو زانیارییەکانی فەرمانگەکەش (فەرمانبەران، مۆڵەت، سەماح، هەڵبژاردەکان و تۆماری چاودێری) بە تەواوی دەسڕدرێنەوە. ئەم کردارە ناگەڕێتەوە. دڵنیایت؟';
+  if(!window.confirm(warning))return;
+  const typed=window.prompt('بۆ پشتڕاستکردنەوە، ئەم ناوە بنووسە: '+canonicalName);
+  const normalizeDeleteName=value=>String(value??'').normalize('NFKC').replace(/[\\u200B-\\u200F\\u202A-\\u202E\\u2066-\\u2069\\uFEFF]/g,'').replace(/[\\u0640]/g,'').replace(/\\s+/g,' ').trim();
+  if(normalizeDeleteName(typed)!==normalizeDeleteName(canonicalName))return say('ناوی فەرمانگەکە یەکسان نییە؛ هیچ زانیارییەک نەسڕدرایەوە.');
+  const button=ownAccount?$('deleteMyDepartment'):document.querySelector('[data-delete-org="'+organizationId+'"]');
+  if(button){button.disabled=true;button.textContent='چاوەڕێ بکە...'}
+  try{
+   const {data,error}=await db.functions.invoke('delete-department-account',{body:ownAccount?{}:{organization_id:organizationId}});
+   if(error)throw error;
+   if(data?.error)throw new Error(data.error);
+   if(data?.data_cleanup_pending||data?.auth_cleanup_pending)throw new Error(data.error||'پاککردنەوەی هەژمار تەواو نەبوو. تکایە پەیوەندی بە بەڕێوەبەری گشتی بکە.');
+   if(ownAccount){
+    alert('هەژمار و هەموو زانیارییەکانی فەرمانگەکە بە سەرکەوتوویی سڕدرانەوە. ئێستا دەچیتە دەرەوە.');
+    await db.auth.signOut();location.reload();return;
+   }
+   const msg=$('adminOrgMsg');if(msg){msg.classList.remove('hidden');msg.textContent='هەژماری «'+canonicalName+'» و هەموو زانیارییەکانی بە سەرکەوتوویی سڕدرانەوە.'}
+   await refreshOrganizations();
+  }catch(e){
+   alert('سڕینەوە سەرکەوتوو نەبوو: '+(e?.message||String(e)));
+   if(button){button.disabled=false;button.textContent=ownAccount?'سڕینەوەی هەژماری فەرمانگە':'سڕینەوەی هەژمار'}
   }
-  const msg=$('adminOrgMsg');if(msg){msg.classList.remove('hidden');msg.textContent='هەژماری «'+organizationName+'» و هەموو زانیارییەکانی بە سەرکەوتوویی سڕدرانەوە.'}
-  await refreshOrganizations();
- }catch(e){
-  alert('سڕینەوە سەرکەوتوو نەبوو: '+(e?.message||String(e)));
-  if(button){button.disabled=false;button.textContent=ownAccount?'سڕینەوەی هەژماری فەرمانگە':'سڕینەوەی هەژمار'}
- }
+ }catch(e){alert('نەتوانرا ناوی فەرمانگە بپشکنرێت: '+(e?.message||String(e)))}
 }
-$('deleteMyDepartment').onclick=async()=>deleteDepartmentAccount(CURRENT_PROFILE?.organization_id,$('who').textContent.replace(/\s+—\s+.*$/,''),true);
+$('deleteMyDepartment').onclick=async()=>deleteDepartmentAccount(CURRENT_PROFILE?.organization_id,'',true);
 $('adminOrgList').addEventListener('click',ev=>{
  const button=ev.target.closest('[data-delete-org]');
  if(!button||CURRENT_PROFILE?.role!=='super_admin')return;
