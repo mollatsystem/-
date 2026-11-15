@@ -1512,7 +1512,7 @@ body:has(#app:not(.hidden)) #app .app-account-area #logout{background:#fff0bf!im
    <div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="officeLongEmp">0</strong></div><div class="stat">مۆڵەتە درێژخایەنەکان<strong id="officeLong">0</strong></div></div></div>
   </div>
  </div>
-</div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە هەموو زانیارییە تۆمارکراوەکانی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. هەڵبژاردەکان، هەژماری چوونەژوورەوە و تۆماری چاودێری دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn" data-action="global-delete" onclick="if(typeof window.runGlobalDelete==='function'){window.runGlobalDelete(event)}else{alert('فەرمانی سڕینەوە بارنەبووە؛ پەڕەکە نوێ بکەرەوە.')}">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div id="adminEmployeeSearches" style="display:none">
+</div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە تەنها تۆمارەکانی ئەم هەژمارە لە بەشی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. لە هەژماری سەرپەرشتیاری گشتیدا هیچ داتای فەرمانگەکان ناسڕدرێتەوە. هەڵبژاردەکان و هەژماری چوونەژوورەوە دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn" data-action="global-delete" onclick="if(typeof window.runGlobalDelete==='function'){window.runGlobalDelete(event)}else{alert('فەرمانی سڕینەوە بارنەبووە؛ پەڕەکە نوێ بکەرەوە.')}">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div id="adminEmployeeSearches" style="display:none">
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری سەرپەرشتیاری گشتی</h2><form id="adminOwnEmpSearch"><div class="field"><label for="adminOwnMainCode">کۆدی فەرمانبەر</label><input id="adminOwnMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOwnSearch">پاککردنەوە</button></div></form><div id="adminOwnEmpResult" class="msg hidden" aria-live="polite"></div></div>
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری فەرمانگەکان</h2><form id="adminOfficeEmpSearch"><div class="field"><label for="adminOfficeMainCode">کۆدی فەرمانبەر</label><input id="adminOfficeMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOfficeSearch">پاککردنەوە</button></div></form><div id="adminOfficeEmpResult" class="msg hidden" aria-live="polite"></div></div>
 </div>
@@ -1958,7 +1958,7 @@ document.querySelectorAll('#recovery .recovery-password-toggle').forEach(button=
 $('recoveryBackToLogin').onclick=async()=>{try{await db.auth.signOut()}catch(e){}$('recoveryForm').reset();$('recoveryMsg').textContent='';$('loginMsg').textContent='';showAuthPanel('login');};
 $('recoveryForm').onsubmit=async ev=>{ev.preventDefault();let p=$('newPassword').value;if(p!==$('confirmPassword').value){$('recoveryMsg').textContent='دوو وشەی نهێنییەکە یەک ناگرن.';return}let r=await db.auth.updateUser({password:p});if(r.error){$('recoveryMsg').textContent='گۆڕینی وشەی نهێنی سەرکەوتوو نەبوو: '+r.error.message;return}$('recoveryMsg').textContent='وشەی نهێنی بە سەرکەوتوویی گۆڕدرا. ئێستا دەتوانیت بچیتە ژوورەوە.';await db.auth.signOut();setTimeout(()=>location.reload(),1200)};
 db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'){showAuthPanel('recovery')}});
-async function enter(s){if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(!s||!s.user){$('loginMsg').textContent='زانیاری هەژمار وەرنەگیرا. تکایە دووبارە بچۆ ژوورەوە.';return}let email=s.user.email||'';if(!email){try{let current=await db.auth.getUser();email=current?.data?.user?.email||''}catch(e){}}const pr=await db.from('user_profiles').select('role,organization_id,display_name').eq('user_id',s.user.id).single();if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(pr.error||!pr.data){await db.auth.signOut();$('loginMsg').textContent='ئەم هەژمارە لە هیچ فەرمانگەیەکدا تۆمار نەکراوە. تکایە پەیوەندی بە سەرپەرشتیاری گشتی بکە.';return}CURRENT_PROFILE=pr.data;const backupButton=$('backup');if(backupButton)backupButton.textContent=pr.data.role==='super_admin'?'داگرتن و پاشەکەوتی داتای سەرپەرشتیار (JSON)':'داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)';const restoreControls=$('restorePreviewBtn')?.parentElement;if(restoreControls)restoreControls.style.display='';if(restoreControls?.nextElementSibling)restoreControls.nextElementSibling.style.display='';$('who').textContent=pr.data.role==='super_admin'?(email||'هەژماری بەکارهێنەر')+' — سەرپەرشتیاری گشتی':(email?email+' — ':'')+(pr.data.display_name||'فەرمانگە');$('who').style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;color:#173b60!important;font-weight:700!important;margin-inline-end:10px';$('login').classList.add('hidden');$('app').classList.remove('hidden');const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=pr.data.role==='super_admin'?'':'none';$('adminOrgPanel').style.display=pr.data.role==='super_admin'?'block':'none';const delPanel=document.querySelector('.global-delete-panel');if(delPanel)delPanel.style.display=pr.data.role==='super_admin'?'none':'block';const manageDepartmentAccounts=$('manageDepartmentAccounts');if(manageDepartmentAccounts)manageDepartmentAccounts.style.display=pr.data.role==='super_admin'?'inline-block':'none';const registeredOrganizationsNav=$('registeredOrganizationsNav');if(registeredOrganizationsNav)registeredOrganizationsNav.style.display=pr.data.role==='super_admin'?'':'none';await load();if(pr.data.role==='department'&&navigator.onLine){try{await saveOfflineProfile(pr.data,email)}catch(cacheError){console.warn('Offline profile cache unavailable',cacheError)}}if(pr.data.role==='super_admin')await refreshOrganizations();else if(navigator.onLine)syncOfflineQueue()}
+async function enter(s){if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(!s||!s.user){$('loginMsg').textContent='زانیاری هەژمار وەرنەگیرا. تکایە دووبارە بچۆ ژوورەوە.';return}let email=s.user.email||'';if(!email){try{let current=await db.auth.getUser();email=current?.data?.user?.email||''}catch(e){}}const pr=await db.from('user_profiles').select('role,organization_id,display_name').eq('user_id',s.user.id).single();if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(pr.error||!pr.data){await db.auth.signOut();$('loginMsg').textContent='ئەم هەژمارە لە هیچ فەرمانگەیەکدا تۆمار نەکراوە. تکایە پەیوەندی بە سەرپەرشتیاری گشتی بکە.';return}CURRENT_PROFILE=pr.data;const backupButton=$('backup');if(backupButton)backupButton.textContent=pr.data.role==='super_admin'?'داگرتن و پاشەکەوتی داتای سەرپەرشتیار (JSON)':'داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)';const restoreControls=$('restorePreviewBtn')?.parentElement;if(restoreControls)restoreControls.style.display='';if(restoreControls?.nextElementSibling)restoreControls.nextElementSibling.style.display='';$('who').textContent=pr.data.role==='super_admin'?(email||'هەژماری بەکارهێنەر')+' — سەرپەرشتیاری گشتی':(email?email+' — ':'')+(pr.data.display_name||'فەرمانگە');$('who').style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;color:#173b60!important;font-weight:700!important;margin-inline-end:10px';$('login').classList.add('hidden');$('app').classList.remove('hidden');const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=pr.data.role==='super_admin'?'':'none';$('adminOrgPanel').style.display=pr.data.role==='super_admin'?'block':'none';const delPanel=document.querySelector('.global-delete-panel');if(delPanel)delPanel.style.display='block';const manageDepartmentAccounts=$('manageDepartmentAccounts');if(manageDepartmentAccounts)manageDepartmentAccounts.style.display=pr.data.role==='super_admin'?'inline-block':'none';const registeredOrganizationsNav=$('registeredOrganizationsNav');if(registeredOrganizationsNav)registeredOrganizationsNav.style.display=pr.data.role==='super_admin'?'':'none';await load();if(pr.data.role==='department'&&navigator.onLine){try{await saveOfflineProfile(pr.data,email)}catch(cacheError){console.warn('Offline profile cache unavailable',cacheError)}}if(pr.data.role==='super_admin')await refreshOrganizations();else if(navigator.onLine)syncOfflineQueue()}
 $('changeAccountEmail').onclick=async()=>{try{const {data,error}=await db.auth.getUser();if(error||!data?.user)return say('تکایە سەرەتا بچۆ ژوورەوە.');if((data.user.email||'').toLowerCase()===TARGET_ACCOUNT_EMAIL)return say('ئەم ئیمەیڵە پێشتر لە هەژمارەکەتدا بەکاردەهێنرێت.');if(!confirm('ئایا دڵنیایت ئیمەیڵی چوونەژوورەوە بگۆڕیت بۆ '+TARGET_ACCOUNT_EMAIL+'؟ لینکی پشتڕاستکردنەوە بۆ ئیمەیڵە نوێیەکە دەنێردرێت.'))return;const r=await db.auth.updateUser({email:TARGET_ACCOUNT_EMAIL},{emailRedirectTo:'https://mollatsystem.github.io/-/'});if(r.error)return say('داواکاری گۆڕینی ئیمەیڵ سەرکەوتوو نەبوو: '+r.error.message);say('داواکاری گۆڕینی ئیمەیڵ نێردرا. تکایە سندوقی پۆستی '+TARGET_ACCOUNT_EMAIL+' بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە. تا پشتڕاستکردنەوە تەواو نەبێت، ئیمەیڵی هەژمار ناگۆڕێت.')}catch(e){say('هەڵە لە گۆڕینی ئیمەیڵ: '+(e?.message||String(e)))}};
 $('logout').onclick=async()=>{if(!navigator.onLine||OFFLINE_MODE){OFFLINE_MODE=true;$('app').classList.add('hidden');$('login').classList.remove('hidden');$('loginMsg').textContent='لە دۆخی ئۆفلاین دەرچوویت؛ لە هەمان ئامێرەوە دەتوانیت بەبێ ئیمەیڵ و وشەی نهێنی بەردەوام بیت.';updateConnectionStatus('ئۆفلاین');if($('offlineContinue'))$('offlineContinue').style.display='block';return}if(CURRENT_PROFILE?.organization_id)await idbRequest('profiles','readwrite','delete',String(CURRENT_PROFILE.organization_id));await db.auth.signOut();CURRENT_PROFILE=null;OFFLINE_MODE=false;location.reload()};
 async function refreshOrganizations(){
@@ -2370,9 +2370,7 @@ window.runGlobalDelete = async function(ev){
    status.style.display='block';
    status.style.color=bad?'#9b2525':'#17633b';
    status.style.background=bad?'#fff0f0':'#eef8f1';
-  }else{
-   window.alert(message);
-  }
+  }else{window.alert(message);}
  }
  if(window.__globalDeleteRunning)return;
  window.__globalDeleteRunning=true;
@@ -2384,42 +2382,44 @@ window.runGlobalDelete = async function(ev){
   var auth=await client.auth.getSession();
   if(auth.error)throw auth.error;
   if(!auth.data||!auth.data.session)throw new Error('هەژماری چوونەژوورەوە بەسەرچووە؛ دووبارە بچۆ ژوورەوە.');
-  if(!window.confirm('ئاگاداری گرنگ: هەموو تۆمارەکانی فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەڵبژاردەکان و هەژماری چوونەژوورەوە دەمێننەوە. دڵنیایت؟')){
-   report('کردارەکە هەڵوەشێندرایەوە؛ هیچ زانیارییەک نەسڕایەوە.',false);return;
-  }
+  var profileResult=await client.from('user_profiles').select('organization_id,role').eq('user_id',auth.data.session.user.id).single();
+  if(profileResult.error||!profileResult.data)throw new Error('زانیاری هەژمار و فەرمانگە نەدۆزرایەوە.');
+  var profile=profileResult.data,orgId=String(profile.organization_id||'');
+  if(!orgId||!['department','super_admin'].includes(profile.role))throw new Error('ئەم هەژمارە مۆڵەتی سڕینەوەی گشتی نییە.');
+  var isAdmin=profile.role==='super_admin';
+  var confirmText=isAdmin
+   ?'ئاگاداری گرنگ: تەنها هەموو تۆمارەکانی خۆی هەژماری سەرپەرشتیاری گشتی دەسڕدرێنەوە. هیچ داتای فەرمانگەکان ناسڕدرێتەوە. هەڵبژاردەکان و هەژماری چوونەژوورەوە دەمێننەوە. دڵنیایت؟'
+   :'ئاگاداری گرنگ: هەموو تۆمارەکانی ئەم فەرمانگەیە لە بەشی فەرمانبەران و مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕدرێنەوە. هەژماری چوونەژوورەوە و هەڵبژاردەکان دەمێننەوە. دڵنیایت؟';
+  if(!window.confirm(confirmText)){report('کردارەکە هەڵوەشێندرایەوە؛ هیچ زانیارییەک نەسڕایەوە.',false);return;}
   if(window.prompt('بۆ پشتڕاستکردنەوە ئەم دەقە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی'){
    report('وشەی پشتڕاستکردنەوە دروست نەبوو؛ هیچ زانیارییەک نەسڕایەوە.',true);return;
   }
-  // These are the six real data tables loaded by load(). Do not include app_options
-  // (settings) or the non-existent "employees" table.
   var tables=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
-  var backup={created_at:new Date().toISOString(),tables:{}};
-  report('پاشەکەوتی زانیارییەکان ئامادە دەکرێت...',false);
+  var backup={format:'mollat-global-delete-backup',created_at:new Date().toISOString(),organization:{id:orgId,role:profile.role},tables:{}};
+  report('پاشەکەوتی زانیارییەکانی هەمان هەژمار ئامادە دەکرێت...',false);
   for(var i=0;i<tables.length;i++){
    var table=tables[i],all=[],offset=0,batch;
    do{
-    batch=await client.from(table).select('*').range(offset,offset+999);
+    batch=await client.from(table).select('*').eq('organization_id',orgId).range(offset,offset+999);
     if(batch.error)throw new Error('خوێندنەوەی خشتەی '+table+' سەرکەوتوو نەبوو: '+batch.error.message);
-    all=all.concat(batch.data||[]);
-    offset+=1000;
+    all=all.concat(batch.data||[]);offset+=1000;
    }while(batch.data&&batch.data.length===1000);
    backup.tables[table]=all;
   }
   var blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   var url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='mollat-backup-before-global-delete-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(function(){URL.revokeObjectURL(url);},30000);
-  report('پاشەکەوتی JSON داگیرا. ئێستا سڕینەوەی تۆمارەکان دەستی پێدەکات...',false);
+  a.href=url;a.download=(isAdmin?'پاشەکەوت_سەرپەرشتیاری_گشتی':'پاشەکەوت_فەرمانگە')+'_پێش_سڕینەوە_'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
+  report('پاشەکەوتی JSON داگیرا. ئێستا تەنها داتای هەمان هەژمار دەسڕدرێتەوە...',false);
   for(var j=0;j<tables.length;j++){
    var name=tables[j];
-   var del=await client.from(name).delete().not('id','is',null).select('id');
+   var del=await client.from(name).delete().eq('organization_id',orgId).not('id','is',null).select('id');
    if(del.error)throw new Error('سڕینەوەی خشتەی '+name+' سەرکەوتوو نەبوو: '+del.error.message);
-   var verify=await client.from(name).select('id',{count:'exact',head:true});
+   var verify=await client.from(name).select('id',{count:'exact',head:true}).eq('organization_id',orgId);
    if(verify.error)throw new Error('پشکنینی خشتەی '+name+' سەرکەوتوو نەبوو: '+verify.error.message);
-   if(verify.count!==0)throw new Error('لە خشتەی '+name+' هێشتا '+verify.count+' تۆمار ماوەتەوە. ڕەنگە مۆڵەتی DELETE لە Supabase پێویست بێت.');
+   if(verify.count!==0)throw new Error('لە خشتەی '+name+' هێشتا '+verify.count+' تۆماری ئەم هەژمارە ماوەتەوە.');
   }
-  report('سڕینەوەی گشتی بە سەرکەوتوویی تەواو بوو. هەموو ٦ خشتەی داتا بەتاڵن؛ هەڵبژاردەکان و هەژماری چوونەژوورەوە پارێزراون.',false);
+  report(isAdmin?'سڕینەوەی گشتیی هەژماری سەرپەرشتیاری گشتی سەرکەوتوو بوو. داتای فەرمانگەکان بە تەواوی پارێزراون.':'سڕینەوەی گشتیی ئەم فەرمانگەیە سەرکەوتوو بوو. هەژماری چوونەژوورەوە و هەڵبژاردەکان پارێزراون.',false);
   setTimeout(function(){location.reload();},2200);
  }catch(err){
   console.error('Global delete failed:',err);
