@@ -2303,6 +2303,19 @@ if(restorePreviewBtn&&restoreBackupFile){
   try{
    if(file.size>25*1024*1024)throw new Error('قەبارەی فایل زۆرە؛ سنوور ٢٥ مێگابایتە.');
    const data=JSON.parse(await file.text()),org=String(CURRENT_PROFILE?.organization_id||'');
+   const legacyGlobalDelete=data?.format==='mollat-global-delete-backup';
+   if(legacyGlobalDelete){
+    if(String(data?.organization?.id||'')!==org)throw new Error('ئەم پاشەکەوتە هی ئەم فەرمانگەیە نییە؛ بۆ پاراستنی نهێنی زانیارییەکان ڕێگە نادرێت.');
+    const legacyTables=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','long_term_leaves'];
+    if(!data.tables||typeof data.tables!=='object'||Array.isArray(data.tables))throw new Error('پێکهاتەی خشتەکانی فایلەکە دروست نییە.');
+    for(const name of legacyTables)if(!Array.isArray(data.tables[name]))throw new Error('خشتەی '+name+' لە فایلەکەدا نییە یان دروست نییە.');
+    const {data:currentOptions,error:optionsError}=await db.from('app_options').select('*').eq('organization_id',org);
+    if(optionsError)throw new Error('نەتوانرا هەڵبژاردەکانی هەمان هەژمار بۆ تەواوکردنی پاشەکەوت بخوێندرێنەوە: '+optionsError.message);
+    data.tables.app_options=currentOptions||[];
+    data.format='mollat-organization-backup';data.version=1;
+    data.organization.name=data.organization.name||(CURRENT_PROFILE?.display_name||(CURRENT_PROFILE?.role==='super_admin'?'سەرپەرشتیاری گشتی':'فەرمانگە'));
+    data.offline_pending_changes=[];data.counts=Object.fromEntries(Object.entries(data.tables).map(([name,rows])=>[name,Array.isArray(rows)?rows.length:0]));
+   }
    if(data?.format!=='mollat-organization-backup'||data?.version!==1)throw new Error('ئەم فایلە پاشەکەوتی دروستی سیستەمی مۆڵەت نییە.');
    if(String(data?.organization?.id||'')!==org)throw new Error('ئەم پاشەکەوتە هی ئەم فەرمانگەیە نییە؛ بۆ پاراستنی نهێنی زانیارییەکان ڕێگە نادرێت.');
    const expected=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','app_options','long_term_leaves'];
@@ -2365,12 +2378,8 @@ window.runGlobalDelete = async function(ev){
  var button=document.getElementById('globalDeleteBtn');
  var status=document.getElementById('globalDeleteStatus');
  function report(message,bad){
-  if(status){
-   status.textContent=message;
-   status.style.display='block';
-   status.style.color=bad?'#9b2525':'#17633b';
-   status.style.background=bad?'#fff0f0':'#eef8f1';
-  }else{window.alert(message);}
+  if(status){status.textContent=message;status.style.display='block';status.style.color=bad?'#9b2525':'#17633b';status.style.background=bad?'#fff0f0':'#eef8f1';}
+  else{window.alert(message);}
  }
  if(window.__globalDeleteRunning)return;
  window.__globalDeleteRunning=true;
@@ -2382,7 +2391,7 @@ window.runGlobalDelete = async function(ev){
   var auth=await client.auth.getSession();
   if(auth.error)throw auth.error;
   if(!auth.data||!auth.data.session)throw new Error('هەژماری چوونەژوورەوە بەسەرچووە؛ دووبارە بچۆ ژوورەوە.');
-  var profileResult=await client.from('user_profiles').select('organization_id,role').eq('user_id',auth.data.session.user.id).single();
+  var profileResult=await client.from('user_profiles').select('organization_id,role,display_name').eq('user_id',auth.data.session.user.id).single();
   if(profileResult.error||!profileResult.data)throw new Error('زانیاری هەژمار و فەرمانگە نەدۆزرایەوە.');
   var profile=profileResult.data,orgId=String(profile.organization_id||'');
   if(!orgId||!['department','super_admin'].includes(profile.role))throw new Error('ئەم هەژمارە مۆڵەتی سڕینەوەی گشتی نییە.');
@@ -2394,9 +2403,11 @@ window.runGlobalDelete = async function(ev){
   if(window.prompt('بۆ پشتڕاستکردنەوە ئەم دەقە بنووسە: سڕینەوەی گشتی')!=='سڕینەوەی گشتی'){
    report('وشەی پشتڕاستکردنەوە دروست نەبوو؛ هیچ زانیارییەک نەسڕایەوە.',true);return;
   }
-  var tables=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
-  var backup={format:'mollat-global-delete-backup',created_at:new Date().toISOString(),organization:{id:orgId,role:profile.role},tables:{}};
-  report('پاشەکەوتی زانیارییەکانی هەمان هەژمار ئامادە دەکرێت...',false);
+  var queued=(await idbRequest('queue','readonly','getAll')).filter(function(item){return String(item.organization_id||'')===orgId;});
+  if(queued.length)throw new Error('گۆڕانکاریی ئۆفلاینی چاوەڕوان هەن ('+queued.length+'). سەرەتا پەیوەندی ئۆنلاین چالاک بکە و با گۆڕانکارییەکان هاوکات بن؛ پاشان سڕینەوەی گشتی ئەنجام بدە.');
+  var tables=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','app_options','long_term_leaves'];
+  var backup={format:'mollat-organization-backup',version:1,created_at:new Date().toISOString(),organization:{id:orgId,name:profile.display_name||(isAdmin?'سەرپەرشتیاری گشتی':'فەرمانگە'),role:profile.role},tables:{},offline_pending_changes:[],counts:{}};
+  report('پاشەکەوتی تەواوی هەمان هەژمار ئامادە دەکرێت...',false);
   for(var i=0;i<tables.length;i++){
    var table=tables[i],all=[],offset=0,batch;
    do{
@@ -2405,14 +2416,18 @@ window.runGlobalDelete = async function(ev){
     all=all.concat(batch.data||[]);offset+=1000;
    }while(batch.data&&batch.data.length===1000);
    backup.tables[table]=all;
+   backup.counts[table]=all.length;
   }
+  backup.offline_pending_changes_count=0;
+  backup.note=isAdmin?'ئەم فایلە پاشەکەوتی داتای تایبەتی سەرپەرشتیاری گشتییە؛ داتای فەرمانگەکان تێدا نییە.':'ئەم فایلە پاشەکەوتی داتای ئەم فەرمانگەیە.';
   var blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   var url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download=(isAdmin?'پاشەکەوت_سەرپەرشتیاری_گشتی':'پاشەکەوت_فەرمانگە')+'_پێش_سڕینەوە_'+new Date().toISOString().slice(0,10)+'.json';
   document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
-  report('پاشەکەوتی JSON داگیرا. ئێستا تەنها داتای هەمان هەژمار دەسڕدرێتەوە...',false);
-  for(var j=0;j<tables.length;j++){
-   var name=tables[j];
+  report('پاشەکەوتی تەواوی JSON داگیرا. ئێستا تەنها داتای هەمان هەژمار دەسڕدرێتەوە...',false);
+  var deleteTables=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
+  for(var j=0;j<deleteTables.length;j++){
+   var name=deleteTables[j];
    var del=await client.from(name).delete().eq('organization_id',orgId).not('id','is',null).select('id');
    if(del.error)throw new Error('سڕینەوەی خشتەی '+name+' سەرکەوتوو نەبوو: '+del.error.message);
    var verify=await client.from(name).select('id',{count:'exact',head:true}).eq('organization_id',orgId);
@@ -2428,7 +2443,7 @@ window.runGlobalDelete = async function(ev){
   window.__globalDeleteRunning=false;
   if(button){button.disabled=false;button.textContent='سڕینەوەی گشتی';}
  }
-};
+}
 // Capture clicks at document level so the handler still works if the summary
 // panel is re-rendered after login or navigation.
 document.addEventListener('click',function(ev){
