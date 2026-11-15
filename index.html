@@ -2360,7 +2360,7 @@ if(restorePreviewBtn&&restoreBackupFile){
    validatedRestoreBackup=null;restoreApplyBtn.classList.add('hidden');
    restorePreviewStatus.textContent='گەڕاندنەوە بە سەرکەوتوویی تەواو بوو. ژمارەی تۆمارەکان: '+Object.values(data.counts||{}).reduce((a,b)=>a+Number(b||0),0)+'. داتا نوێ دەکرێتەوە...';
    await load();
-   restorePreviewStatus.textContent='گەڕاندنەوە بە سەرکەوتوویی تەواو بوو؛ داتاکانی سەرپەرشتیار لە فایلەکەوە نوێ کرانەوە.';
+   restorePreviewStatus.textContent=CURRENT_PROFILE?.role==='super_admin'?'گەڕاندنەوە بە سەرکەوتوویی تەواو بوو؛ داتاکانی سەرپەرشتیار لە فایلەکەوە نوێ کرانەوە.':'گەڕاندنەوە بە سەرکەوتوویی تەواو بوو؛ داتاکانی فەرمانگە لە فایلەکەوە نوێ کرانەوە.';
   }catch(error){
    restorePreviewStatus.textContent='گەڕاندنەوە سەرکەوتوو نەبوو: '+(error?.message||String(error))+'؛ مامەڵەکە لە داتابەیسدا بە تەواوی پاشگەز کرایەوە ئەگەر هەڵە لە ناو کارەکەدا ڕوویدابێت.';
   }finally{
