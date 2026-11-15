@@ -1580,8 +1580,36 @@ if(loginPasswordToggle)loginPasswordToggle.addEventListener('click',()=>{const f
 
 
 const newOrgPasswordToggle=$('toggleNewOrgPassword'); if(newOrgPasswordToggle)newOrgPasswordToggle.addEventListener('click',()=>{const field=$('newOrgPassword'),show=field.type==='password';field.type=show?'text':'password';newOrgPasswordToggle.textContent=show?'شاردنەوە':'نیشاندان';newOrgPasswordToggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');newOrgPasswordToggle.setAttribute('aria-pressed',show?'true':'false');field.focus();});
+// ڕێکخستنی ژمارەکانی پاسۆرد بەبێ گۆڕینی پیت و هێماکان
+function passwordDigitVariants(value){
+ const raw=String(value??'');
+ const toAscii=s=>s.replace(/[٠-٩۰-۹]/g,ch=>{
+  const n=ch.charCodeAt(0);
+  return String(n-(n>=0x06F0?0x06F0:0x0660));
+ });
+ const ascii=toAscii(raw);
+ const toArabic=s=>s.replace(/[0-9]/g,ch=>String.fromCharCode(0x0660+Number(ch)));
+ return [...new Set([raw,ascii,toArabic(ascii)])];
+}
+
+async function signInWithPasswordFlexible(email,password){
+ const candidates=passwordDigitVariants(password);
+ let result=null;
+ for(let i=0;i<candidates.length;i++){
+  result=await db.auth.signInWithPassword({
+   email,
+   password:candidates[i]
+  });
+  if(!result.error)return result;
+  const code=String(result.error.code||'').toLowerCase();
+  const message=String(result.error.message||'');
+  const invalid=code==='invalid_credentials'||/invalid login credentials|invalid credentials/i.test(message);
+  if(!invalid||i===candidates.length-1)return result;
+ }
+ return result;
+}
 window.__loginHandlerReady=true;
-$('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('loginForm').querySelector('button[type=submit],button:not([type])');if(btn){btn.disabled=true;btn.textContent='چاوەڕێ بکە...'}$('loginMsg').textContent='پەیوەندی بە سیستەمەوە...';try{const {data,error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){$('loginMsg').textContent='چوونەژوورەوە سەرکەوتوو نەبوو: '+error.message;return}if(!data||!data.session){$('loginMsg').textContent='هەژمارەکە پشتڕاست نەکرایەوە. تکایە دووبارە هەوڵ بدە.';return}await enter(data.session)}catch(e){$('loginMsg').textContent='پەیوەندی بە سیستەمەوە سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{if(btn){btn.disabled=false;btn.textContent='چوونەژوورەوە'}}});window.__mollatDb=db;let CURRENT_PROFILE=null,ADMIN_OFFICE_COUNT=0;let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
+$('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('loginForm').querySelector('button[type=submit],button:not([type])');if(btn){btn.disabled=true;btn.textContent='چاوەڕێ بکە...'}$('loginMsg').textContent='پەیوەندی بە سیستەمەوە...';try{const {data,error}=await signInWithPasswordFlexible($('email').value.trim(),$('password').value));if(error){$('loginMsg').textContent='چوونەژوورەوە سەرکەوتوو نەبوو: '+error.message;return}if(!data||!data.session){$('loginMsg').textContent='هەژمارەکە پشتڕاست نەکرایەوە. تکایە دووبارە هەوڵ بدە.';return}await enter(data.session)}catch(e){$('loginMsg').textContent='پەیوەندی بە سیستەمەوە سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{if(btn){btn.disabled=false;btn.textContent='چوونەژوورەوە'}}});window.__mollatDb=db;let CURRENT_PROFILE=null,ADMIN_OFFICE_COUNT=0;let EL=[],EP=[],ET=[],L=[],P=[],O=[],T=[];
 document.addEventListener('click',function(ev){const b=ev.target.closest('[data-search-action]');if(!b)return;ev.preventDefault();const inputId=b.getAttribute('data-search-input');let focusField=null;if(b.getAttribute('data-search-action')==='clear'){focusField=document.getElementById(inputId);if(focusField)focusField.value='';}try{render();if(focusField)focusField.focus();}catch(err){console.error('Search action failed:',err);say('گەڕان سەرکەوتوو نەبوو. تکایە پەڕەکە نوێ بکەرەوە. '+(err&&err.message?err.message:''));}});
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1896,7 +1924,7 @@ $('deleteDepartmentFromLogin').onclick=async()=>{
  button.disabled=true;button.textContent='پشکنینی هەژمار...';msg.textContent='پشکنینی هەژمار دەکرێت...';
  let signedIn=false;
  try{
-  const login=await db.auth.signInWithPassword({email,password});
+  const login=await signInWithPasswordFlexible(email,password);
   if(login.error||!login.data?.user)throw new Error(login.error?.message||'چوونەژوورەوە سەرکەوتوو نەبوو.');
   signedIn=true;
   const profile=await db.from('user_profiles').select('role,organization_id').eq('user_id',login.data.user.id).single();
