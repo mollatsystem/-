@@ -2295,6 +2295,8 @@ if(restorePreviewBtn&&restoreBackupFile){
   restoreApplyBtn.disabled=true;restorePreviewBtn.disabled=true;restoreApplyBtn.textContent='گەڕاندنەوە دەکرێت...';
   restorePreviewStatus.textContent='گەڕاندنەوەی زانیارییەکان دەستی پێکرد...';
   try{
+   const pendingLocal=(await idbRequest('queue','readonly','getAll')).filter(item=>String(item.organization_id||'')===String(CURRENT_PROFILE.organization_id));
+   if(pendingLocal.length)throw new Error('لە ئامێرەکەتدا '+pendingLocal.length+' گۆڕانکاریی ئۆفلاین هەن؛ سەرەتا پێویستە هاوکات بکرێن یان چارەسەر بکرێن.');
    const {data,error}=await db.rpc('restore_organization_backup',{p_backup:validatedRestoreBackup});
    if(error)throw error;
    if(!data?.success||String(data.organization_id)!==String(CURRENT_PROFILE.organization_id))throw new Error('ئەنجامی گەڕاندنەوە پشتڕاست نەکرایەوە.');
