@@ -1516,7 +1516,7 @@ body:has(#app:not(.hidden)) #app .app-account-area #logout{background:#fff0bf!im
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری سەرپەرشتیاری گشتی</h2><form id="adminOwnEmpSearch"><div class="field"><label for="adminOwnMainCode">کۆدی فەرمانبەر</label><input id="adminOwnMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOwnSearch">پاککردنەوە</button></div></form><div id="adminOwnEmpResult" class="msg hidden" aria-live="polite"></div></div>
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری فەرمانگەکان</h2><form id="adminOfficeEmpSearch"><div class="field"><label for="adminOfficeMainCode">کۆدی فەرمانبەر</label><input id="adminOfficeMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOfficeSearch">پاککردنەوە</button></div></form><div id="adminOfficeEmpResult" class="msg hidden" aria-live="polite"></div></div>
 </div>
-<div id="departmentEmployeeSearch" class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی JSON</button></div></section>
+<div id="departmentEmployeeSearch" class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)</button></div></section>
 
 <section id="registeredOrganizations" class="page">
  <div class="panel registered-org-page">
@@ -2195,7 +2195,48 @@ function clearPermForm(){
  return false;
 }
 window.clearPermForm=clearPermForm;
-$('backup').onclick=()=>{let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify({employees:E,leave_records:L,daily_permissions:P,long_term_leaves:T},null,2)],{type:'application/json'}));a.href=u;a.download='leave-permission-backup.json';a.click();URL.revokeObjectURL(u)};
+$('backup').onclick=async()=>{
+ const button=$('backup'),originalText=button.textContent,org=String(CURRENT_PROFILE?.organization_id||'');
+ if(!org||CURRENT_PROFILE?.role!=='department'){say('پاشەکەوتی داتای فەرمانگە لە هەژماری فەرمانگەکەوە ئەنجام بدرێت.');return}
+ button.disabled=true;button.textContent='تکایە چاوەڕێ بکە...';
+ try{
+  const sourceTables={
+   leave_employees:EL,
+   permission_employees:EP,
+   long_leave_employees:ET,
+   leave_records:L,
+   daily_permissions:P,
+   app_options:O,
+   long_term_leaves:T
+  };
+  const tables={};
+  for(const [name,rows] of Object.entries(sourceTables)){
+   tables[name]=(Array.isArray(rows)?rows:[]).filter(row=>String(row.organization_id||'')===org);
+  }
+  const queued=(await idbRequest('queue','readonly','getAll')).filter(item=>String(item.organization_id||'')===org);
+  const backup={
+   format:'mollat-organization-backup',
+   version:1,
+   created_at:new Date().toISOString(),
+   organization:{id:org,name:CURRENT_PROFILE.display_name||'',role:CURRENT_PROFILE.role},
+   tables,
+   offline_pending_changes:queued,
+   counts:Object.fromEntries(Object.entries(tables).map(([name,rows])=>[name,rows.length])),
+   offline_pending_changes_count:queued.length,
+   note:'ئەم فایلە پاشەکەوتی داتای ئەم فەرمانگەیە؛ وشەی نهێنی، تۆکنی چوونەژوورەوە و هەژمارەکانی Supabase تێدا نین.'
+  };
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='mollat-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+  say('پاشەکەوتی JSONی فەرمانگە داگیرا. ژمارەی تۆمارەکان و گۆڕانکارییە ئۆفلاینە چاوەڕوانەکانیش لە فایلەکەدا هەن.');
+ }catch(error){
+  say('داگرتنی پاشەکەوت سەرکەوتوو نەبوو: '+(error?.message||String(error)));
+ }finally{
+  button.disabled=false;button.textContent=originalText;
+ }
+};
 
 
 
