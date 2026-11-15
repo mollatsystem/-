@@ -2422,7 +2422,7 @@ window.runGlobalDelete = async function(ev){
   backup.note=isAdmin?'ئەم فایلە پاشەکەوتی داتای تایبەتی سەرپەرشتیاری گشتییە؛ داتای فەرمانگەکان تێدا نییە.':'ئەم فایلە پاشەکەوتی داتای ئەم فەرمانگەیە.';
   var blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   var url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download=(isAdmin?'پاشەکەوت_سەرپەرشتیاری_گشتی':'پاشەکەوت_فەرمانگە')+'_پێش_سڕینەوە_'+new Date().toISOString().slice(0,10)+'.json';
+  a.href=url;var backupName=isAdmin?'سەرپەرشتیاری_گشتی':String(profile.display_name||'فەرمانگە').trim().replace(/[\\/:*?"<>|]/g,'_').replace(/\s+/g,'_');a.download='پاشەکەوت_'+backupName+'_پێش_سڕینەوە_'+new Date().toISOString().slice(0,10)+'.json';
   document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
   report('پاشەکەوتی تەواوی JSON داگیرا. ئێستا تەنها داتای هەمان هەژمار دەسڕدرێتەوە...',false);
   var deleteTables=['leave_records','daily_permissions','long_term_leaves','leave_employees','permission_employees','long_leave_employees'];
