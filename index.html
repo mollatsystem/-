@@ -2268,7 +2268,10 @@ $('backup').onclick=async()=>{
   };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='mollat-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  const backupDate=new Date(),orgFileName=String(CURRENT_PROFILE.display_name||'فەرمانگە').trim().replace(/[<>:"/\\|?*\u0000-\u001F]/g,'').replace(/\s+/g,'_').replace(/_+/g,'_').replace(/^_+|_+$/g,'')||'فەرمانگە';
+  const datePart=[backupDate.getFullYear(),String(backupDate.getMonth()+1).padStart(2,'0'),String(backupDate.getDate()).padStart(2,'0')].join('-');
+  const timePart=[String(backupDate.getHours()).padStart(2,'0'),String(backupDate.getMinutes()).padStart(2,'0'),String(backupDate.getSeconds()).padStart(2,'0')].join('-');
+  a.href=url;a.download='پاشەکەوت_'+orgFileName+'_'+datePart+'_'+timePart+'.json';
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),30000);
   say('پاشەکەوتی JSONی فەرمانگە داگیرا. ژمارەی تۆمارەکان و گۆڕانکارییە ئۆفلاینە چاوەڕوانەکانیش لە فایلەکەدا هەن.');
