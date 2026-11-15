@@ -1516,7 +1516,7 @@ body:has(#app:not(.hidden)) #app .app-account-area #logout{background:#fff0bf!im
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری سەرپەرشتیاری گشتی</h2><form id="adminOwnEmpSearch"><div class="field"><label for="adminOwnMainCode">کۆدی فەرمانبەر</label><input id="adminOwnMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOwnSearch">پاککردنەوە</button></div></form><div id="adminOwnEmpResult" class="msg hidden" aria-live="polite"></div></div>
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری فەرمانگەکان</h2><form id="adminOfficeEmpSearch"><div class="field"><label for="adminOfficeMainCode">کۆدی فەرمانبەر</label><input id="adminOfficeMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOfficeSearch">پاککردنەوە</button></div></form><div id="adminOfficeEmpResult" class="msg hidden" aria-live="polite"></div></div>
 </div>
-<div id="departmentEmployeeSearch" class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)</button></div></section>
+<div id="departmentEmployeeSearch" class="panel"><h2>گەڕان بە کۆدی سەرەکی فەرمانبەر</h2><form id="homeEmpSearch"><div class="field"><label for="homeMainCode">کۆدی سەرەکی</label><input id="homeMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearHomeSearch">پاککردنەوە</button></div></form><div id="homeEmpResult" class="msg hidden" aria-live="polite"></div></div><div class="panel"><h2>بەخێربێیت</h2><p class="muted">تۆمارەکان لە Supabase پاشەکەوت دەکرێن و لەسەر ئامێرەکانی تر بە هەمان هەژمار دەردەکەون.</p><button id="backup" class="btn">داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)</button><div class="actions"><button id="restorePreviewBtn" type="button" class="btn gray">پشکنینی فایل و پێشبینینی گەڕاندنەوە</button><input id="restoreBackupFile" type="file" accept=".json,application/json" class="hidden"><span id="restorePreviewStatus" class="muted" role="status" aria-live="polite"></span></div><p class="muted">لە ئێستادا تەنها فایلەکە پشکنین و ژمارەی تۆمارەکان پیشان دەدرێت؛ هیچ زانیارییەک ناگۆڕدرێت و ناگەڕێندرێتەوە.</p></div></section>
 
 <section id="registeredOrganizations" class="page">
  <div class="panel registered-org-page">
@@ -2237,6 +2237,45 @@ $('backup').onclick=async()=>{
   button.disabled=false;button.textContent=originalText;
  }
 };
+
+
+
+const restorePreviewBtn=$('restorePreviewBtn'),restoreBackupFile=$('restoreBackupFile'),restorePreviewStatus=$('restorePreviewStatus');
+if(restorePreviewBtn&&restoreBackupFile){
+ restorePreviewBtn.addEventListener('click',()=>{
+  if(!CURRENT_PROFILE?.organization_id||CURRENT_PROFILE?.role!=='department'){
+   restorePreviewStatus.textContent='ئەم کردارە تەنها بۆ هەژماری فەرمانگە بەردەستە.';return;
+  }
+  restoreBackupFile.value='';restoreBackupFile.click();
+ });
+ restoreBackupFile.addEventListener('change',async()=>{
+  const file=restoreBackupFile.files?.[0];if(!file)return;
+  restorePreviewBtn.disabled=true;restorePreviewStatus.textContent='فایلەکە پشکنین دەکرێت...';
+  try{
+   if(file.size>25*1024*1024)throw new Error('قەبارەی فایل زۆرە؛ سنوور ٢٥ مێگابایتە.');
+   const data=JSON.parse(await file.text()),org=String(CURRENT_PROFILE?.organization_id||'');
+   if(data?.format!=='mollat-organization-backup'||data?.version!==1)throw new Error('ئەم فایلە پاشەکەوتی دروستی سیستەمی مۆڵەت نییە.');
+   if(String(data?.organization?.id||'')!==org)throw new Error('ئەم پاشەکەوتە هی ئەم فەرمانگەیە نییە؛ بۆ پاراستنی نهێنی زانیارییەکان ڕێگە نادرێت.');
+   const expected=['leave_employees','permission_employees','long_leave_employees','leave_records','daily_permissions','app_options','long_term_leaves'];
+   if(!data.tables||typeof data.tables!=='object'||Array.isArray(data.tables))throw new Error('پێکهاتەی خشتەکانی فایلەکە دروست نییە.');
+   const counts={};
+   for(const name of expected){
+    const rows=data.tables[name];
+    if(!Array.isArray(rows))throw new Error('خشتەی '+name+' لە فایلەکەدا نییە یان دروست نییە.');
+    const ids=new Set();
+    for(const row of rows){
+     if(!row||typeof row!=='object'||String(row.organization_id||'')!==org)throw new Error('تۆمارێک لە خشتەی '+name+' سەر بە فەرمانگەی ئێستا نییە.');
+     if(row.id!=null){const id=String(row.id);if(ids.has(id))throw new Error('IDی دووبارە لە خشتەی '+name+' هەیە.');ids.add(id);}
+    }
+    counts[name]=rows.length;
+   }
+   if(!Array.isArray(data.offline_pending_changes))throw new Error('بەشی گۆڕانکارییە ئۆفلاینەکان دروست نییە.');
+   const total=Object.values(counts).reduce((a,b)=>a+b,0);
+   restorePreviewStatus.textContent='فایلەکە لە ڕووی پێکهاتەوە دروستە. فەرمانگە: '+(data.organization.name||'ناونەزانراو')+'؛ کۆی تۆمار: '+total+'؛ گۆڕانکاری ئۆفلاین: '+data.offline_pending_changes.length+'؛ '+expected.map(n=>n+': '+counts[n]).join('، ')+'. هیچ داتایەک نەگۆڕدرا.';
+  }catch(error){restorePreviewStatus.textContent='پشکنین سەرکەوتوو نەبوو: '+(error?.message||String(error));}
+  finally{restorePreviewBtn.disabled=false;}
+ });
+}
 
 
 
