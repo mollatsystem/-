@@ -1698,7 +1698,7 @@ document.addEventListener('click',function(ev){const b=ev.target.closest('[data-
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
-function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=(CURRENT_PROFILE?.role!=='super_admin'&&id==='home')?'none':''}
+function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=(CURRENT_PROFILE?.role!=='super_admin'&&id==='home')?'none':'';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>page(b.dataset.page));
 
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
@@ -1902,6 +1902,49 @@ function renderLongTermLeaveWatch(){
  }).join('');
  const msg=$('longLeaveWatchMsg');
  if(msg)msg.textContent=query?(matches.length?'ژمارەی '+arabicDigits(matches.length)+' تۆمار دۆزرایەوە؛ ناوی فەرمانبەری هاوتا بە ڕەنگ دیارە.':'هیچ تۆمارێک بەو کۆدی سەرەکی، ژمارەی دۆسیە یان ناوە نەدۆزرایەوە.'):'هەموو مۆڵەتە درێژخایەنەکان بە جۆرەکانیان لە خوارەوە پیشان دەدرێن.';
+}
+function showExpiredLongLeaveAlert(){
+ if(CURRENT_PROFILE?.role!=='super_admin')return;
+ const today=ltToday();
+ const expired=(Array.isArray(T)?T:[]).filter(x=>x&&x.end_date&&String(x.end_date).slice(0,10)<today)
+  .slice().sort((a,b)=>String(a.end_date).localeCompare(String(b.end_date)));
+ if(!expired.length)return;
+ let modal=$('expiredLongLeaveAlert');
+ if(!modal){
+  const style=document.createElement('style');
+  style.id='expired-long-leave-alert-style';
+  style.textContent=`
+   #expiredLongLeaveAlert{position:fixed;inset:0;z-index:1000000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,22,39,.72);backdrop-filter:blur(4px)}
+   #expiredLongLeaveAlert .expired-alert-card{width:min(760px,100%);max-height:min(82vh,760px);overflow:auto;background:linear-gradient(155deg,#fff 0%,#edf4fa 100%);border:2px solid #b78336;border-top:7px solid #c58a2d;border-radius:18px;box-shadow:0 22px 65px rgba(0,0,0,.38);padding:22px;direction:rtl;color:#18334e}
+   #expiredLongLeaveAlert .expired-alert-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+   #expiredLongLeaveAlert .expired-alert-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:14px;background:#fff0ce;color:#8a5410;font-size:27px;font-weight:900}
+   #expiredLongLeaveAlert h2{font-size:20px;margin:0;color:#75460e}
+   #expiredLongLeaveAlert .expired-alert-sub{margin:5px 0 0;color:#53677e;font-size:13px}
+   #expiredLongLeaveAlert .expired-alert-count{display:inline-block;margin:0 0 12px;padding:6px 11px;border-radius:8px;background:#ffedc8;border:1px solid #e0bd78;color:#75460e;font-weight:900}
+   #expiredLongLeaveAlert .expired-alert-list{display:grid;gap:9px}
+   #expiredLongLeaveAlert .expired-alert-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;background:#fff;border:1px solid #d6c49f;border-right:5px solid #c58a2d;border-radius:10px}
+   #expiredLongLeaveAlert .expired-alert-name{font-weight:900;color:#183b5b}
+   #expiredLongLeaveAlert .expired-alert-meta{font-size:12px;color:#53677e;margin-top:4px;line-height:1.8}
+   #expiredLongLeaveAlert .expired-alert-date{white-space:nowrap;text-align:center;padding:7px 9px;border-radius:8px;background:#fff0ce;color:#80500f;font-size:12px;font-weight:900}
+   #expiredLongLeaveAlert .expired-alert-footer{display:flex;justify-content:flex-end;margin-top:16px}
+   #expiredLongLeaveAlert .expired-alert-close{min-width:130px;padding:11px 20px;border:0;border-radius:9px;background:linear-gradient(135deg,#205a91,#167985);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+   #expiredLongLeaveAlert .expired-alert-close:focus-visible{outline:3px solid #e1a63d;outline-offset:3px}
+   @media(max-width:560px){#expiredLongLeaveAlert{padding:10px}#expiredLongLeaveAlert .expired-alert-card{padding:15px;max-height:88vh}#expiredLongLeaveAlert h2{font-size:17px}#expiredLongLeaveAlert .expired-alert-item{grid-template-columns:1fr}#expiredLongLeaveAlert .expired-alert-date{text-align:right;white-space:normal}}
+  `;
+  document.head.appendChild(style);
+  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveAlert" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveAlertTitle"><div class="expired-alert-card"><div class="expired-alert-head"><div class="expired-alert-icon" aria-hidden="true">!</div><div><h2 id="expiredLongLeaveAlertTitle">ئاگاداری: مۆڵەتی درێژخایەن تەواو بووە</h2><p class="expired-alert-sub">ئەم فەرمانبەرانە بەرواری کۆتایی مۆڵەتەکەیان تێپەڕیوە.</p></div></div><div id="expiredLongLeaveAlertCount" class="expired-alert-count"></div><div id="expiredLongLeaveAlertList" class="expired-alert-list"></div><div class="expired-alert-footer"><button type="button" id="expiredLongLeaveAlertClose" class="expired-alert-close">داخستن</button></div></div></div>');
+  modal=$('expiredLongLeaveAlert');
+  $('expiredLongLeaveAlertClose').addEventListener('click',()=>{modal.style.display='none'});
+  modal.addEventListener('click',ev=>{if(ev.target===modal)modal.style.display='none'});
+  modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')modal.style.display='none'});
+ }
+ $('expiredLongLeaveAlertCount').textContent='ژمارەی مۆڵەتە تەواوبووەکان: '+arabicDigits(expired.length);
+ $('expiredLongLeaveAlertList').innerHTML=expired.map(x=>{
+  const details=['کۆدی سەرەکی: '+arabicDigits(x.employee_main_code||'—'),'فەرمانگە/هۆبە: '+(x.employee_department||'—'),'جۆری مۆڵەت: '+(x.leave_type||'—')].map(esc).join(' · ');
+  return '<article class="expired-alert-item"><div><div class="expired-alert-name">'+esc(x.employee_name||'ناوی فەرمانبەر دیاری نییە')+'</div><div class="expired-alert-meta">'+details+'</div></div><div class="expired-alert-date">کۆتایی مۆڵەت<br>'+esc(displayDate(x.end_date))+'</div></article>';
+ }).join('');
+ modal.style.display='flex';
+ $('expiredLongLeaveAlertClose').focus();
 }
 function runLongLeaveWatchSearch(){
  const input=$('longLeaveWatchSearch'),msg=$('longLeaveWatchMsg');if(!input)return;
