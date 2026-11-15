@@ -1927,8 +1927,8 @@ async function deleteDepartmentAccount(organizationId, organizationName, ownAcco
    if(error)throw error;
    if(data?.error)throw new Error(data.error);
    if(data?.data_cleanup_pending||data?.auth_cleanup_pending)throw new Error(data.error||'پاککردنەوەی هەژمار تەواو نەبوو. تکایە پەیوەندی بە سەرپەرشتیاری گشتی بکە.');
+   await clearOfflineOrganization(organizationId);
    if(ownAccount){
-    await clearOfflineOrganization(organizationId);
     alert('هەژمار و هەموو زانیارییەکانی فەرمانگەکە بە سەرکەوتوویی سڕدرانەوە. ئێستا دەچیتە دەرەوە.');
     await db.auth.signOut();location.reload();return;
    }
