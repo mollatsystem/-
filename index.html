@@ -1974,12 +1974,12 @@ function openExpiredLongLeaveDetails(recordId){
  const totalDays=ltTotalLeaveDays(x);
  const detail=(label,value,extraClass='')=>'<div class="expired-detail-field '+extraClass+'"><span>'+esc(label)+'</span><strong>'+esc(value===null||value===undefined||value===''?'—':value)+'</strong></div>';
  const rows=[
-  ['ناوی فەرمانگە',organizationName,''],
-  ['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—'),''],
-  ['ناوی فەرمانبەر',x.employee_name,'expired-detail-employee'],
   ['دۆخی مۆڵەت',statusText,isExpired?'expired-detail-status-field expired':'expired-detail-status-field active'],
   ['ڕۆژەکانی ماوەی مۆڵەت',arabicDigits(totalDays)+' ڕۆژ',''],
   ['ڕۆژەکانی تا کۆتایی/ڕۆژەکانی کۆتاییهاتوو',dayMessage,isExpired?'expired-detail-days expired':'expired-detail-days active'],
+  ['ناوی فەرمانگە',organizationName,''],
+  ['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—'),''],
+  ['ناوی فەرمانبەر',x.employee_name,'expired-detail-employee'],
   ['ناونیشانی فەرمانبەری',x.employee_job_title,''],['ڕەگەز',x.employee_gender,''],
   ['جۆری میلاک',x.employee_employment_type,''],['هۆبە',x.employee_department,''],
   ['مەبەستی مۆڵەت',x.leave_purpose,''],['جۆری مۆڵەت',x.leave_type,''],
