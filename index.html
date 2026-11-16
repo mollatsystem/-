@@ -2046,16 +2046,10 @@ async function refreshOrganizations(){
  window.ADMIN_ORGANIZATIONS=r.data||[];
  ADMIN_OFFICE_COUNT=r.data.length;
  const officeCountNode=$('adminOfficeCount');if(officeCountNode)officeCountNode.textContent=arabicDigits(ADMIN_OFFICE_COUNT);
- // Show one explicit delete action for each registered department in the management panel.
+ // Show registered department names only; deletion is available through the single main button.
  box.innerHTML=window.ADMIN_ORGANIZATIONS.length
-  ?window.ADMIN_ORGANIZATIONS.map(org=>'<div class="admin-org-delete-item"><button type="button" class="btn" data-delete-org="'+esc(String(org.id))+'">سڕینەوەی هەژماری «'+esc(org.name||'فەرمانگە')+'»</button></div>').join('')
+  ?window.ADMIN_ORGANIZATIONS.map(org=>'<div class="stat"><strong>'+esc(org.name||'فەرمانگە')+'</strong></div>').join('')
   :'<div class="muted">هیچ فەرمانگەیەکی تۆمارکراو نییە.</div>';
- box.querySelectorAll('button[data-delete-org]').forEach(button=>{
-  button.addEventListener('click',()=>{
-   const org=window.ADMIN_ORGANIZATIONS.find(item=>String(item.id)===String(button.getAttribute('data-delete-org')));
-   if(org)deleteDepartmentAccount(org.id,org.name,false);
-  });
- });
  renderRegisteredOrganizations();
 }
 
