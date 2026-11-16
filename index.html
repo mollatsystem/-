@@ -1958,7 +1958,7 @@ function openExpiredLongLeaveDetails(recordId){
  const detail=(label,value)=>'<div class="expired-detail-field"><span>'+esc(label)+'</span><strong>'+esc(value===null||value===undefined||value===''?'—':value)+'</strong></div>';
  const rows=[
   ['ناوی فەرمانبەر',x.employee_name],['ناوی فەرمانگە',organizationName],
-  ['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—')],['دۆخی مۆڵەت','مۆڵەتەکە تەواو بووە'],['ناونیشانی فەرمانبەری',x.employee_job_title],
+  ['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—')],['ناونیشانی فەرمانبەری',x.employee_job_title],
   ['ڕەگەز',x.employee_gender],['جۆری میلاک',x.employee_employment_type],['هۆبە',x.employee_department],
   ['مەبەستی مۆڵەت',x.leave_purpose],['جۆری مۆڵەت',x.leave_type],
   ['ماوەی مۆڵەت',longWatchPeriod(x,'duration')],['بەرواری دەستپێک',displayDate(x.start_date)],
@@ -1975,6 +1975,7 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal{position:fixed;inset:0;z-index:1000003;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,17,31,.78);backdrop-filter:blur(5px)}
    #expiredLongLeaveDetailsModal .expired-detail-card{width:min(1120px,97vw);max-height:91vh;overflow:auto;background:linear-gradient(150deg,#fff 0%,#edf3f9 100%);border:2px solid #8da8c1;border-top:7px solid #176b78;border-radius:18px;padding:clamp(16px,2.5vw,28px);box-shadow:0 25px 75px rgba(0,0,0,.42);direction:rtl;color:#18334e}
    #expiredLongLeaveDetailsModal .expired-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid #cbd8e4}
+   #expiredLongLeaveDetailsModal .expired-detail-status{display:flex;align-items:center;gap:9px;margin-bottom:16px;padding:13px 16px;border:1px solid #e2a2a2;border-right:6px solid #c62828;border-radius:11px;background:linear-gradient(90deg,#fff5f5,#fee2e2);color:#991b1b;font-size:16px;font-weight:900;box-shadow:0 3px 10px rgba(153,27,27,.08)}
    #expiredLongLeaveDetailsModal h2{margin:0;color:#173e5d;font-size:21px}
    #expiredLongLeaveDetailsModal .expired-detail-sub{margin:6px 0 0;color:#53677e;font-size:13px}
    #expiredLongLeaveDetailsModal .expired-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
@@ -1987,7 +1988,7 @@ function openExpiredLongLeaveDetails(recordId){
    @media(max-width:480px){#expiredLongLeaveDetailsModal{padding:8px}#expiredLongLeaveDetailsModal .expired-detail-card{max-height:94vh;padding:14px}#expiredLongLeaveDetailsModal h2{font-size:18px}#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:1fr}}
   `;
   document.head.appendChild(style);
-  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-grid"></div></div></div>');
+  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status">⚠️ مۆڵەتەکە تەواو بووە</div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-grid"></div></div></div>');
   overlay=$('expiredLongLeaveDetailsModal');
   $('expiredLongLeaveDetailsClose').addEventListener('click',()=>{overlay.style.display='none'});
   overlay.addEventListener('click',ev=>{if(ev.target===overlay)overlay.style.display='none'});
