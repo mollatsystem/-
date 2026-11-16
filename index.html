@@ -1698,7 +1698,7 @@ document.addEventListener('click',function(ev){const b=ev.target.closest('[data-
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
-function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=(CURRENT_PROFILE?.role!=='super_admin'&&id==='home')?'none':'';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
+function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>page(b.dataset.page));
 
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
