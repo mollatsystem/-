@@ -2557,7 +2557,7 @@ document.addEventListener('keydown',ev=>{
  if(ev.key!=='Enter'||ev.altKey||ev.ctrlKey||ev.metaKey||ev.shiftKey)return;
  const current=ev.target;
  if(!current||!current.matches||!current.matches('input,select'))return;
- if(current.disabled||current.readOnly)return;
+ if(current.disabled)return;
  const form=current.closest('form');
  if(!form||!form.closest('#app'))return;
  if(/(?:Search|CodeForm)$/.test(form.id||''))return;
