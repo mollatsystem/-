@@ -2482,6 +2482,67 @@ html body #app:not(.hidden) .page.active select option{
 }
 </style>
 
+
+<style id="password-toggle-caret-clearance">
+/* Keep the typing caret and password text completely clear of visibility buttons. */
+html body #login #loginForm .password-input-wrap{
+  position:relative!important;display:block!important;width:100%!important;min-width:0!important;
+}
+html body #login #loginForm .password-input-wrap input{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding-right:104px!important;padding-left:13px!important;
+  direction:ltr!important;text-align:left!important;unicode-bidi:plaintext!important;
+  caret-color:#173b60!important;
+}
+html body #login #loginForm .password-input-wrap .password-toggle{
+  position:absolute!important;right:8px!important;left:auto!important;top:50%!important;
+  transform:translateY(-50%)!important;z-index:4!important;
+  min-width:82px!important;max-width:88px!important;min-height:32px!important;
+  padding:5px 9px!important;box-sizing:border-box!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  white-space:nowrap!important;line-height:1.3!important;
+}
+html body #app #adminOrgPanel .org-password-wrap{
+  position:relative!important;display:block!important;width:100%!important;min-width:0!important;
+}
+html body #app #adminOrgPanel .org-password-wrap input{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding-left:104px!important;padding-right:12px!important;
+  direction:ltr!important;text-align:left!important;unicode-bidi:plaintext!important;
+  caret-color:#173b60!important;
+}
+html body #app #adminOrgPanel .org-password-wrap .org-password-toggle{
+  position:absolute!important;left:8px!important;right:auto!important;top:50%!important;
+  transform:translateY(-50%)!important;z-index:4!important;
+  min-width:82px!important;min-height:32px!important;padding:5px 9px!important;
+  box-sizing:border-box!important;display:inline-flex!important;
+  align-items:center!important;justify-content:center!important;white-space:nowrap!important;
+}
+html body #recovery .recovery-password-wrap input,
+html body #changePasswordPanel .change-password-wrap input,
+html body #signup .signup-password-wrap input{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  padding-left:104px!important;padding-right:13px!important;
+  direction:ltr!important;text-align:left!important;unicode-bidi:plaintext!important;
+  caret-color:#173b60!important;
+}
+html body #recovery .recovery-password-wrap .recovery-password-toggle,
+html body #changePasswordPanel .change-password-wrap .change-password-toggle,
+html body #signup .signup-password-wrap .signup-password-toggle{
+  left:8px!important;right:auto!important;z-index:4!important;
+  min-width:82px!important;min-height:32px!important;box-sizing:border-box!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  white-space:nowrap!important;
+}
+html body #login #loginForm .password-input-wrap input:focus,
+html body #app #adminOrgPanel .org-password-wrap input:focus,
+html body #recovery .recovery-password-wrap input:focus,
+html body #changePasswordPanel .change-password-wrap input:focus,
+html body #signup .signup-password-wrap input:focus{
+  position:relative!important;z-index:1!important;
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
