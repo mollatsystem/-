@@ -2264,6 +2264,49 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:17px!important;line-height:1.65!important;overflow-wrap:anywhere}
    @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field,#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field:last-child{min-height:100px;padding:8px 5px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field span{font-size:11px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:14px!important}}
    @media(max-width:420px){#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field{min-height:92px;padding:6px 3px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field span{font-size:10px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:12px!important}}
+   /* Align leave dates in one balanced two-column row */
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field,
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:last-child{
+    grid-column:auto!important;min-width:0;min-height:96px;display:flex;flex-direction:column;
+    justify-content:center;padding:13px 15px!important;text-align:center;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field span{
+    font-size:13px!important;line-height:1.6;margin:0 0 5px!important;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field strong{
+    font-size:17px!important;line-height:1.7!important;overflow-wrap:anywhere;
+   }
+   /* Keep all three case fields on one evenly sized row */
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field,
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field:last-child{
+    grid-column:auto!important;min-width:0;min-height:100px;display:flex;flex-direction:column;
+    justify-content:center;padding:13px 11px!important;text-align:center;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field span{
+    font-size:13px!important;line-height:1.6;margin:0 0 5px!important;
+   }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field strong{
+    font-size:16px!important;line-height:1.7!important;overflow-wrap:anywhere;
+   }
+   @media(max-width:760px){
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field{min-height:84px;padding:9px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field strong{font-size:15px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field{min-height:88px;padding:8px 5px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field span{font-size:11px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field strong{font-size:13px!important}
+   }
+   @media(max-width:420px){
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-grid{grid-template-columns:1fr!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field{min-height:68px!important}
+   }
 `;
   document.head.appendChild(style);
   document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status" id="expiredLongLeaveDetailsStatus"></div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-content"></div></div></div>');
