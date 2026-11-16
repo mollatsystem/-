@@ -2078,7 +2078,9 @@ async function deleteDepartmentAccount(organizationId, organizationName, ownAcco
     alert('هەژمار و هەموو زانیارییەکانی فەرمانگەکە بە سەرکەوتوویی سڕدرانەوە. ئێستا دەچیتە دەرەوە.');
     await db.auth.signOut();location.reload();return;
    }
-   const msg=$('adminOrgMsg');if(msg){msg.classList.remove('hidden');msg.textContent='هەژماری «'+canonicalName+'» و هەموو زانیارییەکانی بە سەرکەوتوویی سڕدرانەوە.'}
+   const successMessage='هەژماری فەرمانگەی «'+canonicalName+'» بە سەرکەوتوویی سڕدرایەوە.';
+   const msg=$('adminOrgMsg');if(msg){msg.classList.remove('hidden');msg.textContent=successMessage}
+   alert(successMessage);
    await refreshOrganizations();
   }catch(e){
    alert('سڕینەوە سەرکەوتوو نەبوو: '+(e?.message||String(e)));
