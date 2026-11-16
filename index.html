@@ -1957,8 +1957,8 @@ function openExpiredLongLeaveDetails(recordId){
  if(!organizationName)organizationName='ناوی فەرمانگە بەردەست نییە';
  const detail=(label,value)=>'<div class="expired-detail-field"><span>'+esc(label)+'</span><strong>'+esc(value===null||value===undefined||value===''?'—':value)+'</strong></div>';
  const rows=[
-  ['ناوی فەرمانبەر',x.employee_name],['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—')],
-  ['ناوی فەرمانگە',organizationName],['ناونیشانی فەرمانبەری',x.employee_job_title],
+  ['ناوی فەرمانبەر',x.employee_name],['ناوی فەرمانگە',organizationName],
+  ['کۆدی سەرەکی',arabicDigits(x.employee_main_code||'—')],['دۆخی مۆڵەت','مۆڵەتەکە تەواو بووە'],['ناونیشانی فەرمانبەری',x.employee_job_title],
   ['ڕەگەز',x.employee_gender],['جۆری میلاک',x.employee_employment_type],['هۆبە',x.employee_department],
   ['مەبەستی مۆڵەت',x.leave_purpose],['جۆری مۆڵەت',x.leave_type],
   ['ماوەی مۆڵەت',longWatchPeriod(x,'duration')],['بەرواری دەستپێک',displayDate(x.start_date)],
@@ -2053,7 +2053,7 @@ async function showExpiredLongLeaveAlert(){
   const organizationName=recordOrganizationId&&currentAdminOrganizationId&&recordOrganizationId===currentAdminOrganizationId
    ?'بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی'
    :(organizationNames.get(recordOrganizationId)||'ناوی فەرمانگە بەردەست نییە');
-  const details=['کۆدی سەرەکی: '+arabicDigits(x.employee_main_code||'—'),'ناوی فەرمانگە: '+organizationName,'هۆبە: '+(x.employee_department||'—'),'جۆری مۆڵەت: '+(x.leave_type||'—')].map(esc).join(' · ');
+  const details=['ناوی فەرمانگە: '+organizationName,'کۆدی سەرەکی: '+arabicDigits(x.employee_main_code||'—'),'دۆخی مۆڵەت: مۆڵەتەکە تەواو بووە','هۆبە: '+(x.employee_department||'—'),'جۆری مۆڵەت: '+(x.leave_type||'—')].map(esc).join(' · ');
   return '<article class="expired-alert-item"><div><div class="expired-alert-name">'+esc(x.employee_name||'ناوی فەرمانبەر دیاری نییە')+'</div><div class="expired-alert-meta">'+details+'</div><button type="button" class="expired-alert-more" data-expired-detail-id="'+esc(x.id)+'">بینینی زیاتر</button></div><div class="expired-alert-date">کۆتایی مۆڵەت<br>'+esc(displayDate(x.end_date))+'</div></article>';
  }).join('');
  modal.style.display='flex';
