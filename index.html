@@ -5221,3 +5221,36 @@ html body #app section#home.page.active > #departmentEmployeeSearch + .panel .re
   opacity:1!important;
 }
 </style>
+
+
+<style id="dashboard-summary-heading-final-override">
+/* Last-in-file override: force readable heading foreground/background on every summary card. */
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3,
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#17364d!important;
+  background-color:#17364d!important;
+  background-image:none!important;
+  border:1px solid #66869b!important;
+  border-right:6px solid #39b7b5!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  text-shadow:none!important;
+  mix-blend-mode:normal!important;
+  -webkit-background-clip:border-box!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3 *,
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2 *,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3 *{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+</style>
+
