@@ -4889,3 +4889,48 @@ html body:has(#signup:not(.hidden)) #signup #signupMsg{
 }
 </style>
 
+
+
+<style id="system-wide-input-reference-style">
+/* Match the supplied soft white-and-blue input appearance without changing field dimensions. */
+html body input:not([type="checkbox]):not([type="radio]):not([type="range]):not([type="file]):not([type="button]):not([type="submit]):not([type="reset]):not([type="hidden"]),
+html body textarea,
+html body select{
+  background-color:#ffffff!important;
+  background-image:none!important;
+  color:#294f6d!important;
+  -webkit-text-fill-color:#294f6d!important;
+  caret-color:#294f6d!important;
+  border-color:#b5c9d8!important;
+  border-radius:15px!important;
+  box-shadow:0 2px 7px rgba(45,82,110,.12),inset 0 1px 2px rgba(255,255,255,.9)!important;
+  opacity:1!important;
+}
+html body input:not([type="checkbox]):not([type="radio]):not([type="range]):not([type="file]):not([type="button]):not([type="submit]):not([type="reset]):not([type="hidden"])::placeholder,
+html body textarea::placeholder{
+  color:#6e8ba3!important;
+  -webkit-text-fill-color:#6e8ba3!important;
+  opacity:1!important;
+}
+html body input:not([type="checkbox]):not([type="radio]):not([type="range]):not([type="file]):not([type="button]):not([type="submit]):not([type="reset]):not([type="hidden"]):focus,
+html body textarea:focus,
+html body select:focus{
+  background-color:#ffffff!important;
+  border-color:#83a9c2!important;
+  box-shadow:0 0 0 3px rgba(131,169,194,.19),0 2px 7px rgba(45,82,110,.10)!important;
+  outline:none!important;
+}
+html body input:not([type="checkbox]):not([type="radio]):not([type="range]):not([type="file]):not([type="button]):not([type="submit]):not([type="reset]):not([type="hidden"]):disabled,
+html body textarea:disabled,
+html body select:disabled,
+html body input[readonly],
+html body textarea[readonly]{
+  background-color:#f5f8fa!important;
+  color:#526d82!important;
+  -webkit-text-fill-color:#526d82!important;
+}
+html body select option{
+  background:#ffffff!important;
+  color:#294f6d!important;
+}
+</style>
