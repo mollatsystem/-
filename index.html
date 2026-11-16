@@ -1771,6 +1771,20 @@ function compareSequence(a,b){return sequenceNumber(a)-sequenceNumber(b)||String
 function nextSequence(rows){let nums=rows.map(x=>Number.parseInt(latinDigits(x.sequence_no),10)).filter(Number.isFinite);return arabicDigits(String(Math.max(0,...nums)+1))}function updateSequenceFields(){$('leaveSeq').value=nextSequence(L);$('permSeq').value=nextSequence(P)}
 function nextSequence(rows){let nums=rows.map(x=>Number.parseInt(latinDigits(x.sequence_no),10)).filter(Number.isFinite);return arabicDigits(String(Math.max(0,...nums)+1))}function updateSequenceFields(){$('leaveSeq').value=nextSequence(L);$('permSeq').value=nextSequence(P)}
 async function load(){try{if(!CURRENT_PROFILE?.organization_id)throw Error('ناسنامەی فەرمانگە نەدۆزرایەوە');if(OFFLINE_MODE||!navigator.onLine){const d=await readCachedTables(CURRENT_PROFILE.organization_id);[EL,EP,ET,L,P,O,T]=OFFLINE_TABLES.map(t=>d[t]||[]);updateConnectionStatus('ئۆفلاین — داتا پارێزراوە')}else{const r=await Promise.all(OFFLINE_TABLES.map(t=>{let q=db.from(t).select('*').order('created_at',{ascending:false});if(t==='app_options')q=q.eq('organization_id',CURRENT_PROFILE.organization_id);return q}));for(const x of r)if(x.error)throw x.error;[EL,EP,ET,L,P,O,T]=r.map(x=>x.data||[]);O=O.filter(x=>String(x.organization_id)===String(CURRENT_PROFILE.organization_id));await persistOrgCache().catch(cacheError=>console.warn('Offline data cache unavailable',cacheError));updateConnectionStatus('ئۆنلاین — هاوکاتکراوە')}await applyPendingQueue().catch(queueError=>console.warn('Offline queue overlay unavailable',queueError));updateSequenceFields();renderOptions();render()}catch(e){if(isNetworkFailure(e)&&CURRENT_PROFILE?.organization_id){NETWORK_UNAVAILABLE=true;OFFLINE_MODE=true;const d=await readCachedTables(CURRENT_PROFILE.organization_id);[EL,EP,ET,L,P,O,T]=OFFLINE_TABLES.map(t=>d[t]||[]);updateSequenceFields();renderOptions();render();updateConnectionStatus('ئۆفلاین — داتا پارێزراوە')}else say('هەڵە لە خوێندنەوەی داتا: '+e.message)}}
+function focusEditMainCode(fieldId){
+ const input=$(fieldId);
+ if(!input)return;
+ const focusNow=()=>{
+  if(!document.body.contains(input))return;
+  input.focus();
+  if(typeof input.setSelectionRange==='function'){
+   const position=String(input.value||'').length;
+   try{input.setSelectionRange(position,position)}catch(e){}
+  }
+ };
+ if(typeof window.requestAnimationFrame==='function')window.requestAnimationFrame(focusNow);
+ else setTimeout(focusNow,0);
+}
 function edit(kind,id){
  try{
   const rows=({empLeave:EL,empPerm:EP,empLong:ET,leave:L,perm:P,long:T})[kind];
@@ -1778,7 +1792,7 @@ function edit(kind,id){
   if(!x){say('تۆماری دەستکاریکردن نەدۆزرایەوە. تکایە گەڕانەکە دووبارە بکەوە.');return}
   const targetPage=kind.startsWith('emp')?'employees':kind==='leave'?'leaves':kind==='perm'?'permissions':'longLeaves';
   page(targetPage);
-  if(kind==='long'){fillLongLeaveForm(x);return}
+  if(kind==='long'){fillLongLeaveForm(x);focusEditMainCode('ltMainCode');return}
   const maps={
    empLeave:{leaveEmpId:'id',leaveEmpCode:'main_code',leaveEmpName:'full_name',leaveEmpJob:'job_title',leaveEmpGender:'gender',leaveEmpType:'employment_type',leaveEmpLeaveType:'default_leave_type',leaveEmpDepartment:'department',leaveEmpNotes:'notes'},
    empPerm:{permEmpId:'id',permEmpCode:'main_code',permEmpName:'full_name',permEmpJob:'job_title',permEmpGender:'gender',permEmpType:'employment_type',permEmpDepartment:'department',permEmpNotes:'notes'},
@@ -1801,7 +1815,7 @@ function edit(kind,id){
   ['leaveEmpCode','permEmpCode','longEmpCode','leaveSeq','leaveDuration','permSeq'].forEach(field=>{const element=$(field);if(element)element.value=arabicDigits(element.value)});
   if(kind==='leave')calcLeaveEnd();
   const firstField=kind==='empLeave'?'leaveEmpCode':kind==='empPerm'?'permEmpCode':kind==='empLong'?'longEmpCode':kind==='leave'?'leaveMainCode':'permMainCode';
-  if($(firstField))$(firstField).focus();
+  focusEditMainCode(firstField);
   say('زانیاریی فەرمانبەر بۆ دەستکاری هێنرایە ناو فۆرمەکە. دوای گۆڕانکاری، پاشەکەوت بکە.');
  }catch(error){
   console.error('Employee/record edit failed:',error);
