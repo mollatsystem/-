@@ -1465,6 +1465,55 @@ body.signup-panel-open #signup .signup-password-toggle:focus-visible{
 @media(max-width:540px){#longLeaveWatch .long-watch-details{grid-template-columns:1fr}#longLeaveWatch .long-watch-card{padding:11px}}
 #longLeaveWatch .long-watch-status.active{background:#e0f4e8;color:#17613a}
 #longLeaveWatch .long-watch-status.expired{background:#fde8e7;color:#a32620}
+
+/* Modern high-contrast long-term leave cards */
+#longLeaveWatch .long-watch-card{
+ background:linear-gradient(135deg,#10283f 0%,#173d59 58%,#155365 100%)!important;
+ border:1px solid #52758e!important;border-right:6px solid #35b6b0!important;
+ border-radius:16px!important;padding:16px 18px!important;
+ box-shadow:0 8px 22px rgba(8,25,42,.22)!important;
+}
+#longLeaveWatch .long-watch-card-head{
+ align-items:center!important;padding-bottom:13px!important;margin-bottom:13px!important;
+ border-bottom:1px solid rgba(219,239,250,.22)!important;
+}
+#longLeaveWatch .long-watch-employee{
+ display:block!important;margin:0 0 7px!important;color:#fff!important;
+ font-size:20px!important;font-weight:1000!important;line-height:1.65!important;
+ text-shadow:0 1px 3px rgba(0,0,0,.45)!important;
+}
+#longLeaveWatch .long-watch-employee span:not(.long-watch-name-hit){
+ color:#fff!important;background:transparent!important;
+}
+#longLeaveWatch .long-watch-code{color:#e2edf6!important;font-size:13px!important;font-weight:800!important}
+#longLeaveWatch .long-watch-org{color:#bde7ec!important;font-size:13px!important;font-weight:700!important}
+#longLeaveWatch .long-watch-card-tags{gap:8px!important}
+#longLeaveWatch .long-watch-type{
+ background:#d9f3f2!important;color:#104b56!important;border:1px solid #9edbd7!important;
+ border-radius:9px!important;padding:7px 11px!important;font-size:13px!important;font-weight:900!important;
+}
+#longLeaveWatch .long-watch-summary{gap:10px!important;color:#17364e!important;font-size:13px!important}
+#longLeaveWatch .long-watch-summary span{
+ display:inline-flex!important;align-items:center!important;gap:5px!important;
+ padding:8px 11px!important;border-radius:9px!important;
+ background:#f1f6fa!important;border:1px solid #c8d8e5!important;color:#35536b!important;
+ font-weight:700!important;
+}
+#longLeaveWatch .long-watch-summary strong{color:#102d46!important;font-size:14px!important;font-weight:900!important}
+#longLeaveWatch .long-watch-more{
+ margin-top:13px!important;padding:9px 19px!important;border:1px solid #6dd0ca!important;
+ border-radius:10px!important;background:linear-gradient(135deg,#167c88,#126078)!important;
+ color:#fff!important;font-size:13px!important;font-weight:900!important;
+ box-shadow:0 3px 9px rgba(0,0,0,.18)!important;
+}
+#longLeaveWatch .long-watch-status{padding:7px 11px!important;border-radius:9px!important;font-size:13px!important;font-weight:900!important}
+@media(max-width:600px){
+ #longLeaveWatch .long-watch-card{padding:13px!important}
+ #longLeaveWatch .long-watch-employee{font-size:18px!important}
+ #longLeaveWatch .long-watch-card-head{align-items:flex-start!important}
+ #longLeaveWatch .long-watch-summary{display:grid!important;grid-template-columns:1fr!important}
+ #longLeaveWatch .long-watch-summary span{width:100%!important;box-sizing:border-box!important}
+}
 #longLeaveWatch .long-watch-empty{padding:18px;text-align:center;color:#53677e}
 #longLeaveWatch #longLeaveWatchMsg{margin-top:9px;min-height:20px}
 @media(max-width:700px){#longLeaveWatch .long-watch-search{grid-template-columns:1fr 1fr}#longLeaveWatch .long-watch-search input{grid-column:1/-1}#longLeaveWatch .long-watch-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
