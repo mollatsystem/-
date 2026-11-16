@@ -1946,6 +1946,98 @@ html body #app #home #adminOrgPanel .org-password-toggle{
 @media(prefers-reduced-motion:reduce){
  html body #app #home #adminOrgPanel *{scroll-behavior:auto!important;transition:none!important}
 }
+
+/* Refined, aligned action buttons for the department administration panel */
+html body #app #home #adminOrgPanel #adminCreateOrgForm .actions{
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ gap:12px!important;margin:15px 0 2px!important;
+}
+html body #app #home #adminOrgPanel #createOrgBtn{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ width:min(100%,380px)!important;min-height:48px!important;padding:12px 24px!important;
+ border:1px solid #176779!important;border-radius:12px!important;
+ background:linear-gradient(135deg,#167e8c 0%,#145b78 100%)!important;
+ color:#fff!important;font-size:13px!important;font-weight:950!important;letter-spacing:.1px!important;
+ box-shadow:0 6px 14px rgba(18,82,108,.24),inset 0 1px 0 rgba(255,255,255,.2)!important;
+ transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+html body #app #home #adminOrgPanel #adminOrgSearchBox .admin-org-search-row{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(112px,148px) minmax(112px,148px)!important;
+ gap:10px!important;align-items:stretch!important;
+}
+html body #app #home #adminOrgPanel #adminOrgSearchBtn,
+html body #app #home #adminOrgPanel #adminOrgSearchClearBtn,
+html body #app #home #adminOrgPanel #issueDepartmentRecoveryCode,
+html body #app #home #adminOrgPanel #adminOrgList button[data-delete-org]{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ gap:7px!important;min-height:45px!important;padding:10px 16px!important;
+ border-radius:11px!important;font-size:12px!important;font-weight:900!important;
+ line-height:1.5!important;white-space:normal!important;text-align:center!important;
+ cursor:pointer!important;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+html body #app #home #adminOrgPanel #adminOrgSearchBtn{
+ border:1px solid #176779!important;
+ background:linear-gradient(135deg,#168b98 0%,#17647f 100%)!important;
+ color:#fff!important;box-shadow:0 4px 10px rgba(20,91,116,.2)!important;
+}
+html body #app #home #adminOrgPanel #adminOrgSearchClearBtn{
+ border:1px solid #8da9ba!important;
+ background:linear-gradient(135deg,#e8f0f5 0%,#cbdbe5 100%)!important;
+ color:#234b63!important;box-shadow:0 3px 8px rgba(27,61,82,.1)!important;
+}
+html body #app #home #adminOrgPanel #issueDepartmentRecoveryCode{
+ width:100%!important;margin-top:12px!important;min-height:47px!important;
+ border:1px solid #176779!important;
+ background:linear-gradient(135deg,#167e8c 0%,#145b78 100%)!important;
+ color:#fff!important;box-shadow:0 5px 12px rgba(18,82,108,.2)!important;
+}
+html body #app #home #adminOrgPanel #adminOrgList button[data-delete-org]{
+ min-height:38px!important;padding:8px 14px!important;border:1px solid #a63c43!important;
+ border-radius:10px!important;background:linear-gradient(135deg,#c94e55 0%,#96343e 100%)!important;
+ color:#fff!important;box-shadow:0 3px 8px rgba(140,43,53,.17)!important;
+}
+html body #app #home #adminOrgPanel #toggleNewOrgPassword{
+ position:absolute!important;left:7px!important;top:50%!important;transform:translateY(-50%)!important;
+ min-height:31px!important;padding:5px 11px!important;border:1px solid #9bb5c5!important;
+ border-radius:8px!important;background:linear-gradient(135deg,#e7f0f5,#cbdce6)!important;
+ color:#244f68!important;font-size:11px!important;font-weight:850!important;
+ box-shadow:0 2px 5px rgba(23,55,78,.09)!important;
+}
+html body #app #home #adminOrgPanel #createOrgBtn:hover,
+html body #app #home #adminOrgPanel #adminOrgSearchBtn:hover,
+html body #app #home #adminOrgPanel #issueDepartmentRecoveryCode:hover,
+html body #app #home #adminOrgPanel #adminOrgList button[data-delete-org]:hover{
+ filter:brightness(1.07)!important;transform:translateY(-2px)!important;
+ box-shadow:0 8px 16px rgba(18,65,88,.22)!important;
+}
+html body #app #home #adminOrgPanel #adminOrgSearchClearBtn:hover{
+ filter:brightness(.97)!important;transform:translateY(-2px)!important;
+ box-shadow:0 6px 12px rgba(27,61,82,.15)!important;
+}
+html body #app #home #adminOrgPanel #createOrgBtn:focus-visible,
+html body #app #home #adminOrgPanel #adminOrgSearchBtn:focus-visible,
+html body #app #home #adminOrgPanel #adminOrgSearchClearBtn:focus-visible,
+html body #app #home #adminOrgPanel #issueDepartmentRecoveryCode:focus-visible,
+html body #app #home #adminOrgPanel #adminOrgList button[data-delete-org]:focus-visible{
+ outline:3px solid rgba(28,133,153,.35)!important;outline-offset:3px!important;
+}
+html body #app #home #adminOrgPanel button:disabled{
+ opacity:.62!important;cursor:not-allowed!important;transform:none!important;box-shadow:none!important;
+}
+@media(max-width:600px){
+ html body #app #home #adminOrgPanel #adminCreateOrgForm .actions{display:flex!important;justify-content:stretch!important}
+ html body #app #home #adminOrgPanel #createOrgBtn{width:100%!important;max-width:none!important}
+ html body #app #home #adminOrgPanel #adminOrgSearchBox .admin-org-search-row{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;
+ }
+ html body #app #home #adminOrgPanel #adminOrgSearchBox .admin-org-search-row input{grid-column:1/-1!important}
+ html body #app #home #adminOrgPanel #adminOrgSearchBtn,
+ html body #app #home #adminOrgPanel #adminOrgSearchClearBtn{width:100%!important;min-height:43px!important}
+ html body #app #home #adminOrgPanel #issueDepartmentRecoveryCode{width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html body #app #home #adminOrgPanel button{transition:none!important}
+}
 </style>
 
 </head>
