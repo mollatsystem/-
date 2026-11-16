@@ -1951,7 +1951,7 @@ async function showExpiredLongLeaveAlert(){
  }
  $('expiredLongLeaveAlertCount').textContent='ژمارەی مۆڵەتە تەواوبووەکان: '+arabicDigits(expired.length);
  $('expiredLongLeaveAlertList').innerHTML=expired.map(x=>{
-  const organizationName=organizationNames.get(String(x.organization_id||''))||'ناوی فەرمانگە بەردەست نییە';
+  const organizationName=(organizationNames.get(String(x.organization_id||''))||'ناوی فەرمانگە بەردەست نییە').replace(/بەرێوەبەرایەتی گشتی/g,'بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی');
   const details=['کۆدی سەرەکی: '+arabicDigits(x.employee_main_code||'—'),'ناوی فەرمانگە: '+organizationName,'هۆبە: '+(x.employee_department||'—'),'جۆری مۆڵەت: '+(x.leave_type||'—')].map(esc).join(' · ');
   return '<article class="expired-alert-item"><div><div class="expired-alert-name">'+esc(x.employee_name||'ناوی فەرمانبەر دیاری نییە')+'</div><div class="expired-alert-meta">'+details+'</div></div><div class="expired-alert-date">کۆتایی مۆڵەت<br>'+esc(displayDate(x.end_date))+'</div></article>';
  }).join('');
