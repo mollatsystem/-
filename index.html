@@ -1879,7 +1879,7 @@ function longWatchCategory(value){
  return 'جۆری تری مۆڵەتی درێژخایەن';
 }
 function longWatchPeriod(x,prefix){const parts=[['years','ساڵ'],['months','مانگ'],['days','ڕۆژ']].map(([key,label])=>({n:Math.max(0,Number(x[prefix+'_'+key])||0),label})).filter(v=>v.n>0);return parts.length?parts.map(v=>arabicDigits(v.n)+' '+v.label).join(' و '):'—'}
-function renderLongTermLeaveWatch(){
+async function renderLongTermLeaveWatch(){
  const body=$('longLeaveWatchRows');if(!body||CURRENT_PROFILE?.role!=='super_admin')return;
  const query=normalizeLongWatchText($('longLeaveWatchSearch')?.value||'');
  const codeQuery=normalizeMainCode(query);
@@ -1894,13 +1894,27 @@ function renderLongTermLeaveWatch(){
  $('longLeaveWatchStats').innerHTML=Object.entries(counts).map(([label,count])=>'<div class="long-watch-stat"><span>'+esc(label)+'</span><strong>'+arabicDigits(count)+'</strong></div>').join('');
  $('longLeaveWatchCount').textContent='ژمارەی تۆمارەکان: '+arabicDigits(matches.length);
  $('longLeaveWatchEmpty').style.display=matches.length?'none':'block';
+ const organizationNames=new Map((Array.isArray(window.ADMIN_ORGANIZATIONS)?window.ADMIN_ORGANIZATIONS:[]).map(org=>[String(org.id),String(org.name||'')]));
+ const missingOrganizationIds=[...new Set(matches.map(x=>String(x.organization_id||'').trim()).filter(id=>id&&!organizationNames.has(id)))];
+ if(missingOrganizationIds.length){
+  try{
+   const orgResult=await db.from('organizations').select('id,name').in('id',missingOrganizationIds);
+   if(!orgResult.error)(orgResult.data||[]).forEach(org=>organizationNames.set(String(org.id),String(org.name||'')));
+  }catch(e){console.warn('نەتوانرا ناوی فەرمانگەکان بۆ چاودێری مۆڵەتی درێژخایەن وەربگیرێت.',e)}
+ }
+ if(!document.body.contains(body)||CURRENT_PROFILE?.role!=='super_admin')return;
  $('longLeaveWatchRows').innerHTML=matches.slice().sort((a,b)=>(categoryOrder[longWatchCategory(a.leave_type)]-categoryOrder[longWatchCategory(b.leave_type)])||String(b.start_date||'').localeCompare(String(a.start_date||''))).map(x=>{
   const category=longWatchCategory(x.leave_type),expired=!!(x.end_date&&x.end_date<ltToday()),status=expired?'<span class="long-watch-status expired">کۆتایی هاتووە</span>':'<span class="long-watch-status active">چالاک</span>';
   const nameClass=query?'long-watch-name-hit':'';
   const detail=(label,value)=>'<div class="long-watch-detail"><span>'+label+'</span><strong>'+esc(value||'—')+'</strong></div>';
   const name='<span'+(nameClass?' class="'+nameClass+'"':'')+'>'+esc(x.employee_name||'—')+'</span>';
+  const recordOrganizationId=String(x.organization_id||'').trim();
+  const currentAdminOrganizationId=String(CURRENT_PROFILE?.organization_id||'').trim();
+  const organizationName=recordOrganizationId&&recordOrganizationId===currentAdminOrganizationId
+   ?'بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی'
+   :(organizationNames.get(recordOrganizationId)||'ناوی فەرمانگە بەردەست نییە');
   return '<article class="long-watch-card"><div class="long-watch-card-head"><div><h3 class="long-watch-employee">'+name+'</h3><div class="long-watch-code">کۆدی سەرەکی: '+esc(arabicDigits(x.employee_main_code||'—'))+'</div></div><div><span class="long-watch-type">'+esc(x.leave_type||category)+'</span> '+status+'</div></div><div class="long-watch-details">'+
-   detail('ناونیشانی فەرمانبەری',x.employee_job_title)+detail('ڕەگەز',x.employee_gender)+detail('جۆری میلاک',x.employee_employment_type)+detail('هۆبە',x.employee_department)+
+   detail('ناوی فەرمانگە',organizationName)+detail('ناونیشانی فەرمانبەری',x.employee_job_title)+detail('ڕەگەز',x.employee_gender)+detail('جۆری میلاک',x.employee_employment_type)+detail('هۆبە',x.employee_department)+
    detail('مەبەستی مۆڵەت',x.leave_purpose)+detail('ماوەی مۆڵەت',longWatchPeriod(x,'duration'))+detail('بەرواری دەستپێک',displayDate(x.start_date))+detail('بەرواری کۆتایی',displayDate(x.end_date))+
    detail('ژمارەی دۆسیە',x.case_number)+detail('جۆری دۆسیە',x.case_type)+detail('بەرواری دۆسیە',displayDate(x.case_date))+detail('ماوەی بەسەربردوو',longWatchPeriod(x,'used'))+
    detail('ماوەی ماوە',longWatchPeriod(x,'unused'))+detail('تێبینی',x.notes)+'</div></article>';
