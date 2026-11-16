@@ -2063,29 +2063,53 @@ $('forgotPassword').onclick=()=>{ $('recoveryForm').reset(); $('recoveryMsg').te
 $('recoveryAccountType').addEventListener('change',()=>{const isDepartment=$('recoveryAccountType').value==='department';$('recoveryOrgField').style.display=isDepartment?'':'none';$('recoveryOrgName').required=isDepartment;});
 $('recoveryCode').addEventListener('input',()=>{const field=$('recoveryCode');const start=field.selectionStart;const before=field.value;const normalized=normalizePasswordDigits(before).replace(/\s+/g,'').toUpperCase();if(before!==normalized){field.value=normalized;try{field.setSelectionRange(Math.min(start,normalized.length),Math.min(start,normalized.length));}catch(e){}}});
 $('recoveryForm').noValidate=true;
-function setRecoveryMessage(kind,detail){
- const msg=$('recoveryMsg');
- msg.classList.remove('hidden');
- msg.setAttribute('role','alert');
- msg.setAttribute('aria-live','assertive');
- msg.textContent='پەیامی سەرپەرشتیاری گشتی: '+detail;
- msg.style.cssText='display:block;margin:14px 0 0;padding:11px 13px;border-radius:9px;line-height:1.9;font-weight:700;border:1px solid '+(kind==='success'?'#16a34a':'#dc2626')+';background:'+(kind==='success'?'#f0fdf4':'#fef2f2')+';color:'+(kind==='success'?'#166534':'#b91c1c');
+function showAdminMessageModal(kind,detail){
+ const previous=document.getElementById('adminMessageModal');
+ if(previous)previous.remove();
+ const overlay=document.createElement('div');
+ overlay.id='adminMessageModal';
+ overlay.style.cssText='position:fixed;inset:0;z-index:11000;background:rgba(12,24,42,.68);display:flex;align-items:center;justify-content:center;padding:18px;direction:rtl';
+ const dialog=document.createElement('div');
+ dialog.setAttribute('role',kind==='pending'?'dialog':'alertdialog');
+ dialog.setAttribute('aria-modal','true');
+ dialog.setAttribute('aria-labelledby','adminMessageModalTitle');
+ dialog.style.cssText='width:min(460px,100%);background:#fff;border-radius:16px;padding:24px 22px;box-shadow:0 20px 60px rgba(0,0,0,.32);text-align:center;border-top:5px solid '+(kind==='success'?'#16a34a':kind==='pending'?'#2563eb':'#dc2626');
+ const title=document.createElement('h3');
+ title.id='adminMessageModalTitle';
+ title.textContent='پەیامی سەرپەرشتیاری گشتی';
+ title.style.cssText='margin:0 0 12px;font-size:19px;font-weight:800;color:#173b60';
+ const message=document.createElement('p');
+ message.textContent=detail;
+ message.style.cssText='margin:0 0 20px;line-height:2;font-size:15px;font-weight:700;color:'+(kind==='success'?'#166534':kind==='pending'?'#1d4ed8':'#b91c1c');
+ const close=document.createElement('button');
+ close.type='button';
+ close.className='btn';
+ close.textContent=kind==='pending'?'تکایە چاوەڕێ بکە':'داخستن';
+ close.disabled=kind==='pending';
+ close.style.cssText='min-width:110px;padding:9px 22px;border-radius:9px';
+ const dismiss=()=>{if(kind!=='pending')overlay.remove();};
+ close.addEventListener('click',dismiss);
+ overlay.addEventListener('click',ev=>{if(ev.target===overlay)dismiss();});
+ dialog.append(title,message,close);
+ overlay.appendChild(dialog);
+ document.body.appendChild(overlay);
+ if(kind!=='pending')close.focus();
 }
 $('recoveryForm').onsubmit=async ev=>{
  ev.preventDefault();
  const msg=$('recoveryMsg'),btn=$('recoverySubmit');
  const accountType=$('recoveryAccountType').value;
  const organizationName=$('recoveryOrgName').value.trim();
- if(!accountType){setRecoveryMessage('error','تکایە سەرەتا جۆری هەژمار هەڵبژێرە.');$('recoveryAccountType').focus();return;}
+ if(!accountType){setRecoveryMessage('error','تکایە سەرەتا جۆری هەژمار هەڵبژێرە.');return;}
  const recoveryCode=normalizePasswordDigits($('recoveryCode').value).replace(/\s+/g,'').toUpperCase();
  // Both Arabic-Indic/Persian digits and English digits are normalized to the same ASCII form.
  const password=normalizePasswordDigits($('newPassword').value);
  const confirmPassword=normalizePasswordDigits($('confirmPassword').value);
- if(accountType==='department'&&!organizationName){setRecoveryMessage('error','تکایە ناوی تەواوی فەرمانگە بنووسە.');$('recoveryOrgName').focus();return;}
- if(!recoveryCode){setRecoveryMessage('error','تکایە کۆدی گەڕاندنەوە بنووسە.');$('recoveryCode').focus();return;}
- if(!password||!confirmPassword){setRecoveryMessage('error','تکایە هەردوو خانەی ووشەی نهێنی پڕ بکەرەوە.');$('newPassword').focus();return;}
- if(password.length<8){setRecoveryMessage('error','ووشەی نهێنی نوێ دەبێت لانیکەم ٨ پیت بێت.');$('newPassword').focus();return;}
- if(password!==confirmPassword){setRecoveryMessage('error','دوو ووشەی نهێنییەکە یەک ناگرن. تکایە دووبارەیان بنووسە.');$('confirmPassword').focus();return;}
+ if(accountType==='department'&&!organizationName){setRecoveryMessage('error','تکایە ناوی تەواوی فەرمانگە بنووسە.');return;}
+ if(!recoveryCode){setRecoveryMessage('error','تکایە کۆدی گەڕاندنەوە بنووسە.');return;}
+ if(!password||!confirmPassword){setRecoveryMessage('error','تکایە هەردوو خانەی ووشەی نهێنی پڕ بکەرەوە.');return;}
+ if(password.length<8){setRecoveryMessage('error','ووشەی نهێنی نوێ دەبێت لانیکەم ٨ پیت بێت.');return;}
+ if(password!==confirmPassword){setRecoveryMessage('error','دوو ووشەی نهێنییەکە یەک ناگرن. تکایە دووبارەیان بنووسە.');return;}
  btn.disabled=true;btn.textContent='چاوەڕێ بکە...';
  setRecoveryMessage('pending','داواکاری گۆڕینی ووشەی نهێنی دەکرێت...');
  try{
@@ -2098,7 +2122,42 @@ $('recoveryForm').onsubmit=async ev=>{
  }finally{btn.disabled=false;btn.textContent='پاشەکەوتکردنی وشەی نهێنی نوێ';}
 };
 document.querySelectorAll('#changePasswordPanel .change-password-toggle').forEach(button=>{button.addEventListener('click',()=>{const input=document.getElementById(button.dataset.passwordTarget);if(!input)return;const showing=input.type==='password';input.type=showing?'text':'password';button.textContent=showing?'شاردنەوە':'نیشاندان';button.setAttribute('aria-label',showing?'شاردنەوەی ووشەی نهێنی':'نیشاندانی ووشەی نهێنی');button.setAttribute('aria-pressed',String(showing));input.focus();});});
-$('changePasswordForm').addEventListener('submit',async ev=>{ev.preventDefault();const msg=$('changePasswordMsg'),btn=$('changePasswordSubmit'),password=normalizePasswordDigits($('signedInNewPassword').value),confirmPassword=normalizePasswordDigits($('signedInConfirmPassword').value);if(CURRENT_PROFILE?.role!=='super_admin'&&CURRENT_PROFILE?.role!=='department'){msg.classList.remove('hidden');msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو نەبوو؛ پێویستە سەرەتا بچیتە ژوورەوە.';return}if(!navigator.onLine||OFFLINE_MODE){msg.classList.remove('hidden');msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو نەبوو؛ بۆ گۆڕینی ووشەی نهێنی پەیوەندی ئینتەرنێت پێویستە.';return}if(password.length<8){msg.classList.remove('hidden');msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو نەبوو؛ ووشەی نهێنی نوێ دەبێت لانیکەم ٨ پیت بێت.';return}if(password!==confirmPassword){msg.classList.remove('hidden');msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو نەبوو؛ دوو ووشەی نهێنییەکە یەک ناگرن. تکایە زانیارییەکان بە دروستی بنووسە.';return}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.classList.remove('hidden');msg.textContent='پەیامی سەرپەرشتیاری گشتی: گۆڕینی ووشەی نهێنی دەکرێت...';try{const {error}=await db.auth.updateUser({password});if(error)throw error;$('changePasswordForm').reset();msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو بوو؛ ووشەی نهێنی نوێ بە سەرکەوتوویی گۆڕدرا.';}catch(e){msg.textContent='پەیامی سەرپەرشتیاری گشتی: سەرکەوتوو نەبوو؛ '+(e?.message||'هەڵەیەک ڕوویدا.')+' تکایە هەنگاوەکان و زانیارییەکان بە دروستی جێبەجێ بکە.';}finally{btn.disabled=false;btn.textContent='گۆڕینی ووشەی نهێنی';}});
+$('changePasswordForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();
+ const btn=$('changePasswordSubmit');
+ const password=normalizePasswordDigits($('signedInNewPassword').value);
+ const confirmPassword=normalizePasswordDigits($('signedInConfirmPassword').value);
+ if(CURRENT_PROFILE?.role!=='super_admin'&&CURRENT_PROFILE?.role!=='department'){
+  showAdminMessageModal('error','سەرکەوتوو نەبوو؛ پێویستە سەرەتا بچیتە ژوورەوە.');
+  return;
+ }
+ if(!navigator.onLine||OFFLINE_MODE){
+  showAdminMessageModal('error','سەرکەوتوو نەبوو؛ بۆ گۆڕینی ووشەی نهێنی پەیوەندی ئینتەرنێت پێویستە.');
+  return;
+ }
+ if(password.length<8){
+  showAdminMessageModal('error','سەرکەوتوو نەبوو؛ ووشەی نهێنی نوێ دەبێت لانیکەم ٨ پیت بێت.');
+  return;
+ }
+ if(password!==confirmPassword){
+  showAdminMessageModal('error','سەرکەوتوو نەبوو؛ دوو ووشەی نهێنییەکە یەک ناگرن. تکایە زانیارییەکان بە دروستی بنووسە.');
+  return;
+ }
+ btn.disabled=true;
+ btn.textContent='چاوەڕێ بکە...';
+ showAdminMessageModal('pending','گۆڕینی ووشەی نهێنی دەکرێت...');
+ try{
+  const {error}=await db.auth.updateUser({password});
+  if(error)throw error;
+  $('changePasswordForm').reset();
+  showAdminMessageModal('success','سەرکەوتوو بوو؛ ووشەی نهێنی نوێ بە سەرکەوتوویی گۆڕدرا.');
+ }catch(e){
+  showAdminMessageModal('error','سەرکەوتوو نەبوو؛ '+(e?.message||'هەڵەیەک ڕوویدا.')+' تکایە هەنگاوەکان و زانیارییەکان بە دروستی جێبەجێ بکە.');
+ }finally{
+  btn.disabled=false;
+  btn.textContent='گۆڕینی ووشەی نهێنی';
+ }
+});
 async function showRecoveryCodeWithCopy(description,code){
  const overlay=document.createElement('div');overlay.setAttribute('role','presentation');overlay.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(12,24,42,.62);display:flex;align-items:center;justify-content:center;padding:18px';
  const dialog=document.createElement('div');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-labelledby','recoveryCodeModalTitle');dialog.style.cssText='width:min(540px,100%);background:#fff;border-radius:16px;padding:22px;box-shadow:0 18px 55px rgba(0,0,0,.28);direction:rtl;text-align:right';
