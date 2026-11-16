@@ -2448,6 +2448,40 @@ html body #app:not(.hidden) .page.active .msg{
 }
 </style>
 
+
+<style id="light-interior-inputs">
+/* Keep the page and panels muted/dark, but make editable fields softly light */
+html body #app:not(.hidden) .page.active input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html body #app:not(.hidden) .page.active select,
+html body #app:not(.hidden) .page.active textarea,
+html body #app:not(.hidden) .page.active input.search,
+html body #app:not(.hidden) .page.active input[type="search"]{
+ background:#e7edf1!important;color:#243b4d!important;
+ border:1px solid #9aabb7!important;
+ box-shadow:inset 0 1px 2px rgba(24,47,64,.055),0 1px 0 rgba(255,255,255,.10)!important;
+}
+html body #app:not(.hidden) .page.active input::placeholder,
+html body #app:not(.hidden) .page.active textarea::placeholder{
+ color:#687d8d!important;opacity:1!important;
+}
+html body #app:not(.hidden) .page.active input:focus,
+html body #app:not(.hidden) .page.active select:focus,
+html body #app:not(.hidden) .page.active textarea:focus{
+ background:#f0f4f6!important;color:#20394b!important;
+ border-color:#78aaa8!important;
+ box-shadow:0 0 0 3px rgba(120,170,168,.20)!important;
+}
+html body #app:not(.hidden) .page.active input[readonly],
+html body #app:not(.hidden) .page.active input:disabled,
+html body #app:not(.hidden) .page.active select:disabled,
+html body #app:not(.hidden) .page.active textarea:disabled{
+ background:#d4dee4!important;color:#526878!important;border-color:#a7b6c1!important;
+}
+html body #app:not(.hidden) .page.active select option{
+ background:#e7edf1!important;color:#243b4d!important;
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
