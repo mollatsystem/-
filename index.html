@@ -2134,13 +2134,25 @@ $('deleteDepartmentFromLogin').onclick=async()=>{
  }
 };
 
-$('manageDepartmentAccounts').onclick=()=>{
+$('manageDepartmentAccounts').onclick=async()=>{
  if(CURRENT_PROFILE?.role!=='super_admin')return say('تەنها سەرپەرشتیاری گشتی دەتوانێت هەژماری فەرمانگە بسڕێتەوە.');
- const panel=$('adminOrgPanel');
- if(!panel)return;
- panel.scrollIntoView({behavior:'smooth',block:'start'});
- const list=$('adminOrgList');
- if(list)list.focus?.();
+ const panel=$('adminOrgPanel'),list=$('adminOrgList'),manageButton=$('manageDepartmentAccounts');
+ if(!panel||!list)return say('بەشی بەڕێوەبردنی فەرمانگەکان نەدۆزرایەوە.');
+ panel.style.display='block';
+ list.style.display='grid';
+ if(manageButton)manageButton.disabled=true;
+ try{
+  await refreshOrganizations();
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+  list.scrollIntoView({behavior:'smooth',block:'center'});
+  if(!list.querySelector('button[data-delete-org]')){
+   const status=$('adminOrgMsg');
+   if(status){status.classList.remove('hidden');status.textContent=list.textContent.includes('هەڵە لە وەرگرتنی لیست')?list.textContent:'هیچ هەژماری فەرمانگەیەک بۆ سڕینەوە نەدۆزرایەوە.'}
+  }
+ }catch(e){
+  const status=$('adminOrgMsg');
+  if(status){status.classList.remove('hidden');status.textContent='نەتوانرا لیستی فەرمانگەکان باربکرێت: '+(e?.message||String(e))}
+ }finally{if(manageButton)manageButton.disabled=false}
 };
 
 
