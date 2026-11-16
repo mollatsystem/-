@@ -2551,6 +2551,25 @@ document.addEventListener('click',function(ev){
  }
  window.runGlobalDelete(ev);
 },true);
+// Enter behaves like Tab in data-entry forms inside the app.
+// Search/print lookup forms keep their existing Enter-to-submit behavior.
+document.addEventListener('keydown',ev=>{
+ if(ev.key!=='Enter'||ev.altKey||ev.ctrlKey||ev.metaKey||ev.shiftKey)return;
+ const current=ev.target;
+ if(!current||!current.matches||!current.matches('input,select'))return;
+ if(current.disabled||current.readOnly)return;
+ const form=current.closest('form');
+ if(!form||!form.closest('#app'))return;
+ if(/(?:Search|CodeForm)$/.test(form.id||''))return;
+ if(current.type&&/^(button|submit|reset|checkbox|radio|file|image|hidden)$/i.test(current.type))return;
+ const fields=Array.from(form.querySelectorAll('input:not([type="hidden"]),select,textarea,button,[tabindex]:not([tabindex="-1"])'))
+  .filter(el=>!el.disabled&&el.tabIndex>=0&&el.getClientRects().length>0&&el.type!=='hidden');
+ const index=fields.indexOf(current);
+ const next=index>=0?fields[index+1]:null;
+ if(!next)return;
+ ev.preventDefault();
+ next.focus();
+},true);
 // F2: enter edit mode without selecting/replacing the whole field value.
 document.addEventListener('keydown',ev=>{
  if(ev.key!=='F2'||ev.altKey||ev.ctrlKey||ev.metaKey)return;
