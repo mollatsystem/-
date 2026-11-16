@@ -2264,20 +2264,26 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:17px!important;line-height:1.65!important;overflow-wrap:anywhere}
    @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field,#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field:last-child{min-height:100px;padding:8px 5px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field span{font-size:11px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:14px!important}}
    @media(max-width:420px){#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field{min-height:92px;padding:6px 3px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field span{font-size:10px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:12px!important}}
-   /* Align leave dates in one balanced two-column row */
+   /* Compact three-column layout: duration and both dates share the second row */
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important;
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:stretch!important;gap:7px!important;
    }
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field,
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:last-child{
-    grid-column:auto!important;min-width:0;min-height:96px;display:flex;flex-direction:column;
-    justify-content:center;padding:13px 15px!important;text-align:center;
+    grid-column:auto!important;grid-row:auto!important;min-width:0;min-height:72px;
+    display:flex;flex-direction:column;justify-content:center;padding:7px 8px!important;text-align:center;
    }
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:nth-child(1){grid-column:1;grid-row:1}
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:nth-child(2){grid-column:2;grid-row:1}
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:nth-child(3){grid-column:1;grid-row:2}
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:nth-child(4){grid-column:2;grid-row:2}
+   #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field:nth-child(5){grid-column:3;grid-row:2}
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field span{
-    font-size:13px!important;line-height:1.6;margin:0 0 5px!important;
+    font-size:11px!important;line-height:1.4;margin:0 0 3px!important;
    }
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field strong{
-    font-size:17px!important;line-height:1.7!important;overflow-wrap:anywhere;
+    font-size:14px!important;line-height:1.5!important;overflow-wrap:anywhere;
    }
    /* Keep all three case fields on one evenly sized row */
    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-grid{
@@ -2295,9 +2301,10 @@ function openExpiredLongLeaveDetails(recordId){
     font-size:16px!important;line-height:1.7!important;overflow-wrap:anywhere;
    }
    @media(max-width:760px){
-    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field{min-height:84px;padding:9px!important}
-    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field strong{font-size:15px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field{min-height:66px;padding:6px 4px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field span{font-size:10px!important}
+    #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(4) .expired-detail-field strong{font-size:12px!important}
     #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
     #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field{min-height:88px;padding:8px 5px!important}
     #expiredLongLeaveDetailsModal .expired-detail-section:nth-child(5) .expired-detail-field span{font-size:11px!important}
