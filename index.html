@@ -1695,6 +1695,116 @@ body:has(#app:not(.hidden)) #app .app-account-area #logout{background:#fff0bf!im
  #longLeaveWatch .long-watch-stat,#longLeaveWatch .long-watch-search .btn{transition:none!important}
 }
 </style>
+
+<style id="home-dashboard-premium">
+/* Modern, balanced dashboard cards and statistics — presentation only */
+#home #departmentSummary,
+#home #adminSummary .summary-groups{
+ display:grid!important;
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ align-items:stretch!important;
+ gap:14px!important;
+ margin:0 0 18px!important;
+}
+#home #departmentSummary .summary-group,
+#home #adminSummary .summary-group{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+ min-width:0!important;min-height:176px!important;
+ padding:17px!important;border:1px solid #cbd9e5!important;
+ border-radius:17px!important;
+ background:linear-gradient(150deg,#ffffff 0%,#f1f6fa 100%)!important;
+ box-shadow:0 7px 19px rgba(25,55,80,.09)!important;
+ transition:transform .18s ease,box-shadow .18s ease!important;
+}
+#home #departmentSummary .summary-group:before,
+#home #adminSummary .summary-group:before{
+ content:"";position:absolute;z-index:-1;top:0;right:0;left:0;height:4px;
+ background:linear-gradient(90deg,#2c8d9d,#477db0,#6c83b7);
+}
+#home #departmentSummary .summary-group:nth-child(2):before,
+#home #adminSummary .summary-group:nth-child(2):before{background:linear-gradient(90deg,#397fc0,#5b9bc9)}
+#home #departmentSummary .summary-group:nth-child(3):before,
+#home #adminSummary .summary-group:nth-child(3):before{background:linear-gradient(90deg,#398b68,#65ae83)}
+#home #departmentSummary .summary-group:hover,
+#home #adminSummary .summary-group:hover{
+ transform:translateY(-2px)!important;box-shadow:0 11px 24px rgba(25,55,80,.13)!important;
+}
+#home .summary-group h3{
+ display:flex!important;align-items:center!important;min-height:34px!important;
+ margin:0 0 13px!important;padding:0 0 10px!important;
+ border-bottom:1px solid #e0e9f0!important;
+ color:#1e4563!important;font-size:15px!important;font-weight:900!important;line-height:1.7!important;
+}
+#home .summary-metrics{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ align-items:stretch!important;gap:9px!important;flex:1!important;
+}
+#home .summary-metrics .stat{
+ display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+ align-items:center!important;gap:8px!important;min-width:0!important;min-height:91px!important;
+ margin:0!important;padding:12px 9px!important;
+ border:1px solid #dce6ee!important;border-radius:12px!important;
+ background:linear-gradient(145deg,#f8fbfd 0%,#edf4f8 100%)!important;
+ color:#526b7d!important;font-size:11.5px!important;font-weight:800!important;
+ line-height:1.8!important;text-align:center!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+#home .summary-metrics .stat strong{
+ display:block!important;margin:0!important;color:#174b69!important;
+ font-size:25px!important;font-weight:1000!important;line-height:1.15!important;
+ font-variant-numeric:tabular-nums!important;
+}
+#home .summary-group:nth-child(2) .summary-metrics .stat strong{color:#286b9e!important}
+#home .summary-group:nth-child(3) .summary-metrics .stat strong{color:#287451!important}
+#home #adminSummary>.panel,
+#home>.panel:not(#adminOrgPanel){
+ position:relative!important;overflow:hidden!important;
+ margin:0 0 16px!important;padding:clamp(15px,2vw,22px)!important;
+ border:1px solid #d0dce6!important;border-radius:17px!important;
+ background:linear-gradient(160deg,#ffffff 0%,#f7fafc 100%)!important;
+ box-shadow:0 7px 20px rgba(28,54,77,.075)!important;
+}
+#home #adminSummary>.panel>h2,
+#home>.panel:not(#adminOrgPanel)>h2{
+ margin:0 0 8px!important;color:#1c4664!important;
+ font-size:18px!important;font-weight:950!important;line-height:1.7!important;
+}
+#home #adminSummary>.panel>p.muted,
+#home>.panel:not(#adminOrgPanel)>p.muted{
+ color:#607487!important;font-size:12.5px!important;line-height:2!important;
+}
+#home #adminSummary{display:block}
+#home #adminSummary .summary-groups{margin-top:14px!important}
+#home #departmentEmployeeSearch form,
+#home #adminEmployeeSearches form{margin-top:12px!important}
+#home #departmentEmployeeSearch .field input,
+#home #adminEmployeeSearches .field input{
+ min-height:45px!important;border-radius:11px!important;
+}
+#home .actions .btn{border-radius:10px!important;font-weight:850!important}
+@media(max-width:1050px){
+ #home #departmentSummary,
+ #home #adminSummary .summary-groups{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:650px){
+ #home #departmentSummary,
+ #home #adminSummary .summary-groups{grid-template-columns:1fr!important;gap:10px!important}
+ #home #departmentSummary .summary-group,
+ #home #adminSummary .summary-group{min-height:0!important;padding:14px!important}
+ #home .summary-metrics .stat{min-height:82px!important;padding:10px 7px!important;font-size:11px!important}
+ #home .summary-metrics .stat strong{font-size:23px!important}
+ #home #adminSummary>.panel,
+ #home>.panel:not(#adminOrgPanel){padding:14px!important;border-radius:14px!important}
+ #home #adminSummary>.panel>h2,
+ #home>.panel:not(#adminOrgPanel)>h2{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #home #departmentSummary .summary-group,
+ #home #adminSummary .summary-group{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
