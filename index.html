@@ -1987,7 +1987,7 @@ function openExpiredLongLeaveDetails(recordId){
   ['بەرواری کۆتایی',displayDate(x.end_date),''],['ژمارەی دۆسیە',x.case_number,''],
   ['جۆری دۆسیە',x.case_type,''],['بەرواری دۆسیە',displayDate(x.case_date),''],
   ['ماوەی بەسەربردوو',longWatchPeriod(x,'used'),''],['ماوەی ماوە',longWatchPeriod(x,'unused'),''],
-  ['تێبینی',x.notes,'']
+  ['تێبینی',x.notes,String(x.notes||'').includes('دەستی بەكارنەكردووە')?'expired-detail-note unused':String(x.notes||'').includes('دەستی بەكاركردووە')?'expired-detail-note used':'expired-detail-note']
  ];
  let overlay=$('expiredLongLeaveDetailsModal');
  if(!overlay){
@@ -2011,6 +2011,10 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.active{background:#edfbf1;border-color:#9bd3ae}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.active strong,#expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days.active strong{color:#167342;font-weight:900;font-size:17px}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days{grid-column:auto}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-note.unused{background:#fff0f0;border-color:#e5a3a3}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-note.unused strong{color:#b42318;font-weight:1000}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-note.used{background:#edfbf1;border-color:#9bd3ae}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-note.used strong{color:#167342;font-weight:1000}
    #expiredLongLeaveDetailsModal .expired-detail-field:last-child{grid-column:1/-1}
    #expiredLongLeaveDetailsModal .expired-detail-close{min-width:120px;padding:10px 20px;border:0;border-radius:9px;background:linear-gradient(135deg,#205a91,#167985);color:#fff;font:inherit;font-weight:800;cursor:pointer}
    @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:7px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:12px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:15px}}
