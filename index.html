@@ -2001,20 +2001,20 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-status.active{border-color:#9bd3ae;border-right-color:#16834a;background:linear-gradient(90deg,#f0fff4,#dcfce7);color:#166534}
    #expiredLongLeaveDetailsModal h2{margin:0;color:#173e5d;font-size:21px}
    #expiredLongLeaveDetailsModal .expired-detail-sub{margin:6px 0 0;color:#53677e;font-size:13px}
-   #expiredLongLeaveDetailsModal .expired-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-   #expiredLongLeaveDetailsModal .expired-detail-field{min-width:0;padding:12px;background:#fff;border:1px solid #cbd8e4;border-radius:10px;box-shadow:0 2px 6px rgba(25,53,78,.05)}
-   #expiredLongLeaveDetailsModal .expired-detail-field span{display:block;color:#5b7085;font-size:12px;font-weight:700;margin-bottom:5px}
-   #expiredLongLeaveDetailsModal .expired-detail-field strong{display:block;color:#173b5b;font-size:14px;line-height:1.9;overflow-wrap:anywhere;white-space:pre-wrap}
+   #expiredLongLeaveDetailsModal .expired-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+   #expiredLongLeaveDetailsModal .expired-detail-field{min-width:0;padding:9px;background:#fff;border:1px solid #aebfd0;border-radius:10px;box-shadow:0 2px 6px rgba(25,53,78,.05)}
+   #expiredLongLeaveDetailsModal .expired-detail-field span{display:block;color:#263b50;font-size:13px;font-weight:900;margin-bottom:5px}
+   #expiredLongLeaveDetailsModal .expired-detail-field strong{display:block;color:#102f4d;font-size:16px;font-weight:900;line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-employee strong{font-size:23px;font-weight:1000;color:#102f4d;line-height:1.6}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.expired{background:#fff0f0;border-color:#e5a3a3}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.expired strong,#expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days.expired strong{color:#b42318;font-weight:900;font-size:17px}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.active{background:#edfbf1;border-color:#9bd3ae}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.active strong,#expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days.active strong{color:#167342;font-weight:900;font-size:17px}
-   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days{grid-column:span 2}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days{grid-column:auto}
    #expiredLongLeaveDetailsModal .expired-detail-field:last-child{grid-column:1/-1}
    #expiredLongLeaveDetailsModal .expired-detail-close{min-width:120px;padding:10px 20px;border:0;border-radius:9px;background:linear-gradient(135deg,#205a91,#167985);color:#fff;font:inherit;font-weight:800;cursor:pointer}
-   @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-   @media(max-width:480px){#expiredLongLeaveDetailsModal{padding:8px}#expiredLongLeaveDetailsModal .expired-detail-card{max-height:94vh;padding:14px}#expiredLongLeaveDetailsModal h2{font-size:18px}#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:1fr}}
+   @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:7px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:12px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:15px}}
+   @media(max-width:480px){#expiredLongLeaveDetailsModal{padding:8px}#expiredLongLeaveDetailsModal .expired-detail-card{max-height:94vh;padding:14px}#expiredLongLeaveDetailsModal h2{font-size:18px}#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:6px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:11px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:14px}}
   `;
   document.head.appendChild(style);
   document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'expired':'active')+'">⚠️ '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'مۆڵەتەكەی كۆتایی هاتووە':'مۆڵەتەكە چالاکە')+'</div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-grid"></div></div></div>');
