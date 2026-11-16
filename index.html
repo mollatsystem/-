@@ -1882,8 +1882,15 @@ function renderLongTermLeaveWatch(){
  const body=$('longLeaveWatchRows');if(!body||CURRENT_PROFILE?.role!=='super_admin')return;
  const query=normalizeLongWatchText($('longLeaveWatchSearch')?.value||'');
  const codeQuery=normalizeMainCode(query);
+ const isMainCodeQuery=/^[0-9]+$/.test(codeQuery);
  const categoryOrder={'پێش مناڵبوون':0,'مناڵبوون':1,'دایکایەتی':2,'بێ مووچە':3,'جۆری تری مۆڵەتی درێژخایەن':4};
- const matches=T.filter(x=>!query||normalizeMainCode(x.employee_main_code).includes(codeQuery)||normalizeMainCode(x.case_number).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query));
+ // A numeric query is a main employee code: match the whole code only,
+ // never a substring of another employee's code or case number.
+ const matches=T.filter(x=>{
+  if(!query)return true;
+  if(isMainCodeQuery)return normalizeMainCode(x.employee_main_code)===codeQuery;
+  return normalizeMainCode(x.case_number).includes(codeQuery)||normalizeLongWatchText(x.employee_name).includes(query);
+ });
  const counts={'پێش مناڵبوون':0,'مناڵبوون':0,'دایکایەتی':0,'بێ مووچە':0,'جۆری تری مۆڵەتی درێژخایەن':0};
  T.forEach(x=>counts[longWatchCategory(x.leave_type)]++);
  $('longLeaveWatchStats').innerHTML=Object.entries(counts).map(([label,count])=>'<div class="long-watch-stat"><span>'+esc(label)+'</span><strong>'+arabicDigits(count)+'</strong></div>').join('');
