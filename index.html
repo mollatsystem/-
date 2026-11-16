@@ -163,15 +163,15 @@ body:has(#recovery:not(.hidden)) .institution-heading{display:block}
 }
 /* Password recovery inputs: left-to-right typing and independent show/hide controls */
 #recovery .recovery-password-wrap{position:relative;display:flex;align-items:stretch;direction:ltr;width:100%}
-#recovery .recovery-password-wrap input{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;padding-right:104px!important;padding-left:13px!important;flex:1;min-width:0}
-#recovery .recovery-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;border:1px solid #9bb0c7;border-radius:7px;background:#e8f0f8;color:#173b60;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;min-width:78px}
+#recovery .recovery-password-wrap input{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;padding-left:104px!important;padding-right:13px!important;flex:1;min-width:0}
+#recovery .recovery-password-toggle{position:absolute;left:8px;top:50%;transform:translateY(-50%);z-index:2;border:1px solid #9bb0c7;border-radius:7px;background:#e8f0f8;color:#173b60;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;min-width:78px}
 #recovery .recovery-password-toggle:hover{background:#d9e7f4}
 #recovery .recovery-password-toggle:focus-visible{outline:2px solid #326b9d;outline-offset:2px}
 
 /* Signed-in password change: independent show/hide controls for both fields */
 #changePasswordPanel .change-password-wrap{position:relative;display:flex;align-items:stretch;direction:ltr;width:100%}
-#changePasswordPanel .change-password-wrap input{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;padding-right:104px!important;padding-left:13px!important;flex:1;min-width:0;width:100%;box-sizing:border-box}
-#changePasswordPanel .change-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;border:1px solid #9bb0c7;border-radius:7px;background:#e8f0f8;color:#173b60;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;min-width:78px}
+#changePasswordPanel .change-password-wrap input{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;padding-left:104px!important;padding-right:13px!important;flex:1;min-width:0;width:100%;box-sizing:border-box}
+#changePasswordPanel .change-password-toggle{position:absolute;left:8px;top:50%;transform:translateY(-50%);z-index:2;border:1px solid #9bb0c7;border-radius:7px;background:#e8f0f8;color:#173b60;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;min-width:78px}
 #changePasswordPanel .change-password-toggle:hover{background:#d9e7f4}
 #changePasswordPanel .change-password-toggle:focus-visible{outline:2px solid #326b9d;outline-offset:2px}
 
@@ -2626,6 +2626,21 @@ document.addEventListener('keydown',ev=>{
  if(!next)return;
  ev.preventDefault();
  next.focus();
+ if(next.matches('input:not([type="button"]):not([type="submit"]):not([type="reset"]),textarea')){try{next.select()}catch(e){}}
+},true);
+// Tab also selects the destination field when keyboard navigation enters it.
+let selectAllAfterKeyboardMove=false;
+document.addEventListener('keydown',ev=>{
+ if(ev.key==='Tab'&&!ev.altKey&&!ev.ctrlKey&&!ev.metaKey){const el=ev.target;if(el&&el.closest&&el.closest('#app form'))selectAllAfterKeyboardMove=true;}
+},true);
+document.addEventListener('focusin',ev=>{
+ if(!selectAllAfterKeyboardMove)return;
+ const el=ev.target;
+ if(!el||!el.matches||!el.matches('input,textarea'))return;
+ selectAllAfterKeyboardMove=false;
+ if(el.disabled||el.readOnly)return;
+ if(el.tagName==='INPUT'&&/^(button|submit|reset|checkbox|radio|file|image|hidden)$/i.test(el.type))return;
+ try{el.select()}catch(e){}
 },true);
 // F2: enter edit mode without selecting/replacing the whole field value.
 document.addEventListener('keydown',ev=>{
