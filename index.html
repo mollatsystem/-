@@ -1822,13 +1822,13 @@ function normalizePermissionTimeInput(input){if(!input)return;const raw=latinDig
 ['timeFrom','timeTo'].forEach(id=>{const input=$(id);if(input){input.addEventListener('blur',()=>normalizePermissionTimeInput(input));input.addEventListener('change',()=>normalizePermissionTimeInput(input))}});function durationMinutes(a,b){let p=String(a||'').slice(0,5).split(':'),q=String(b||'').slice(0,5).split(':');if(p.length!==2||q.length!==2)return 0;let h1=Number(p[0]),m1=Number(p[1]),h2=Number(q[0]),m2=Number(q[1]);if(![h1,m1,h2,m2].every(Number.isFinite)||h1<0||h1>23||h2<0||h2>23||m1<0||m1>59||m2<0||m2>59)return 0;let start=h1*60+m1,end=h2*60+m2;if(end<start)end+=1440;return end-start}
 function render(){
 const isGlobalAdmin=CURRENT_PROFILE?.role==='super_admin';
+const adminOrgId=String(CURRENT_PROFILE?.organization_id||'');
 const longWatchNav=$('longLeaveWatchNav');if(longWatchNav)longWatchNav.style.display=isGlobalAdmin?'block':'none';
 $('departmentSummary').style.display=isGlobalAdmin?'none':'grid';
 $('adminSummary').style.display=isGlobalAdmin?'block':'none';
 $('adminEmployeeSearches').style.display=isGlobalAdmin?'block':'none';
 $('departmentEmployeeSearch').style.display=isGlobalAdmin?'none':'block';
 if(isGlobalAdmin){
- const adminOrgId=String(CURRENT_PROFILE?.organization_id||'');
  const ownRows=rows=>rows.filter(row=>String(row.organization_id||'')===adminOrgId);
  const officeRows=rows=>rows.filter(row=>row.organization_id&&String(row.organization_id)!==adminOrgId);
  const ownEL=ownRows(EL),ownEP=ownRows(EP),ownET=ownRows(ET),ownL=ownRows(L),ownP=ownRows(P),ownT=ownRows(T);
