@@ -5118,3 +5118,40 @@ html body #app:not(.hidden) section#home.page.active #departmentSummary .summary
   }
 }
 </style>
+
+
+<style id="dashboard-welcome-message-readable">
+/* Explicit contrast for the final Welcome panel and all its explanatory text. */
+html body #app section#home.page.active > .panel:last-child{
+  background:#20394c!important;
+  background-image:none!important;
+  border:1px solid #668095!important;
+  border-top:4px solid #58bdc2!important;
+  border-radius:14px!important;
+  color:#ffffff!important;
+  box-shadow:0 5px 16px rgba(8,20,32,.22)!important;
+}
+html body #app section#home.page.active > .panel:last-child > h2{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-weight:950!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+html body #app section#home.page.active > .panel:last-child > p,
+html body #app section#home.page.active > .panel:last-child > p.muted{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  font-weight:750!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+html body #app section#home.page.active > .panel:last-child .restore-status,
+html body #app section#home.page.active > .panel:last-child .restore-status.muted{
+  color:#f0f6fb!important;
+  -webkit-text-fill-color:#f0f6fb!important;
+  font-weight:750!important;
+  opacity:1!important;
+}
+</style>
