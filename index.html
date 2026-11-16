@@ -2141,12 +2141,14 @@ function openExpiredLongLeaveDetails(recordId){
    @media(max-width:420px){#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field{min-height:92px;padding:6px 3px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field span{font-size:10px!important}#expiredLongLeaveDetailsModal .expired-detail-section:first-child .expired-detail-field strong{font-size:12px!important}}
 `;
   document.head.appendChild(style);
-  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'expired':'active')+'">⚠️ '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'مۆڵەتەكەی كۆتایی هاتووە':'مۆڵەتەكە چالاکە')+'</div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-content"></div></div></div>');
+  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status" id="expiredLongLeaveDetailsStatus"></div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-content"></div></div></div>');
   overlay=$('expiredLongLeaveDetailsModal');
   $('expiredLongLeaveDetailsClose').addEventListener('click',()=>{overlay.style.display='none'});
   overlay.addEventListener('click',ev=>{if(ev.target===overlay)overlay.style.display='none'});
   overlay.addEventListener('keydown',ev=>{if(ev.key==='Escape')overlay.style.display='none'});
  }
+ const statusBanner=$('expiredLongLeaveDetailsStatus');
+ if(statusBanner){statusBanner.className='expired-detail-status'+(isExpired?'':' active');statusBanner.textContent='⚠️ '+(isExpired?'مۆڵەتەكەی كۆتایی هاتووە':'مۆڵەتەكە چالاکە')}
  const detailGroups=[
   {title:'پوختەی دۆخی مۆڵەت',icon:'◈',items:rows.slice(0,3)},
   {title:'ناسنامە و زانیاری فەرمانبەر',icon:'◆',items:rows.slice(3,6)},
