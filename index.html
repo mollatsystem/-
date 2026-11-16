@@ -2543,6 +2543,84 @@ html body #signup .signup-password-wrap input:focus{
 }
 </style>
 
+
+<style id="change-password-panel-balanced-fields">
+/* Balanced signed-in password form: keep the toggle outside the typing area. */
+html body #app #changePasswordPanel{
+  padding:clamp(14px,1.7vw,22px)!important;
+  background:linear-gradient(150deg,#edf2f5 0%,#e4ebf0 100%)!important;
+  border:1px solid #b8c7d2!important;
+  border-radius:15px!important;
+}
+html body #app #changePasswordPanel form>.grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:end!important;
+  gap:16px!important;
+}
+html body #app #changePasswordPanel .field{
+  min-width:0!important;width:100%!important;
+  display:flex!important;flex-direction:column!important;gap:7px!important;
+}
+html body #app #changePasswordPanel .field label{
+  color:#29475d!important;font-size:13px!important;font-weight:800!important;
+  line-height:1.7!important;
+}
+html body #app #changePasswordPanel .change-password-wrap{
+  position:relative!important;display:flex!important;flex-direction:row!important;
+  align-items:stretch!important;gap:8px!important;direction:ltr!important;
+  width:100%!important;min-width:0!important;min-height:46px!important;
+}
+html body #app #changePasswordPanel .change-password-wrap input{
+  position:static!important;order:1!important;display:block!important;
+  flex:1 1 0!important;width:0!important;min-width:0!important;max-width:100%!important;
+  box-sizing:border-box!important;min-height:46px!important;height:46px!important;
+  padding:10px 13px!important;margin:0!important;
+  direction:ltr!important;text-align:left!important;unicode-bidi:plaintext!important;
+  background:#f2f5f7!important;color:#20394b!important;
+  border:1.5px solid #aabcc9!important;border-radius:9px!important;
+  caret-color:#173b60!important;
+}
+html body #app #changePasswordPanel .change-password-wrap input:focus{
+  background:#f7f9fa!important;border-color:#6e9da7!important;
+  box-shadow:0 0 0 3px rgba(110,157,167,.18)!important;outline:none!important;
+}
+html body #app #changePasswordPanel .change-password-wrap .change-password-toggle{
+  position:static!important;order:2!important;transform:none!important;
+  flex:0 0 92px!important;width:92px!important;min-width:92px!important;max-width:92px!important;
+  min-height:46px!important;height:46px!important;margin:0!important;
+  padding:7px 9px!important;box-sizing:border-box!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  white-space:nowrap!important;line-height:1.35!important;
+  border:1px solid #9aafbf!important;border-radius:9px!important;
+  background:#e4edf3!important;color:#244760!important;
+  font-size:12px!important;font-weight:800!important;cursor:pointer!important;
+}
+html body #app #changePasswordPanel .change-password-wrap .change-password-toggle:hover{
+  background:#d8e5ed!important;border-color:#819daf!important;
+}
+html body #app #changePasswordPanel .change-password-wrap .change-password-toggle:focus-visible{
+  outline:2px solid #397b9c!important;outline-offset:2px!important;
+}
+html body #app #changePasswordPanel .actions{
+  display:flex!important;justify-content:center!important;margin-top:16px!important;
+}
+html body #app #changePasswordPanel #changePasswordSubmit{
+  min-width:210px!important;min-height:44px!important;border-radius:9px!important;
+}
+@media(max-width:700px){
+  html body #app #changePasswordPanel form>.grid{
+    grid-template-columns:minmax(0,1fr)!important;gap:13px!important;
+  }
+}
+@media(max-width:360px){
+  html body #app #changePasswordPanel .change-password-wrap{gap:6px!important}
+  html body #app #changePasswordPanel .change-password-wrap .change-password-toggle{
+    flex-basis:82px!important;width:82px!important;min-width:82px!important;max-width:82px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
