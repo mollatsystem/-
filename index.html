@@ -1636,7 +1636,7 @@ function passwordDigitVariants(value){
  return [...new Set([raw,ascii,toArabic(ascii)])];
 }
 
-async async function signInWithPasswordFlexible(loginName,password){
+async function signInWithPasswordFlexible(loginName,password){
  const value=String(loginName||'').trim();
  if(!value)return {data:null,error:{message:'ناوی فەرمانگە یان ئیمەیڵ بنووسە.'}};
  if(!value.includes('@')){
