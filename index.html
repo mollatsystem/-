@@ -2083,11 +2083,15 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-status.active{border-color:#9bd3ae;border-right-color:#16834a;background:linear-gradient(90deg,#f0fff4,#dcfce7);color:#166534}
    #expiredLongLeaveDetailsModal h2{margin:0;color:#173e5d;font-size:21px}
    #expiredLongLeaveDetailsModal .expired-detail-sub{margin:6px 0 0;color:#53677e;font-size:13px}
+   #expiredLongLeaveDetailsModal .expired-detail-content{display:grid;gap:16px}
+   #expiredLongLeaveDetailsModal .expired-detail-section{padding:14px;background:linear-gradient(145deg,#f8fbff,#eaf2f8);border:1px solid #c5d5e3;border-radius:15px;box-shadow:0 4px 14px rgba(20,52,80,.06)}
+   #expiredLongLeaveDetailsModal .expired-detail-section h3{display:flex;align-items:center;gap:9px;margin:0 0 12px;padding-bottom:9px;border-bottom:1px solid #cbd9e5;color:#174b69;font-size:16px;font-weight:1000}
+   #expiredLongLeaveDetailsModal .expired-detail-section h3 span{display:inline-flex;align-items:center;justify-content:center;width:29px;height:29px;border-radius:9px;background:#d7eef0;color:#087b83;font-size:16px}
    #expiredLongLeaveDetailsModal .expired-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-   #expiredLongLeaveDetailsModal .expired-detail-field{min-width:0;padding:9px;background:#fff;border:1px solid #aebfd0;border-radius:10px;box-shadow:0 2px 6px rgba(25,53,78,.05)}
+   #expiredLongLeaveDetailsModal .expired-detail-field{min-width:0;padding:12px;background:#fff;border:1px solid #c5d4e1;border-radius:12px;box-shadow:0 3px 9px rgba(25,53,78,.07);transition:transform .16s ease,box-shadow .16s ease} #expiredLongLeaveDetailsModal .expired-detail-field:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(25,53,78,.11)}
    #expiredLongLeaveDetailsModal .expired-detail-field span{display:block;color:#263b50;font-size:13px;font-weight:900;margin-bottom:5px}
    #expiredLongLeaveDetailsModal .expired-detail-field strong{display:block;color:#102f4d;font-size:16px;font-weight:900;line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap}
-   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-employee strong{font-size:23px;font-weight:1000;color:#102f4d;line-height:1.6}
+   #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-employee{grid-column:span 2;background:linear-gradient(135deg,#e8f4ff,#fff);border:2px solid #8db6d1} #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-employee strong{font-size:23px;font-weight:1000;color:#102f4d;line-height:1.6}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.expired{background:#fff0f0;border-color:#e5a3a3}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.expired strong,#expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-days.expired strong{color:#b42318;font-weight:900;font-size:17px}
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-status-field.active{background:#edfbf1;border-color:#9bd3ae}
@@ -2099,17 +2103,25 @@ function openExpiredLongLeaveDetails(recordId){
    #expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-note.used strong{color:#167342;font-weight:1000}
    #expiredLongLeaveDetailsModal .expired-detail-field:last-child{grid-column:1/-1}
    #expiredLongLeaveDetailsModal .expired-detail-close{min-width:120px;padding:10px 20px;border:0;border-radius:9px;background:linear-gradient(135deg,#205a91,#167985);color:#fff;font:inherit;font-weight:800;cursor:pointer}
-   @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:7px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:12px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:15px}}
-   @media(max-width:480px){#expiredLongLeaveDetailsModal{padding:8px}#expiredLongLeaveDetailsModal .expired-detail-card{max-height:94vh;padding:14px}#expiredLongLeaveDetailsModal h2{font-size:18px}#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:6px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:11px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:14px}}
+   @media(max-width:760px){#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:7px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:12px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:15px}}
+   @media(max-width:480px){#expiredLongLeaveDetailsModal .expired-detail-field.expired-detail-employee{grid-column:1/-1}#expiredLongLeaveDetailsModal{padding:8px}#expiredLongLeaveDetailsModal .expired-detail-card{max-height:94vh;padding:14px}#expiredLongLeaveDetailsModal h2{font-size:18px}#expiredLongLeaveDetailsModal .expired-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}#expiredLongLeaveDetailsModal .expired-detail-field{padding:6px}#expiredLongLeaveDetailsModal .expired-detail-field span{font-size:11px}#expiredLongLeaveDetailsModal .expired-detail-field strong{font-size:14px}}
   `;
   document.head.appendChild(style);
-  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'expired':'active')+'">⚠️ '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'مۆڵەتەكەی كۆتایی هاتووە':'مۆڵەتەكە چالاکە')+'</div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-grid"></div></div></div>');
+  document.body.insertAdjacentHTML('beforeend','<div id="expiredLongLeaveDetailsModal" role="dialog" aria-modal="true" aria-labelledby="expiredLongLeaveDetailsTitle"><div class="expired-detail-card"><div class="expired-detail-status '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'expired':'active')+'">⚠️ '+(x.end_date&&String(x.end_date).slice(0,10)<ltToday()?'مۆڵەتەكەی كۆتایی هاتووە':'مۆڵەتەكە چالاکە')+'</div><div class="expired-detail-head"><div><h2 id="expiredLongLeaveDetailsTitle">وردەکاری تەواوی زانیاری فەرمانبەر</h2><p class="expired-detail-sub">زانیارییەکانی تۆماری مۆڵەتی درێژخایەن</p></div><button type="button" class="expired-detail-close" id="expiredLongLeaveDetailsClose">داخستن</button></div><div id="expiredLongLeaveDetailsContent" class="expired-detail-content"></div></div></div>');
   overlay=$('expiredLongLeaveDetailsModal');
   $('expiredLongLeaveDetailsClose').addEventListener('click',()=>{overlay.style.display='none'});
   overlay.addEventListener('click',ev=>{if(ev.target===overlay)overlay.style.display='none'});
   overlay.addEventListener('keydown',ev=>{if(ev.key==='Escape')overlay.style.display='none'});
  }
- $('expiredLongLeaveDetailsContent').innerHTML=rows.map(([label,value,extraClass])=>detail(label,value,extraClass)).join('');
+ const detailGroups=[
+  {title:'پوختەی دۆخی مۆڵەت',icon:'◈',items:rows.slice(0,3)},
+  {title:'ناسنامە و زانیاری فەرمانبەر',icon:'◆',items:rows.slice(3,6)},
+  {title:'زانیاری پیشەیی و شوێنی کار',icon:'▦',items:rows.slice(6,10)},
+  {title:'وردەکاری مۆڵەت',icon:'◷',items:rows.slice(10,15)},
+  {title:'زانیاری دۆسیە',icon:'▤',items:rows.slice(15,18)},
+  {title:'ماوە و تێبینی',icon:'✓',items:rows.slice(18)}
+ ];
+ $('expiredLongLeaveDetailsContent').innerHTML=detailGroups.map(group=>'<section class="expired-detail-section"><h3><span>'+group.icon+'</span>'+group.title+'</h3><div class="expired-detail-grid">'+group.items.map(([label,value,extraClass])=>detail(label,value,extraClass)).join('')+'</div></section>').join('');
  overlay.style.display='flex';
  $('expiredLongLeaveDetailsClose').focus();
 }
