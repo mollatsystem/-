@@ -4047,13 +4047,13 @@ function smRenderMonitor(data){
  if(stamp){const updatedAt=new Date(data.captured_at||Date.now());const datePart=updatedAt.getFullYear()+'/'+String(updatedAt.getMonth()+1).padStart(2,'0')+'/'+String(updatedAt.getDate()).padStart(2,'0');const timePart=updatedAt.toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});stamp.textContent='دوایین نوێکردنەوە: '+datePart+'، '+timePart;}
 }
 async function refreshStorageMonitor(){
- const content=$('smMonitorContent'),btn=$('smRefreshBtn');
+ const content=$('smMonitorContent'),btn=$('smRefreshBtn'),btnLabel=btn?.querySelector('span');
  if(!CURRENT_PROFILE?.organization_id||OFFLINE_MODE||!navigator.onLine){
   if(content)content.innerHTML='<div class="sm-error">چاودێریی قەبارەی داتا پێویستی بە پەیوەندیی ئۆنلاین هەیە. تکایە پەیوەندیی ئینتەرنێت بپشکنە.</div>';
   smSetHomeSignalUnavailable(OFFLINE_MODE?'ئۆفلاین':'ئینتەرنێت پێویستە');
   return;
  }
- if(btn){btn.disabled=true;btn.textContent='نوێکردنەوە...'}
+ if(btn){btn.disabled=true;if(btnLabel)btnLabel.textContent='نوێکردنەوە...'}
  try{
   const {data,error}=await db.functions.invoke('storage-monitor');
   if(error)throw error;
@@ -4062,7 +4062,7 @@ async function refreshStorageMonitor(){
  }catch(e){
   if(content)content.innerHTML='<div class="sm-error">نەتوانرا زانیاریی چاودێری وەربگیرێت: '+esc(e?.message||String(e))+'</div>';
   smSetHomeSignalUnavailable('نەتوانرا نوێ بکرێتەوە');
- }finally{if(btn)btn.disabled=false}
+ }finally{if(btn){btn.disabled=false;if(btnLabel)btnLabel.textContent='نوێکردنەوەی زانیاری'}}
 }
 $('smRefreshBtn')?.addEventListener('click',refreshStorageMonitor);
 function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
