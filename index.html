@@ -5721,3 +5721,71 @@ html body #app #adminEmployeeSearches #adminOfficeEmpSearch #clearAdminOfficeSea
   white-space:nowrap!important;
 }
 </style>
+
+
+<style id="admin-summary-search-buttons-final-alignment">
+/* Hard-align both employee search toolbars: equal columns, button dimensions and typography. */
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions,
+html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:13px 0 0!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
+html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  flex:initial!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:50px!important;
+  min-height:50px!important;
+  max-height:50px!important;
+  margin:0!important;
+  padding:8px 12px!important;
+  border-radius:9px!important;
+  font-family:inherit!important;
+  font-size:18px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  box-shadow:0 2px 5px rgba(20,45,70,.12)!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
+html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]{
+  gap:8px!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]::before,
+html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]::before{
+  content:"⌕"!important;
+  display:inline-block!important;
+  font-family:Arial,sans-serif!important;
+  font-size:25px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray,
+html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray{
+  font-size:18px!important;
+  font-weight:900!important;
+}
+@media(max-width:420px){
+  html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions,
+  html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions{
+    gap:7px!important;
+  }
+  html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
+  html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
+    padding:7px 5px!important;
+    font-size:15px!important;
+  }
+}
+</style>
