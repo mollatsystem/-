@@ -3996,6 +3996,10 @@ function smRenderMonitor(data){
   html+=smProgress('بەکارهێنانی شوێنی فایلەکان',project.file_storage_bytes,fileLimit,filePct);
   html+='<div class="sm-card"><h3>ژمارەی فایلە بارکراوەکان</h3><div class="sm-value">'+Number(project.file_object_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">هەموو فایلەکانی پرۆژە</div></div>';
   html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div></div>';
+  const departmentRows=Array.isArray(data.departments)?data.departments:[];
+  const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
+  const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای '+departmentRows.length.toLocaleString('en-US')+' فەرمانگە</div></div>';
   html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
   for(const o of (data.departments||[])){
    const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
