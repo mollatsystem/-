@@ -2898,41 +2898,203 @@ html body #app section#home.page.active > .global-delete-panel + .panel > h2{
 }
 </style>
 
-<style id="all-dashboard-summary-headings-contrast">
-/* Consistent high-contrast headings throughout the dashboard summaries. */
-html body #app section#home.page.active #departmentSummary > .summary-group > h3,
-html body #app section#home.page.active #adminSummary > .panel > h2,
-html body #app section#home.page.active #adminSummary .summary-group > h3{
-  display:flex!important;
-  align-items:center!important;
-  color:#102f46!important;
-  -webkit-text-fill-color:#102f46!important;
-  background:#e4eff7!important;
+
+
+<style id="dashboard-summary-clean-readable">
+/* Clean, high-contrast summary dashboard: consistent spacing and legible text. */
+html body #app section#home.page.active #departmentSummary,
+html body #app section#home.page.active #adminSummary .summary-groups{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  align-items:stretch!important;
+  margin:14px 0!important;
+}
+html body #app section#home.page.active #adminSummary > .panel{
+  background:#f2f6fa!important;
   background-image:none!important;
-  border:1px solid #9bb6c9!important;
-  border-right:6px solid #176b83!important;
-  border-radius:10px!important;
+  color:#172f46!important;
+  border:1px solid #aebfce!important;
+  border-radius:15px!important;
+  padding:17px!important;
+  box-shadow:0 4px 12px rgba(23,48,72,.08)!important;
+}
+html body #app section#home.page.active #adminSummary > .panel > h2{
+  display:block!important;
+  color:#123653!important;
+  -webkit-text-fill-color:#123653!important;
+  background:#e1ebf3!important;
+  border:1px solid #b5c7d5!important;
+  border-right:5px solid #26758a!important;
+  border-radius:9px!important;
   padding:10px 13px!important;
-  margin-bottom:13px!important;
-  font-weight:950!important;
+  margin:0 0 10px!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  line-height:1.9!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+html body #app section#home.page.active #adminSummary > .panel > p{
+  color:#29465d!important;
+  -webkit-text-fill-color:#29465d!important;
+  background:#ffffff!important;
+  border:1px solid #d0dbe4!important;
+  border-radius:8px!important;
+  padding:9px 12px!important;
+  margin:0 0 13px!important;
+  font-size:14px!important;
+  font-weight:650!important;
+  line-height:2!important;
+  opacity:1!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group,
+html body #app section#home.page.active #adminSummary .summary-group{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:11px!important;
+  padding:14px!important;
+  background:#ffffff!important;
+  background-image:none!important;
+  border:1px solid #b8c8d5!important;
+  border-top:4px solid #347f98!important;
+  border-radius:12px!important;
+  color:#18354b!important;
+  box-shadow:0 3px 9px rgba(20,45,67,.07)!important;
+  opacity:1!important;
+  filter:none!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(2),
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(2){
+  border-top-color:#278779!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(3),
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(3){
+  border-top-color:#7563a4!important;
+}
+html body #app section#home.page.active #adminSummary > .panel:nth-child(2) .summary-group:first-child{
+  border-top-color:#b18438!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group > h3,
+html body #app section#home.page.active #adminSummary .summary-group > h3{
+  display:block!important;
+  color:#123650!important;
+  -webkit-text-fill-color:#123650!important;
+  background:#eaf1f6!important;
+  background-image:none!important;
+  border:1px solid #c4d2dc!important;
+  border-right:4px solid #347f98!important;
+  border-radius:8px!important;
+  padding:9px 11px!important;
+  margin:0!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  line-height:1.9!important;
+  text-align:right!important;
   opacity:1!important;
   visibility:visible!important;
   text-shadow:none!important;
-  filter:none!important;
-  line-height:1.9!important;
 }
-html body #app section#home.page.active #adminSummary > .panel > h2{
-  background:#dceaf4!important;
-  border-right-color:#12516e!important;
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(2) > h3,
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(2) > h3{
+  border-right-color:#278779!important;
 }
-html body #app section#home.page.active #adminSummary > .panel > p,
-html body #app section#home.page.active #departmentSummary .summary-group .stat{
-  color:#18364c!important;
-  -webkit-text-fill-color:#18364c!important;
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(3) > h3,
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(3) > h3{
+  border-right-color:#7563a4!important;
+}
+html body #app section#home.page.active #adminSummary > .panel:nth-child(2) .summary-group:first-child > h3{
+  border-right-color:#b18438!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics,
+html body #app section#home.page.active #adminSummary .summary-metrics{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;
+  align-items:stretch!important;
+  margin:0!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics .stat,
+html body #app section#home.page.active #adminSummary .summary-metrics .stat{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  padding:11px 9px!important;
+  color:#203b50!important;
+  -webkit-text-fill-color:#203b50!important;
+  background:#f7f9fb!important;
+  background-image:none!important;
+  border:1px solid #cbd6df!important;
+  border-radius:9px!important;
+  font-size:14px!important;
   font-weight:800!important;
+  line-height:1.9!important;
+  text-align:center!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics .stat strong,
+html body #app section#home.page.active #adminSummary .summary-metrics .stat strong{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#286783!important;
+  border:0!important;
+  border-radius:7px!important;
+  padding:6px 5px!important;
+  margin:0!important;
+  font-size:25px!important;
+  font-weight:950!important;
+  line-height:1.45!important;
+  font-variant-numeric:tabular-nums!important;
   opacity:1!important;
 }
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(2) .summary-metrics .stat strong,
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(2) .summary-metrics .stat strong{
+  background:#24796f!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group:nth-child(3) .summary-metrics .stat strong,
+html body #app section#home.page.active #adminSummary .summary-group:nth-child(3) .summary-metrics .stat strong{
+  background:#66558f!important;
+}
+html body #app section#home.page.active #adminSummary > .panel:nth-child(2) .summary-group:first-child .summary-metrics .stat strong{
+  background:#946b26!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group *,
+html body #app section#home.page.active #adminSummary .summary-group *{
+  text-shadow:none!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+  -webkit-text-stroke:0!important;
+  opacity:1!important;
+}
+@media(max-width:900px){
+  html body #app section#home.page.active #departmentSummary,
+  html body #app section#home.page.active #adminSummary .summary-groups{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:560px){
+  html body #app section#home.page.active #departmentSummary,
+  html body #app section#home.page.active #adminSummary .summary-groups{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+  html body #app section#home.page.active #adminSummary > .panel{padding:12px!important}
+  html body #app section#home.page.active #departmentSummary .summary-group,
+  html body #app section#home.page.active #adminSummary .summary-group{padding:11px!important}
+  html body #app section#home.page.active #departmentSummary .summary-metrics .stat,
+  html body #app section#home.page.active #adminSummary .summary-metrics .stat{font-size:13px!important}
+}
 </style>
+
 </head>
 <body>
 <div class="wrap">
@@ -4999,182 +5161,10 @@ html body select option{
 </style>
 
 
-<style id="dashboard-overview-text-contrast">
-/* Improve readability throughout the Overview page without changing layout or dimensions. */
-html body #home,
-html body #home .panel,
-html body #home .panel p,
-html body #home .panel label,
-html body #home .panel .muted,
-html body #home .summary-group,
-html body #home .summary-group .stat,
-html body #home .summary-group .stat strong{
-  color:#172b3d!important;
-  -webkit-text-fill-color:#172b3d!important;
-  opacity:1!important;
-  text-shadow:none!important;
-}
-html body #home .panel{
-  background-color:#e7eef5!important;
-  border-color:#aebfd0!important;
-}
-html body #home .panel h2,
-html body #home .panel h3,
-html body #home .summary-group h3{
-  color:#102f49!important;
-  -webkit-text-fill-color:#102f49!important;
-  font-weight:900!important;
-  opacity:1!important;
-}
-html body #home .panel .muted,
-html body #home .panel p{
-  color:#263f55!important;
-  -webkit-text-fill-color:#263f55!important;
-  font-weight:650!important;
-  opacity:1!important;
-}
-html body #home .summary-group{
-  background:#dce7f0!important;
-  border:1px solid #a9bdcf!important;
-  box-shadow:0 3px 9px rgba(25,53,78,.09)!important;
-}
-html body #home .summary-group h3{
-  background:#d0dfeb!important;
-  border:1px solid #a4bacd!important;
-  border-right:5px solid #28627f!important;
-  border-radius:9px!important;
-}
-html body #home .summary-metrics .stat{
-  background:#f8fbfd!important;
-  border:1px solid #c0cfdb!important;
-  color:#172b3d!important;
-  -webkit-text-fill-color:#172b3d!important;
-  font-weight:800!important;
-  box-shadow:0 2px 6px rgba(25,53,78,.07)!important;
-}
-html body #home .summary-metrics .stat strong{
-  color:#102f49!important;
-  -webkit-text-fill-color:#102f49!important;
-  font-weight:900!important;
-}
-html body #home #departmentSummary .summary-group h3,
-html body #home #adminSummary .summary-group h3{
-  color:#102f49!important;
-  -webkit-text-fill-color:#102f49!important;
-}
-html body #home #adminSummary .panel .muted{
-  color:#263f55!important;
-  -webkit-text-fill-color:#263f55!important;
-}
-</style>
 
 
-<style id="dashboard-overview-final-contrast">
-/* Final high-contrast dashboard palette: dark calm surfaces with bright, readable text. */
-html body #app:not(.hidden) section#home.page.active{
-  color:#f4f7fa!important;
-}
-html body #app:not(.hidden) section#home.page.active > .panel,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel{
-  background:#263d50!important;
-  background-image:none!important;
-  border:1px solid #526b7f!important;
-  color:#f4f7fa!important;
-  box-shadow:0 5px 16px rgba(8,20,32,.22),inset 0 1px 0 rgba(255,255,255,.07)!important;
-}
-html body #app:not(.hidden) section#home.page.active > .panel h1,
-html body #app:not(.hidden) section#home.page.active > .panel h2,
-html body #app:not(.hidden) section#home.page.active > .panel h3,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel h1,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel h2,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel h3{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  font-weight:900!important;
-  opacity:1!important;
-  text-shadow:none!important;
-}
-html body #app:not(.hidden) section#home.page.active > .panel p,
-html body #app:not(.hidden) section#home.page.active > .panel .muted,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel p,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel .muted{
-  color:#e2ebf2!important;
-  -webkit-text-fill-color:#e2ebf2!important;
-  font-weight:650!important;
-  opacity:1!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary > .summary-group,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group{
-  background:#344f64!important;
-  background-image:none!important;
-  border:1px solid #668095!important;
-  border-radius:13px!important;
-  color:#ffffff!important;
-  box-shadow:0 4px 11px rgba(7,19,30,.20),inset 0 1px 0 rgba(255,255,255,.07)!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3{
-  display:block!important;
-  background:#1d394e!important;
-  background-image:none!important;
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  border:1px solid #648398!important;
-  border-right:5px solid #58bdc2!important;
-  border-radius:9px!important;
-  font-weight:950!important;
-  line-height:1.9!important;
-  text-align:right!important;
-  opacity:1!important;
-  text-shadow:none!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat{
-  background:#20394c!important;
-  background-image:none!important;
-  border:1px solid #587286!important;
-  border-radius:10px!important;
-  color:#f5f8fb!important;
-  -webkit-text-fill-color:#f5f8fb!important;
-  font-weight:800!important;
-  line-height:2!important;
-  opacity:1!important;
-  box-shadow:inset 0 1px 2px rgba(0,0,0,.12),0 2px 6px rgba(5,16,26,.16)!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat strong,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat strong{
-  display:block!important;
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  font-weight:1000!important;
-  opacity:1!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group,
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group *,
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group *{
-  text-shadow:none!important;
-  filter:none!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group,
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group{
-  overflow:visible!important;
-  min-width:0!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group h3,
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group h3,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat,
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat{
-  overflow-wrap:anywhere!important;
-  word-break:normal!important;
-}
-@media(max-width:700px){
-  html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group,
-  html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group{
-    min-width:0!important;
-  }
-}
-</style>
+
+
 
 
 <style id="dashboard-welcome-message-readable">
@@ -5223,36 +5213,7 @@ html body #app section#home.page.active > #departmentEmployeeSearch + .panel .re
 </style>
 
 
-<style id="dashboard-summary-heading-final-override">
-/* Last-in-file override: force readable heading foreground/background on every summary card. */
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  background:#17364d!important;
-  background-color:#17364d!important;
-  background-image:none!important;
-  border:1px solid #66869b!important;
-  border-right:6px solid #39b7b5!important;
-  opacity:1!important;
-  visibility:visible!important;
-  filter:none!important;
-  text-shadow:none!important;
-  mix-blend-mode:normal!important;
-  -webkit-background-clip:border-box!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3 *,
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2 *,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3 *{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  opacity:1!important;
-  visibility:visible!important;
-  text-shadow:none!important;
-  filter:none!important;
-}
-</style>
+
 
 
 <style id="change-password-text-contrast-final">
@@ -5314,93 +5275,7 @@ html body #app #changePasswordPanel .change-password-wrap input::placeholder{
 </style>
 
 
-<style id="dashboard-summary-all-text-contrast">
-/* Final readable palette for every heading, metric label and numeric value in dashboard summary cards. */
-html body #app section#home.page.active #departmentSummary .summary-group,
-html body #app section#home.page.active #adminSummary .summary-group{
-  background:#edf3f7!important;
-  background-image:none!important;
-  border:1px solid #9eb4c4!important;
-  border-radius:13px!important;
-  color:#17364d!important;
-  box-shadow:0 3px 10px rgba(17,45,66,.10)!important;
-  opacity:1!important;filter:none!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group > h3,
-html body #app section#home.page.active #adminSummary .summary-group > h3{
-  display:block!important;
-  color:#123b59!important;
-  -webkit-text-fill-color:#123b59!important;
-  background:#d8e8f2!important;
-  background-color:#d8e8f2!important;
-  background-image:none!important;
-  border:1px solid #9ab5c8!important;
-  border-right:6px solid #16738a!important;
-  border-radius:9px!important;
-  padding:10px 13px!important;
-  margin:0 0 12px!important;
-  font-size:16px!important;font-weight:950!important;
-  line-height:1.9!important;text-align:right!important;
-  opacity:1!important;visibility:visible!important;
-  text-shadow:none!important;filter:none!important;
-  mix-blend-mode:normal!important;
-}
-html body #app section#home.page.active #adminSummary > .panel > h2{
-  color:#123b59!important;
-  -webkit-text-fill-color:#123b59!important;
-  background:#d8e8f2!important;
-  background-color:#d8e8f2!important;
-  border:1px solid #9ab5c8!important;
-  border-right:6px solid #16738a!important;
-  border-radius:10px!important;
-  padding:11px 14px!important;
-  font-weight:950!important;opacity:1!important;
-  text-shadow:none!important;filter:none!important;
-}
-html body #app section#home.page.active #adminSummary > .panel > p,
-html body #app section#home.page.active #departmentSummary .summary-group .summary-metrics .stat,
-html body #app section#home.page.active #adminSummary .summary-group .summary-metrics .stat{
-  color:#203c50!important;
-  -webkit-text-fill-color:#203c50!important;
-  background:#ffffff!important;
-  background-color:#ffffff!important;
-  background-image:none!important;
-  border:1px solid #bdcbd5!important;
-  border-radius:10px!important;
-  font-size:14px!important;font-weight:850!important;
-  line-height:2!important;
-  opacity:1!important;visibility:visible!important;
-  text-shadow:none!important;filter:none!important;
-  mix-blend-mode:normal!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group .summary-metrics .stat *,
-html body #app section#home.page.active #adminSummary .summary-group .summary-metrics .stat *{
-  color:#203c50!important;
-  -webkit-text-fill-color:#203c50!important;
-  opacity:1!important;visibility:visible!important;
-  text-shadow:none!important;filter:none!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group .summary-metrics .stat strong,
-html body #app section#home.page.active #adminSummary .summary-group .summary-metrics .stat strong{
-  display:block!important;
-  color:#0d3d5d!important;
-  -webkit-text-fill-color:#0d3d5d!important;
-  background:#e1eff6!important;
-  background-color:#e1eff6!important;
-  border:1px solid #bfd4e1!important;
-  border-radius:8px!important;
-  padding:4px 9px!important;
-  margin-top:5px!important;
-  font-size:25px!important;font-weight:1000!important;
-  line-height:1.5!important;
-  opacity:1!important;visibility:visible!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group *,
-html body #app section#home.page.active #adminSummary .summary-group *{
-  text-shadow:none!important;filter:none!important;
-  -webkit-text-stroke:0!important;
-}
-</style>
+
 
 
 <style id="global-delete-panel-text-contrast">
@@ -5462,266 +5337,7 @@ html body #app section#home.page.active > .panel.global-delete-panel > p *{
 
 
 
-<style id="dashboard-summary-professional-refresh">
-/* Professional, calm dashboard summary: clear hierarchy, readable labels and prominent figures. */
-html body #app section#home.page.active #departmentSummary,
-html body #app section#home.page.active #adminSummary .summary-groups{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:15px!important;
-  align-items:stretch!important;
-  margin:15px 0!important;
-}
-html body #app section#home.page.active #adminSummary .summary-groups{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-}
-html body #app section#home.page.active #adminSummary > .panel{
-  background:linear-gradient(145deg,#e5edf4 0%,#d9e4ed 100%)!important;
-  border:1px solid #a9bdcd!important;
-  border-radius:17px!important;
-  padding:18px!important;
-  color:#19364d!important;
-  box-shadow:0 6px 18px rgba(20,48,70,.10)!important;
-}
-html body #app section#home.page.active #adminSummary > .panel > h2{
-  display:block!important;
-  color:#153b56!important;
-  -webkit-text-fill-color:#153b56!important;
-  background:linear-gradient(100deg,#d5e5ef,#eaf2f7)!important;
-  border:1px solid #b2c7d6!important;
-  border-right:6px solid #278b91!important;
-  border-radius:11px!important;
-  padding:12px 15px!important;
-  margin:0 0 10px!important;
-  font-size:18px!important;
-  font-weight:950!important;
-  line-height:1.9!important;
-  text-shadow:none!important;filter:none!important;opacity:1!important;
-}
-html body #app section#home.page.active #adminSummary > .panel > p{
-  color:#365267!important;
-  -webkit-text-fill-color:#365267!important;
-  background:rgba(255,255,255,.62)!important;
-  border:1px solid #c5d3dd!important;
-  border-radius:9px!important;
-  padding:9px 12px!important;
-  margin:0 0 14px!important;
-  font-size:13px!important;
-  font-weight:700!important;
-  line-height:1.9!important;
-  opacity:1!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group,
-html body #app section#home.page.active #adminSummary .summary-group{
-  min-width:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  gap:11px!important;
-  padding:14px!important;
-  background:linear-gradient(155deg,#f9fcfe 0%,#eaf2f7 100%)!important;
-  border:1px solid #b8cbd8!important;
-  border-top:4px solid #398d99!important;
-  border-radius:14px!important;
-  color:#1c394e!important;
-  box-shadow:0 4px 12px rgba(20,48,70,.09)!important;
-  opacity:1!important;filter:none!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group > h3,
-html body #app section#home.page.active #adminSummary .summary-group > h3{
-  display:block!important;
-  color:#173c56!important;
-  -webkit-text-fill-color:#173c56!important;
-  background:#dceaf2!important;
-  border:1px solid #bfd1dd!important;
-  border-right:4px solid #278b91!important;
-  border-radius:9px!important;
-  padding:9px 11px!important;
-  margin:0!important;
-  font-size:15px!important;
-  font-weight:900!important;
-  line-height:1.85!important;
-  text-align:right!important;
-  opacity:1!important;visibility:visible!important;
-  text-shadow:none!important;filter:none!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-metrics,
-html body #app section#home.page.active #adminSummary .summary-metrics{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:9px!important;
-  align-items:stretch!important;
-  margin:0!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-metrics .stat,
-html body #app section#home.page.active #adminSummary .summary-metrics .stat{
-  min-width:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:space-between!important;
-  gap:7px!important;
-  padding:10px 9px!important;
-  color:#314c60!important;
-  -webkit-text-fill-color:#314c60!important;
-  background:#ffffff!important;
-  border:1px solid #d0dce4!important;
-  border-radius:10px!important;
-  font-size:12px!important;
-  font-weight:800!important;
-  line-height:1.8!important;
-  text-align:center!important;
-  opacity:1!important;filter:none!important;
-  box-shadow:0 2px 6px rgba(20,48,70,.05)!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-metrics .stat strong,
-html body #app section#home.page.active #adminSummary .summary-metrics .stat strong{
-  display:block!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  color:#123f60!important;
-  -webkit-text-fill-color:#123f60!important;
-  background:linear-gradient(135deg,#e2f0f6,#d4e7f0)!important;
-  border:1px solid #c1d8e3!important;
-  border-radius:8px!important;
-  padding:5px 7px!important;
-  margin:0!important;
-  font-size:24px!important;
-  font-weight:1000!important;
-  line-height:1.45!important;
-  font-variant-numeric:tabular-nums!important;
-  opacity:1!important;
-}
-html body #app section#home.page.active #departmentSummary .summary-group *,
-html body #app section#home.page.active #adminSummary .summary-group *{
-  text-shadow:none!important;
-  filter:none!important;
-  mix-blend-mode:normal!important;
-  -webkit-text-stroke:0!important;
-}
-@media(max-width:900px){
-  html body #app section#home.page.active #departmentSummary,
-  html body #app section#home.page.active #adminSummary .summary-groups{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  }
-}
-@media(max-width:560px){
-  html body #app section#home.page.active #departmentSummary,
-  html body #app section#home.page.active #adminSummary .summary-groups{
-    grid-template-columns:1fr!important;
-    gap:11px!important;
-  }
-  html body #app section#home.page.active #adminSummary > .panel{padding:13px!important}
-  html body #app section#home.page.active #departmentSummary .summary-group,
-  html body #app section#home.page.active #adminSummary .summary-group{padding:12px!important}
-}
-</style>
 
 
-<style id="dashboard-summary-executive-design">
-/* Executive dashboard refresh: restrained navy surfaces, distinct category accents, crisp typography. */
-html body #app:not(.hidden) section#home.page.active #departmentSummary,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:16px!important;
-  align-items:stretch!important;
-  margin:16px 0!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel{
-  background:linear-gradient(145deg,#263f54 0%,#1e3448 100%)!important;
-  border:1px solid #49657b!important;
-  border-radius:18px!important;
-  padding:19px!important;
-  box-shadow:0 9px 24px rgba(10,27,42,.18)!important;
-  color:#f5f8fb!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2{
-  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
-  background:transparent!important;background-color:transparent!important;
-  border:0!important;border-right:5px solid #42c2bd!important;
-  border-radius:0!important;padding:3px 13px 3px 0!important;
-  margin:0 0 9px!important;font-size:19px!important;font-weight:950!important;
-  line-height:1.9!important;text-shadow:none!important;filter:none!important;
-}
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > p{
-  color:#d6e3ed!important;-webkit-text-fill-color:#d6e3ed!important;
-  background:rgba(255,255,255,.055)!important;
-  border:1px solid rgba(194,216,231,.18)!important;
-  border-radius:10px!important;padding:10px 13px!important;
-  margin:0 0 15px!important;font-size:13px!important;font-weight:700!important;
-  line-height:1.9!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group{
-  --summary-accent:#3b82a8;
-  position:relative!important;isolation:isolate!important;
-  min-width:0!important;display:flex!important;flex-direction:column!important;
-  gap:13px!important;padding:16px!important;
-  background:linear-gradient(155deg,#f8fbfd 0%,#e8f0f5 100%)!important;
-  border:1px solid #b7c9d5!important;border-top:4px solid var(--summary-accent)!important;
-  border-radius:15px!important;color:#1a3448!important;
-  box-shadow:0 5px 14px rgba(6,25,40,.13)!important;
-  opacity:1!important;filter:none!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group:nth-child(2),
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group:nth-child(2){--summary-accent:#168b83}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group:nth-child(3),
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group:nth-child(3){--summary-accent:#7862a9}
-html body #app:not(.hidden) section#home.page.active #adminSummary > .panel:nth-child(2) .summary-group:nth-child(1){--summary-accent:#bd8b35}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3{
-  display:flex!important;align-items:center!important;
-  min-height:43px!important;box-sizing:border-box!important;
-  color:#17364c!important;-webkit-text-fill-color:#17364c!important;
-  background:transparent!important;background-color:transparent!important;
-  border:0!important;border-right:4px solid var(--summary-accent)!important;
-  border-radius:0!important;padding:2px 11px 2px 0!important;margin:0!important;
-  font-size:16px!important;font-weight:950!important;line-height:1.85!important;
-  text-align:right!important;opacity:1!important;visibility:visible!important;
-  text-shadow:none!important;filter:none!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:9px!important;align-items:stretch!important;margin:0!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat{
-  min-width:0!important;box-sizing:border-box!important;
-  display:flex!important;flex-direction:column!important;justify-content:space-between!important;
-  gap:9px!important;padding:11px 9px!important;
-  color:#334e62!important;-webkit-text-fill-color:#334e62!important;
-  background:#ffffff!important;background-image:none!important;
-  border:1px solid #d2dee6!important;border-radius:11px!important;
-  font-size:12px!important;font-weight:850!important;line-height:1.85!important;
-  text-align:center!important;opacity:1!important;filter:none!important;
-  box-shadow:0 2px 7px rgba(16,42,60,.055)!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat strong,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat strong{
-  display:block!important;box-sizing:border-box!important;width:100%!important;
-  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
-  background:var(--summary-accent)!important;background-image:none!important;
-  border:0!important;border-radius:8px!important;
-  padding:7px 5px!important;margin:0!important;
-  font-size:25px!important;font-weight:1000!important;line-height:1.4!important;
-  font-variant-numeric:tabular-nums!important;opacity:1!important;
-}
-html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group *,
-html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group *{
-  text-shadow:none!important;filter:none!important;mix-blend-mode:normal!important;
-  -webkit-text-stroke:0!important;
-}
-@media(max-width:900px){
- html body #app:not(.hidden) section#home.page.active #departmentSummary,
- html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
-   grid-template-columns:repeat(2,minmax(0,1fr))!important;
- }
-}
-@media(max-width:560px){
- html body #app:not(.hidden) section#home.page.active #departmentSummary,
- html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
-   grid-template-columns:1fr!important;gap:11px!important;
- }
- html body #app:not(.hidden) section#home.page.active #adminSummary > .panel{padding:14px!important}
-}
-</style>
+
+
