@@ -3157,7 +3157,7 @@ html body #app section#home.page.active #adminSummary .summary-group *{
    <div class="summary-group"><h3>بەشی مۆڵەتی درێژخایەن</h3><div class="summary-metrics"><div class="stat">فەرمانبەرانی مۆڵەتی درێژخایەن<strong id="officeLongEmp">0</strong></div><div class="stat">مۆڵەتە درێژخایەنەکان<strong id="officeLong">0</strong></div></div></div>
   </div>
  </div>
-</div><div class="panel global-delete-panel"><h2>سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە تەنها تۆمارەکانی ئەم هەژمارە لە بەشی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. لە هەژماری سەرپەرشتیاری گشتیدا هیچ داتای فەرمانگەکان ناسڕدرێتەوە. هەڵبژاردەکان و هەژماری چوونەژوورەوە دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn" data-action="global-delete" onclick="if(typeof window.runGlobalDelete==='function'){window.runGlobalDelete(event)}else{alert('فەرمانی سڕینەوە بارنەبووە؛ پەڕەکە نوێ بکەرەوە.')}">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div id="adminEmployeeSearches" style="display:none">
+</div><div class="panel global-delete-panel"><h2 style="color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;background:#173b59!important;background-color:#173b59!important;background-image:none!important;background-clip:border-box!important;-webkit-background-clip:border-box!important;text-shadow:none!important;opacity:1!important;visibility:visible!important;filter:none!important;mix-blend-mode:normal!important;-webkit-text-stroke:0!important;">سڕینەوەی گشتی</h2><p class="muted">ئەم کردارە تەنها تۆمارەکانی ئەم هەژمارە لە بەشی فەرمانبەران، مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن دەسڕێتەوە. لە هەژماری سەرپەرشتیاری گشتیدا هیچ داتای فەرمانگەکان ناسڕدرێتەوە. هەڵبژاردەکان و هەژماری چوونەژوورەوە دەمێننەوە.</p><button id="globalDeleteBtn" type="button" class="btn global-delete-btn" data-action="global-delete" onclick="if(typeof window.runGlobalDelete==='function'){window.runGlobalDelete(event)}else{alert('فەرمانی سڕینەوە بارنەبووە؛ پەڕەکە نوێ بکەرەوە.')}">سڕینەوەی گشتی</button><div id="globalDeleteStatus" role="status" aria-live="polite" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f4f7fa;font-weight:600"></div></div><div class="panel"><h2>ئاگادارکردنەوەی مۆڵەتی درێژخایەن</h2><div id="longLeaveAlerts" aria-live="polite" class="muted">هیچ ئاگادارکردنەوەیەک نییە.</div></div><div id="adminEmployeeSearches" style="display:none">
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری سەرپەرشتیاری گشتی</h2><form id="adminOwnEmpSearch"><div class="field"><label for="adminOwnMainCode">کۆدی فەرمانبەر</label><input id="adminOwnMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOwnSearch">پاککردنەوە</button></div></form><div id="adminOwnEmpResult" class="msg hidden" aria-live="polite"></div></div>
  <div class="panel"><h2>گەڕان بە کۆدی فەرمانبەرانی هەژماری فەرمانگەکان</h2><form id="adminOfficeEmpSearch"><div class="field"><label for="adminOfficeMainCode">کۆدی فەرمانبەر</label><input id="adminOfficeMainCode" autocomplete="off" placeholder="کۆدی فەرمانبەر بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearAdminOfficeSearch">پاککردنەوە</button></div></form><div id="adminOfficeEmpResult" class="msg hidden" aria-live="polite"></div></div>
 </div>
@@ -5340,58 +5340,4 @@ html body #app section#home.page.active > .panel.global-delete-panel > p *{
 }
 </style>
 
-<style id="global-delete-heading-final-readable">
-/* High-contrast heading for the global delete panel. */
-html body #app .global-delete-panel h2,
-html body #app .global-delete-panel > h2,
-html body #app div.global-delete-panel h2{
-  display:block!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  background:#173b59!important;
-  background-color:#173b59!important;
-  background-image:none!important;
-  border:1px solid #0d2a42!important;
-  border-right:7px solid #28a6a0!important;
-  border-radius:10px!important;
-  padding:13px 17px!important;
-  margin:0 0 14px!important;
-  font-family:'Noto Sans Arabic',sans-serif!important;
-  font-size:20px!important;
-  font-weight:900!important;
-  line-height:2!important;
-  text-align:right!important;
-  opacity:1!important;
-  visibility:visible!important;
-  text-shadow:none!important;
-  filter:none!important;
-  mix-blend-mode:normal!important;
-  -webkit-text-stroke:0!important;
-}
-html body #app .global-delete-panel h2 *,
-html body #app .global-delete-panel > h2 *{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  opacity:1!important;
-  visibility:visible!important;
-  text-shadow:none!important;
-  filter:none!important;
-}
-</style>
 
-<style id="global-delete-heading-white-final">
-/* Force only the global-delete heading text to white; preserve its existing background and layout. */
-html body #app section#home.page.active .panel.global-delete-panel > h2,
-html body #app section#home.page.active .panel.global-delete-panel > h2 *,
-html body #app .global-delete-panel h2,
-html body #app .global-delete-panel h2 *{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  opacity:1!important;
-  visibility:visible!important;
-  text-shadow:none!important;
-  filter:none!important;
-}
-</style>
