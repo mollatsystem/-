@@ -3687,6 +3687,11 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor .sm-card h3{font-size:14px;color:#345b7c;margin:0 0 9px}
 #storageMonitor .sm-value{font-size:25px;font-weight:900;color:#173b60;direction:ltr;text-align:right;overflow-wrap:anywhere}
 #storageMonitor .sm-sub{font-size:12px;color:#63778a;margin-top:5px;line-height:1.8}
+#storageMonitor .sm-departments-summary{display:flex;flex-direction:row;direction:ltr;align-items:center;justify-content:space-between;gap:14px}
+#storageMonitor .sm-department-count{flex:0 0 auto;min-width:76px;text-align:center;direction:rtl;border-left:1px solid #d5e0eb;padding-left:14px}
+#storageMonitor .sm-department-count-title{font-size:13px;font-weight:800;color:#345b7c}
+#storageMonitor .sm-department-count-number{font-size:30px;font-weight:900;line-height:1.25;color:#173b60}
+#storageMonitor .sm-departments-data{flex:1;min-width:0;direction:rtl;text-align:right}
 #storageMonitor .sm-bar{height:12px;border-radius:20px;background:#e8eef4;overflow:hidden;margin:12px 0 6px}
 #storageMonitor .sm-bar span{display:block;height:100%;border-radius:20px;background:#3685b9;transition:width .25s}
 #storageMonitor .sm-bar span.warning{background:#d89a2b}
@@ -3999,7 +4004,7 @@ function smRenderMonitor(data){
   const departmentRows=Array.isArray(data.departments)?data.departments:[];
   const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
   const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div><div class="sm-sub">'+departmentRows.length.toLocaleString('en-US')+'</div></div>';
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-departments-summary"><div class="sm-department-count"><div class="sm-department-count-title">فەرمانگە</div><div class="sm-department-count-number">'+departmentRows.length.toLocaleString('en-US')+'</div></div><div class="sm-departments-data"><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div></div></div>';
   html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
   for(const o of (data.departments||[])){
    const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
