@@ -3757,7 +3757,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 function say(t){$('msg').textContent=t;$('msg').classList.remove('hidden')}
 function set(id,v){$(id).value=v??''}function clear(ids){ids.forEach(id=>set(id,''))}
 function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
-document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page(b.dataset.page);if(b.dataset.page==='printPermissions')requestAnimationFrame(()=>$('printPermMainCode')?.focus())});
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page(b.dataset.page);if(b.dataset.page==='printPermissions')requestAnimationFrame(()=>$('printPermMainCode')?.focus());if(b.dataset.page==='printLeave')requestAnimationFrame(()=>$('printLeaveMainCode')?.focus())});
 
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
 function normalizeMainCode(v){return latinDigits(v||'').replace(/\s+/g,'').trim().toLowerCase()}
