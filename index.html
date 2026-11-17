@@ -1010,6 +1010,14 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
   visibility:visible!important;
   opacity:1!important;
 }
+
+/* Match the registered-offices logo tile background to the dashboard logo. */
+#app nav.nav > button#registeredOrganizationsNav > svg.registered-offices-nav-icon > rect:first-of-type{
+  fill:#176f83!important;
+}
+#app nav.nav > button#registeredOrganizationsNav:hover > svg.registered-offices-nav-icon > rect:first-of-type{
+  fill:#1596a0!important;
+}
 </style>
 <style>
 /* Final signed-in header layout: title, centered logo, then a wider email frame. */
