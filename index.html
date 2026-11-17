@@ -5337,7 +5337,7 @@ window.runGlobalDelete = async function(ev){
  var button=document.getElementById('globalDeleteBtn');
  var status=document.getElementById('globalDeleteStatus');
  function report(message,bad){
-  if(status){status.textContent=message;status.style.display='block';var cancelledMessage='کردارەکە هەڵوەشێندرایەوە؛ هیچ زانیارییەک نەسڕایەوە.';status.style.color=message===cancelledMessage?'#000000':(bad?'#9b2525':'#17633b');status.style.webkitTextFillColor=message===cancelledMessage?'#000000':'';status.style.background=bad?'#fff0f0':'#eef8f1';}
+  if(status){status.textContent=message;status.style.display='block';status.style.color='#000000';status.style.webkitTextFillColor='#000000';status.style.background=bad?'#fff0f0':'#eef8f1';}
   else{window.alert(message);}
  }
  if(window.__globalDeleteRunning)return;
