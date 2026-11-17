@@ -3787,6 +3787,34 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor .sm-error{color:#8b2525;background:#fff0f0;border:1px solid #e5b4b4;padding:14px;border-radius:12px}
 @media(max-width:650px){#storageMonitor .sm-header{align-items:stretch;flex-direction:column}#storageMonitor .sm-grid{grid-template-columns:1fr}#storageMonitor .sm-value{font-size:22px}}
 </style>
+<script id="login-password-toggle-standalone">
+(function(){
+  // Use a direct button handler so unrelated document-level listeners cannot
+  // swallow the visibility action.
+  window.toggleLoginPassword = function(ev){
+    if(ev) ev.preventDefault();
+    var field = document.getElementById('password');
+    var button = document.getElementById('togglePassword');
+    if(!field || !button) return false;
+
+    var showing = field.type === 'password';
+    field.type = showing ? 'text' : 'password';
+    button.textContent = showing ? 'شاردنەوە' : 'نیشاندان';
+    button.setAttribute('aria-label', showing ? 'شاردنەوەی وشەی نهێنی' : 'نیشاندانی وشەی نهێنی');
+    button.setAttribute('aria-pressed', showing ? 'true' : 'false');
+
+    // Keep the input active and place the insertion point at its left edge.
+    button.blur();
+    try { field.focus({preventScroll:true}); }
+    catch(ignore) { field.focus(); }
+    if(showing){
+      try { field.setSelectionRange(0, 0, 'forward'); } catch(ignore) {}
+      field.scrollLeft = 0;
+    }
+    return false;
+  };
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -6436,34 +6464,7 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
  touch-action:manipulation!important;cursor:pointer!important;
 }
 </style>
-<script id="login-password-toggle-standalone">
-(function(){
-  // Use a direct button handler so unrelated document-level listeners cannot
-  // swallow the visibility action.
-  window.toggleLoginPassword = function(ev){
-    if(ev) ev.preventDefault();
-    var field = document.getElementById('password');
-    var button = document.getElementById('togglePassword');
-    if(!field || !button) return false;
 
-    var showing = field.type === 'password';
-    field.type = showing ? 'text' : 'password';
-    button.textContent = showing ? 'شاردنەوە' : 'نیشاندان';
-    button.setAttribute('aria-label', showing ? 'شاردنەوەی وشەی نهێنی' : 'نیشاندانی وشەی نهێنی');
-    button.setAttribute('aria-pressed', showing ? 'true' : 'false');
-
-    // Keep the input active and place the insertion point at its left edge.
-    button.blur();
-    try { field.focus({preventScroll:true}); }
-    catch(ignore) { field.focus(); }
-    if(showing){
-      try { field.setSelectionRange(0, 0, 'forward'); } catch(ignore) {}
-      field.scrollLeft = 0;
-    }
-    return false;
-  };
-})();
-</script>
 
 </html>
 
