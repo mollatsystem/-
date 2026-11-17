@@ -3683,6 +3683,10 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor .sm-header p{margin:0;line-height:1.8}
 #storageMonitor .sm-updated{font-size:12px;margin:0 0 12px;text-align:left}
 #storageMonitor .sm-header-actions{display:flex;flex-direction:column;align-items:flex-start;gap:7px;flex:0 0 auto}
+#storageMonitor #smRefreshBtn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#176b87;border:1px solid #10556d;color:#fff;font-weight:800;border-radius:10px;padding:10px 15px;box-shadow:0 3px 8px rgba(23,107,135,.22);transition:background .18s ease,box-shadow .18s ease,transform .18s ease}
+#storageMonitor #smRefreshBtn:hover:not(:disabled){background:#0f566f;box-shadow:0 5px 12px rgba(23,107,135,.28);transform:translateY(-1px)}
+#storageMonitor #smRefreshBtn:disabled{opacity:.72;cursor:wait}
+#storageMonitor #smRefreshBtn .sm-refresh-icon{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 #storageMonitor .sm-account-name{font-size:13px;font-weight:800;color:#000;text-align:left;direction:rtl;max-width:240px;overflow-wrap:anywhere;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;pointer-events:none;cursor:default}
 @media(max-width:600px){#storageMonitor .sm-header{align-items:flex-start}#storageMonitor .sm-header-actions{max-width:45%}#storageMonitor .sm-account-name{font-size:12px;max-width:100%;text-align:left}}
 #storageMonitor .sm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
@@ -3789,7 +3793,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <section id="storageMonitor" class="page">
   <div class="panel sm-header">
     <div><h2>چاودێری قەبارەی داتا و شوێنی پاشەکەوتکردن</h2><p class="muted">زانیارییەکان لە داتابەیسەوە وەردەگیرێن؛ هەر هەژمار تەنها ئەو زانیارییانە دەبینێت کە مۆڵەتی هەیە بیبینێت.</p></div>
-    <div class="sm-header-actions"><div id="smAccountName" class="sm-account-name" aria-label="ناوی هەژمار" aria-live="polite"></div><button type="button" class="btn" id="smRefreshBtn">نوێکردنەوەی زانیاری</button></div>
+    <div class="sm-header-actions"><div id="smAccountName" class="sm-account-name" aria-label="ناوی هەژمار" aria-live="polite"></div><button type="button" class="btn" id="smRefreshBtn"><svg class="sm-refresh-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M4 17v-5h5M5.6 9A7 7 0 0 1 18 6.5L20 12M4 12l2 5.5A7 7 0 0 0 18.4 15"/></svg><span>نوێکردنەوەی زانیاری</span></button></div>
   </div>
   <div id="smUpdatedAt" class="sm-updated muted" aria-live="polite">چاوەڕێی وەرگرتنی زانیاری...</div>
   <div id="smAlerts" aria-live="polite"></div>
@@ -4054,7 +4058,7 @@ async function refreshStorageMonitor(){
  }catch(e){
   if(content)content.innerHTML='<div class="sm-error">نەتوانرا زانیاریی چاودێری وەربگیرێت: '+esc(e?.message||String(e))+'</div>';
   smSetHomeSignalUnavailable('نەتوانرا نوێ بکرێتەوە');
- }finally{if(btn){btn.disabled=false;btn.textContent='نوێکردنەوەی زانیاری'}}
+ }finally{if(btn)btn.disabled=false}
 }
 $('smRefreshBtn')?.addEventListener('click',refreshStorageMonitor);
 function page(id){if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
