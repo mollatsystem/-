@@ -3959,6 +3959,10 @@ function smProgress(label,value,limit,percent){
  const level=percent>=95?'critical':percent>=85?'danger':percent>=70?'warning':'';
  return '<div class="sm-card"><h3>'+esc(label)+'</h3><div class="sm-value">'+smFormatBytes(value)+'</div><div class="sm-sub">لە کۆی '+smFormatBytes(limit)+'</div><div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,Math.max(0,percent))+'%"></span></div><div class="sm-percent">'+Number(percent||0).toFixed(1)+'%</div></div>';
 }
+function smSignalMarkup(percent){
+ const level=percent>=95?'critical':percent>=85?'danger':percent>=70?'warning':'';
+ return '<div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,Math.max(0,percent))+'%"></span></div><div class="sm-percent">'+Number(percent||0).toFixed(1)+'%</div>';
+}
 function smRenderHomeSignal(data){
  const box=$('homeDataSizeSignal'),value=$('homeDataSizeSignal')?.querySelector('.home-data-size-value'),bar=$('homeDataSizeBar');
  if(!box||!value||!bar)return;
@@ -4000,11 +4004,12 @@ function smRenderMonitor(data){
   html+=smProgress('بەکارهێنانی ڕاستەقینەی داتابەیسی گشتی',project.database_bytes,dbLimit,dbPct);
   html+=smProgress('بەکارهێنانی شوێنی فایلەکان',project.file_storage_bytes,fileLimit,filePct);
   html+='<div class="sm-card"><h3>ژمارەی فایلە بارکراوەکان</h3><div class="sm-value">'+Number(project.file_object_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">هەموو فایلەکانی پرۆژە</div></div>';
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div></div>';
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(ownDbPct)+'</div>';
   const departmentRows=Array.isArray(data.departments)?data.departments:[];
   const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
   const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-departments-summary"><div class="sm-department-count"><div class="sm-department-count-title">فەرمانگە</div><div class="sm-department-count-number">'+departmentRows.length.toLocaleString('en-US')+'</div></div><div class="sm-departments-data"><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div></div></div>';
+  const allDepartmentsPct=dbLimit?allDepartmentsBytes/dbLimit*100:0;
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-departments-summary"><div class="sm-department-count"><div class="sm-department-count-title">فەرمانگە</div><div class="sm-department-count-number">'+departmentRows.length.toLocaleString('en-US')+'</div></div><div class="sm-departments-data"><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div></div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(allDepartmentsPct)+'</div>';
   html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
   for(const o of (data.departments||[])){
    const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
