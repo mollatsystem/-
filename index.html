@@ -3358,6 +3358,103 @@ html body #app #registeredOrganizations .registered-org-page{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
 }
 </style>
+<style id="registered-organizations-components-match">
+/* Unify the registered-organizations page, search controls, and list components with the department search design. */
+html body #app #registeredOrganizations .registered-org-page{
+  box-sizing:border-box!important;
+  margin:15px 0!important;padding:14px!important;
+  border:1px solid #c3d7e1!important;border-radius:14px!important;
+  background:linear-gradient(145deg,#c2d5e0 0%,#b5cad7 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+html body #app #registeredOrganizations .registered-org-page>h2{
+  margin:0 0 12px!important;color:#1c4b66!important;font-weight:950!important;
+}
+html body #app #registeredOrganizations .registered-org-search{
+  box-sizing:border-box!important;
+  margin:15px 0!important;padding:14px!important;
+  border:1px solid #c3d7e1!important;border-radius:14px!important;
+  background:linear-gradient(145deg,#c2d5e0 0%,#b5cad7 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+html body #app #registeredOrganizations .registered-org-search>label{
+  display:block!important;margin:0 0 8px!important;
+  color:#193f5a!important;font-size:14px!important;font-weight:850!important;
+}
+html body #app #registeredOrganizations .registered-org-search>label:before{display:none!important;content:none!important}
+html body #app #registeredOrganizations .registered-org-search-row{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;
+  gap:9px!important;align-items:stretch!important;
+}
+html body #app #registeredOrganizations .registered-org-search-row input{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;min-height:44px!important;
+  padding:10px 12px!important;direction:rtl!important;text-align:right!important;
+  background:#fff!important;color:#17334a!important;-webkit-text-fill-color:#17334a!important;
+  border:2px solid #8ba5ba!important;border-radius:8px!important;
+  box-shadow:none!important;font-size:14px!important;font-weight:700!important;
+}
+html body #app #registeredOrganizations .registered-org-search-row input::placeholder{
+  color:#8293a5!important;-webkit-text-fill-color:#8293a5!important;opacity:1!important;
+}
+html body #app #registeredOrganizations .registered-org-search-row input:focus{
+  outline:0!important;border-color:#24758a!important;
+  box-shadow:0 0 0 3px rgba(36,117,138,.14)!important;
+}
+html body #app #registeredOrganizations .registered-org-search-row button{
+  box-sizing:border-box!important;min-width:92px!important;min-height:44px!important;
+  padding:8px 14px!important;border-radius:9px!important;
+  color:#fff!important;background:linear-gradient(135deg,#168b98 0%,#17647f 100%)!important;
+  border:1px solid #145d73!important;font-size:14px!important;font-weight:850!important;
+  box-shadow:0 2px 6px rgba(24,88,119,.13)!important;white-space:nowrap!important;
+}
+html body #app #registeredOrganizations #registeredOrgSearchClearBtn{
+  color:#29465f!important;background:linear-gradient(145deg,#e8f0f5 0%,#cbdbe5 100%)!important;
+  border:1px solid #afc1d1!important;box-shadow:0 2px 5px rgba(25,53,78,.06)!important;
+}
+html body #app #registeredOrganizations .registered-org-search-row button:hover{
+  filter:brightness(.97)!important;transform:translateY(-1px);
+}
+html body #app #registeredOrganizations .registered-org-message{
+  margin-top:11px!important;padding:11px 13px!important;border-radius:10px!important;
+  font-weight:750!important;line-height:1.8!important;
+}
+html body #app #registeredOrganizations .registered-org-list{
+  box-sizing:border-box!important;min-height:48px!important;margin:0!important;padding:13px!important;
+  border:1px solid #c5d7e1!important;border-radius:13px!important;
+  background:linear-gradient(145deg,#c5d5df 0%,#b7cbd8 100%)!important;
+  color:#2d4a5e!important;font-size:12px!important;font-weight:700!important;line-height:1.9!important;
+  box-shadow:inset 0 1px 2px rgba(28,57,78,.08)!important;
+}
+html body #app #registeredOrganizations .registered-org-list ol{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;margin:0!important;padding-inline-start:32px!important;align-items:stretch!important;
+}
+html body #app #registeredOrganizations .registered-org-list li{
+  box-sizing:border-box!important;min-width:0!important;overflow-wrap:anywhere!important;
+  direction:rtl!important;text-align:right!important;
+  min-height:58px!important;padding:12px 14px!important;
+  border:1px solid #c3d5df!important;border-right:4px solid #278d99!important;
+  border-radius:11px!important;
+  background:linear-gradient(145deg,#fff 0%,#e8f0f5 100%)!important;
+  color:#183e56!important;font-size:14px!important;font-weight:850!important;
+  box-shadow:0 3px 9px rgba(29,65,87,.07)!important;
+}
+html body #app #registeredOrganizations .registered-org-list li.is-search-match{
+  background:linear-gradient(110deg,#fff2b8 0%,#ffe28a 100%)!important;
+  border:1.5px solid #d6a52b!important;border-right:5px solid #c58b13!important;
+  color:#563b08!important;
+}
+@media(max-width:600px){
+  html body #app #registeredOrganizations .registered-org-page{padding:12px!important}
+  html body #app #registeredOrganizations .registered-org-search{padding:12px!important}
+  html body #app #registeredOrganizations .registered-org-search-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+  html body #app #registeredOrganizations .registered-org-search-row input{grid-column:1/-1!important}
+  html body #app #registeredOrganizations .registered-org-search-row button{width:100%!important;min-width:0!important}
+  html body #app #registeredOrganizations .registered-org-list{padding:9px!important}
+  html body #app #registeredOrganizations .registered-org-list ol{gap:7px!important;padding-inline-start:27px!important}
+  html body #app #registeredOrganizations .registered-org-list li{padding:9px 8px!important;font-size:13px!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
