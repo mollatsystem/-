@@ -3787,6 +3787,25 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor .sm-error{color:#8b2525;background:#fff0f0;border:1px solid #e5b4b4;padding:14px;border-radius:12px}
 @media(max-width:650px){#storageMonitor .sm-header{align-items:stretch;flex-direction:column}#storageMonitor .sm-grid{grid-template-columns:1fr}#storageMonitor .sm-value{font-size:22px}}
 </style>
+<style id="home-employee-search-icon-style">
+/* Keep the search icon clearly visible beside the label in the department dashboard. */
+html body #departmentEmployeeSearch #homeEmpSearch .home-employee-search-btn{
+ display:inline-flex!important;
+ flex-direction:row!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:8px!important;
+ white-space:nowrap!important;
+}
+html body #departmentEmployeeSearch #homeEmpSearch .home-employee-search-icon{
+ display:block!important;
+ width:19px!important;
+ height:19px!important;
+ min-width:19px!important;
+ flex:0 0 19px!important;
+ overflow:visible!important;
+}
+</style>
 <script id="login-password-toggle-standalone">
 (function(){
   // Use a direct button handler so unrelated document-level listeners cannot
