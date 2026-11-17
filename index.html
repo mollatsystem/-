@@ -3109,11 +3109,31 @@ button[id^="clear"]{
   font-weight:800!important;
 }
 
-/* Emphasize only the super-admin's own employee-code search controls */
-#adminOwnEmpSearch button.btn{font-size:18px!important;font-weight:800!important;min-height:42px;}
-#adminOwnEmpSearch button[type="submit"]{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
-#adminOwnEmpSearch button[type="submit"]{font-size:21px!important;font-weight:900!important;min-height:46px!important;padding:10px 22px!important;}\n#adminOwnEmpSearch button[type="submit"]::before{content:"⌕";display:inline-block;font-family:Arial,sans-serif;font-size:26px;font-weight:900;line-height:1;}
-#adminOwnEmpSearch #clearAdminOwnSearch{font-size:18px!important;font-weight:800!important;}
+/* Make the super-admin's own employee-code search button unmistakably readable */
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  min-height:56px!important;
+  padding:12px 28px!important;
+  font-size:24px!important;
+  line-height:1.5!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]::before{
+  content:"⌕";
+  display:inline-block;
+  font-family:Arial,sans-serif;
+  font-size:30px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+html body #app #adminEmployeeSearches #adminOwnEmpSearch #clearAdminOwnSearch{
+  font-size:18px!important;
+  font-weight:800!important;
+}
 </style>
 </head>
 <body>
