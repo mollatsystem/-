@@ -3797,7 +3797,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <section id="storageMonitor" class="page">
   <div class="panel sm-header">
     <div><h2>چاودێری قەبارەی داتا و شوێنی پاشەکەوتکردن</h2><p class="muted">زانیارییەکان لە داتابەیسەوە وەردەگیرێن؛ هەر هەژمار تەنها ئەو زانیارییانە دەبینێت کە مۆڵەتی هەیە بیبینێت.</p></div>
-    <div class="sm-header-actions"><div id="smAccountName" class="sm-account-name" aria-label="ناوی هەژمار" aria-live="polite"></div><button type="button" class="btn" id="smRefreshBtn"><svg class="sm-refresh-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M4 17v-5h5M5.6 9A7 7 0 0 1 18 6.5L20 12M4 12l2 5.5A7 7 0 0 0 18.4 15"/></svg><span>نوێکردنەوەی زانیاری</span></button></div>
+    <div class="sm-header-actions"><div id="smAccountName" class="sm-account-name" aria-label="ناوی هەژمار" aria-live="polite"></div><button type="button" class="btn" id="smRefreshBtn"><svg class="sm-refresh-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.64 5.64A9 9 0 0 1 20 12"/><path d="M4 12a9 9 0 0 0 14.36 6.36"/></svg><span>نوێکردنەوەی زانیاری</span></button></div>
   </div>
   <div id="smUpdatedAt" class="sm-updated muted" aria-live="polite">چاوەڕێی وەرگرتنی زانیاری...</div>
   <div id="smAlerts" aria-live="polite"></div>
@@ -6221,8 +6221,12 @@ html body #adminOwnEmpResult .admin-office-search-result *{
   height:21px!important;
   min-width:21px!important;
   flex:0 0 21px!important;
+  fill:none!important;
   stroke:#fff!important;
-  stroke-width:2.1!important;
+  stroke-width:2.2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  overflow:visible!important;
   visibility:visible!important;
   opacity:1!important;
 }
