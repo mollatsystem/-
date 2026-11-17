@@ -3224,6 +3224,114 @@ html body #app #adminOrgPanel #adminOrgSearchBox > label{
   font-weight:900!important;
 }
 </style>
+<style id="admin-employee-search-match-org-exact">
+/* Match the two employee-code search panels to the live department-name search controls. */
+/* Outer panel: same effective frame dimensions and colors as #adminOrgSearchBox. */
+html body #app #home #adminEmployeeSearches > .panel{
+  box-sizing:border-box!important;
+  margin:14px 0!important;
+  padding:15px!important;
+  border:1px solid #c3d7e1!important;
+  border-radius:14px!important;
+  background:linear-gradient(145deg,#c2d5e0 0%,#b5cad7 100%)!important;
+  background-color:#c2d5e0!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+/* Label and input: same typography, dimensions, border and white field as organization search. */
+html body #app #home #adminEmployeeSearches > .panel form .field{
+  min-width:0!important;margin:0!important;
+}
+html body #app #home #adminEmployeeSearches > .panel form .field label{
+  display:block!important;margin:0 0 7px!important;
+  color:#12364f!important;font-size:12px!important;font-weight:900!important;line-height:1.8!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnMainCode,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode,
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:hover,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:hover,
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:focus,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:focus,
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:active,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:active{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;min-height:44px!important;
+  padding:10px 12px!important;border:1.5px solid #a9c0cf!important;border-radius:10px!important;
+  background:#fff!important;background-color:#fff!important;background-image:none!important;
+  color:#183b53!important;-webkit-text-fill-color:#183b53!important;caret-color:#183b53!important;
+  font-family:inherit!important;font-size:13px!important;font-weight:650!important;
+  direction:rtl!important;text-align:right!important;
+  box-shadow:inset 0 1px 2px rgba(24,61,84,.045)!important;
+  opacity:1!important;filter:none!important;outline:0!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnMainCode::placeholder,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode::placeholder{
+  color:#61788b!important;-webkit-text-fill-color:#61788b!important;opacity:1!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:focus,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:focus{
+  border-color:#278d99!important;box-shadow:0 0 0 3px rgba(39,141,153,.15)!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:-webkit-autofill,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:-webkit-autofill,
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:-webkit-autofill:hover,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:-webkit-autofill:hover,
+html body #app #home #adminEmployeeSearches #adminOwnMainCode:-webkit-autofill:focus,
+html body #app #home #adminEmployeeSearches #adminOfficeMainCode:-webkit-autofill:focus{
+  -webkit-box-shadow:inset 0 0 0 1000px #fff!important;
+  box-shadow:inset 0 0 0 1000px #fff!important;
+  -webkit-text-fill-color:#183b53!important;
+}
+/* Two equal action buttons; same colors, height, radius and font sizing as department search. */
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions{
+  display:grid!important;grid-template-columns:repeat(2,minmax(112px,148px))!important;
+  gap:10px!important;align-items:stretch!important;justify-content:start!important;
+  width:100%!important;margin:13px 0 0!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"],
+html body #app #home #adminEmployeeSearches #clearAdminOwnSearch,
+html body #app #home #adminEmployeeSearches #clearAdminOfficeSearch{
+  box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;min-width:0!important;min-height:48px!important;height:48px!important;
+  margin:0!important;border-radius:11px!important;
+  font-family:inherit!important;line-height:1.5!important;font-weight:900!important;
+  white-space:nowrap!important;text-align:center!important;cursor:pointer!important;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]{
+  padding:10px 18px!important;border:1px solid #176779!important;
+  background:linear-gradient(135deg,#168b98 0%,#17647f 100%)!important;
+  background-color:#168b98!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+  font-size:21px!important;box-shadow:0 4px 10px rgba(20,91,116,.2)!important;
+}
+html body #app #home #adminEmployeeSearches #clearAdminOwnSearch,
+html body #app #home #adminEmployeeSearches #clearAdminOfficeSearch{
+  padding:10px 16px!important;border:1px solid #8da9ba!important;
+  background:linear-gradient(135deg,#e8f0f5 0%,#cbdbe5 100%)!important;
+  background-color:#e8f0f5!important;color:#234b63!important;-webkit-text-fill-color:#234b63!important;
+  font-size:19px!important;font-weight:850!important;box-shadow:0 3px 8px rgba(27,61,82,.1)!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]:hover,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]:hover{
+  filter:brightness(1.07)!important;transform:translateY(-2px)!important;
+  box-shadow:0 8px 16px rgba(18,65,88,.22)!important;
+}
+html body #app #home #adminEmployeeSearches #clearAdminOwnSearch:hover,
+html body #app #home #adminEmployeeSearches #clearAdminOfficeSearch:hover{
+  filter:brightness(.97)!important;transform:translateY(-2px)!important;
+  box-shadow:0 6px 12px rgba(27,61,82,.15)!important;
+}
+@media(max-width:600px){
+  html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions,
+  html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body #app #home #adminEmployeeSearches button{transition:none!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -4992,31 +5100,6 @@ html body #app section#home.page.active #departmentSummary[style*="display:none"
 }
 </style>
 
-<style id="admin-office-employee-search-input-pure-white-final">
-/* Force the entire input surface to pure white in every interaction state. */
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:focus,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:active,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:autofill{
-  background:#ffffff!important;
-  background-color:#ffffff!important;
-  background-image:none!important;
-  color:#17212b!important;
-  -webkit-text-fill-color:#17212b!important;
-  caret-color:#17212b!important;
-  opacity:1!important;
-  filter:none!important;
-  box-shadow:inset 0 0 0 1000px #ffffff!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:focus{
-  -webkit-box-shadow:inset 0 0 0 1000px #ffffff!important;
-  box-shadow:inset 0 0 0 1000px #ffffff!important;
-  -webkit-text-fill-color:#17212b!important;
-}
-</style>
 <style id="department-recovery-clear-button">
 html body #app #home #adminOrgPanel .department-recovery-actions{
  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(130px,190px)!important;
@@ -5569,86 +5652,6 @@ html body section#app #changePasswordPanel #signedInConfirmPassword:focus{
 </style>
 
 </body>
-<style id="admin-office-employee-search-input-dark-white-text">
-/* Dark field surface with bright white entered text for strong contrast. */
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:focus,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:active{
-  background:#263b50!important;
-  background-color:#263b50!important;
-  background-image:none!important;
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  caret-color:#ffffff!important;
-  border:1px solid #66839c!important;
-  box-shadow:inset 0 0 0 1000px #263b50!important;
-  opacity:1!important;
-  filter:none!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode::placeholder{
-  color:#e5edf4!important;
-  -webkit-text-fill-color:#e5edf4!important;
-  opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:focus{
-  -webkit-box-shadow:inset 0 0 0 1000px #263b50!important;
-  box-shadow:inset 0 0 0 1000px #263b50!important;
-  -webkit-text-fill-color:#ffffff!important;
-  caret-color:#ffffff!important;
-}
-</style>
-
-<style id="admin-office-employee-search-input-extra-dark">
-/* Extra-dark navy input surface; retain high-contrast white text. */
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:focus,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:active{
-  background:#1b2e42!important;
-  background-color:#1b2e42!important;
-  background-image:none!important;
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  caret-color:#ffffff!important;
-  border:1px solid #607991!important;
-  box-shadow:inset 0 0 0 1000px #1b2e42!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode::placeholder{
-  color:#dce6ef!important;
-  -webkit-text-fill-color:#dce6ef!important;
-  opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:-webkit-autofill:focus{
-  -webkit-box-shadow:inset 0 0 0 1000px #1b2e42!important;
-  box-shadow:inset 0 0 0 1000px #1b2e42!important;
-  -webkit-text-fill-color:#ffffff!important;
-  caret-color:#ffffff!important;
-}
-</style>
-
-<style id="admin-office-employee-search-input-pure-white-text">
-/* Make both typed text and placeholder crisp pure white on the dark field. */
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:hover,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:focus,
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode:active{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  caret-color:#ffffff!important;
-  opacity:1!important;
-  text-shadow:0 0 0 #ffffff!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:nth-child(2) #adminOfficeEmpSearch #adminOfficeMainCode::placeholder{
-  color:#ffffff!important;
-  -webkit-text-fill-color:#ffffff!important;
-  opacity:1!important;
-}
-</style>
 <style id="admin-office-employee-search-result-black-text">
 /* Scope directly to the actual result element; do not depend on wrapper structure. */
 html body #adminOfficeEmpResult,
@@ -5674,284 +5677,6 @@ html body #adminOwnEmpResult .admin-office-search-result *{
 }
 </style>
 
-<style id="admin-summary-employee-search-frame-match-org-search">
-/* Match only the outer frame colors, border, lightness and shape of department-name search. */
-html body #app #home #adminEmployeeSearches > .panel{
- margin:12px 0 14px!important;
- padding:14px!important;
- background:linear-gradient(145deg,#e2ebf2 0%,#d5e1eb 100%)!important;
- background-color:#e2ebf2!important;
- border:2px solid #7897ad!important;
- border-radius:12px!important;
- box-shadow:0 3px 10px rgba(25,55,79,.07),inset 0 1px 0 rgba(255,255,255,.85)!important;
-}
-</style>
-
-<style id="admin-summary-employee-search-controls-match-org-search">
-/* Match employee-code search inputs and buttons to the department-name search controls. */
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input{
- width:100%!important;min-width:0!important;box-sizing:border-box!important;
- background:#ffffff!important;background-color:#ffffff!important;background-image:none!important;
- color:#17334a!important;-webkit-text-fill-color:#17334a!important;caret-color:#17334a!important;
- border:2px solid #8ba5ba!important;border-radius:8px!important;padding:10px 12px!important;
- direction:rtl!important;text-align:right!important;box-shadow:none!important;opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input::placeholder,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input::placeholder{
- color:#61788b!important;-webkit-text-fill-color:#61788b!important;opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input:focus,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input:focus{
- background:#ffffff!important;border-color:#347d9b!important;
- box-shadow:0 0 0 3px rgba(52,125,155,.18)!important;outline:none!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
- min-height:42px!important;padding:10px 14px!important;border-radius:8px!important;
- font-size:16px!important;font-weight:800!important;line-height:1.5!important;
- background:#245b78!important;background-image:none!important;color:#ffffff!important;
- -webkit-text-fill-color:#ffffff!important;border:2px solid #17435d!important;
- box-shadow:none!important;white-space:nowrap!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button:hover,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button:hover{
- background:#1d4d67!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray{
- background:#667789!important;background-image:none!important;color:#ffffff!important;
- -webkit-text-fill-color:#ffffff!important;border:2px solid #465a6d!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray:hover,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray:hover{
- background:#4c6073!important;
-}
-</style>
 </html>
 
 
-<style id="admin-own-employee-search-input-match-office">
-/* Match the super-admin employee-code input to the department-account search field. */
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode,
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:hover,
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:focus,
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:active{
-  background:#ffffff!important;
-  background-color:#ffffff!important;
-  background-image:none!important;
-  color:#000000!important;
-  -webkit-text-fill-color:#000000!important;
-  caret-color:#000000!important;
-  border:1px solid #607991!important;
-  box-shadow:inset 0 0 0 1000px #ffffff!important;
-  opacity:1!important;
-  filter:none!important;
-  text-shadow:0 0 0 #000000!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode::placeholder{
-  color:#000000!important;
-  -webkit-text-fill-color:#000000!important;
-  opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:-webkit-autofill,
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:-webkit-autofill:hover,
-html body #app #home #adminEmployeeSearches > .panel:first-child #adminOwnEmpSearch #adminOwnMainCode:-webkit-autofill:focus{
-  -webkit-box-shadow:inset 0 0 0 1000px #ffffff!important;
-  box-shadow:inset 0 0 0 1000px #ffffff!important;
-  -webkit-text-fill-color:#000000!important;
-  caret-color:#000000!important;
-}
-</style>
-
-
-<style id="admin-summary-search-buttons-unified">
-/* Make search and clear buttons identical in both employee-code search panels. */
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:9px!important;
-  min-height:48px!important;
-  padding:10px 20px!important;
-  font-size:20px!important;
-  line-height:1.5!important;
-  font-weight:900!important;
-  white-space:nowrap!important;
-  letter-spacing:0!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]::before,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]::before{
-  content:"⌕";
-  display:inline-block;
-  font-family:Arial,sans-serif;
-  font-size:27px!important;
-  font-weight:900!important;
-  line-height:1!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch #clearAdminOwnSearch,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch #clearAdminOfficeSearch{
-  min-height:48px!important;
-  padding:10px 18px!important;
-  font-size:19px!important;
-  line-height:1.5!important;
-  font-weight:900!important;
-  letter-spacing:0!important;
-  white-space:nowrap!important;
-}
-</style>
-
-
-<style id="admin-summary-search-buttons-final-alignment">
-/* Hard-align both employee search toolbars: equal columns, button dimensions and typography. */
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  align-items:stretch!important;
-  justify-content:stretch!important;
-  gap:10px!important;
-  width:100%!important;
-  margin:13px 0 0!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
-  box-sizing:border-box!important;
-  display:inline-flex!important;
-  flex:initial!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:100%!important;
-  min-width:0!important;
-  max-width:none!important;
-  height:50px!important;
-  min-height:50px!important;
-  max-height:50px!important;
-  margin:0!important;
-  padding:8px 12px!important;
-  border-radius:9px!important;
-  font-family:inherit!important;
-  font-size:18px!important;
-  line-height:1.25!important;
-  font-weight:900!important;
-  letter-spacing:0!important;
-  white-space:nowrap!important;
-  box-shadow:0 2px 5px rgba(20,45,70,.12)!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]{
-  gap:8px!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]::before,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]::before{
-  content:"⌕"!important;
-  display:inline-block!important;
-  font-family:Arial,sans-serif!important;
-  font-size:25px!important;
-  font-weight:900!important;
-  line-height:1!important;
-}
-html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray,
-html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray{
-  font-size:18px!important;
-  font-weight:900!important;
-}
-@media(max-width:420px){
-  html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions,
-  html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions{
-    gap:7px!important;
-  }
-  html body #app #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
-  html body #app #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
-    padding:7px 5px!important;
-    font-size:15px!important;
-  }
-}
-</style>
-
-
-<style id="admin-summary-employee-search-final-org-style-match">
-/* Exact match to #adminOrgPanel #adminOrgSearchBox: frame, fields and action controls. */
-html body #app #home #adminEmployeeSearches > div.panel{
-  box-sizing:border-box!important;
-  margin:15px 0!important;
-  padding:14px!important;
-  border:1px solid #c3d7e1!important;
-  border-radius:14px!important;
-  background:linear-gradient(145deg,#c2d5e0 0%,#b5cad7 100%)!important;
-  background-color:#c2d5e0!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
-}
-html body #app #home #adminEmployeeSearches > div.panel > form .field{
-  min-width:0!important;margin:0!important;
-}
-html body #app #home #adminEmployeeSearches > div.panel > form .field label{
-  display:block!important;margin:0 0 7px!important;
-  color:#12364f!important;font-size:12px!important;font-weight:900!important;line-height:1.8!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnMainCode,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode,
-html body #app #home #adminEmployeeSearches #adminOwnMainCode:hover,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode:hover,
-html body #app #home #adminEmployeeSearches #adminOwnMainCode:focus,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode:focus,
-html body #app #home #adminEmployeeSearches #adminOwnMainCode:active,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode:active{
-  box-sizing:border-box!important;width:100%!important;min-width:0!important;min-height:44px!important;
-  padding:10px 12px!important;border:1.5px solid #a9c0cf!important;border-radius:10px!important;
-  background:#ffffff!important;background-color:#ffffff!important;background-image:none!important;
-  color:#183b53!important;-webkit-text-fill-color:#183b53!important;caret-color:#183b53!important;
-  font-family:inherit!important;font-size:13px!important;font-weight:650!important;
-  direction:rtl!important;text-align:right!important;
-  box-shadow:inset 0 1px 2px rgba(24,61,84,.045)!important;
-  opacity:1!important;filter:none!important;outline:0!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnMainCode::placeholder,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode::placeholder{
-  color:#61788b!important;-webkit-text-fill-color:#61788b!important;opacity:1!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnMainCode:focus,
-html body #app #home #adminEmployeeSearches #adminOfficeMainCode:focus{
-  border-color:#278d99!important;box-shadow:0 0 0 3px rgba(39,141,153,.15)!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:9px!important;align-items:stretch!important;width:100%!important;margin:13px 0 0!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch #adminOwnEmpSearchBtn,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch #adminOfficeEmpSearchBtn,
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"],
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]{
-  box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  width:100%!important;min-width:0!important;min-height:45px!important;height:45px!important;
-  margin:0!important;padding:10px 16px!important;border:1px solid #176779!important;border-radius:11px!important;
-  background:linear-gradient(135deg,#168b98 0%,#17647f 100%)!important;
-  background-color:#168b98!important;color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
-  font-family:inherit!important;font-size:12px!important;font-weight:900!important;line-height:1.5!important;
-  white-space:nowrap!important;text-align:center!important;box-shadow:0 4px 10px rgba(20,91,116,.2)!important;
-}
-html body #app #home #adminEmployeeSearches #clearAdminOwnSearch,
-html body #app #home #adminEmployeeSearches #clearAdminOfficeSearch{
-  box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  width:100%!important;min-width:0!important;min-height:45px!important;height:45px!important;
-  margin:0!important;padding:10px 16px!important;border:1px solid #8da9ba!important;border-radius:11px!important;
-  background:linear-gradient(135deg,#e8f0f5 0%,#cbdbe5 100%)!important;
-  background-color:#e8f0f5!important;color:#234b63!important;-webkit-text-fill-color:#234b63!important;
-  font-family:inherit!important;font-size:12px!important;font-weight:850!important;line-height:1.5!important;
-  white-space:nowrap!important;text-align:center!important;box-shadow:0 3px 8px rgba(27,61,82,.1)!important;
-}
-html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button[type="submit"]:hover,
-html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button[type="submit"]:hover{
-  filter:brightness(1.07)!important;
-}
-html body #app #home #adminEmployeeSearches #clearAdminOwnSearch:hover,
-html body #app #home #adminEmployeeSearches #clearAdminOfficeSearch:hover{
-  filter:brightness(.97)!important;
-}
-@media(max-width:600px){
-  html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions,
-  html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions{gap:8px!important}
-}
-</style>
