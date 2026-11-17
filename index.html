@@ -4953,6 +4953,13 @@ function searchAdminOrganization(){
  if(matches.length){
   msg.classList.add('is-found');
   msg.innerHTML=matches.map(o=>'<div><strong>هەژماری ئەم فەرمانگەیە دروستکراوە:</strong> '+esc(o.name)+' — '+(o.is_active?'چالاکە':'ناچالاکە')+'</div>').join('');
+  // Force the successful department-account search message and all its text black.
+  msg.style.setProperty('color','#000000','important');
+  msg.style.setProperty('-webkit-text-fill-color','#000000','important');
+  msg.querySelectorAll('*').forEach(node=>{
+   node.style.setProperty('color','#000000','important');
+   node.style.setProperty('-webkit-text-fill-color','#000000','important');
+  });
  }else{
   msg.classList.add('is-missing');
   msg.textContent='هیچ فەرمانگەیەک بەو ناوە نەدۆزرایەوە؛ هەژماری ئەم فەرمانگەیە لە لیستی تۆمارکراوەکاندا نییە.';
@@ -6408,11 +6415,11 @@ body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
 
 
 <style id="admin-org-search-success-text-black">
-html body #app #adminOrgPanel #adminOrgSearchMsg.is-found,
-html body #app #adminOrgPanel #adminOrgSearchMsg.is-found *,
-html body #app #home #adminOrgPanel #adminOrgSearchMsg.is-found,
-html body #app #home #adminOrgPanel #adminOrgSearchMsg.is-found *{
- color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;text-shadow:none!important;
+html body #app #home #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-found,
+html body #app #home #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-found *,
+html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-found,
+html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-found *{
+ color:#000000!important;-webkit-text-fill-color:#000000!important;opacity:1!important;text-shadow:none!important;
 }
 </style>
 <style id="login-password-toggle-interaction-fix">
