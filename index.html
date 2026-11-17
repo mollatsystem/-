@@ -3624,6 +3624,11 @@ html body #app section#longLeaves #ltFindEmployee .lt-employee-search-icon{width
 html body #app section#longLeaves #searchLongLeaveNow.lt-records-search-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
 html body #app section#longLeaves #searchLongLeaveNow .lt-records-search-icon{width:19px!important;height:19px!important;display:block!important;flex:0 0 19px!important;}
 </style>
+
+<style id="long-watch-search-icon-style">
+html body #app section#longLeaveWatch #longLeaveWatchSearchBtn.long-watch-search-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
+html body #app section#longLeaveWatch #longLeaveWatchSearchBtn .long-watch-search-icon{width:19px!important;height:19px!important;display:block!important;flex:0 0 19px!important;}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -3754,7 +3759,7 @@ html body #app section#longLeaves #searchLongLeaveNow .lt-records-search-icon{wi
   <div class="long-watch-title"><div><h2>چاودێری مۆڵەتی درێژخایەن</h2><p class="muted">لیستی جیاکراوەی مۆڵەتە درێژخایەنەکان لە هەموو فەرمانگەکان، لەگەڵ تەواوی زانیاریی فەرمانبەر و وردەکاریی مۆڵەت.</p></div><span class="long-watch-shield">تەنها سەرپەرشتیاری گشتی</span></div>
   <div class="long-watch-search">
    <input id="longLeaveWatchSearch" type="search" autocomplete="off" placeholder="بگەڕێ بە کۆدی سەرەکی، ژمارەی دۆسیە یان ناوی فەرمانبەر...">
-   <button class="btn" type="button" id="longLeaveWatchSearchBtn">گەڕان</button>
+   <button class="btn long-watch-search-btn" type="button" id="longLeaveWatchSearchBtn"><svg class="long-watch-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.6 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>گەڕان</span></button>
    <button class="btn gray" type="button" id="longLeaveWatchClearBtn">پاککردنەوە</button>
   </div>
   <div id="longLeaveWatchMsg" class="muted" aria-live="polite"></div>
