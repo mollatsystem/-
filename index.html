@@ -3661,9 +3661,18 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 .home-data-size-value{font-size:14px;font-weight:900;direction:ltr;unicode-bidi:isolate;color:#174f4b}
 .home-data-size-track{display:block;flex:1 1 220px;width:auto;min-width:100px;height:12px;background:#cfe3df;border-radius:20px;overflow:hidden}
 .home-data-size-track i{display:block;width:0;height:100%;background:#287f78;border-radius:20px;transition:width .25s}
-.home-data-size.warning .home-data-size-track i{background:#d89a2b}
-.home-data-size.danger .home-data-size-track i{background:#df7135}
-.home-data-size.critical .home-data-size-track i{background:#c83232}
+.home-data-size.warning{border-color:#e0bd70;border-right-color:#c18a22;background:linear-gradient(100deg,#fff9e9 0%,#f8edcf 100%)}
+.home-data-size.warning strong,.home-data-size.warning .home-data-size-value{color:#805b16}
+.home-data-size.warning .home-data-size-track i{background:#d6a12e}
+.home-data-size.danger{border-color:#e8aa7d;border-right-color:#d66a2d;background:linear-gradient(100deg,#fff4ec 0%,#f9e2d2 100%)}
+.home-data-size.danger strong,.home-data-size.danger .home-data-size-value{color:#98451d}
+.home-data-size.danger .home-data-size-track i{background:#e47736}
+.home-data-size.critical{border-color:#d99aa5;border-right-color:#b83f57;background:linear-gradient(100deg,#fff0f3 0%,#f5dce2 100%)}
+.home-data-size.critical strong,.home-data-size.critical .home-data-size-value{color:#842b40}
+.home-data-size.critical .home-data-size-track i{background:#c34a5f}
+.home-data-size.full{border-color:#e08b8b;border-right-color:#b80000;background:linear-gradient(100deg,#fff0f0 0%,#f5d4d4 100%)}
+.home-data-size.full strong,.home-data-size.full .home-data-size-value{color:#990000}
+.home-data-size.full .home-data-size-track i{background:#d00000}
 @media(max-width:600px){.home-data-size{gap:10px;padding:11px 12px}.home-data-size-heading{width:100%;justify-content:space-between}.home-data-size-track{flex-basis:100%;height:10px}}
 </style>
 <style id="storage-monitor-ui">
@@ -3956,14 +3965,15 @@ function smRenderHomeSignal(data){
  bar.style.width=pct+'%';
  box.classList.toggle('warning',pct>=70&&pct<85);
  box.classList.toggle('danger',pct>=85&&pct<95);
- box.classList.toggle('critical',pct>=95);
+ box.classList.toggle('critical',pct>=95&&pct<100);
+ box.classList.toggle('full',pct>=100);
  box.title=data?.role==='super_admin'?'بەکارهێنانی گشتیی داتابەیس': 'خەمڵاندنی قەبارەی داتای ئەم فەرمانگەیە لە بەرامبەر سنووری گشتی';
 }
 function smSetHomeSignalUnavailable(message){
  const box=$('homeDataSizeSignal'),value=box?.querySelector('.home-data-size-value'),bar=$('homeDataSizeBar');
  if(value)value.textContent=message||'بەردەست نییە';
  if(bar)bar.style.width='0%';
- if(box)box.classList.remove('warning','danger','critical');
+ if(box)box.classList.remove('warning','danger','critical','full');
 }
 function smRenderMonitor(data){
  const content=$('smMonitorContent'),alerts=$('smAlerts');
