@@ -3946,8 +3946,21 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <script>
 const SUPABASE_URL='https://znomldkvmhbvvbzqldmi.supabase.co',KEY='sb_publishable_z_f3Wc32pGg6in2tDRq5Ug_yg4XqoLH';const TARGET_ACCOUNT_EMAIL='info.milakat@gmail.com';
 try{const oldSession=localStorage.getItem('employee-leave-system-auth'),authKey='sb-znomldkvmhbvvbzqldmi-auth-token';if(oldSession&&!localStorage.getItem(authKey))localStorage.setItem(authKey,oldSession)}catch(e){}const db=window.supabase.createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id);
-const loginPasswordToggle=$('togglePassword');
-if(loginPasswordToggle)loginPasswordToggle.addEventListener('click',()=>{const field=$('password'),show=field.type==='password';field.type=show?'text':'password';loginPasswordToggle.textContent=show?'شاردنەوە':'نیشاندان';loginPasswordToggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');loginPasswordToggle.setAttribute('aria-pressed',show?'true':'false');field.focus();});
+// Login password visibility: delegated capture handler so the control remains reliable
+// even if other form handlers or later UI bindings intercept normal click bubbling.
+document.addEventListener('click',ev=>{
+ const button=ev.target.closest&&ev.target.closest('#togglePassword');
+ if(!button)return;
+ ev.preventDefault();
+ ev.stopPropagation();
+ const field=$('password');
+ if(!field)return;
+ const showing=field.type==='password';
+ field.type=showing?'text':'password';
+ button.textContent=showing?'شاردنەوە':'نیشاندان';
+ button.setAttribute('aria-label',showing?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');
+ button.setAttribute('aria-pressed',String(showing));
+},true);
 
 
 const newOrgPasswordToggle=$('toggleNewOrgPassword'); if(newOrgPasswordToggle)newOrgPasswordToggle.addEventListener('click',()=>{const field=$('newOrgPassword'),show=field.type==='password';field.type=show?'text':'password';newOrgPasswordToggle.textContent=show?'شاردنەوە':'نیشاندان';newOrgPasswordToggle.setAttribute('aria-label',show?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');newOrgPasswordToggle.setAttribute('aria-pressed',show?'true':'false');field.focus();});
@@ -4268,6 +4281,18 @@ html body #app #home #adminOrgPanel #adminOrgSearchMsg.is-found *{
   -webkit-text-fill-color:#000000!important;
   opacity:1!important;
   text-shadow:none!important;
+}
+</style>
+
+<style id="login-password-toggle-interaction-fix">
+/* Keep the login visibility button above the input and reliably clickable. */
+#login .password-input-wrap{position:relative!important;isolation:isolate!important}
+#login #password{position:relative!important;z-index:1!important;padding-right:92px!important}
+#login #togglePassword{
+ position:absolute!important;right:8px!important;top:50%!important;transform:translateY(-50%)!important;
+ z-index:5!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ min-width:76px!important;min-height:34px!important;pointer-events:auto!important;touch-action:manipulation!important;
+ cursor:pointer!important;
 }
 </style>
 </html>');w.document.close();w.focus();setTimeout(()=>w.print(),700)}$('printLeaveCodeForm').onsubmit=ev=>{ev.preventDefault();let code=normalizeMainCode($('printLeaveMainCode').value);if(!code)return;let records=L.filter(r=>normalizeMainCode(r.employee_main_code)===code);if(!records.length){$('printLeaveResult').textContent='ئەم فەرمانبەرە هیچ تۆمارێکی مۆڵەتی نییە.';$('printLeaveResult').classList.remove('hidden');return}let employee={full_name:records[0].employee_name};if(!records.length){$('printLeaveResult').textContent='ئەم فەرمانبەرە هیچ تۆمارێکی مۆڵەتی نییە.';$('printLeaveResult').classList.remove('hidden');return}$('printLeaveResult').textContent='فەرمانبەر: '+employee.full_name+' — کۆدی سەرەکی: '+arabicDigits(code)+' — ژمارەی تۆمارەکانی مۆڵەت: '+arabicDigits(records.length);$('printLeaveResult').classList.remove('hidden');printRecord('leave',records[0].id)};$('clearPrintLeaveCode').onclick=()=>{$('printLeaveMainCode').value='';$('printLeaveResult').textContent='';$('printLeaveResult').classList.add('hidden');$('printLeaveMainCode').focus()};
