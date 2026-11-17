@@ -1018,6 +1018,20 @@ body:has(#login:not(.hidden)) #login #loginForm .field input{
 #app nav.nav > button#registeredOrganizationsNav:hover > svg.registered-offices-nav-icon > rect:first-of-type{
   fill:#1596a0!important;
 }
+
+/* Stronger subtitle size after user feedback: make the wording clearly larger. */
+body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
+  font-size:clamp(30px,2.5vw,36px)!important;
+  line-height:1.5!important;
+  font-weight:800!important;
+  margin-top:8px!important;
+}
+@media(max-width:760px){
+  body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
+    font-size:clamp(24px,5vw,29px)!important;
+    line-height:1.45!important;
+  }
+}
 </style>
 <style>
 /* Final signed-in header layout: title, centered logo, then a wider email frame. */
