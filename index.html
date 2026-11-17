@@ -3484,6 +3484,24 @@ html body #app section#printLeave #printLeaveCodeForm label[for="printLeaveMainC
   text-shadow:none!important;
 }
 </style>
+<style id="print-leave-search-button-enhancements">
+/* Search icon and slightly larger labels, scoped only to the leave-print form. */
+html body #app section#printLeave #printLeaveCodeForm .print-leave-search-button,
+html body #app section#printLeave #printLeaveCodeForm .print-leave-clear-button{
+  font-size:18px!important;
+  font-weight:700!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+}
+html body #app section#printLeave #printLeaveCodeForm .print-leave-search-icon{
+  width:19px!important;
+  height:19px!important;
+  flex:0 0 19px!important;
+  display:block!important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -3567,7 +3585,7 @@ html body #app section#printLeave #printLeaveCodeForm label[for="printLeaveMainC
   <div id="registeredOrgNamesList" class="registered-org-list" aria-live="polite"><div class="muted">بارکردنی لیستی فەرمانگەکان...</div></div>
  </div>
 </section>
-<section id="printLeave" class="page"><div class="panel"><h2>پرنتی مۆڵەت بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی مۆڵەتی ئەو کۆدە لە یەک فۆرم چاپ دەکرێن.</p><form id="printLeaveCodeForm"><div class="field"><label for="printLeaveMainCode">کۆدی سەرەکی</label><input id="printLeaveMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان</button><button class="btn gray" type="button" id="clearPrintLeaveCode">پاککردنەوە</button></div></form><div id="printLeaveResult" class="msg hidden" aria-live="polite"></div></div></section>
+<section id="printLeave" class="page"><div class="panel"><h2>پرنتی مۆڵەت بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی مۆڵەتی ئەو کۆدە لە یەک فۆرم چاپ دەکرێن.</p><form id="printLeaveCodeForm"><div class="field"><label for="printLeaveMainCode">کۆدی سەرەکی</label><input id="printLeaveMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn print-leave-search-button" type="submit"><svg class="print-leave-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.6 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>گەڕان</span></button><button class="btn gray print-leave-clear-button" type="button" id="clearPrintLeaveCode">پاککردنەوە</button></div></form><div id="printLeaveResult" class="msg hidden" aria-live="polite"></div></div></section>
 <section id="printPermissions" class="page"><div class="panel"><h2>پرنتکردنی سەماحی ڕۆژانە بەپێی کۆدی سەرەکی</h2><p class="muted">کۆدی سەرەکی فەرمانبەر بنووسە؛ هەموو تۆمارەکانی سەماحی ئەو فەرمانبەرە لە یەک فۆرم چاپ دەکرێن.</p><form id="printPermCodeForm"><div class="field"><label for="printPermMainCode">کۆدی سەرەکی</label><input id="printPermMainCode" autocomplete="off" placeholder="کۆدی سەرەکی بنووسە" required></div><div class="actions"><button class="btn" type="submit">گەڕان و پرنتکردن</button><button class="btn gray" type="button" id="clearPrintPermCode">پاککردنەوە</button></div></form><div id="printPermResult" class="msg hidden" aria-live="polite"></div></div></section><section id="employees" class="page">
 
 <div class="panel"><h2>١. فەرمانبەرانی بەشی مۆڵەت</h2><p class="muted">ئەم لیستە تەنها بۆ بەشی مۆڵەتە؛ کۆدی سەرەکی لەم بەشەدا دەتوانێت ناوی جیاوازی هەبێت.</p><form id="leaveEmpForm"><input type="hidden" id="leaveEmpId"><div class="grid"><div class="field"><label>کۆدی سەرەکی *</label><input id="leaveEmpCode" required></div><div class="field"><label>ناوی فەرمانبەر *</label><input id="leaveEmpName" required></div><div class="field"><label>ناونیشانی فەرمانبەری</label><input id="leaveEmpJob"></div><div class="field"><label>ڕەگەز</label><select id="leaveEmpGender"><option value="">هەڵبژێرە</option><option>نێر</option><option>مێ</option></select></div><div class="field"><label>جۆری میلاک</label><select id="leaveEmpType"><option value="">هەڵبژێرە</option><option>هەمیشەیی</option><option>گرێبەست</option><option>کرێی ڕۆژانە</option></select></div><div class="field"><label>جۆری مۆڵەت</label><select id="leaveEmpLeaveType"><option value="">هەڵبژێرە</option></select></div><div class="field"><label>ناوی هۆبە</label><select id="leaveEmpDepartment"><option value="">هەڵبژێرە</option></select></div><div class="field"><label>تێبینی</label><input id="leaveEmpNotes"></div></div><div class="actions"><button class="btn">پاشەکەوتکردنی فەرمانبەری مۆڵەت</button><button type="button" class="btn gray" id="clearLeaveEmp">پاککردنەوە</button></div></form><h3>لیستی فەرمانبەرانی مۆڵەت</h3><div id="leaveEmpSearchForm" class="search-form"><input id="searchLeaveEmp" class="search" placeholder="گەڕان بە کۆدی سەرەکی" autocomplete="off"><div class="actions"><button class="btn" type="button" id="searchLeaveEmpNow" data-search-action="search" data-search-input="searchLeaveEmp">گەڕان</button><button class="btn gray" type="button" id="clearSearchLeaveEmp" data-search-action="clear" data-search-input="searchLeaveEmp">پاککردنەوە</button></div></div><div class="tablewrap"><table><thead><tr><th>کۆد</th><th>ناو</th><th>ناونیشان</th><th>ڕەگەز</th><th>میلاک</th><th>جۆری مۆڵەت</th><th>هۆبە</th><th>کردار</th></tr></thead><tbody id="leaveEmpRows"></tbody></table></div></div>
