@@ -6185,6 +6185,56 @@ html body #adminOwnEmpResult .admin-office-search-result *{
   opacity:1!important;
   text-shadow:none!important;
 }
+
+/* Final, scoped refresh-button fix: preserve readable label and icon at every screen size. */
+#storageMonitor #smRefreshBtn{
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:11px!important;
+  width:auto!important;
+  min-width:224px!important;
+  max-width:100%!important;
+  min-height:48px!important;
+  height:auto!important;
+  box-sizing:border-box!important;
+  padding:12px 18px!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  border:1px solid #4b238f!important;
+  border-radius:12px!important;
+  background:linear-gradient(135deg,#6d28d9 0%,#8b36c9 100%)!important;
+  color:#fff!important;
+  font-family:inherit!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  line-height:1.5!important;
+  text-align:center!important;
+  box-shadow:0 4px 11px rgba(91,43,153,.25)!important;
+  cursor:pointer!important;
+  transition:background .18s ease,box-shadow .18s ease,transform .18s ease!important;
+}
+#storageMonitor #smRefreshBtn .sm-refresh-icon{
+  display:block!important;
+  width:21px!important;
+  height:21px!important;
+  min-width:21px!important;
+  flex:0 0 21px!important;
+  stroke:#fff!important;
+  stroke-width:2.1!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#storageMonitor #smRefreshBtn span{display:inline-block!important;visibility:visible!important;opacity:1!important;color:#fff!important}
+#storageMonitor #smRefreshBtn:hover:not(:disabled){background:linear-gradient(135deg,#5420ad 0%,#7026a8 100%)!important;box-shadow:0 6px 14px rgba(91,43,153,.32)!important;transform:translateY(-1px)}
+#storageMonitor #smRefreshBtn:focus-visible{outline:3px solid rgba(139,92,246,.35)!important;outline-offset:3px!important}
+#storageMonitor #smRefreshBtn:disabled{opacity:.75!important;cursor:wait!important;transform:none!important}
+@media(max-width:600px){
+  #storageMonitor .sm-header{flex-direction:column!important;align-items:stretch!important}
+  #storageMonitor .sm-header-actions{width:100%!important;max-width:none!important;align-items:flex-start!important;flex:0 0 auto!important}
+  #storageMonitor #smRefreshBtn{min-width:224px!important;max-width:100%!important;min-height:48px!important;font-size:13px!important}
+}
 </style>
 
 </html>
