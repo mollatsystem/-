@@ -3750,7 +3750,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span>
 </div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <span id="connectionStatus" class="connection-status" data-state="checking" role="status" aria-live="polite"><svg class="connection-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 8.8a15.2 15.2 0 0 1 19 0M5.8 12.2a10 10 0 0 1 12.4 0M9.2 15.6a4.8 4.8 0 0 1 5.6 0M12 19.2h.01"/></svg><span class="connection-label">پشکنینی پەیوەندی...</span></span> <button id="generateOwnRecoveryCode" type="button" class="btn gray">دروستکردنی کۆدی گەڕاندنەوە</button> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="manageDepartmentAccounts" type="button" class="btn gray" style="display:none;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div id="homeDataSizeSignal" class="home-data-size" role="status" aria-live="polite"><div class="home-data-size-heading"><strong>قەبارەی داتا</strong><span class="home-data-size-value">چاوەڕێ...</span></div><div class="home-data-size-track" aria-hidden="true"><i id="homeDataSizeBar"></i></div></div>
-<div class="layout"><nav class="nav"><button class="active" data-page="home" aria-label="پوختەی گشتی"><span>پوختەی گشتی</span></button><button data-page="registeredOrganizations" id="registeredOrganizationsNav" style="display:none">فەرمانگە تۆمارکراوەکان</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button><button data-page="longLeaveWatch" id="longLeaveWatchNav" style="display:none">چاودێری مۆڵەتی درێژخایەن</button><button data-page="storageMonitor" id="storageMonitorNav">چاودێری قەبارەی داتا</button></nav>
+<div class="layout"><nav class="nav"><button class="active dashboard-home-nav" data-page="home" aria-label="پوختەی گشتی"><svg class="dashboard-home-nav-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 15.5V12m5 3.5V8m5 7.5V10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>پوختەی گشتی</span></button><button data-page="registeredOrganizations" id="registeredOrganizationsNav" style="display:none">فەرمانگە تۆمارکراوەکان</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button><button data-page="longLeaveWatch" id="longLeaveWatchNav" style="display:none">چاودێری مۆڵەتی درێژخایەن</button><button data-page="storageMonitor" id="storageMonitorNav">چاودێری قەبارەی داتا</button></nav>
 <main>
 <section id="home" class="page active"><div id="adminOrgPanel" class="panel" style="display:none;background:linear-gradient(135deg,#cbd8e6 0%,#bdcddd 100%);border:2px solid #829bb5;border-top:5px solid #315f83;border-radius:16px;box-shadow:0 8px 22px rgba(26,52,79,.16);color:#1b3550"><h2>سەرپەرشتیاری مۆڵەتەکانی ٣٦ فەرمانگە</h2><p class="muted">تەنها سەرپەرشتیاری گشتی دەتوانێت هەژماری فەرمانگە دروست بکات. ناوی فەرمانگە دەبێتە ناوی چوونەژوورەوە؛ ئیمەیل ئارەزوومەندانەیە.</p><form id="adminCreateOrgForm"><div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;background:linear-gradient(145deg,#dce5ee 0%,#d2deea 100%);border:1px solid #9eb2c7;border-radius:13px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)"><div class="field org-name-field"><label for="newOrgName">ناوی تەواوی فەرمانگە</label><input id="newOrgName" dir="rtl" style="direction:rtl;text-align:right" required placeholder="ناوی تەواوی فەرمانگە"></div><div class="field org-email-field"><label for="newOrgEmail">ئیمەیل (ئارەزوومەندانە)</label><input id="newOrgEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" autocomplete="off" placeholder="name@example.com"></div><div class="field org-password-field"><label for="newOrgPassword">وشەی نهێنی (لانیکەم ٨ پیت)</label><div class="org-password-wrap"><input id="newOrgPassword" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-left:92px" minlength="8" required autocomplete="new-password" placeholder="وشەی نهێنی"><button type="button" id="toggleNewOrgPassword" class="org-password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div></div><div class="actions"><button class="btn" type="submit" id="createOrgBtn">دروستکردنی هەژماری فەرمانگە</button></div><div id="adminOrgMsg" class="msg hidden" role="status"></div></form>
 <div id="adminOrgSearchBox" class="admin-org-search-box">
@@ -3957,7 +3957,7 @@ async function syncOfflineQueue(){if(OFFLINE_BUSY||!navigator.onLine||OFFLINE_MO
 async function enterOffline(){if(navigator.onLine&&!NETWORK_UNAVAILABLE){$('loginMsg').textContent='لە دۆخی ئۆنلاین، بە ئیمەیڵ و وشەی نهێنی بچۆ ژوورەوە.';return}try{const s=await getOfflineProfile();if(!s){$('loginMsg').textContent='هەژمارێکی پێشوو نییە؛ یەکەم جار بە ئینتەرنێت بچۆ ژوورەوە.';return}OFFLINE_MODE=true;CURRENT_PROFILE=s.profile;$('who').textContent=(s.email||'هەژماری پێشوو')+' — ئۆفلاین';$('login').classList.add('hidden');$('app').classList.remove('hidden');['changeAccountEmail','manageDepartmentAccounts','registeredOrganizationsNav','longLeaveWatchNav'].forEach(id=>{if($(id))$(id).style.display='none'});if($('adminOrgPanel'))$('adminOrgPanel').style.display='none';if(document.querySelector('.global-delete-panel'))document.querySelector('.global-delete-panel').style.display='none';await load();updateConnectionStatus('ئۆفلاین — داتا لە ئامێرەکە پارێزراوە')}catch(e){$('loginMsg').textContent='هەڵەی خوێندنەوەی داتای ئۆفلاین: '+e.message}}
 if($('offlineContinue'))$('offlineContinue').onclick=enterOffline;
 window.addEventListener('online',()=>{NETWORK_UNAVAILABLE=false;if(CURRENT_PROFILE&&OFFLINE_MODE){OFFLINE_MODE=false;CURRENT_PROFILE=null;$('app').classList.add('hidden');$('login').classList.remove('hidden');$('loginMsg').textContent='ئینتەرنێت گەڕایەوە؛ بۆ پاراستنی هەژمار، تکایە بە ئیمەیڵ و وشەی نهێنی بچۆ ژوورەوە. گۆڕانکارییە ئۆفلاینەکان پارێزراون.'}else if(CURRENT_PROFILE)syncOfflineQueue();updateConnectionStatus('ئینتەرنێت گەڕایەوە')});window.addEventListener('offline',()=>updateConnectionStatus('ئۆفلاین — گۆڕانکارییەکان پاشەکەوت دەکرێن'));
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(e=>console.warn('SW registration',e)));updateConnectionStatus();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(e=>console.warn('SW registration',e)));updateConnectionStatus();
 
 document.addEventListener('click',function(ev){const b=ev.target.closest('[data-search-action]');if(!b)return;ev.preventDefault();const inputId=b.getAttribute('data-search-input');let focusField=null;if(b.getAttribute('data-search-action')==='clear'){focusField=document.getElementById(inputId);if(focusField)focusField.value='';}try{render();if(focusField)focusField.focus();}catch(err){console.error('Search action failed:',err);say('گەڕان سەرکەوتوو نەبوو. تکایە پەڕەکە نوێ بکەرەوە. '+(err&&err.message?err.message:''));}});
 
@@ -6245,8 +6245,8 @@ html body #adminOwnEmpResult .admin-office-search-result *{
   #storageMonitor #smRefreshBtn{min-width:224px!important;max-width:100%!important;min-height:48px!important;font-size:13px!important}
 }
 
-/* Reliable dashboard summary mark rendered by CSS, not nested SVG or icon fonts. */
-#app .nav > button[data-page="home"]{
+/* Dashboard summary navigation icon: explicit inline SVG with fixed layout. */
+#app nav.nav > button.dashboard-home-nav[data-page="home"]{
   display:flex!important;
   flex-direction:row!important;
   direction:ltr!important;
@@ -6255,38 +6255,33 @@ html body #adminOwnEmpResult .admin-office-search-result *{
   gap:10px!important;
   width:100%!important;
   min-height:50px!important;
-  text-align:right!important;
+  padding:10px 12px!important;
+  text-align:left!important;
+  overflow:visible!important;
 }
-#app .nav > button[data-page="home"]::before{
-  content:"▥"!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  flex:0 0 34px!important;
-  width:34px!important;
-  height:34px!important;
-  box-sizing:border-box!important;
-  border-radius:9px!important;
-  border:1px solid #a9c9e1!important;
-  background:#dcecf8!important;
-  color:#155b86!important;
-  -webkit-text-fill-color:#155b86!important;
-  font-family:Arial,sans-serif!important;
-  font-size:27px!important;
-  font-weight:900!important;
-  line-height:1!important;
+#app nav.nav > button.dashboard-home-nav[data-page="home"] > svg.dashboard-home-nav-icon{
+  display:block!important;
+  flex:0 0 24px!important;
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  min-height:24px!important;
   visibility:visible!important;
   opacity:1!important;
+  color:#d9ecff!important;
+  stroke:currentColor!important;
 }
-#app .nav > button[data-page="home"] > span{
+#app nav.nav > button.dashboard-home-nav[data-page="home"] > span{
   display:inline-block!important;
   flex:0 1 auto!important;
+  direction:rtl!important;
+  text-align:right!important;
+  white-space:nowrap!important;
   visibility:visible!important;
   opacity:1!important;
 }
-#app .nav > button[data-page="home"].active::before{
-  background:#c4e1f3!important;
-  border-color:#83b5d8!important;
+#app nav.nav > button.dashboard-home-nav[data-page="home"].active > svg.dashboard-home-nav-icon{
+  color:#123b60!important;
 }
 </style>
 
