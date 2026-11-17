@@ -3682,6 +3682,9 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor .sm-header h2{margin-bottom:6px;color:#173b60}
 #storageMonitor .sm-header p{margin:0;line-height:1.8}
 #storageMonitor .sm-updated{font-size:12px;margin:0 0 12px;text-align:left}
+#storageMonitor .sm-header-actions{display:flex;flex-direction:column;align-items:flex-start;gap:7px;flex:0 0 auto}
+#storageMonitor .sm-account-name{font-size:13px;font-weight:800;color:#000;text-align:left;direction:rtl;max-width:240px;overflow-wrap:anywhere;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;pointer-events:none;cursor:default}
+@media(max-width:600px){#storageMonitor .sm-header{align-items:flex-start}#storageMonitor .sm-header-actions{max-width:45%}#storageMonitor .sm-account-name{font-size:12px;max-width:100%;text-align:left}}
 #storageMonitor .sm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
 #storageMonitor .sm-card{background:#fff;border:1px solid #d5e0eb;border-radius:14px;padding:16px;box-shadow:0 4px 12px rgba(20,50,80,.06);min-width:0;color:#000}
 #storageMonitor .sm-grid>.sm-card:nth-child(1){background:#eaf3ff;border-color:#b9d2ef}
@@ -3786,7 +3789,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <section id="storageMonitor" class="page">
   <div class="panel sm-header">
     <div><h2>چاودێری قەبارەی داتا و شوێنی پاشەکەوتکردن</h2><p class="muted">زانیارییەکان لە داتابەیسەوە وەردەگیرێن؛ هەر هەژمار تەنها ئەو زانیارییانە دەبینێت کە مۆڵەتی هەیە بیبینێت.</p></div>
-    <button type="button" class="btn" id="smRefreshBtn">نوێکردنەوەی زانیاری</button>
+    <div class="sm-header-actions"><div id="smAccountName" class="sm-account-name" aria-label="ناوی هەژمار" aria-live="polite"></div><button type="button" class="btn" id="smRefreshBtn">نوێکردنەوەی زانیاری</button></div>
   </div>
   <div id="smUpdatedAt" class="sm-updated muted" aria-live="polite">چاوەڕێی وەرگرتنی زانیاری...</div>
   <div id="smAlerts" aria-live="polite"></div>
@@ -3994,6 +3997,8 @@ function smSetHomeSignalUnavailable(message){
  if(box)box.classList.remove('warning','danger','critical','full');
 }
 function smRenderMonitor(data){
+ const accountLabel=$('smAccountName');
+ if(accountLabel&&CURRENT_PROFILE){const accountName=CURRENT_PROFILE.role==='super_admin'?'سەرپەرشتیاری گشتی':(CURRENT_PROFILE.display_name||'فەرمانگە');accountLabel.textContent='هەژمار: '+accountName;}
  const content=$('smMonitorContent'),alerts=$('smAlerts');
  smRenderHomeSignal(data);
  if(!content||!alerts)return;
