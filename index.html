@@ -5614,3 +5614,114 @@ html body #app section#home.page.active #adminSummary .summary-group *{
   html body #app section#home.page.active #adminSummary .summary-group{padding:12px!important}
 }
 </style>
+
+
+<style id="dashboard-summary-executive-design">
+/* Executive dashboard refresh: restrained navy surfaces, distinct category accents, crisp typography. */
+html body #app:not(.hidden) section#home.page.active #departmentSummary,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  align-items:stretch!important;
+  margin:16px 0!important;
+}
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel{
+  background:linear-gradient(145deg,#263f54 0%,#1e3448 100%)!important;
+  border:1px solid #49657b!important;
+  border-radius:18px!important;
+  padding:19px!important;
+  box-shadow:0 9px 24px rgba(10,27,42,.18)!important;
+  color:#f5f8fb!important;
+}
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > h2{
+  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+  background:transparent!important;background-color:transparent!important;
+  border:0!important;border-right:5px solid #42c2bd!important;
+  border-radius:0!important;padding:3px 13px 3px 0!important;
+  margin:0 0 9px!important;font-size:19px!important;font-weight:950!important;
+  line-height:1.9!important;text-shadow:none!important;filter:none!important;
+}
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel > p{
+  color:#d6e3ed!important;-webkit-text-fill-color:#d6e3ed!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(194,216,231,.18)!important;
+  border-radius:10px!important;padding:10px 13px!important;
+  margin:0 0 15px!important;font-size:13px!important;font-weight:700!important;
+  line-height:1.9!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group{
+  --summary-accent:#3b82a8;
+  position:relative!important;isolation:isolate!important;
+  min-width:0!important;display:flex!important;flex-direction:column!important;
+  gap:13px!important;padding:16px!important;
+  background:linear-gradient(155deg,#f8fbfd 0%,#e8f0f5 100%)!important;
+  border:1px solid #b7c9d5!important;border-top:4px solid var(--summary-accent)!important;
+  border-radius:15px!important;color:#1a3448!important;
+  box-shadow:0 5px 14px rgba(6,25,40,.13)!important;
+  opacity:1!important;filter:none!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group:nth-child(2),
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group:nth-child(2){--summary-accent:#168b83}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group:nth-child(3),
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group:nth-child(3){--summary-accent:#7862a9}
+html body #app:not(.hidden) section#home.page.active #adminSummary > .panel:nth-child(2) .summary-group:nth-child(1){--summary-accent:#bd8b35}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group > h3,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group > h3{
+  display:flex!important;align-items:center!important;
+  min-height:43px!important;box-sizing:border-box!important;
+  color:#17364c!important;-webkit-text-fill-color:#17364c!important;
+  background:transparent!important;background-color:transparent!important;
+  border:0!important;border-right:4px solid var(--summary-accent)!important;
+  border-radius:0!important;padding:2px 11px 2px 0!important;margin:0!important;
+  font-size:16px!important;font-weight:950!important;line-height:1.85!important;
+  text-align:right!important;opacity:1!important;visibility:visible!important;
+  text-shadow:none!important;filter:none!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;align-items:stretch!important;margin:0!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat{
+  min-width:0!important;box-sizing:border-box!important;
+  display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+  gap:9px!important;padding:11px 9px!important;
+  color:#334e62!important;-webkit-text-fill-color:#334e62!important;
+  background:#ffffff!important;background-image:none!important;
+  border:1px solid #d2dee6!important;border-radius:11px!important;
+  font-size:12px!important;font-weight:850!important;line-height:1.85!important;
+  text-align:center!important;opacity:1!important;filter:none!important;
+  box-shadow:0 2px 7px rgba(16,42,60,.055)!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-metrics .stat strong,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-metrics .stat strong{
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+  background:var(--summary-accent)!important;background-image:none!important;
+  border:0!important;border-radius:8px!important;
+  padding:7px 5px!important;margin:0!important;
+  font-size:25px!important;font-weight:1000!important;line-height:1.4!important;
+  font-variant-numeric:tabular-nums!important;opacity:1!important;
+}
+html body #app:not(.hidden) section#home.page.active #departmentSummary .summary-group *,
+html body #app:not(.hidden) section#home.page.active #adminSummary .summary-group *{
+  text-shadow:none!important;filter:none!important;mix-blend-mode:normal!important;
+  -webkit-text-stroke:0!important;
+}
+@media(max-width:900px){
+ html body #app:not(.hidden) section#home.page.active #departmentSummary,
+ html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ }
+}
+@media(max-width:560px){
+ html body #app:not(.hidden) section#home.page.active #departmentSummary,
+ html body #app:not(.hidden) section#home.page.active #adminSummary .summary-groups{
+   grid-template-columns:1fr!important;gap:11px!important;
+ }
+ html body #app:not(.hidden) section#home.page.active #adminSummary > .panel{padding:14px!important}
+}
+</style>
