@@ -3654,6 +3654,17 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 }
 </style>
 
+<style id="home-data-size-ui">
+.home-data-size{display:inline-flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:8px;padding:6px 11px;border:1px solid #c8d7e5;border-radius:10px;background:#f3f7fb;color:#173b60;font-size:12px;vertical-align:middle}
+.home-data-size strong{font-size:13px;color:#173b60}
+.home-data-size-value{font-weight:800;direction:ltr;unicode-bidi:isolate}
+.home-data-size-track{display:inline-block;width:82px;height:7px;background:#dce6ef;border-radius:20px;overflow:hidden}
+.home-data-size-track i{display:block;width:0;height:100%;background:#3685b9;border-radius:20px;transition:width .25s}
+.home-data-size.warning .home-data-size-track i{background:#d89a2b}
+.home-data-size.danger .home-data-size-track i{background:#df7135}
+.home-data-size.critical .home-data-size-track i{background:#c83232}
+@media(max-width:600px){.home-data-size{gap:6px}.home-data-size-track{width:58px}}
+</style>
 <style id="storage-monitor-ui">
 #storageMonitor .sm-header{display:flex;align-items:center;justify-content:space-between;gap:14px;background:linear-gradient(135deg,#eaf2f9,#dce8f3);border:1px solid #afc2d5}
 #storageMonitor .sm-header h2{margin-bottom:6px;color:#173b60}
@@ -3701,7 +3712,8 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 <section id="signup" class="login hidden"><h2>دروستکردنی هەژماری فەرمانگە</h2><p class="muted">دەتوانیت هەژماری فەرمانگە بەبێ ئیمەیڵی فەرمی دروست بکەیت؛ ئیمەیڵ ئارەزوومەندانەیە.</p>
 <form id="signupForm"><div class="field signup-org-field"><label for="signupOrgName">ناوی تەواوی فەرمانگە</label><input id="signupOrgName" dir="rtl" style="direction:rtl;text-align:right" required maxlength="160" autocomplete="organization" placeholder="ناوی فەرمانگە"></div><div class="field signup-email-field"><label for="signupEmail">ناونیشانی ئیمەیڵی فەرمی (ئارەزوومەندانە)</label><input id="signupEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" autocomplete="email" placeholder="name@organization.com"><small class="muted">ئەگەر ئیمەیڵ نەنووسیت، بە ناوی فەرمانگە و وشەی نهێنی دەچیتە ژوورەوە.</small></div><div class="field signup-password-field"><label for="signupPassword">وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPassword" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field signup-password-field"><label for="signupPasswordConfirm">دووبارەکردنەوەی وشەی نهێنی</label><div class="signup-password-wrap"><input id="signupPasswordConfirm" type="password" dir="ltr" style="direction:ltr;text-align:left" minlength="8" required autocomplete="new-password"><button type="button" class="signup-password-toggle" data-signup-password-target="signupPasswordConfirm" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" type="submit" id="signupSubmit">دروستکردنی هەژمار</button></form><button type="button" class="btn gray" id="backToLogin" style="margin-top:10px">گەڕانەوە بۆ چوونەژوورەوە</button><p id="signupMsg" class="muted" role="status"></p></section><section id="recovery" class="login hidden"><h2>دانانی وشەی نهێنی نوێ</h2><p class="muted">بە کۆدی گەڕاندنەوەی تایبەت، بەبێ ئیمەیل و ووشەی نهێنی پێشوو، ووشەی نهێنی نوێ دابنێ.</p><form id="recoveryForm" novalidate><div class="field"><label for="recoveryAccountType">جۆری هەژمار</label><select id="recoveryAccountType" required><option value="" selected disabled>جۆری هەژمار هەڵبژێرە</option><option value="department">هەژماری فەرمانگە</option><option value="super_admin">هەژماری سەرپەرشتیاری گشتی</option></select></div><div class="field" id="recoveryOrgField"><label for="recoveryOrgName">ناوی تەواوی فەرمانگە</label><input id="recoveryOrgName" required autocomplete="organization" placeholder="ناوی فەرمانگە"></div><div class="field"><label for="recoveryCode">کۆدی گەڕاندنەوە</label><input id="recoveryCode" type="text" dir="ltr" style="direction:ltr;text-align:left;text-transform:uppercase" required autocomplete="one-time-code" maxlength="64" inputmode="text" placeholder="کۆدی تایبەت بنووسە"></div><div class="field"><label for="newPassword">وشەی نهێنی نوێ (لانیکەم ٨ پیت)</label><div class="recovery-password-wrap"><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="newPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><div class="field"><label for="confirmPassword">دووبارەکردنەوەی وشەی نهێنی نوێ</label><div class="recovery-password-wrap"><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" dir="ltr"><button type="button" class="recovery-password-toggle" data-password-target="confirmPassword" aria-label="نیشاندان یان شاردنەوەی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" id="recoverySubmit">پاشەکەوتکردنی وشەی نهێنی نوێ</button></form><button type="button" class="btn gray" id="recoveryBackToLogin" style="margin-top:10px;width:100%">گەڕانەوە بۆ پەڕەی چوونەژوورەوە</button><p id="recoveryMsg" class="muted" role="status" aria-live="polite"></p></section>
 <section id="app" class="hidden">
-<header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <span id="connectionStatus" class="connection-status" data-state="checking" role="status" aria-live="polite"><svg class="connection-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 8.8a15.2 15.2 0 0 1 19 0M5.8 12.2a10 10 0 0 1 12.4 0M9.2 15.6a4.8 4.8 0 0 1 5.6 0M12 19.2h.01"/></svg><span class="connection-label">پشکنینی پەیوەندی...</span></span> <button id="generateOwnRecoveryCode" type="button" class="btn gray">دروستکردنی کۆدی گەڕاندنەوە</button> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="manageDepartmentAccounts" type="button" class="btn gray" style="display:none;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
+<header class="top"><div class="app-title-area"><h1>سیستەمی بەڕێوەبردنی مۆڵەت و سەماح</h1><span class="muted">داتابەیسی هاوبەشی فەرمانبەران</span>
+<span id="homeDataSizeSignal" class="home-data-size" role="status" aria-live="polite"><strong>قەبارەی داتا</strong><span class="home-data-size-value">چاوەڕێ...</span><span class="home-data-size-track"><i id="homeDataSizeBar"></i></span></span></div><img class="app-institution-logo" src="https://gov.krd/media/2893/krg_logo_2480x2056.png" alt="لۆگۆی حکومەتی هەرێمی کوردستان"><div class="app-account-area"><span id="who" class="muted"></span> <span id="connectionStatus" class="connection-status" data-state="checking" role="status" aria-live="polite"><svg class="connection-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 8.8a15.2 15.2 0 0 1 19 0M5.8 12.2a10 10 0 0 1 12.4 0M9.2 15.6a4.8 4.8 0 0 1 5.6 0M12 19.2h.01"/></svg><span class="connection-label">پشکنینی پەیوەندی...</span></span> <button id="generateOwnRecoveryCode" type="button" class="btn gray">دروستکردنی کۆدی گەڕاندنەوە</button> <button id="changeAccountEmail" type="button" class="btn gray">گۆڕینی ئیمەیڵی هەژمار</button> <button id="manageDepartmentAccounts" type="button" class="btn gray" style="display:none;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button> <button id="logout" class="btn gray">چوونەدەرەوە</button></div></header>
 <div class="layout"><nav class="nav"><button class="active" data-page="home">پوختەی گشتی</button><button data-page="registeredOrganizations" id="registeredOrganizationsNav" style="display:none">فەرمانگە تۆمارکراوەکان</button><button data-page="printLeave">پرنتکردنی مۆڵەت</button><button data-page="printPermissions">پرنتکردنی سەماحی ڕۆژانە</button><button data-page="employees">فەرمانبەران</button><button data-page="options">بەڕێوەبردنی هەڵبژاردەکان</button><button data-page="leaves">مۆڵەت</button><button data-page="permissions">سەماحی ڕۆژانە</button><button data-page="longLeaves">مۆڵەتی درێژخایەن</button><button data-page="longLeaveWatch" id="longLeaveWatchNav" style="display:none">چاودێری مۆڵەتی درێژخایەن</button><button data-page="storageMonitor" id="storageMonitorNav">چاودێری قەبارەی داتا</button></nav>
 <main>
 <section id="home" class="page active"><div id="adminOrgPanel" class="panel" style="display:none;background:linear-gradient(135deg,#cbd8e6 0%,#bdcddd 100%);border:2px solid #829bb5;border-top:5px solid #315f83;border-radius:16px;box-shadow:0 8px 22px rgba(26,52,79,.16);color:#1b3550"><h2>سەرپەرشتیاری مۆڵەتەکانی ٣٦ فەرمانگە</h2><p class="muted">تەنها سەرپەرشتیاری گشتی دەتوانێت هەژماری فەرمانگە دروست بکات. ناوی فەرمانگە دەبێتە ناوی چوونەژوورەوە؛ ئیمەیل ئارەزوومەندانەیە.</p><form id="adminCreateOrgForm"><div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;background:linear-gradient(145deg,#dce5ee 0%,#d2deea 100%);border:1px solid #9eb2c7;border-radius:13px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)"><div class="field org-name-field"><label for="newOrgName">ناوی تەواوی فەرمانگە</label><input id="newOrgName" dir="rtl" style="direction:rtl;text-align:right" required placeholder="ناوی تەواوی فەرمانگە"></div><div class="field org-email-field"><label for="newOrgEmail">ئیمەیل (ئارەزوومەندانە)</label><input id="newOrgEmail" type="email" dir="ltr" style="direction:ltr;text-align:left" autocomplete="off" placeholder="name@example.com"></div><div class="field org-password-field"><label for="newOrgPassword">وشەی نهێنی (لانیکەم ٨ پیت)</label><div class="org-password-wrap"><input id="newOrgPassword" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-left:92px" minlength="8" required autocomplete="new-password" placeholder="وشەی نهێنی"><button type="button" id="toggleNewOrgPassword" class="org-password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div></div><div class="actions"><button class="btn" type="submit" id="createOrgBtn">دروستکردنی هەژماری فەرمانگە</button></div><div id="adminOrgMsg" class="msg hidden" role="status"></div></form>
@@ -3929,8 +3941,31 @@ function smProgress(label,value,limit,percent){
  const level=percent>=95?'critical':percent>=85?'danger':percent>=70?'warning':'';
  return '<div class="sm-card"><h3>'+esc(label)+'</h3><div class="sm-value">'+smFormatBytes(value)+'</div><div class="sm-sub">لە کۆی '+smFormatBytes(limit)+'</div><div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,Math.max(0,percent))+'%"></span></div><div class="sm-percent">'+Number(percent||0).toFixed(1)+'%</div></div>';
 }
+function smRenderHomeSignal(data){
+ const box=$('homeDataSizeSignal'),value=$('homeDataSizeSignal')?.querySelector('.home-data-size-value'),bar=$('homeDataSizeBar');
+ if(!box||!value||!bar)return;
+ const limits=data?.limits||{},own=data?.own||{};
+ const limit=Number(limits.database_bytes||0);
+ let used=0;
+ if(data?.role==='super_admin')used=Number(data?.project?.database_bytes||0);
+ else used=Number(own.estimated_bytes||0);
+ const pct=limit>0?Math.max(0,Math.min(100,used/limit*100)):0;
+ value.textContent=limit>0?(smFormatBytes(used)+' / '+smFormatBytes(limit)+' — '+pct.toFixed(1)+'%'):'بەردەست نییە';
+ bar.style.width=pct+'%';
+ box.classList.toggle('warning',pct>=70&&pct<85);
+ box.classList.toggle('danger',pct>=85&&pct<95);
+ box.classList.toggle('critical',pct>=95);
+ box.title=data?.role==='super_admin'?'بەکارهێنانی گشتیی داتابەیس': 'خەمڵاندنی قەبارەی داتای ئەم فەرمانگەیە لە بەرامبەر سنووری گشتی';
+}
+function smSetHomeSignalUnavailable(message){
+ const box=$('homeDataSizeSignal'),value=box?.querySelector('.home-data-size-value'),bar=$('homeDataSizeBar');
+ if(value)value.textContent=message||'بەردەست نییە';
+ if(bar)bar.style.width='0%';
+ if(box)box.classList.remove('warning','danger','critical');
+}
 function smRenderMonitor(data){
  const content=$('smMonitorContent'),alerts=$('smAlerts');
+ smRenderHomeSignal(data);
  if(!content||!alerts)return;
  const own=data.own||{},limits=data.limits||{};
  const dbLimit=Number(limits.database_bytes||0),fileLimit=Number(limits.file_storage_bytes||0);
@@ -3967,6 +4002,7 @@ async function refreshStorageMonitor(){
  const content=$('smMonitorContent'),btn=$('smRefreshBtn');
  if(!CURRENT_PROFILE?.organization_id||OFFLINE_MODE||!navigator.onLine){
   if(content)content.innerHTML='<div class="sm-error">چاودێریی قەبارەی داتا پێویستی بە پەیوەندیی ئۆنلاین هەیە. تکایە پەیوەندیی ئینتەرنێت بپشکنە.</div>';
+  smSetHomeSignalUnavailable(OFFLINE_MODE?'ئۆفلاین':'ئینتەرنێت پێویستە');
   return;
  }
  if(btn){btn.disabled=true;btn.textContent='نوێکردنەوە...'}
@@ -3977,6 +4013,7 @@ async function refreshStorageMonitor(){
   smRenderMonitor(data);
  }catch(e){
   if(content)content.innerHTML='<div class="sm-error">نەتوانرا زانیاریی چاودێری وەربگیرێت: '+esc(e?.message||String(e))+'</div>';
+  smSetHomeSignalUnavailable('نەتوانرا نوێ بکرێتەوە');
  }finally{if(btn){btn.disabled=false;btn.textContent='نوێکردنەوەی زانیاری'}}
 }
 $('smRefreshBtn')?.addEventListener('click',refreshStorageMonitor);
