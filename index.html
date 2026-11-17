@@ -6336,6 +6336,27 @@ html body #adminOwnEmpResult .admin-office-search-result *{
   fill:#1596a0!important;
 }
 
+
+/* Registered offices: same left-icon/right-label order as every other menu item. */
+#app nav.nav > button#registeredOrganizationsNav:not([style*="display:none"]):not([style*="display: none"]){
+  flex-direction:row!important;
+  direction:ltr!important;
+  justify-content:space-between!important;
+  gap:32px!important;
+}
+#app nav.nav > button#registeredOrganizationsNav:not([style*="display:none"]):not([style*="display: none"]) > svg.registered-offices-nav-icon{
+  order:0!important;
+  margin:0!important;
+}
+#app nav.nav > button#registeredOrganizationsNav:not([style*="display:none"]):not([style*="display: none"]) > span{
+  order:1!important;
+  max-width:100%!important;
+  direction:rtl!important;
+  text-align:right!important;
+  white-space:normal!important;
+  line-height:1.45!important;
+}
+
 /* Unified navigation: shared logo color, icon size, spacing and RTL labels. */
 #app nav.nav > button[data-page]:not([style*="display:none"]):not([style*="display: none"]){display:flex!important;flex-direction:row!important;direction:ltr!important;align-items:center!important;justify-content:space-between!important;gap:32px!important;width:100%!important;min-height:54px!important;padding:9px 13px!important;text-align:right!important;overflow:visible!important}
 #app nav.nav > button[data-page]:not([style*="display:none"]):not([style*="display: none"])>svg{display:block!important;flex:0 0 32px!important;width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;margin:0!important;visibility:visible!important;opacity:1!important;overflow:visible!important}
