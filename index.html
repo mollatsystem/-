@@ -3999,7 +3999,7 @@ function smRenderMonitor(data){
   const departmentRows=Array.isArray(data.departments)?data.departments:[];
   const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
   const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div>';
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div><div class="sm-sub">'+departmentRows.length.toLocaleString('en-US')+'</div></div>';
   html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
   for(const o of (data.departments||[])){
    const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
