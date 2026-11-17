@@ -4036,7 +4036,7 @@ function smRenderMonitor(data){
  }
  content.innerHTML=html;
  const stamp=$('smUpdatedAt');
- if(stamp)stamp.textContent='دوایین نوێکردنەوە: '+new Date(data.captured_at||Date.now()).toLocaleString('ku-IQ');
+ if(stamp){const updatedAt=new Date(data.captured_at||Date.now());const datePart=updatedAt.getFullYear()+'/'+String(updatedAt.getMonth()+1).padStart(2,'0')+'/'+String(updatedAt.getDate()).padStart(2,'0');const timePart=updatedAt.toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});stamp.textContent='دوایین نوێکردنەوە: '+datePart+'، '+timePart;}
 }
 async function refreshStorageMonitor(){
  const content=$('smMonitorContent'),btn=$('smRefreshBtn');
