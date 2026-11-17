@@ -4854,6 +4854,13 @@ body:has(#signup:not(.hidden)) #signup button#backToLogin:hover{
 })();
 </script>
 
+<style id="dashboard-hide-duplicate-department-summary">
+/* Respect the role-based visibility set by render(): super-admins see adminSummary, not the department-only 3-card summary. */
+html body #app section#home.page.active #departmentSummary[style*="display: none"],
+html body #app section#home.page.active #departmentSummary[style*="display:none"]{
+  display:none!important;
+}
+</style>
 </body></html>
 
 <style id="signup-screen-final-verified-fix">
