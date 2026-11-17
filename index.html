@@ -3687,6 +3687,10 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 #storageMonitor #smRefreshBtn:hover:not(:disabled){background:#0f566f;box-shadow:0 5px 12px rgba(23,107,135,.28);transform:translateY(-1px)}
 #storageMonitor #smRefreshBtn:disabled{opacity:.72;cursor:wait}
 #storageMonitor #smRefreshBtn .sm-refresh-icon{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#storageMonitor #smRefreshBtn{min-width:196px;min-height:44px;padding:11px 16px;gap:10px;flex:0 0 auto;white-space:nowrap;font-size:14px;line-height:1.4;background:#6546a5;border-color:#503487;box-sizing:border-box}
+#storageMonitor #smRefreshBtn:hover:not(:disabled){background:#503487;box-shadow:0 5px 13px rgba(80,52,135,.3)}
+#storageMonitor #smRefreshBtn .sm-refresh-icon{width:20px;height:20px;flex-basis:20px}
+@media(max-width:600px){#storageMonitor .sm-header-actions{max-width:none;flex:0 0 auto}#storageMonitor #smRefreshBtn{min-width:190px;padding:10px 12px;font-size:13px}}
 #storageMonitor .sm-account-name{font-size:13px;font-weight:800;color:#000;text-align:left;direction:rtl;max-width:240px;overflow-wrap:anywhere;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;pointer-events:none;cursor:default}
 @media(max-width:600px){#storageMonitor .sm-header{align-items:flex-start}#storageMonitor .sm-header-actions{max-width:45%}#storageMonitor .sm-account-name{font-size:12px;max-width:100%;text-align:left}}
 #storageMonitor .sm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
