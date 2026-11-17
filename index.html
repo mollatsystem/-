@@ -5686,6 +5686,48 @@ html body #app #home #adminEmployeeSearches > .panel{
  box-shadow:0 3px 10px rgba(25,55,79,.07),inset 0 1px 0 rgba(255,255,255,.85)!important;
 }
 </style>
+
+<style id="admin-summary-employee-search-controls-match-org-search">
+/* Match employee-code search inputs and buttons to the department-name search controls. */
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input{
+ width:100%!important;min-width:0!important;box-sizing:border-box!important;
+ background:#ffffff!important;background-color:#ffffff!important;background-image:none!important;
+ color:#17334a!important;-webkit-text-fill-color:#17334a!important;caret-color:#17334a!important;
+ border:2px solid #8ba5ba!important;border-radius:8px!important;padding:10px 12px!important;
+ direction:rtl!important;text-align:right!important;box-shadow:none!important;opacity:1!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input::placeholder,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input::placeholder{
+ color:#61788b!important;-webkit-text-fill-color:#61788b!important;opacity:1!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .field input:focus,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .field input:focus{
+ background:#ffffff!important;border-color:#347d9b!important;
+ box-shadow:0 0 0 3px rgba(52,125,155,.18)!important;outline:none!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button{
+ min-height:42px!important;padding:10px 14px!important;border-radius:8px!important;
+ font-size:16px!important;font-weight:800!important;line-height:1.5!important;
+ background:#245b78!important;background-image:none!important;color:#ffffff!important;
+ -webkit-text-fill-color:#ffffff!important;border:2px solid #17435d!important;
+ box-shadow:none!important;white-space:nowrap!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button:hover,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button:hover{
+ background:#1d4d67!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray{
+ background:#667789!important;background-image:none!important;color:#ffffff!important;
+ -webkit-text-fill-color:#ffffff!important;border:2px solid #465a6d!important;
+}
+html body #app #home #adminEmployeeSearches #adminOwnEmpSearch .actions > button.gray:hover,
+html body #app #home #adminEmployeeSearches #adminOfficeEmpSearch .actions > button.gray:hover{
+ background:#4c6073!important;
+}
+</style>
 </html>
 
 
