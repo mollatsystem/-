@@ -6450,6 +6450,9 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
   button.textContent=showing?'شاردنەوە':'نیشاندان';
   button.setAttribute('aria-label',showing?'شاردنەوەی وشەی نهێنی':'نیشاندانی وشەی نهێنی');
   button.setAttribute('aria-pressed',showing?'true':'false');
+  // Return focus to the password field and place the caret at its left edge.
+  field.focus();
+  try{field.setSelectionRange(0,0);}catch(ignore){}
  }
  document.addEventListener('click',toggleLoginPassword,true);
 })();
