@@ -6438,6 +6438,15 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
 </style>
 <script id="login-password-toggle-standalone">
 (function(){
+ // Clicking the visibility button must not take keyboard focus away from the input.
+ // Prevent the browser's default mouse-down focus on the button; the input remains
+ // the active editing control when the password is revealed or hidden.
+ document.addEventListener('mousedown',function(ev){
+  var target=ev.target;
+  var button=target&&target.closest?target.closest('#togglePassword'):null;
+  if(button)ev.preventDefault();
+ },true);
+
  function toggleLoginPassword(ev){
   var target=ev.target;
   var button=target&&target.closest?target.closest('#togglePassword'):null;
