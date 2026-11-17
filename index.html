@@ -3802,7 +3802,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
   </div>
 </div>
 <section id="login" class="login"><h2>چوونەژوورەوە</h2><p class="muted">بە ناوی فەرمانگەکەت یان ئیمەیڵ و وشەی نهێنی بچۆ ژوورەوە.</p>
-<form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field"><label for="email">ناوی فەرمانگە / ئیمەیڵ</label><input id="email" type="text" dir="rtl" style="direction:rtl;text-align:right" required autocomplete="username" placeholder="فەرمانگەی ئاو"></div><div class="field login-ltr-field"><label for="password">وشەی نهێنی</label><div class="password-input-wrap"><input id="password" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-right:82px" required autocomplete="current-password"><button type="button" id="togglePassword" class="password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false">نیشاندان</button></div></div><button class="btn" type="submit">چوونەژوورەوە</button></form><button type="button" class="btn gray" id="offlineContinue" style="display:none;margin-top:10px;width:100%">بەردەوامبوون بە دۆخی ئۆفلاین</button>
+<form id="loginForm" onsubmit="if(!window.__loginHandlerReady){event.preventDefault();document.getElementById('loginMsg').textContent='فەرمانی چوونەژوورەوە چالاک نەبوو؛ پەڕەکە بە تەواوی بارنەبوو. تکایە پەڕەکە نوێ بکەرەوە.';return false}"><div class="field"><label for="email">ناوی فەرمانگە / ئیمەیڵ</label><input id="email" type="text" dir="rtl" style="direction:rtl;text-align:right" required autocomplete="username" placeholder="فەرمانگەی ئاو"></div><div class="field login-ltr-field"><label for="password">وشەی نهێنی</label><div class="password-input-wrap"><input id="password" type="password" dir="ltr" style="direction:ltr;text-align:left;padding-right:82px" required autocomplete="current-password"><button type="button" id="togglePassword" class="password-toggle" aria-label="نیشاندانی وشەی نهێنی" aria-pressed="false" onmousedown="event.preventDefault()" onclick="return window.toggleLoginPassword(event)">نیشاندان</button></div></div><button class="btn" type="submit">چوونەژوورەوە</button></form><button type="button" class="btn gray" id="offlineContinue" style="display:none;margin-top:10px;width:100%">بەردەوامبوون بە دۆخی ئۆفلاین</button>
 <button type="button" class="btn gray" id="showSignup" style="margin-top:10px">دروستکردنی هەژماری نوێ بۆ فەرمانگە</button>
 <button type="button" class="btn gray" id="forgotPassword" style="margin-top:10px">وشەی نهێنیم لەبیرچووە</button>
 <button type="button" class="btn gray" id="deleteDepartmentFromLogin" style="margin-top:10px;background:#9b2525!important;color:#fff!important">سڕینەوەی هەژماری فەرمانگە</button><p class="muted">بۆ سڕینەوەی هەژمار، ناوی فەرمانگە و وشەی نهێنی بنووسە.</p><p id="loginMsg" class="muted" role="status"></p></section>
@@ -6438,50 +6438,30 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
 </style>
 <script id="login-password-toggle-standalone">
 (function(){
-  var selector = '#togglePassword';
-
-  // Prevent the visibility button from taking focus on mouse, touch, or pen input.
-  function keepInputFocused(ev){
-    var button = ev.target && ev.target.closest ? ev.target.closest(selector) : null;
-    if(button) ev.preventDefault();
-  }
-  document.addEventListener('pointerdown', keepInputFocused, true);
-  document.addEventListener('mousedown', keepInputFocused, true);
-  document.addEventListener('touchstart', keepInputFocused, {capture:true, passive:false});
-
-  function focusAtLeft(field){
-    if(!field || !document.documentElement.contains(field)) return;
-    try { field.focus({preventScroll:true}); }
-    catch(ignore) { field.focus(); }
-    if(field.type === 'text'){
-      try {
-        field.setSelectionRange(0, 0, 'forward');
-        field.scrollLeft = 0;
-      } catch(ignore) {}
-    }
-  }
-
-  document.addEventListener('click', function(ev){
-    var button = ev.target && ev.target.closest ? ev.target.closest(selector) : null;
-    if(!button) return;
+  // Use a direct button handler so unrelated document-level listeners cannot
+  // swallow the visibility action.
+  window.toggleLoginPassword = function(ev){
+    if(ev) ev.preventDefault();
     var field = document.getElementById('password');
-    if(!field) return;
+    var button = document.getElementById('togglePassword');
+    if(!field || !button) return false;
 
-    ev.preventDefault();
     var showing = field.type === 'password';
     field.type = showing ? 'text' : 'password';
     button.textContent = showing ? 'شاردنەوە' : 'نیشاندان';
     button.setAttribute('aria-label', showing ? 'شاردنەوەی وشەی نهێنی' : 'نیشاندانی وشەی نهێنی');
     button.setAttribute('aria-pressed', showing ? 'true' : 'false');
 
+    // Keep the input active and place the insertion point at its left edge.
     button.blur();
-    focusAtLeft(field);
-    Promise.resolve().then(function(){ focusAtLeft(field); });
-    if(window.requestAnimationFrame){
-      window.requestAnimationFrame(function(){ focusAtLeft(field); });
+    try { field.focus({preventScroll:true}); }
+    catch(ignore) { field.focus(); }
+    if(showing){
+      try { field.setSelectionRange(0, 0, 'forward'); } catch(ignore) {}
+      field.scrollLeft = 0;
     }
-    window.setTimeout(function(){ focusAtLeft(field); }, 0);
-  }, false);
+    return false;
+  };
 })();
 </script>
 
