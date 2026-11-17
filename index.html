@@ -3605,6 +3605,25 @@ html body #app section#permissions #findPermEmployee .perm-employee-search-icon{
 html body #app section#permissions #searchPermNow.perm-records-search-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
 html body #app section#permissions #searchPermNow .perm-records-search-icon{width:19px!important;height:19px!important;display:block!important;flex:0 0 19px!important;}
 </style>
+
+<style id="long-leaves-field-labels-white">
+html body #app section#longLeaves .field > label,
+html body #app section#longLeaves .field label{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+}
+</style>
+<style id="long-leave-employee-search-icon-style">
+html body #app section#longLeaves #ltFindEmployee.lt-employee-search-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
+html body #app section#longLeaves #ltFindEmployee .lt-employee-search-icon{width:19px!important;height:19px!important;display:block!important;flex:0 0 19px!important;}
+</style>
+<style id="long-leave-records-search-icon-style">
+html body #app section#longLeaves #searchLongLeaveNow.lt-records-search-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
+html body #app section#longLeaves #searchLongLeaveNow .lt-records-search-icon{width:19px!important;height:19px!important;display:block!important;flex:0 0 19px!important;}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -3704,7 +3723,7 @@ html body #app section#permissions #searchPermNow .perm-records-search-icon{widt
 <div class="panel"><h2>تۆمارکردنی مۆڵەتی درێژخایەن</h2>
 <form id="longLeaveForm"><input type="hidden" id="longLeaveId">
 <div class="panel" style="background:#f7f9fc"><h2>زانیاری فەرمانبەر</h2><div class="grid">
-<div class="field"><label>کۆدی سەرەکی *</label><input id="ltMainCode" required autocomplete="off"><div class="actions"><button class="btn" type="button" id="ltFindEmployee">گەڕان</button><button class="btn gray" type="button" id="ltClearEmployeeSearch">پاککردنەوە</button></div></div>
+<div class="field"><label>کۆدی سەرەکی *</label><input id="ltMainCode" required autocomplete="off"><div class="actions"><button type="button" class="btn lt-employee-search-btn" id="ltFindEmployee"><svg class="lt-employee-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.6 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>گەڕان</span></button><button class="btn gray" type="button" id="ltClearEmployeeSearch">پاککردنەوە</button></div></div>
 
 <div class="field"><label>ناوی فەرمانبەر</label><input id="ltEmployeeName" readonly></div>
 <div class="field"><label>ناونیشانی فەرمانبەری</label><input id="ltJobTitle" readonly></div>
@@ -3727,7 +3746,7 @@ html body #app section#permissions #searchPermNow .perm-records-search-icon{widt
 <div class="field"><label>تێبینی</label><input id="ltNotes"></div>
 <div class="actions"><button class="btn" type="submit">پاشەکەوتکردن</button><button type="button" class="btn gray" id="ltClear">پاککردنەوە</button></div>
 </form></div>
-<div class="panel"><h2>لیستی مۆڵەتی درێژخایەن</h2><div id="longLeaveSearchForm" class="search-form"><input id="searchLongLeave" class="search" placeholder="گەڕان بە کۆدی سەرەکی، ناوی فەرمانبەر یان ژمارەی دۆسیە" autocomplete="off"><div class="actions"><button class="btn" type="button" id="searchLongLeaveNow" data-search-action="search" data-search-input="searchLongLeave">گەڕان</button><button class="btn gray" type="button" id="clearSearchLongLeave" data-search-action="clear" data-search-input="searchLongLeave">پاککردنەوە</button></div></div>
+<div class="panel"><h2>لیستی مۆڵەتی درێژخایەن</h2><div id="longLeaveSearchForm" class="search-form"><input id="searchLongLeave" class="search" placeholder="گەڕان بە کۆدی سەرەکی، ناوی فەرمانبەر یان ژمارەی دۆسیە" autocomplete="off"><div class="actions"><button class="btn lt-records-search-btn" type="button" id="searchLongLeaveNow" data-search-action="search" data-search-input="searchLongLeave"><svg class="lt-records-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m16 16 4.6 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>گەڕان</span></button><button class="btn gray" type="button" id="clearSearchLongLeave" data-search-action="clear" data-search-input="searchLongLeave">پاککردنەوە</button></div></div>
 <div class="tablewrap"><table><thead><tr><th>کۆدی سەرەکی</th><th>فەرمانبەر</th><th>ژمارەی دۆسیە</th><th>جۆری مۆڵەت</th><th>ماوەی مۆڵەت</th><th>تێکڕای ماوەی مۆڵەت</th><th>تێکڕای کۆتایی ماوەی مۆڵەت</th><th>لە بەرواری</th><th>تاکو بەرواری</th><th>دۆخ</th><th>کردار</th></tr></thead><tbody id="longLeaveRows"></tbody></table></div></div>
 </section>
 <section id="longLeaveWatch" class="page">
