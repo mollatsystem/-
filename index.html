@@ -6381,6 +6381,19 @@ body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
     font-size:clamp(15px,3.2vw,18px)!important;
   }
 }
+
+/* Further enlarge the shared employee data subtitle for clear visual hierarchy. */
+body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
+  font-size:clamp(23px,2vw,27px)!important;
+  line-height:1.65!important;
+  font-weight:800!important;
+  margin-top:7px!important;
+}
+@media(max-width:760px){
+  body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
+    font-size:clamp(19px,4vw,22px)!important;
+  }
+}
 </style>
 
 </html>
