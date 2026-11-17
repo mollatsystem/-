@@ -5334,21 +5334,25 @@ html body #app section#home.page.active > .panel.global-delete-panel > p *{
 </style>
 
 <style id="global-delete-heading-final-readable">
-/* Force strong contrast for the global-delete heading only. */
-html body #app section#home.page.active div.panel.global-delete-panel > h2{
+/* High-contrast heading for the global delete panel. */
+html body #app .global-delete-panel h2,
+html body #app .global-delete-panel > h2,
+html body #app div.global-delete-panel h2{
   display:block!important;
-  color:#102f49!important;
-  -webkit-text-fill-color:#102f49!important;
-  background:#e4eef6!important;
-  background-color:#e4eef6!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  background:#173b59!important;
+  background-color:#173b59!important;
   background-image:none!important;
-  border:1px solid #9db5c7!important;
-  border-right:6px solid #b34a4a!important;
+  border:1px solid #0d2a42!important;
+  border-right:7px solid #28a6a0!important;
   border-radius:10px!important;
-  padding:12px 16px!important;
+  padding:13px 17px!important;
   margin:0 0 14px!important;
   font-family:'Noto Sans Arabic',sans-serif!important;
-  font-size:19px!important;
+  font-size:20px!important;
   font-weight:900!important;
   line-height:2!important;
   text-align:right!important;
@@ -5359,11 +5363,13 @@ html body #app section#home.page.active div.panel.global-delete-panel > h2{
   mix-blend-mode:normal!important;
   -webkit-text-stroke:0!important;
 }
-html body #app section#home.page.active div.panel.global-delete-panel > h2 *{
-  color:#102f49!important;
-  -webkit-text-fill-color:#102f49!important;
+html body #app .global-delete-panel h2 *,
+html body #app .global-delete-panel > h2 *{
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
   opacity:1!important;
   visibility:visible!important;
   text-shadow:none!important;
+  filter:none!important;
 }
 </style>
