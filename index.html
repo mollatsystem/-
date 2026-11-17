@@ -3677,6 +3677,7 @@ html body #homeWelcomePanel .restore-actions #restorePreviewStatus *{
 </style>
 <style id="storage-monitor-ui">
 #storageMonitor .panel h2,#storageMonitor .panel p.muted{color:#000!important}
+#storageMonitor #smMonitorContent .panel h2,#storageMonitor #smMonitorContent .panel p.muted{color:#000!important; -webkit-text-fill-color:#000!important}
 #storageMonitor .sm-header{display:flex;align-items:center;justify-content:space-between;gap:14px;background:linear-gradient(135deg,#eaf2f9,#dce8f3);border:1px solid #afc2d5}
 #storageMonitor .sm-header h2{margin-bottom:6px;color:#173b60}
 #storageMonitor .sm-header p{margin:0;line-height:1.8}
@@ -3995,7 +3996,7 @@ function smRenderMonitor(data){
   html+=smProgress('بەکارهێنانی شوێنی فایلەکان',project.file_storage_bytes,fileLimit,filePct);
   html+='<div class="sm-card"><h3>ژمارەی فایلە بارکراوەکان</h3><div class="sm-value">'+Number(project.file_object_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">هەموو فایلەکانی پرۆژە</div></div>';
   html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div></div>';
-  html+='</div><div class="panel"><h2 style="color:#000">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
+  html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
   for(const o of (data.departments||[])){
    const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
    html+='<tr><td>'+esc(o.name||'فەرمانگە')+'</td><td>'+Number(o.record_count||0).toLocaleString('en-US')+'</td><td>'+smFormatBytes(o.estimated_bytes)+'</td><td>'+Number(o.file_count||0).toLocaleString('en-US')+' — '+smFormatBytes(o.file_bytes)+'</td><td><div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,pct)+'%"></span></div><div class="sm-percent">'+pct.toFixed(1)+'%</div></td></tr>';
