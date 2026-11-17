@@ -5460,3 +5460,157 @@ html body #app section#home.page.active > .panel.global-delete-panel > p *{
 
 
 
+
+
+<style id="dashboard-summary-professional-refresh">
+/* Professional, calm dashboard summary: clear hierarchy, readable labels and prominent figures. */
+html body #app section#home.page.active #departmentSummary,
+html body #app section#home.page.active #adminSummary .summary-groups{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:15px!important;
+  align-items:stretch!important;
+  margin:15px 0!important;
+}
+html body #app section#home.page.active #adminSummary .summary-groups{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+html body #app section#home.page.active #adminSummary > .panel{
+  background:linear-gradient(145deg,#e5edf4 0%,#d9e4ed 100%)!important;
+  border:1px solid #a9bdcd!important;
+  border-radius:17px!important;
+  padding:18px!important;
+  color:#19364d!important;
+  box-shadow:0 6px 18px rgba(20,48,70,.10)!important;
+}
+html body #app section#home.page.active #adminSummary > .panel > h2{
+  display:block!important;
+  color:#153b56!important;
+  -webkit-text-fill-color:#153b56!important;
+  background:linear-gradient(100deg,#d5e5ef,#eaf2f7)!important;
+  border:1px solid #b2c7d6!important;
+  border-right:6px solid #278b91!important;
+  border-radius:11px!important;
+  padding:12px 15px!important;
+  margin:0 0 10px!important;
+  font-size:18px!important;
+  font-weight:950!important;
+  line-height:1.9!important;
+  text-shadow:none!important;filter:none!important;opacity:1!important;
+}
+html body #app section#home.page.active #adminSummary > .panel > p{
+  color:#365267!important;
+  -webkit-text-fill-color:#365267!important;
+  background:rgba(255,255,255,.62)!important;
+  border:1px solid #c5d3dd!important;
+  border-radius:9px!important;
+  padding:9px 12px!important;
+  margin:0 0 14px!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1.9!important;
+  opacity:1!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group,
+html body #app section#home.page.active #adminSummary .summary-group{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:11px!important;
+  padding:14px!important;
+  background:linear-gradient(155deg,#f9fcfe 0%,#eaf2f7 100%)!important;
+  border:1px solid #b8cbd8!important;
+  border-top:4px solid #398d99!important;
+  border-radius:14px!important;
+  color:#1c394e!important;
+  box-shadow:0 4px 12px rgba(20,48,70,.09)!important;
+  opacity:1!important;filter:none!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group > h3,
+html body #app section#home.page.active #adminSummary .summary-group > h3{
+  display:block!important;
+  color:#173c56!important;
+  -webkit-text-fill-color:#173c56!important;
+  background:#dceaf2!important;
+  border:1px solid #bfd1dd!important;
+  border-right:4px solid #278b91!important;
+  border-radius:9px!important;
+  padding:9px 11px!important;
+  margin:0!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.85!important;
+  text-align:right!important;
+  opacity:1!important;visibility:visible!important;
+  text-shadow:none!important;filter:none!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics,
+html body #app section#home.page.active #adminSummary .summary-metrics{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px!important;
+  align-items:stretch!important;
+  margin:0!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics .stat,
+html body #app section#home.page.active #adminSummary .summary-metrics .stat{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  gap:7px!important;
+  padding:10px 9px!important;
+  color:#314c60!important;
+  -webkit-text-fill-color:#314c60!important;
+  background:#ffffff!important;
+  border:1px solid #d0dce4!important;
+  border-radius:10px!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  line-height:1.8!important;
+  text-align:center!important;
+  opacity:1!important;filter:none!important;
+  box-shadow:0 2px 6px rgba(20,48,70,.05)!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-metrics .stat strong,
+html body #app section#home.page.active #adminSummary .summary-metrics .stat strong{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  color:#123f60!important;
+  -webkit-text-fill-color:#123f60!important;
+  background:linear-gradient(135deg,#e2f0f6,#d4e7f0)!important;
+  border:1px solid #c1d8e3!important;
+  border-radius:8px!important;
+  padding:5px 7px!important;
+  margin:0!important;
+  font-size:24px!important;
+  font-weight:1000!important;
+  line-height:1.45!important;
+  font-variant-numeric:tabular-nums!important;
+  opacity:1!important;
+}
+html body #app section#home.page.active #departmentSummary .summary-group *,
+html body #app section#home.page.active #adminSummary .summary-group *{
+  text-shadow:none!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+  -webkit-text-stroke:0!important;
+}
+@media(max-width:900px){
+  html body #app section#home.page.active #departmentSummary,
+  html body #app section#home.page.active #adminSummary .summary-groups{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:560px){
+  html body #app section#home.page.active #departmentSummary,
+  html body #app section#home.page.active #adminSummary .summary-groups{
+    grid-template-columns:1fr!important;
+    gap:11px!important;
+  }
+  html body #app section#home.page.active #adminSummary > .panel{padding:13px!important}
+  html body #app section#home.page.active #departmentSummary .summary-group,
+  html body #app section#home.page.active #adminSummary .summary-group{padding:12px!important}
+}
+</style>
