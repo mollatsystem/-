@@ -4046,6 +4046,8 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportCenter .support-font-size-indicator{display:inline-block!important;visibility:visible!important;opacity:1!important;font-size:13px;color:#d5e3ed;min-width:42px;text-align:center}
 #supportCenter.support-floating-open #supportNewBody:read-only{background:#edf1f4!important;cursor:not-allowed}
 #supportCenter.support-floating-open #supportNewBody:not(:read-only){background:#fff!important;cursor:text}
+#supportCenter.support-floating-open .support-reply-font-tools button{pointer-events:auto!important;position:relative;z-index:31;touch-action:manipulation}
+#supportCenter.support-floating-open #supportReplyText{font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important}
 </style></head>
 <body>
 <div class="wrap">
@@ -4217,7 +4219,13 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
    <div id="supportConversation" style="display:none">
     <div class="support-conversation-head"><div><h2 id="supportConversationTitle"></h2><p id="supportConversationMeta" class="muted"></p></div><div id="supportStatusControl" style="display:none"><label for="supportTicketStatus">دۆخی کێشە</label><select id="supportTicketStatus"><option value="new">نوێ</option><option value="in_progress">لەژێر چارەسەردایە</option><option value="resolved">چارەسەر کراوە</option></select></div></div>
     <div id="supportMessageList" class="support-message-list" aria-live="polite"></div>
-    <form id="supportReplyForm" class="support-reply-form"><label for="supportReplyText">نامەی نوێ</label><textarea id="supportReplyText" rows="3" maxlength="5000" required placeholder="نامەکەت لێرە بنووسە..."></textarea><div class="actions"><button type="submit" class="btn" id="supportSendReplyBtn">ناردنی نامە</button></div></form>
+    <form id="supportReplyForm" class="support-reply-form"><label for="supportReplyText">نامەی نوێ</label>
+      <div class="support-reply-font-tools" role="toolbar" aria-label="قەبارەی نووسینی نامە" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;gap:8px;margin:0 0 8px;position:relative;z-index:30">
+       <button type="button" id="supportReplyTextFontDown" aria-label="کەمکردنەوەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:40px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A−</button>
+       <button type="button" id="supportReplyTextFontUp" aria-label="زیادکردنی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:40px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
+       <span id="supportReplyTextFontSize" aria-live="polite" style="display:inline-block!important;visibility:visible!important;opacity:1!important;color:#d5e3ed;font-size:13px;min-width:42px">22px</span>
+      </div>
+      <textarea id="supportReplyText" rows="3" maxlength="5000" required placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important"></textarea><div class="actions"><button type="submit" class="btn" id="supportSendReplyBtn">ناردنی نامە</button></div></form>
    </div>
   </div>
  </div>
@@ -4541,9 +4549,20 @@ function changeSupportNewBodyFont(delta){
  field.style.setProperty('-webkit-text-fill-color','#000000','important');
  if(indicator)indicator.textContent=next+'px';
 }
+function changeSupportReplyTextFont(delta){
+ const field=$('supportReplyText'),indicator=$('supportReplyTextFontSize');if(!field)return;
+ const computed=parseFloat(getComputedStyle(field).fontSize)||22;
+ const current=parseInt(field.dataset.supportFontSize||String(computed),10)||22;
+ const next=Math.max(18,Math.min(34,current+delta));
+ field.dataset.supportFontSize=String(next);
+ field.style.setProperty('font-size',next+'px','important');
+ field.style.setProperty('color','#000000','important');
+ field.style.setProperty('-webkit-text-fill-color','#000000','important');
+ if(indicator)indicator.textContent=next+'px';
+}
 /* Delegate toolbar actions so they keep working if the floating panel is re-rendered. */
 document.addEventListener('click',function(event){
- const control=event.target.closest('#supportNewBodyEditBtn,#supportNewBodyFontUp,#supportNewBodyFontDown');
+ const control=event.target.closest('#supportNewBodyEditBtn,#supportNewBodyFontUp,#supportNewBodyFontDown,#supportReplyTextFontUp,#supportReplyTextFontDown');
  if(!control)return;
  event.preventDefault();
  if(control.id==='supportNewBodyEditBtn'){
@@ -4554,6 +4573,10 @@ document.addEventListener('click',function(event){
  }else if(control.id==='supportNewBodyFontDown'){
   changeSupportNewBodyFont(-2);
  }
+});
+$('supportReplyForm')?.addEventListener('reset',()=>{
+ const field=$('supportReplyText');if(field){field.dataset.supportFontSize='22';field.style.setProperty('font-size','22px','important');field.style.setProperty('color','#000000','important');field.style.setProperty('-webkit-text-fill-color','#000000','important')}
+ const indicator=$('supportReplyTextFontSize');if(indicator)indicator.textContent='22px';
 });
 $('supportNewTicketForm')?.addEventListener('reset',()=>{
  const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');
