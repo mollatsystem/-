@@ -7121,107 +7121,79 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
 </style>
 
 
-<style id="support-center-contrast-adaptive-v13">
-#supportCenter [data-support-placeholder-contrast="light"]::placeholder{color:#111!important;-webkit-text-fill-color:#111!important;opacity:1!important}
-#supportCenter [data-support-placeholder-contrast="dark"]::placeholder{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+<style id="support-center-contrast-final-v14">
+/* Dark surfaces: white text */
+#supportCenter.support-floating-open .support-center-heading,
+#supportCenter.support-floating-open .support-ticket-list-panel,
+#supportCenter.support-floating-open .support-conversation-panel,
+#supportCenter.support-floating-open .support-new-ticket-panel,
+#supportCenter.support-floating-open .support-ticket-item,
+#supportCenter.support-floating-open #supportConversationEmpty{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+#supportCenter.support-floating-open .support-center-heading *,
+#supportCenter.support-floating-open .support-ticket-list-panel *,
+#supportCenter.support-floating-open .support-conversation-panel *,
+#supportCenter.support-floating-open .support-new-ticket-panel *,
+#supportCenter.support-floating-open .support-ticket-item *,
+#supportCenter.support-floating-open #supportConversationEmpty *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+/* Light surfaces and white form fields: black text */
+#supportCenter.support-floating-open #supportStatusMsg,
+#supportCenter.support-floating-open #supportStatusMsg *,
+#supportCenter.support-floating-open #supportMessageList,
+#supportCenter.support-floating-open #supportMessageList>.muted,
+#supportCenter.support-floating-open #supportMessageList>.support-feedback,
+#supportCenter.support-floating-open #supportMessageList>.support-feedback-error,
+#supportCenter.support-floating-open #supportMessageList .support-message:not(.mine),
+#supportCenter.support-floating-open #supportMessageList .support-message:not(.mine) *,
+#supportCenter.support-floating-open input,
+#supportCenter.support-floating-open select,
+#supportCenter.support-floating-open textarea{
+  color:#000!important;
+  -webkit-text-fill-color:#000!important;
+  caret-color:#000!important;
+}
+/* The user's own message bubble is dark teal, so keep its text white. */
+#supportCenter.support-floating-open #supportMessageList .support-message.mine,
+#supportCenter.support-floating-open #supportMessageList .support-message.mine *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+/* Dark buttons use white; pale gray buttons use black. */
+#supportCenter.support-floating-open button.btn:not(.gray),
+#supportCenter.support-floating-open button.btn:not(.gray) *,
+#supportCenter.support-floating-open .support-edit-tool,
+#supportCenter.support-floating-open .support-edit-tool *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+#supportCenter.support-floating-open button.btn.gray,
+#supportCenter.support-floating-open button.btn.gray * ,
+#supportCenter.support-floating-open .support-new-body-tools button:not(.support-edit-tool),
+#supportCenter.support-floating-open .support-new-body-tools button:not(.support-edit-tool) *{
+  color:#000!important;
+  -webkit-text-fill-color:#000!important;
+}
+#supportCenter.support-floating-open #supportReplyText::placeholder,
+#supportCenter.support-floating-open #supportNewBody::placeholder{
+  color:#555!important;
+  -webkit-text-fill-color:#555!important;
+  opacity:1!important;
+}
+#supportCenter.support-floating-open #supportFloatingClose{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+/* Status pills sit on a dark slate badge. */
+#supportCenter.support-floating-open #supportTicketList .support-status-pill,
+#supportCenter.support-floating-open #supportTicketList .support-status-pill *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
 </style>
-<script id="support-center-contrast-adaptive-v13-script">
-(function(){
- 'use strict';
- const ROOT_ID='supportCenter';
- const TRANSPARENT=/^rgba?\(\s*[^,]+\s*,\s*[^,]+\s*,\s*[^,]+\s*(?:,\s*0(?:\.0*)?\s*)?\)$/i;
- function parseColor(value){
-  if(!value)return null;
-  const v=value.trim().toLowerCase();
-  if(v==='transparent')return null;
-  let m=v.match(/^#([0-9a-f]{3,8})$/i);
-  if(m){
-   let h=m[1];
-   if(h.length===3||h.length===4)h=h.split('').map(x=>x+x).join('');
-   if(h.length===6||h.length===8){
-    const a=h.length===8?parseInt(h.slice(6,8),16)/255:1;
-    if(a<0.04)return null;
-    return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];
-   }
-  }
-  m=v.match(/^rgba?\(\s*([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i);
-  if(m){
-   const alpha=m[4]===undefined?1:(m[4].endsWith('%')?parseFloat(m[4])/100:parseFloat(m[4]));
-   if(alpha<0.04)return null;
-   return [Math.min(255,+m[1]),Math.min(255,+m[2]),Math.min(255,+m[3])];
-  }
-  return null;
- }
- function luminance(rgb){
-  const channels=rgb.map(x=>{x/=255;return x<=0.04045?x/12.92:Math.pow((x+0.055)/1.055,2.4)});
-  return .2126*channels[0]+.7152*channels[1]+.0722*channels[2];
- }
- function gradientColors(image){
-  if(!image||image==='none'||!/(gradient)\(/i.test(image))return [];
-  const found=[];
-  const re=/(#[0-9a-f]{3,8}\b|rgba?\([^)]*\))/ig;
-  let m;
-  while((m=re.exec(image))!==null){const rgb=parseColor(m[0]);if(rgb)found.push(rgb)}
-  return found;
- }
- function surfaceLuminance(el,root){
-  for(let n=el;n&&n!==root.parentElement;n=n.parentElement){
-   const cs=getComputedStyle(n);
-   const gradient=gradientColors(cs.backgroundImage);
-   if(gradient.length)return gradient.reduce((sum,c)=>sum+luminance(c),0)/gradient.length;
-   const rgb=parseColor(cs.backgroundColor);
-   if(rgb)return luminance(rgb);
-   if(n===root)break;
-  }
-  const base=parseColor(getComputedStyle(root).backgroundColor);
-  return base?luminance(base):1;
- }
- function setImportant(el,prop,value){
-  if(el.style.getPropertyValue(prop)!==value||el.style.getPropertyPriority(prop)!=='important'){
-   el.style.setProperty(prop,value,'important');
-  }
- }
- function apply(){
-  const root=document.getElementById(ROOT_ID);
-  if(!root)return;
-  const nodes=[root,...root.querySelectorAll('*')];
-  for(const el of nodes){
-   if(el.namespaceURI==='http://www.w3.org/2000/svg')continue;
-   const tag=el.tagName;
-   const isControl=/^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(tag);
-   const hasDirectText=Array.from(el.childNodes).some(n=>n.nodeType===3&&n.nodeValue.trim().length);
-   if(!isControl&&!hasDirectText)continue;
-   const dark=surfaceLuminance(el,root)<0.43;
-   const color=dark?'#ffffff':'#111111';
-   setImportant(el,'color',color);
-   setImportant(el,'-webkit-text-fill-color',color);
-   if(tag==='INPUT'||tag==='TEXTAREA'){
-    const placeholderMode=dark?'dark':'light';
-    if(el.getAttribute('data-support-placeholder-contrast')!==placeholderMode)
-      el.setAttribute('data-support-placeholder-contrast',placeholderMode);
-   }
-  }
- }
- let queued=false;
- function schedule(){
-  if(queued)return;
-  queued=true;
-  requestAnimationFrame(()=>{queued=false;apply()});
- }
- function init(){
-  const root=document.getElementById(ROOT_ID);
-  if(!root)return;
-  apply();
-  const observer=new MutationObserver(schedule);
-  observer.observe(root,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style','hidden']});
-  root.addEventListener('input',schedule,true);
-  root.addEventListener('change',schedule,true);
-  root.addEventListener('click',schedule,true);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
- else init();
-})();
-</script>
 </body>
 </html>
