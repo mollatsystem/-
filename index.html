@@ -4219,7 +4219,65 @@ function smSetHomeSignalUnavailable(message){
 }
 function smRenderMonitor(data){
  const accountLabel=$('smAccountName');
- if(accountLabel&&CURRENT_PROFILE){const accountName=CURREN
+ if(accountLabel&&CURRENT_PROFILE){if(accountLabel&&CURRENT_PROFILE){const accountName=CURRENT_PROFILE.role==='super_admin'?'سەرپەرشتیاری گشتی':(CURRENT_PROFILE.display_name||'فەرمانگە');accountLabel.textContent='هەژمار: '+accountName;}
+ const content=$('smMonitorContent'),alerts=$('smAlerts');
+ smRenderHomeSignal(data);
+ if(!content||!alerts)return;
+ const own=data.own||{},limits=data.limits||{};
+ const dbLimit=Number(limits.database_bytes||0),fileLimit=Number(limits.file_storage_bytes||0);
+ const ownDb=Number(own.estimated_bytes||0),ownFiles=Number(own.file_bytes||0);
+ const ownDbPct=Number(own.database_percent||0),ownFilePct=Number(own.file_percent||0);
+ const alertRows=Array.isArray(data.alerts)?data.alerts:[];
+ alerts.innerHTML=alertRows.length?alertRows.map(a=>'<div class="sm-alert '+(a.level==='critical'?'critical':a.level==='danger'?'danger':'')+'"><strong>'+(a.level==='critical'?'ئاگادارییەکی زۆر گرنگ':a.level==='danger'?'ئاگاداری':'ئاگاداریی پێشوەخت')+'</strong> — '+esc(a.message||'')+'</div>').join(''):'';
+ let html='<div class="sm-grid">';
+ if(data.role==='super_admin'){
+  const project=data.project||{};
+  const dbPct=dbLimit?Number(project.database_bytes||0)/dbLimit*100:0;
+  const filePct=fileLimit?Number(project.file_storage_bytes||0)/fileLimit*100:0;
+  html+=smProgress('بەکارهێنانی ڕاستەقینەی داتابەیسی گشتی',project.database_bytes,dbLimit,dbPct);
+  html+=smProgress('بەکارهێنانی شوێنی فایلەکان',project.file_storage_bytes,fileLimit,filePct);
+  html+='<div class="sm-card"><h3>ژمارەی فایلە بارکراوەکان</h3><div class="sm-value">'+Number(project.file_object_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">هەموو فایلەکانی پرۆژە</div></div>';
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(ownDbPct)+'</div>';
+  const departmentRows=Array.isArray(data.departments)?data.departments:[];
+  const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
+  const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
+  const allDepartmentsPct=dbLimit?allDepartmentsBytes/dbLimit*100:0;
+  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-departments-summary"><div class="sm-department-count"><div class="sm-department-count-title">فەرمانگە</div><div class="sm-department-count-number">'+departmentRows.length.toLocaleString('en-US')+'</div></div><div class="sm-departments-data"><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div></div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(allDepartmentsPct)+'</div>';
+  html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
+  for(const o of (data.departments||[])){
+   const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
+   html+='<tr><td>'+esc(o.name||'فەرمانگە')+'</td><td>'+Number(o.record_count||0).toLocaleString('en-US')+'</td><td>'+smFormatBytes(o.estimated_bytes)+'</td><td>'+Number(o.file_count||0).toLocaleString('en-US')+' — '+smFormatBytes(o.file_bytes)+'</td><td><div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,pct)+'%"></span></div><div class="sm-percent">'+pct.toFixed(1)+'%</div></td></tr>';
+  }
+  html+='</tbody></table></div></div>';
+ }else{
+  html+=smProgress('قەبارەی خەمڵێنراوی داتای فەرمانگەکەت',ownDb,dbLimit,ownDbPct);
+  html+=smProgress('بەکارهێنانی شوێنی فایلەکانی فەرمانگەکەت',ownFiles,fileLimit,ownFilePct);
+  html+='<div class="sm-card"><h3>کۆی تۆمارەکان</h3><div class="sm-value">'+Number(own.record_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">تۆمارەکانی هەژماری فەرمانگەکەت</div></div>';
+  html+='<div class="sm-card"><h3>فایلە بارکراوەکان</h3><div class="sm-value">'+Number(own.file_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">'+smFormatBytes(ownFiles)+' لە شوێنی فایلەکان</div></div></div>';
+ }
+ content.innerHTML=html;
+ const stamp=$('smUpdatedAt');
+ if(stamp){const updatedAt=new Date(data.captured_at||Date.now());const datePart=updatedAt.getFullYear()+'/'+String(updatedAt.getMonth()+1).padStart(2,'0')+'/'+String(updatedAt.getDate()).padStart(2,'0');const timePart=updatedAt.toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});stamp.textContent='دوایین نوێکردنەوە: '+datePart+'، '+timePart;}
+}
+async function refreshStorageMonitor(){
+ const content=$('smMonitorContent'),btn=$('smRefreshBtn'),btnLabel=btn?.querySelector('span');
+ if(!CURRENT_PROFILE?.organization_id||OFFLINE_MODE||!navigator.onLine){
+  if(content)content.innerHTML='<div class="sm-error">چاودێریی قەبارەی داتا پێویستی بە پەیوەندیی ئۆنلاین هەیە. تکایە پەیوەندیی ئینتەرنێت بپشکنە.</div>';
+  smSetHomeSignalUnavailable(OFFLINE_MODE?'ئۆفلاین':'ئینتەرنێت پێویستە');
+  return;
+ }
+ if(btn){btn.disabled=true;if(btnLabel)btnLabel.textContent='نوێکردنەوە...'}
+ try{
+  const {data,error}=await db.functions.invoke('storage-monitor');
+  if(error)throw error;
+  if(!data||data.error)throw new Error(data?.error||'زانیارییەکان بەردەست نین.');
+  smRenderMonitor(data);
+ }catch(e){
+  if(content)content.innerHTML='<div class="sm-error">نەتوانرا زانیاریی چاودێری وەربگیرێت: '+esc(e?.message||String(e))+'</div>';
+  smSetHomeSignalUnavailable('نەتوانرا نوێ بکرێتەوە');
+ }finally{if(btn){btn.disabled=false;if(btnLabel)btnLabel.textContent='نوێکردنەوەی زانیاری'}}
+}
+$('smRefreshBtn')?.addEventListener('click',refreshStorageMonitor);
 // ==================== ناوەندی پەیوەندی و پشتگیری ====================
 let SUPPORT_TICKETS=[],SUPPORT_ACTIVE_TICKET=null,SUPPORT_CHANNEL=null;
 const supportStatusLabels={new:'نوێ',in_progress:'لەژێر چارەسەردایە',resolved:'چارەسەر کراوە'};
@@ -4327,66 +4385,6 @@ function closeSupportFloating(){$('supportCenter')?.classList.remove('support-fl
 $('supportFloatingButton')?.addEventListener('click',openSupportFloating);
 $('supportFloatingClose')?.addEventListener('click',closeSupportFloating);
 document.addEventListener('keydown',event=>{if(event.key==='Escape')closeSupportFloating()});
-
-T_PROFILE.role==='super_admin'?'سەرپەرشتیاری گشتی':(CURRENT_PROFILE.display_name||'فەرمانگە');accountLabel.textContent='هەژمار: '+accountName;}
- const content=$('smMonitorContent'),alerts=$('smAlerts');
- smRenderHomeSignal(data);
- if(!content||!alerts)return;
- const own=data.own||{},limits=data.limits||{};
- const dbLimit=Number(limits.database_bytes||0),fileLimit=Number(limits.file_storage_bytes||0);
- const ownDb=Number(own.estimated_bytes||0),ownFiles=Number(own.file_bytes||0);
- const ownDbPct=Number(own.database_percent||0),ownFilePct=Number(own.file_percent||0);
- const alertRows=Array.isArray(data.alerts)?data.alerts:[];
- alerts.innerHTML=alertRows.length?alertRows.map(a=>'<div class="sm-alert '+(a.level==='critical'?'critical':a.level==='danger'?'danger':'')+'"><strong>'+(a.level==='critical'?'ئاگادارییەکی زۆر گرنگ':a.level==='danger'?'ئاگاداری':'ئاگاداریی پێشوەخت')+'</strong> — '+esc(a.message||'')+'</div>').join(''):'';
- let html='<div class="sm-grid">';
- if(data.role==='super_admin'){
-  const project=data.project||{};
-  const dbPct=dbLimit?Number(project.database_bytes||0)/dbLimit*100:0;
-  const filePct=fileLimit?Number(project.file_storage_bytes||0)/fileLimit*100:0;
-  html+=smProgress('بەکارهێنانی ڕاستەقینەی داتابەیسی گشتی',project.database_bytes,dbLimit,dbPct);
-  html+=smProgress('بەکارهێنانی شوێنی فایلەکان',project.file_storage_bytes,fileLimit,filePct);
-  html+='<div class="sm-card"><h3>ژمارەی فایلە بارکراوەکان</h3><div class="sm-value">'+Number(project.file_object_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">هەموو فایلەکانی پرۆژە</div></div>';
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرپەرشتیاری گشتی</h3><div class="sm-value">'+smFormatBytes(ownDb)+'</div><div class="sm-sub">'+Number(own.record_count||0).toLocaleString('en-US')+' تۆمار — خەمڵاندنی داتای تایبەتی ئەم هەژمارە</div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(ownDbPct)+'</div>';
-  const departmentRows=Array.isArray(data.departments)?data.departments:[];
-  const allDepartmentsBytes=departmentRows.reduce((total,department)=>total+Number(department.estimated_bytes||0),0);
-  const allDepartmentsRecords=departmentRows.reduce((total,department)=>total+Number(department.record_count||0),0);
-  const allDepartmentsPct=dbLimit?allDepartmentsBytes/dbLimit*100:0;
-  html+='<div class="sm-card"><h3>داتای هەژماری سەرجەم فەرمانگەکان</h3><div class="sm-departments-summary"><div class="sm-department-count"><div class="sm-department-count-title">فەرمانگە</div><div class="sm-department-count-number">'+departmentRows.length.toLocaleString('en-US')+'</div></div><div class="sm-departments-data"><div class="sm-value">'+smFormatBytes(allDepartmentsBytes)+'</div><div class="sm-sub">'+allDepartmentsRecords.toLocaleString('en-US')+' تۆمار — کۆی خەمڵاندنی داتای هەموو فەرمانگەکان</div></div></div><div class="sm-sub">لە کۆی سنووری گشتی '+smFormatBytes(dbLimit)+'</div>'+smSignalMarkup(allDepartmentsPct)+'</div>';
-  html+='</div><div class="panel"><h2 style="color:#000!important">قەبارەی داتای هەر فەرمانگە</h2><p class="muted" style="color:#000!important">ژمارەکان خەمڵێنراوی تۆمارەکانن و بە بەراورد لەگەڵ سنووری گشتیی پرۆژە نیشان دراون.</p><div class="sm-table-wrap"><table><thead><tr><th>فەرمانگە</th><th>ژمارەی تۆمار</th><th>قەبارەی خەمڵێنراو</th><th>فایلەکان</th><th>بەکارهێنان</th></tr></thead><tbody>';
-  for(const o of (data.departments||[])){
-   const pct=Number(o.database_percent||0),level=pct>=95?'critical':pct>=85?'danger':pct>=70?'warning':'';
-   html+='<tr><td>'+esc(o.name||'فەرمانگە')+'</td><td>'+Number(o.record_count||0).toLocaleString('en-US')+'</td><td>'+smFormatBytes(o.estimated_bytes)+'</td><td>'+Number(o.file_count||0).toLocaleString('en-US')+' — '+smFormatBytes(o.file_bytes)+'</td><td><div class="sm-bar"><span class="'+level+'" style="width:'+Math.min(100,pct)+'%"></span></div><div class="sm-percent">'+pct.toFixed(1)+'%</div></td></tr>';
-  }
-  html+='</tbody></table></div></div>';
- }else{
-  html+=smProgress('قەبارەی خەمڵێنراوی داتای فەرمانگەکەت',ownDb,dbLimit,ownDbPct);
-  html+=smProgress('بەکارهێنانی شوێنی فایلەکانی فەرمانگەکەت',ownFiles,fileLimit,ownFilePct);
-  html+='<div class="sm-card"><h3>کۆی تۆمارەکان</h3><div class="sm-value">'+Number(own.record_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">تۆمارەکانی هەژماری فەرمانگەکەت</div></div>';
-  html+='<div class="sm-card"><h3>فایلە بارکراوەکان</h3><div class="sm-value">'+Number(own.file_count||0).toLocaleString('en-US')+'</div><div class="sm-sub">'+smFormatBytes(ownFiles)+' لە شوێنی فایلەکان</div></div></div>';
- }
- content.innerHTML=html;
- const stamp=$('smUpdatedAt');
- if(stamp){const updatedAt=new Date(data.captured_at||Date.now());const datePart=updatedAt.getFullYear()+'/'+String(updatedAt.getMonth()+1).padStart(2,'0')+'/'+String(updatedAt.getDate()).padStart(2,'0');const timePart=updatedAt.toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});stamp.textContent='دوایین نوێکردنەوە: '+datePart+'، '+timePart;}
-}
-async function refreshStorageMonitor(){
- const content=$('smMonitorContent'),btn=$('smRefreshBtn'),btnLabel=btn?.querySelector('span');
- if(!CURRENT_PROFILE?.organization_id||OFFLINE_MODE||!navigator.onLine){
-  if(content)content.innerHTML='<div class="sm-error">چاودێریی قەبارەی داتا پێویستی بە پەیوەندیی ئۆنلاین هەیە. تکایە پەیوەندیی ئینتەرنێت بپشکنە.</div>';
-  smSetHomeSignalUnavailable(OFFLINE_MODE?'ئۆفلاین':'ئینتەرنێت پێویستە');
-  return;
- }
- if(btn){btn.disabled=true;if(btnLabel)btnLabel.textContent='نوێکردنەوە...'}
- try{
-  const {data,error}=await db.functions.invoke('storage-monitor');
-  if(error)throw error;
-  if(!data||data.error)throw new Error(data?.error||'زانیارییەکان بەردەست نین.');
-  smRenderMonitor(data);
- }catch(e){
-  if(content)content.innerHTML='<div class="sm-error">نەتوانرا زانیاریی چاودێری وەربگیرێت: '+esc(e?.message||String(e))+'</div>';
-  smSetHomeSignalUnavailable('نەتوانرا نوێ بکرێتەوە');
- }finally{if(btn){btn.disabled=false;if(btnLabel)btnLabel.textContent='نوێکردنەوەی زانیاری'}}
-}
-$('smRefreshBtn')?.addEventListener('click',refreshStorageMonitor);
 function page(id){if(id==='supportCenter'&&(!supportCanUse()))return;if(id==='supportCenter')loadSupportTickets();if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role!=='super_admin')return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page(b.dataset.page);if(b.dataset.page==='printPermissions')requestAnimationFrame(()=>$('printPermMainCode')?.focus());if(b.dataset.page==='printLeave')requestAnimationFrame(()=>$('printLeaveMainCode')?.focus());if(b.dataset.page==='leaves')requestAnimationFrame(()=>$('leaveMainCode')?.focus());if(b.dataset.page==='permissions')requestAnimationFrame(()=>$('permMainCode')?.focus());if(b.dataset.page==='longLeaves')requestAnimationFrame(()=>$('ltMainCode')?.focus())});
 
