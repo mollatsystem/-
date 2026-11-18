@@ -1032,6 +1032,57 @@ body:has(#app:not(.hidden)) #app .app-title-area > span.muted{
     line-height:1.45!important;
   }
 }
+
+/* Final contrast pass for the floating support window: light content surfaces always use dark text. */
+html body #supportCenter.support-floating-open{background:#eef3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important}
+html body #supportCenter.support-floating-open .support-center-heading{background:#155e70!important;color:#fff!important}
+html body #supportCenter.support-floating-open .support-center-heading,
+html body #supportCenter.support-floating-open .support-center-heading :where(*){color:#fff!important;-webkit-text-fill-color:#fff!important}
+html body #supportCenter.support-floating-open .support-center-heading #supportStatusMsg,
+html body #supportCenter.support-floating-open .support-center-heading #supportStatusMsg :where(*){background:#e7f4ee!important;color:#185b43!important;-webkit-text-fill-color:#185b43!important}
+html body #supportCenter.support-floating-open .support-ticket-list-panel,
+html body #supportCenter.support-floating-open .support-conversation-panel,
+html body #supportCenter.support-floating-open .support-new-ticket-panel{background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #c4d0da!important}
+html body #supportCenter.support-floating-open .support-ticket-list-panel :where(h2,p,span,label,small,strong,div),
+html body #supportCenter.support-floating-open .support-conversation-panel :where(h2,p,span,label,small,strong,div),
+html body #supportCenter.support-floating-open .support-new-ticket-panel :where(h2,p,span,label,small,strong,div){color:#172b3d!important;-webkit-text-fill-color:#172b3d!important}
+html body #supportCenter.support-floating-open .muted,
+html body #supportCenter.support-floating-open .support-ticket-item small,
+html body #supportCenter.support-floating-open .support-message-meta,
+html body #supportCenter.support-floating-open .support-attachment-hint,
+html body #supportCenter.support-floating-open .support-font-size-indicator{color:#40586b!important;-webkit-text-fill-color:#40586b!important}
+html body #supportCenter.support-floating-open .support-ticket-item,
+html body #supportCenter.support-floating-open .support-ticket-item :where(*){background:#f8fafc!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border-color:#c4d0da!important}
+html body #supportCenter.support-floating-open .support-ticket-item.active,
+html body #supportCenter.support-floating-open .support-ticket-item.active :where(*){background:#e5f2f5!important;color:#123b4b!important;-webkit-text-fill-color:#123b4b!important;border-color:#287f8d!important}
+html body #supportCenter.support-floating-open .support-status-pill{background:#e8eef3!important;color:#263e50!important;-webkit-text-fill-color:#263e50!important;border:1px solid #b8c7d2!important}
+html body #supportCenter.support-floating-open #supportConversationEmpty{background:#edf3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important}
+html body #supportCenter.support-floating-open #supportMessageList{background:#edf2f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important}
+html body #supportCenter.support-floating-open #supportMessageList .support-message,
+html body #supportCenter.support-floating-open #supportMessageList .support-message :where(*){background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important}
+html body #supportCenter.support-floating-open #supportMessageList .support-message.mine,
+html body #supportCenter.support-floating-open #supportMessageList .support-message.mine :where(*){background:#dff1f2!important;color:#123b4b!important;-webkit-text-fill-color:#123b4b!important}
+html body #supportCenter.support-floating-open input,
+html body #supportCenter.support-floating-open select,
+html body #supportCenter.support-floating-open textarea{background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;caret-color:#172b3d!important;border:1px solid #9aafbf!important;opacity:1!important}
+html body #supportCenter.support-floating-open input::placeholder,
+html body #supportCenter.support-floating-open textarea::placeholder{color:#5c6f80!important;-webkit-text-fill-color:#5c6f80!important;opacity:1!important}
+html body #supportCenter.support-floating-open .btn:not(.gray),
+html body #supportCenter.support-floating-open .btn:not(.gray) :where(*){background:#176f83!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#125b6b!important}
+html body #supportCenter.support-floating-open .btn.gray,
+html body #supportCenter.support-floating-open .btn.gray :where(*){background:#edf3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border-color:#9aafbf!important}
+html body #supportCenter.support-floating-open #supportFloatingClose,
+html body #supportCenter.support-floating-open #supportFloatingClose :where(*){background:#176f83!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#125b6b!important}
+html body #supportCenter.support-floating-open #supportRefreshBtn,
+html body #supportCenter.support-floating-open #supportPickImagesBtn,
+html body #supportCenter.support-floating-open #supportRefreshBtn :where(*),
+html body #supportCenter.support-floating-open #supportPickImagesBtn :where(*){background:#176f83!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#125b6b!important}
+html body #supportCenter.support-floating-open .support-new-body-tools button:not(.support-edit-tool),
+html body #supportCenter.support-floating-open .support-reply-font-tools button{background:#edf3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #9aafbf!important}
+html body #supportCenter.support-floating-open .support-new-body-tools .support-edit-tool{background:#176f83!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html body #supportCenter.support-floating-open .support-feedback-error{background:#fff0f0!important;color:#8b1f2b!important;-webkit-text-fill-color:#8b1f2b!important}
+html body #supportCenter.support-floating-open .support-feedback:not(.support-feedback-error){background:#e7f4ee!important;color:#185b43!important;-webkit-text-fill-color:#185b43!important}
+
 </style>
 <style>
 /* Final signed-in header layout: title, centered logo, then a wider email frame. */
