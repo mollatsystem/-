@@ -7495,5 +7495,31 @@ html body #supportCenter:is(.active,.support-floating-open) #supportMessageList 
 
 
 
+
+<style id="support-action-buttons-refresh-v1">
+/* Support conversation action buttons: white attachment icon, prominent send, red close. */
+html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBtn,
+html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBtn :where(*){
+  background:#176f83!important;color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+  border:1px solid #125b6b!important;
+}
+html body #supportCenter:is(.active,.support-floating-open) #supportSendReplyBtn,
+html body #supportCenter:is(.active,.support-floating-open) #supportSendReplyBtn :where(*){
+  background:#176f83!important;color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+  border:1px solid #125b6b!important;
+}
+html body #supportCenter:is(.active,.support-floating-open) #supportSendReplyBtn{
+  min-height:48px!important;min-width:142px!important;padding:11px 25px!important;
+  font-size:16px!important;font-weight:800!important;border-radius:10px!important;
+}
+html body #supportCenter:is(.active,.support-floating-open) #supportFloatingClose,
+html body #supportCenter:is(.active,.support-floating-open) #supportFloatingClose :where(*){
+  background:#d94841!important;color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+  border:1px solid #b8322b!important;
+}
+html body #supportCenter:is(.active,.support-floating-open) #supportFloatingClose:hover{
+  background:#b8322b!important;
+}
+</style>
 </body>
 </html>
