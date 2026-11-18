@@ -4219,7 +4219,7 @@ function smSetHomeSignalUnavailable(message){
 }
 function smRenderMonitor(data){
  const accountLabel=$('smAccountName');
- if(accountLabel&&CURRENT_PROFILE){if(accountLabel&&CURRENT_PROFILE){const accountName=CURRENT_PROFILE.role==='super_admin'?'سەرپەرشتیاری گشتی':(CURRENT_PROFILE.display_name||'فەرمانگە');accountLabel.textContent='هەژمار: '+accountName;}
+ if(accountLabel&&CURRENT_PROFILE){const accountName=CURRENT_PROFILE.role==='super_admin'?'سەرپەرشتیاری گشتی':(CURRENT_PROFILE.display_name||'فەرمانگە');accountLabel.textContent='هەژمار: '+accountName;}
  const content=$('smMonitorContent'),alerts=$('smAlerts');
  smRenderHomeSignal(data);
  if(!content||!alerts)return;
