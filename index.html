@@ -7642,76 +7642,72 @@ html body #supportCenter:is(.active,.support-floating-open) #supportFloatingClos
 @media(max-width:560px){.leave-limit-overlay{padding:8px}.leave-limit-dialog{border-radius:15px;padding:14px}.leave-limit-head h2{font-size:18px}.leave-limit-content{gap:10px}.leave-limit-employee{grid-template-columns:1fr}.leave-limit-actions{display:grid;grid-template-columns:1fr 1fr}.leave-limit-actions button{min-width:0;padding:10px 8px;font-size:13px}}
 </style>
 
-<style id="leave-monthly-limit-modal-v6">
-/* Match the expired long-term leave notice: dark navy card, warm coral warning, teal actions. */
-#leaveMonthlyLimitModal.leave-limit-overlay{position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:18px!important;background:rgba(8,22,39,.76)!important;backdrop-filter:blur(6px)!important;-webkit-backdrop-filter:blur(6px)!important;animation:leaveOverlayIn .18s ease-out both!important}
-#leaveMonthlyLimitModal .leave-limit-dialog{box-sizing:border-box!important;position:relative!important;isolation:isolate;width:min(720px,96vw)!important;max-height:calc(100dvh - 36px)!important;overflow:auto!important;padding:0!important;margin:auto!important;direction:rtl!important;text-align:right!important;background:radial-gradient(ellipse at top right,rgba(164,75,46,.16),transparent 42%),linear-gradient(145deg,#111e2e 0%,#192b3e 58%,#1d3042 100%)!important;color:#eef4fa!important;border:1px solid #594b49!important;border-top:5px solid #e07852!important;border-radius:20px!important;box-shadow:0 30px 90px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.05)!important;font-family:inherit!important;animation:leaveDialogIn .2s ease-out both!important}
-#leaveMonthlyLimitModal .leave-limit-head{position:relative!important;display:flex!important;align-items:center!important;gap:14px!important;padding:20px 23px 17px!important;margin:0!important;overflow:hidden!important;background:transparent!important;border:0!important;border-bottom:1px solid #435267!important;border-radius:0!important}
-#leaveMonthlyLimitModal .leave-limit-icon{position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 52px!important;width:52px!important;height:52px!important;border-radius:16px!important;background:linear-gradient(145deg,#733d37,#482c35)!important;border:1px solid #b76555!important;color:#ffd1b9!important;font-size:28px!important;font-weight:950!important;box-shadow:0 7px 20px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important}
-#leaveMonthlyLimitModal .leave-limit-heading{position:relative!important;z-index:1!important;flex:1!important;min-width:0!important}
-#leaveMonthlyLimitModal .leave-limit-role{display:inline-block!important;padding:5px 11px!important;margin:0 0 5px!important;border:1px solid #49667d!important;border-radius:20px!important;background:#243e55!important;color:#b8d9e9!important;font-size:11px!important;font-weight:900!important}
-#leaveMonthlyLimitModal .leave-limit-head h2{margin:0!important;color:#ffb18e!important;font-size:20px!important;font-weight:950!important;line-height:1.6!important}
-#leaveMonthlyLimitModal .leave-limit-sub{margin:4px 0 0!important;color:#c0ccda!important;font-size:12px!important;font-weight:550!important;line-height:1.8!important}
-#leaveMonthlyLimitModal .leave-limit-month{position:relative!important;z-index:1!important;align-self:center!important;flex:0 0 auto!important;padding:7px 11px!important;border-radius:9px!important;background:#49333a!important;border:1px solid #81545b!important;color:#ffc3a9!important;font-size:12px!important;font-weight:900!important;direction:ltr!important}
-#leaveMonthlyLimitModal .leave-limit-content{display:flex!important;flex-direction:column!important;gap:13px!important;padding:18px 22px 19px!important;color:#eef4fa!important}
-#leaveMonthlyLimitModal .leave-limit-warning{display:flex!important;align-items:flex-start!important;gap:11px!important;margin:0!important;padding:12px 14px!important;background:linear-gradient(145deg,#49333a,#382d38)!important;border:1px solid #81545b!important;border-right:4px solid #e07852!important;border-radius:12px!important;color:#ffe0d2!important;font-size:12px!important;font-weight:650!important;line-height:1.9!important}
-#leaveMonthlyLimitModal .leave-limit-warning-mark{display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 26px!important;width:26px!important;height:26px!important;margin-top:2px!important;border-radius:9px!important;background:#733d37!important;border:1px solid #b76555!important;color:#ffd1b9!important;font-size:16px!important;font-weight:950!important}
-#leaveMonthlyLimitModal .leave-limit-warning strong{display:block!important;margin-bottom:2px!important;color:#ffc0aa!important;font-size:12px!important;font-weight:950!important}
+<style id="leave-monthly-limit-modal-v7">
+/* Exact visual language of the expired long-term leave alert. */
+#leaveMonthlyLimitModal.leave-limit-overlay{position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important;background:rgba(8,22,39,.72)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important;box-sizing:border-box!important}
+#leaveMonthlyLimitModal .leave-limit-dialog{box-sizing:border-box!important;width:min(760px,100%)!important;max-height:min(82vh,760px)!important;overflow:auto!important;margin:0!important;padding:22px!important;direction:rtl!important;text-align:right!important;background:radial-gradient(ellipse at top right,rgba(164,75,46,.18),transparent 42%),linear-gradient(145deg,#111e2e 0%,#192b3e 58%,#1d3042 100%)!important;border:1px solid #594b49!important;border-top:5px solid #e07852!important;border-radius:18px!important;box-shadow:0 30px 90px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.05)!important;color:#eef4fa!important;font-family:inherit!important}
+#leaveMonthlyLimitModal .leave-limit-head{display:flex!important;align-items:center!important;gap:13px!important;margin:0 0 14px!important;padding:4px 2px 17px!important;border:0!important;border-bottom:1px solid #435267!important;border-radius:0!important;background:transparent!important}
+#leaveMonthlyLimitModal .leave-limit-icon{display:grid!important;place-items:center!important;flex:0 0 56px!important;width:56px!important;height:56px!important;border-radius:17px!important;background:linear-gradient(145deg,#733d37,#482c35)!important;border:1px solid #b76555!important;color:#ffd1b9!important;font-size:29px!important;font-weight:900!important;box-shadow:0 7px 20px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important}
+#leaveMonthlyLimitModal .leave-limit-heading{flex:1!important;min-width:0!important}
+#leaveMonthlyLimitModal .leave-limit-role{display:inline-block!important;margin:0 0 6px!important;padding:5px 12px!important;border-radius:20px!important;background:#243e55!important;border:1px solid #49667d!important;color:#b8d9e9!important;font-size:12px!important;font-weight:900!important}
+#leaveMonthlyLimitModal .leave-limit-head h2{margin:0!important;color:#ffb18e!important;font-size:22px!important;font-weight:1000!important;line-height:1.7!important}
+#leaveMonthlyLimitModal .leave-limit-sub{margin:5px 0 0!important;color:#c0ccda!important;font-size:13px!important;line-height:1.9!important}
+#leaveMonthlyLimitModal .leave-limit-month{align-self:center!important;flex:0 0 auto!important;padding:8px 12px!important;border-radius:10px!important;background:linear-gradient(135deg,#49313a,#382b36)!important;border:1px solid #85515a!important;color:#ffc0aa!important;font-size:13px!important;font-weight:900!important;direction:ltr!important}
+#leaveMonthlyLimitModal .leave-limit-content{display:grid!important;gap:12px!important;padding:0!important;color:#eef4fa!important}
+#leaveMonthlyLimitModal .leave-limit-warning{display:flex!important;align-items:flex-start!important;gap:10px!important;margin:0!important;padding:12px 14px!important;background:linear-gradient(145deg,#49333a,#382d38)!important;border:1px solid #81545b!important;border-right:4px solid #e07852!important;border-radius:13px!important;color:#ffe0d2!important;font-size:13px!important;font-weight:700!important;line-height:1.9!important;box-shadow:0 5px 14px rgba(0,0,0,.16)!important}
+#leaveMonthlyLimitModal .leave-limit-warning-mark{display:grid!important;place-items:center!important;flex:0 0 27px!important;width:27px!important;height:27px!important;margin:1px 0 0!important;border-radius:9px!important;background:#733d37!important;border:1px solid #b76555!important;color:#ffd1b9!important;font-size:16px!important;font-weight:950!important}
+#leaveMonthlyLimitModal .leave-limit-warning strong{display:block!important;margin-bottom:3px!important;color:#ffc0aa!important;font-size:13px!important;font-weight:950!important}
 #leaveMonthlyLimitModal .leave-limit-warning p{margin:0!important;color:#f0d8d0!important;font-size:12px!important;font-weight:650!important;line-height:1.9!important}
 #leaveMonthlyLimitModal .leave-limit-warning p b{color:#fff!important;font-weight:950!important}
 #leaveMonthlyLimitModal .leave-limit-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
-#leaveMonthlyLimitModal .leave-limit-stat{display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important;padding:11px 13px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-radius:12px!important;box-shadow:0 5px 14px rgba(0,0,0,.16)!important}
-#leaveMonthlyLimitModal .leave-limit-stat span{color:#bdcddd!important;font-size:10px!important;font-weight:800!important}
-#leaveMonthlyLimitModal .leave-limit-stat>b{color:#f5f8fc!important;font-size:23px!important;font-weight:950!important;line-height:1.25!important}
-#leaveMonthlyLimitModal .leave-limit-stat small{font-size:10px!important;font-weight:750!important}
-#leaveMonthlyLimitModal .leave-limit-stat-alert{background:linear-gradient(145deg,#49333a,#382d38)!important;border-color:#81545b!important}
+#leaveMonthlyLimitModal .leave-limit-stat{display:flex!important;flex-direction:column!important;gap:4px!important;min-width:0!important;padding:12px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-top:3px solid #36a0ad!important;border-radius:12px!important;box-shadow:0 5px 14px rgba(0,0,0,.16)!important}
+#leaveMonthlyLimitModal .leave-limit-stat span{color:#bdcddd!important;font-size:11px!important;font-weight:800!important;line-height:1.7!important}
+#leaveMonthlyLimitModal .leave-limit-stat>b{color:#f5f8fc!important;font-size:23px!important;font-weight:950!important;line-height:1.3!important}
+#leaveMonthlyLimitModal .leave-limit-stat small{color:#c0ccda!important;font-size:10px!important;font-weight:750!important}
+#leaveMonthlyLimitModal .leave-limit-stat-alert{border-top-color:#e07852!important;background:linear-gradient(145deg,#49333a,#382d38)!important;border-color:#81545b!important}
 #leaveMonthlyLimitModal .leave-limit-stat-alert>b{color:#ffc3a9!important}
-#leaveMonthlyLimitModal .leave-limit-section{display:block!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
-#leaveMonthlyLimitModal .leave-limit-section h3{display:flex!important;align-items:center!important;gap:8px!important;margin:0 0 8px!important;padding:0!important;border:0!important;color:#f1f5f9!important;font-size:12px!important;font-weight:950!important;line-height:1.8!important}
-#leaveMonthlyLimitModal .leave-limit-section h3 i{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:23px!important;height:23px!important;flex:0 0 23px!important;border-radius:8px!important;background:#243e55!important;border:1px solid #49667d!important;color:#b8d9e9!important;font-size:11px!important;font-style:normal!important;font-weight:950!important}
-#leaveMonthlyLimitModal .leave-limit-employee{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;color:#eef4fa!important}
-#leaveMonthlyLimitModal .leave-limit-info-item{display:flex!important;flex-direction:column!important;gap:4px!important;min-width:0!important;padding:10px 12px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-radius:11px!important}
-#leaveMonthlyLimitModal .leave-limit-info-item span,#leaveMonthlyLimitModal .leave-limit-request span{color:#bdcddd!important;font-size:10px!important;font-weight:750!important}
-#leaveMonthlyLimitModal .leave-limit-info-item b{color:#f5f8fc!important;font-size:12px!important;font-weight:900!important;overflow-wrap:anywhere!important}
-#leaveMonthlyLimitModal .leave-limit-table-wrap{overflow-x:auto!important;margin:0!important;border:1px solid #435d73!important;border-radius:11px!important;background:#203247!important}
-#leaveMonthlyLimitModal .leave-limit-table{width:100%!important;min-width:0!important;border-collapse:separate!important;border-spacing:0!important;text-align:center!important;font-size:11px!important}
-#leaveMonthlyLimitModal .leave-limit-table th{padding:9px 8px!important;background:#263e53!important;color:#c7d8e6!important;font-size:10px!important;font-weight:900!important;border:0!important;border-bottom:1px solid #435d73!important;white-space:normal!important}
-#leaveMonthlyLimitModal .leave-limit-table td{padding:9px 8px!important;background:#203247!important;color:#e0e9f1!important;border:0!important;border-bottom:1px solid #344b61!important;font-size:11px!important;font-weight:650!important}
+#leaveMonthlyLimitModal .leave-limit-section{display:block!important;margin:0!important;padding:12px 13px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-right:4px solid #36a0ad!important;border-radius:13px!important;box-shadow:0 5px 14px rgba(0,0,0,.13)!important}
+#leaveMonthlyLimitModal .leave-limit-section h3{display:flex!important;align-items:center!important;gap:9px!important;margin:0 0 10px!important;padding:0 0 8px!important;border:0!important;border-bottom:1px solid #435267!important;color:#f5f8fc!important;font-size:13px!important;font-weight:950!important;line-height:1.8!important}
+#leaveMonthlyLimitModal .leave-limit-section h3 i{display:inline-grid!important;place-items:center!important;width:25px!important;height:25px!important;flex:0 0 25px!important;border-radius:8px!important;background:#243e55!important;border:1px solid #49667d!important;color:#b8d9e9!important;font-size:11px!important;font-style:normal!important;font-weight:950!important}
+#leaveMonthlyLimitModal .leave-limit-employee{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;color:#eef4fa!important}
+#leaveMonthlyLimitModal .leave-limit-info-item,#leaveMonthlyLimitModal .leave-limit-request>div{display:flex!important;flex-direction:column!important;gap:4px!important;min-width:0!important;padding:10px 12px!important;background:#1b2d40!important;border:1px solid #435d73!important;border-radius:10px!important}
+#leaveMonthlyLimitModal .leave-limit-info-item span,#leaveMonthlyLimitModal .leave-limit-request span{color:#bdcddd!important;font-size:11px!important;font-weight:750!important}
+#leaveMonthlyLimitModal .leave-limit-info-item b,#leaveMonthlyLimitModal .leave-limit-request b{color:#f5f8fc!important;font-size:12px!important;font-weight:900!important;overflow-wrap:anywhere!important;line-height:1.8!important}
+#leaveMonthlyLimitModal .leave-limit-table-wrap{overflow-x:auto!important;margin:0!important;border:1px solid #435d73!important;border-radius:10px!important;background:#1b2d40!important}
+#leaveMonthlyLimitModal .leave-limit-table{width:100%!important;min-width:0!important;border-collapse:separate!important;border-spacing:0!important;text-align:center!important;font-size:12px!important}
+#leaveMonthlyLimitModal .leave-limit-table th{padding:10px 9px!important;background:#263e53!important;color:#c7d8e6!important;font-size:11px!important;font-weight:900!important;border:0!important;border-bottom:1px solid #435d73!important;white-space:normal!important}
+#leaveMonthlyLimitModal .leave-limit-table td{padding:10px 9px!important;background:#1b2d40!important;color:#e0e9f1!important;border:0!important;border-bottom:1px solid #344b61!important;font-size:12px!important;font-weight:650!important}
 #leaveMonthlyLimitModal .leave-limit-table tbody tr:last-child td{border-bottom:0!important}
-#leaveMonthlyLimitModal .leave-limit-request{display:grid!important;grid-template-columns:1.1fr 1fr 1fr!important;gap:8px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;color:#eef4fa!important}
-#leaveMonthlyLimitModal .leave-limit-request>div{display:flex!important;flex-direction:column!important;gap:4px!important;min-width:0!important;padding:10px 12px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-radius:11px!important}
+#leaveMonthlyLimitModal .leave-limit-request{display:grid!important;grid-template-columns:1.1fr 1fr 1fr!important;gap:9px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;color:#eef4fa!important}
 #leaveMonthlyLimitModal .leave-limit-request .leave-limit-request-days{background:linear-gradient(145deg,#49333a,#382d38)!important;border-color:#81545b!important}
-#leaveMonthlyLimitModal .leave-limit-request b{color:#f5f8fc!important;font-size:12px!important;font-weight:950!important;overflow-wrap:anywhere!important}
 #leaveMonthlyLimitModal .leave-limit-request-days b{color:#ffc3a9!important;font-size:16px!important}
-#leaveMonthlyLimitModal .leave-limit-confirm-note{display:block!important;margin:0!important;padding:9px 12px!important;background:#24394e!important;border:1px solid #435d73!important;border-radius:10px!important;color:#c0ccda!important;font-size:11px!important;font-weight:650!important;line-height:1.85!important}
-#leaveMonthlyLimitModal .leave-limit-actions{display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:9px!important;margin:0!important;padding:13px 22px 17px!important;border-top:1px solid #435267!important;background:rgba(12,27,43,.35)!important;border-radius:0 0 20px 20px!important}
-#leaveMonthlyLimitModal .leave-limit-actions button{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-width:130px!important;min-height:40px!important;padding:9px 15px!important;border-radius:9px!important;font-family:inherit!important;font-size:11px!important;font-weight:900!important;cursor:pointer!important;transition:filter .16s ease,transform .16s ease!important}
+#leaveMonthlyLimitModal .leave-limit-confirm-note{display:block!important;margin:0!important;padding:10px 13px!important;background:#24394e!important;border:1px solid #435d73!important;border-radius:10px!important;color:#c0ccda!important;font-size:12px!important;font-weight:650!important;line-height:1.9!important}
+#leaveMonthlyLimitModal .leave-limit-actions{display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:10px!important;margin:16px 0 0!important;padding:15px 0 0!important;border:0!important;border-top:1px solid #435267!important;background:transparent!important;border-radius:0!important}
+#leaveMonthlyLimitModal .leave-limit-actions button{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-width:130px!important;min-height:42px!important;padding:10px 18px!important;border-radius:10px!important;font-family:inherit!important;font-size:12px!important;font-weight:900!important;cursor:pointer!important}
 #leaveMonthlyLimitModal .leave-limit-approve{background:linear-gradient(135deg,#087f8c,#07516b)!important;border:1px solid #58c8c2!important;color:#fff!important;box-shadow:0 5px 14px rgba(0,0,0,.22)!important}
 #leaveMonthlyLimitModal .leave-limit-close{background:#263b50!important;border:1px solid #536b80!important;color:#e4edf5!important}
-#leaveMonthlyLimitModal .leave-limit-actions button:hover{filter:brightness(1.13)!important;transform:translateY(-1px)!important}
+#leaveMonthlyLimitModal .leave-limit-actions button:hover{filter:brightness(1.12)!important}
 #leaveMonthlyLimitModal .leave-limit-actions button:focus-visible{outline:3px solid #e1a63d!important;outline-offset:3px!important}
-@keyframes leaveOverlayIn{from{opacity:0}to{opacity:1}}
-@keyframes leaveDialogIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){
- #leaveMonthlyLimitModal.leave-limit-overlay{padding:8px!important}
- #leaveMonthlyLimitModal .leave-limit-dialog{width:100%!important;max-height:calc(100dvh - 16px)!important;border-radius:16px!important}
- #leaveMonthlyLimitModal .leave-limit-head{gap:10px!important;padding:15px 13px!important}
- #leaveMonthlyLimitModal .leave-limit-icon{flex-basis:43px!important;width:43px!important;height:43px!important;border-radius:13px!important;font-size:23px!important}
- #leaveMonthlyLimitModal .leave-limit-head h2{font-size:16px!important}
- #leaveMonthlyLimitModal .leave-limit-sub{font-size:10px!important}
- #leaveMonthlyLimitModal .leave-limit-month{padding:5px 7px!important;font-size:10px!important}
- #leaveMonthlyLimitModal .leave-limit-content{gap:10px!important;padding:12px 12px 14px!important}
- #leaveMonthlyLimitModal .leave-limit-stats{gap:5px!important}
- #leaveMonthlyLimitModal .leave-limit-stat{padding:8px 6px!important}
+@media(max-width:560px){
+ #leaveMonthlyLimitModal.leave-limit-overlay{padding:10px!important}
+ #leaveMonthlyLimitModal .leave-limit-dialog{width:100%!important;max-height:88vh!important;padding:16px!important;border-radius:17px!important}
+ #leaveMonthlyLimitModal .leave-limit-head{align-items:flex-start!important;gap:11px!important;padding:2px 0 13px!important}
+ #leaveMonthlyLimitModal .leave-limit-icon{width:45px!important;height:45px!important;flex-basis:45px!important;font-size:23px!important;border-radius:13px!important}
+ #leaveMonthlyLimitModal .leave-limit-head h2{font-size:17px!important}
+ #leaveMonthlyLimitModal .leave-limit-sub{font-size:12px!important}
+ #leaveMonthlyLimitModal .leave-limit-month{padding:6px 8px!important;font-size:11px!important}
+ #leaveMonthlyLimitModal .leave-limit-content{gap:10px!important}
+ #leaveMonthlyLimitModal .leave-limit-stats{gap:6px!important}
+ #leaveMonthlyLimitModal .leave-limit-stat{padding:9px 7px!important}
  #leaveMonthlyLimitModal .leave-limit-stat span{font-size:9px!important}
  #leaveMonthlyLimitModal .leave-limit-stat>b{font-size:18px!important}
- #leaveMonthlyLimitModal .leave-limit-employee{grid-template-columns:1fr!important;gap:6px!important}
- #leaveMonthlyLimitModal .leave-limit-request{grid-template-columns:1fr!important;gap:6px!important}
+ #leaveMonthlyLimitModal .leave-limit-section{padding:10px!important}
+ #leaveMonthlyLimitModal .leave-limit-employee,#leaveMonthlyLimitModal .leave-limit-request{grid-template-columns:1fr!important;gap:7px!important}
  #leaveMonthlyLimitModal .leave-limit-request>div{flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;padding:8px 10px!important}
- #leaveMonthlyLimitModal .leave-limit-actions{display:grid!important;grid-template-columns:1fr 1.35fr!important;gap:7px!important;padding:11px 12px 13px!important}
- #leaveMonthlyLimitModal .leave-limit-actions button{min-width:0!important;min-height:39px!important;padding:7px 5px!important;font-size:10px!important}
+ #leaveMonthlyLimitModal .leave-limit-actions{display:grid!important;grid-template-columns:1fr 1.35fr!important;gap:8px!important;margin-top:13px!important;padding-top:12px!important}
+ #leaveMonthlyLimitModal .leave-limit-actions button{min-width:0!important;min-height:42px!important;padding:8px 6px!important;font-size:11px!important}
 }
-@media(prefers-reduced-motion:reduce){#leaveMonthlyLimitModal.leave-limit-overlay,#leaveMonthlyLimitModal .leave-limit-dialog{animation:none!important}#leaveMonthlyLimitModal .leave-limit-actions button{transition:none!important}}
+@media(prefers-reduced-motion:reduce){#leaveMonthlyLimitModal *{transition:none!important;animation:none!important}}
 </style>
 
 </body>
