@@ -4759,6 +4759,31 @@ async function loadSupportTickets(){
   if(SUPPORT_ACTIVE_TICKET&&!SUPPORT_TICKETS.some(t=>t.id===SUPPORT_ACTIVE_TICKET.id)){SUPPORT_ACTIVE_TICKET=null;$('supportConversation').style.display='none';$('supportConversationEmpty').style.display='block'}
  }catch(e){list.innerHTML='<p class="support-feedback support-feedback-error" role="alert">نەتوانرا لیستی داواکارییەکان وەربگیرێت: '+esc(e?.message||String(e))+'</p>'}
 }
+function applySupportConversationContrast(){
+ const root=$('supportCenter');if(!root)return;
+ const active=root.classList.contains('active')||root.classList.contains('support-floating-open');if(!active)return;
+ const set=(el,styles)=>{if(!el)return;for(const [key,value] of Object.entries(styles))el.style.setProperty(key,value,'important')};
+ set(root,{'background':'#f1f5f9','color':'#172b3d','-webkit-text-fill-color':'#172b3d'});
+ set(root.querySelector('.support-center-heading'),{'background':'#176f83','color':'#ffffff','-webkit-text-fill-color':'#ffffff','border':'0'});
+ root.querySelectorAll('.support-center-heading h2,.support-center-heading p,.support-center-heading .muted').forEach(el=>set(el,{'color':'#ffffff','-webkit-text-fill-color':'#ffffff','opacity':'1'}));
+ root.querySelectorAll('.support-panel-title h2,.support-conversation-head h2,#supportConversationTitle').forEach(el=>set(el,{'color':'#102a3c','-webkit-text-fill-color':'#102a3c','font-weight':'800','opacity':'1'}));
+ set($('supportConversationMeta'),{'color':'#40586b','-webkit-text-fill-color':'#40586b','font-weight':'700','opacity':'1'});
+ set(root.querySelector('.support-conversation-panel'),{'background':'#ffffff','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da'});
+ set(root.querySelector('.support-conversation-head'),{'background':'#e8f0f5','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da','border-radius':'12px','padding':'13px'});
+ set($('supportMessageList'),{'background':'#edf2f7','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da','border-radius':'12px','padding':'14px'});
+ root.querySelectorAll('#supportMessageList .support-message').forEach(article=>{
+  const mine=article.classList.contains('mine'),bg=mine?'#176f83':'#ffffff',ink=mine?'#ffffff':'#172b3d',meta=mine?'#eaf7fa':'#40586b';
+  set(article,{'background':bg,'color':ink,'-webkit-text-fill-color':ink,'border':'1px solid '+(mine?'#125b6b':'#bdcbd6'),'opacity':'1','text-shadow':'none','border-radius':'13px'});
+  set(article.querySelector('.support-message-meta'),{'color':meta,'-webkit-text-fill-color':meta,'font-weight':'800','opacity':'1'});
+  set(article.querySelector('.support-message-body'),{'display':'block','background':'transparent','color':ink,'-webkit-text-fill-color':ink,'font-size':'16px','font-weight':'700','line-height':'2','white-space':'pre-wrap','overflow-wrap':'anywhere','opacity':'1','text-shadow':'none'});
+ });
+ root.querySelectorAll('#supportTicketList .support-ticket-item').forEach(button=>{
+  const selected=button.classList.contains('active'),ink=selected?'#123b4b':'#172b3d',bg=selected?'#e5f2f5':'#f7fafc';
+  set(button,{'background':bg,'color':ink,'-webkit-text-fill-color':ink,'border':'1px solid #bdcbd6','opacity':'1'});
+  button.querySelectorAll('strong,small,span').forEach(el=>set(el,{'color':ink,'-webkit-text-fill-color':ink,'opacity':'1'}));
+  set(button.querySelector('.support-status-pill'),{'background':'#e8eef3','color':'#263e50','-webkit-text-fill-color':'#263e50','border':'1px solid #b8c7d2'});
+ });
+}
 async function openSupportTicket(id){
  const ticket=SUPPORT_TICKETS.find(t=>t.id===id);if(!ticket)return;
  if(SUPPORT_ACTIVE_TICKET?.id!==id&&typeof clearSupportReplyFiles==='function')clearSupportReplyFiles();
@@ -4793,6 +4818,7 @@ async function openSupportTicket(id){
    return '<article class="support-message'+(mine?' mine':'')+'" style="'+messageStyle+'"><div class="support-message-meta" style="color:'+metaInk+'!important;-webkit-text-fill-color:'+metaInk+'!important;font-size:12px!important;font-weight:800!important;opacity:1!important">'+(m.sender_role==='super_admin'?'سەرپەرشتیاری گشتی':(ticket.organizations?.name||'فەرمانگە'))+' · '+esc(supportDate(m.created_at))+'</div>'+(m.body?'<div class="support-message-body" style="'+bodyStyle+'">'+esc(m.body)+'</div>':'')+(images?'<div class="support-message-attachments">'+images+'</div>':'')+'</article>';
   }));
   $('supportMessageList').innerHTML=messages.join('')||'<p class="muted">هیچ نامەیەک نییە.</p>';
+  applySupportConversationContrast();
   const box=$('supportMessageList');box.scrollTop=box.scrollHeight;
   await db.from('support_ticket_reads').upsert({ticket_id:id,user_id:myId,last_read_at:new Date().toISOString()},{onConflict:'ticket_id,user_id'});
   await loadSupportTickets();
@@ -7446,6 +7472,21 @@ html body #supportCenter.support-floating-open #supportConversationEmpty{
   background:#edf3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;
   border:1px dashed #aebfcb!important;opacity:1!important;
 }
+
+
+/* Last-resort contrast: apply to embedded page AND floating support window. */
+html body #supportCenter:is(.active,.support-floating-open) .support-conversation-panel{background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #c4d0da!important}
+html body #supportCenter:is(.active,.support-floating-open) .support-conversation-head{background:#e8f0f5!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #c4d0da!important;border-radius:12px!important;padding:13px!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportConversationTitle,
+html body #supportCenter:is(.active,.support-floating-open) .support-conversation-head h2{color:#102a3c!important;-webkit-text-fill-color:#102a3c!important;font-size:18px!important;font-weight:800!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportConversationMeta{color:#40586b!important;-webkit-text-fill-color:#40586b!important;font-size:13px!important;font-weight:700!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList{background:#edf2f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #c4d0da!important;border-radius:12px!important;padding:14px!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message{background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border:1px solid #bdcbd6!important;opacity:1!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message .support-message-meta{color:#40586b!important;-webkit-text-fill-color:#40586b!important;font-weight:800!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message .support-message-body{background:transparent!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;font-size:16px!important;font-weight:700!important;line-height:2!important;opacity:1!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message.mine{background:#176f83!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#125b6b!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message.mine .support-message-meta{color:#eaf7fa!important;-webkit-text-fill-color:#eaf7fa!important}
+html body #supportCenter:is(.active,.support-floating-open) #supportMessageList .support-message.mine .support-message-body{color:#fff!important;-webkit-text-fill-color:#fff!important}
 
 </style>
 
