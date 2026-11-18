@@ -4043,7 +4043,6 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportCenter .support-message-attachments a{display:block;width:min(190px,42vw);border-radius:9px;overflow:hidden;border:1px solid #b7c9d8;background:#fff}
 #supportCenter .support-message-attachments img{display:block;width:100%;height:auto;max-height:240px;object-fit:contain}
 #supportCenter .support-message-attachments a:focus-visible{outline:3px solid #1c8190;outline-offset:2px}
-#supportCenter #supportReplyText{required:unset}
 @media(max-width:600px){#supportCenter .support-attachment-thumb{width:86px;height:86px}#supportCenter .support-message-attachments a{width:min(150px,44vw)}}
 /* Keep the department/category/date line in the floating conversation header white. */
 #supportCenter.support-floating-open #supportConversationMeta{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
@@ -4486,6 +4485,7 @@ async function loadSupportTickets(){
 }
 async function openSupportTicket(id){
  const ticket=SUPPORT_TICKETS.find(t=>t.id===id);if(!ticket)return;
+ if(SUPPORT_ACTIVE_TICKET?.id!==id&&typeof clearSupportReplyFiles==='function')clearSupportReplyFiles();
  SUPPORT_ACTIVE_TICKET=ticket;$('supportConversationEmpty').style.display='none';$('supportConversation').style.display='block';
  $('supportConversationTitle').textContent=ticket.subject;
  $('supportConversationMeta').textContent=(CURRENT_PROFILE.role==='super_admin'?(ticket.organizations?.name||'فەرمانگە')+' · ':'')+(supportCategoryLabels[ticket.category]||ticket.category)+' · '+supportDate(ticket.created_at);
