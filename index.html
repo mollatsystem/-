@@ -4036,14 +4036,14 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 /* New support message field: larger, clearly readable black text. */
 #supportCenter.support-floating-open .support-new-ticket-panel textarea#supportNewBody{font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important}
 
-/* Editing toolbar for the new support message field only. */
-#supportCenter.support-floating-open .support-new-body-tools{display:flex!important;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 8px;position:relative;z-index:5}
-#supportCenter.support-floating-open .support-new-body-tools button{pointer-events:auto!important;position:relative;z-index:6;touch-action:manipulation}
-#supportCenter.support-floating-open .support-new-body-tools button{min-height:34px;padding:5px 12px;border:1px solid #9aafbf;border-radius:8px;background:#edf3f7;color:#172b3d;font-size:14px;font-weight:700;cursor:pointer}
-#supportCenter.support-floating-open .support-new-body-tools button:hover{background:#dce8ef}
-#supportCenter.support-floating-open .support-new-body-tools .support-edit-tool{background:#176f83;color:#fff;border-color:#176477}
-#supportCenter.support-floating-open .support-new-body-tools .support-edit-tool[aria-pressed="true"]{background:#28734f;border-color:#236343}
-#supportCenter.support-floating-open .support-font-size-indicator{font-size:12px;color:#d5e3ed;min-width:38px;text-align:center}
+/* Always show the new-message toolbar in both floating and embedded support views. */
+#supportCenter .support-new-body-tools{display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;position:relative;z-index:20;min-height:38px}
+#supportCenter .support-new-body-tools button{display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;pointer-events:auto!important;position:relative;z-index:21;touch-action:manipulation;min-width:48px;min-height:38px;padding:6px 14px;border:1px solid #9aafbf;border-radius:8px;background:#edf3f7;color:#172b3d;font-size:15px;font-weight:700;line-height:1.3;cursor:pointer}
+#supportCenter .support-new-body-tools button:hover{background:#dce8ef}
+#supportCenter .support-new-body-tools .support-edit-tool{min-width:90px;background:#176f83;color:#fff;border-color:#176477}
+#supportCenter .support-new-body-tools .support-edit-tool[aria-pressed="true"]{background:#28734f;border-color:#236343}
+#supportCenter .support-new-body-tools .support-font-tool{min-width:48px;font-size:19px!important;font-weight:800!important}
+#supportCenter .support-font-size-indicator{display:inline-block!important;visibility:visible!important;opacity:1!important;font-size:13px;color:#d5e3ed;min-width:42px;text-align:center}
 #supportCenter.support-floating-open #supportNewBody:read-only{background:#edf1f4!important;cursor:not-allowed}
 #supportCenter.support-floating-open #supportNewBody:not(:read-only){background:#fff!important;cursor:text}
 </style></head>
@@ -4229,10 +4229,10 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
     <div class="field"><label for="supportNewCategory">جۆری داواکاری</label><select id="supportNewCategory"><option value="technical">کێشەی تەکنیکی</option><option value="data">کێشەی زانیاری و تۆمار</option><option value="suggestion">پێشنیار و چاکسازی</option><option value="other">بابەتی تر</option></select></div>
    </div>
    <div class="field"><label for="supportNewBody">وردەکاریی کێشە یان پەیام</label>
-    <div class="support-new-body-tools" role="toolbar" aria-label="ئامرازەکانی دەستکاری نامە">
+    <div class="support-new-body-tools" role="toolbar" aria-label="ئامرازەکانی دەستکاری نامە" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;position:relative;z-index:20;min-height:38px">
      <button type="button" class="support-edit-tool" id="supportNewBodyEditBtn" aria-pressed="false">دەستکاری</button>
-     <button type="button" class="support-font-tool" id="supportNewBodyFontDown" aria-label="کەمکردنەوەی قەبارەی فۆنت" title="کەمکردنەوەی قەبارەی فۆنت">A−</button>
-     <button type="button" class="support-font-tool" id="supportNewBodyFontUp" aria-label="زیادکردنی قەبارەی فۆنت" title="زیادکردنی قەبارەی فۆنت">A+</button>
+     <button type="button" class="support-font-tool" id="supportNewBodyFontDown" aria-label="کەمکردنەوەی قەبارەی فۆنت" title="کەمکردنەوەی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A−</button>
+     <button type="button" class="support-font-tool" id="supportNewBodyFontUp" aria-label="زیادکردنی قەبارەی فۆنت" title="زیادکردنی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
      <span id="supportNewBodyFontSize" class="support-font-size-indicator" aria-live="polite">22px</span>
     </div>
     <textarea id="supportNewBody" rows="4" maxlength="5000" required readonly placeholder="بۆ نووسین، کلیک لەسەر «دەستکاری» بکە..." style="font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important"></textarea>
