@@ -1,4 +1,4 @@
-const CACHE='mollat-pwa-v39';
+const CACHE='mollat-pwa-v40';
 const SHELL=['./','./index.html','./manifest.webmanifest','https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2','https://gov.krd/media/2893/krg_logo_2480x2056.png'];
 self.addEventListener('install',event=>{event.waitUntil((async()=>{const cache=await caches.open(CACHE);await Promise.all(SHELL.map(async url=>{try{const response=await fetch(url,{cache:'no-store'});if(response.ok)await cache.put(url,response)}catch(e){}}));await self.skipWaiting()})())});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('mollat-pwa-')&&k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim()})())});
