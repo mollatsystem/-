@@ -4263,6 +4263,21 @@ html body #supportCenter.support-floating-open{
   background:#f1f5f9!important;color:#172b3d!important;
   -webkit-text-fill-color:#172b3d!important;
 }
+
+/* Requested white labels on the two support actions; dark teal keeps the contrast accessible. */
+html body #supportCenter:is(.active,.support-floating-open) #supportRefreshBtn,
+html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBtn,
+html body #supportCenter:is(.active,.support-floating-open) #supportRefreshBtn :where(*),
+html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBtn :where(*) {
+  background:#176f83!important;
+  color:#ffffff!important;
+  -webkit-text-fill-color:#ffffff!important;
+  border-color:#125b6b!important;
+}
+html body #supportCenter:is(.active,.support-floating-open) #supportRefreshBtn:hover,
+html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBtn:hover {
+  background:#125b6b!important;
+}
 </style>
 </head>
 <body>
