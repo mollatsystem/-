@@ -6354,7 +6354,7 @@ html body #app #home #adminOrgPanel #clearDepartmentRecoveryCodeForm{
 }
 </style>
 
-</body></html>
+</html>
 
 <style id="signup-screen-final-verified-fix">
 /* Final override: only the public create-department-account screen */
@@ -6907,7 +6907,7 @@ document.addEventListener('keydown',function(event){
  }
 },true);
 </script>
-</body>
+
 <style id="admin-office-employee-search-result-black-text">
 /* Scope directly to the actual result element; do not depend on wrapper structure. */
 html body #adminOfficeEmpResult,
@@ -7396,4 +7396,41 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
   -webkit-text-fill-color:#8b1f2b!important;
 }
 </style>
+<style id="support-contrast-runtime-v11">
+#supportCenter .support-center-heading,#supportCenter.support-floating-open .support-center-heading{background:#155e70!important;color:#fff!important}
+#supportCenter .support-center-heading *,#supportCenter.support-floating-open .support-center-heading *{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+#supportCenter .support-ticket-list-panel,#supportCenter .support-conversation-panel,#supportCenter .support-new-ticket-panel,#supportCenter.support-floating-open .support-ticket-list-panel,#supportCenter.support-floating-open .support-conversation-panel,#supportCenter.support-floating-open .support-new-ticket-panel{background:#f4f7fa!important;color:#203548!important}
+#supportCenter #supportTicketList .support-ticket-item,#supportCenter.support-floating-open #supportTicketList .support-ticket-item{background:#fff!important;color:#172b3d!important}
+#supportCenter #supportTicketList .support-ticket-item *,#supportCenter.support-floating-open #supportTicketList .support-ticket-item *{color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;opacity:1!important}
+#supportCenter #supportTicketList .support-ticket-item.active,#supportCenter.support-floating-open #supportTicketList .support-ticket-item.active{background:#e2f0f3!important}
+#supportCenter #supportMessageList,#supportCenter.support-floating-open #supportMessageList{background:#e7eef4!important;color:#203548!important}
+#supportCenter #supportMessageList .support-message,#supportCenter.support-floating-open #supportMessageList .support-message{background:#fff!important;color:#172b3d!important}
+#supportCenter #supportMessageList .support-message *,#supportCenter.support-floating-open #supportMessageList .support-message *{color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;opacity:1!important}
+#supportCenter #supportMessageList .support-message.mine,#supportCenter.support-floating-open #supportMessageList .support-message.mine{background:#176f83!important;color:#fff!important}
+#supportCenter #supportMessageList .support-message.mine *,#supportCenter.support-floating-open #supportMessageList .support-message.mine *{color:#fff!important;-webkit-text-fill-color:#fff!important}
+#supportCenter #supportReplyText,#supportCenter #supportNewBody,#supportCenter #supportNewSubject,#supportCenter #supportNewCategory,#supportCenter #supportTicketStatus,#supportCenter.support-floating-open #supportReplyText,#supportCenter.support-floating-open #supportNewBody,#supportCenter.support-floating-open #supportNewSubject,#supportCenter.support-floating-open #supportNewCategory,#supportCenter.support-floating-open #supportTicketStatus{background:#fff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;caret-color:#172b3d!important;opacity:1!important}
+</style>
+<script id="support-contrast-runtime-script-v11">
+(function(){
+ function paintTree(el,color){
+  if(!el)return;
+  const paint=n=>{n.style.setProperty('color',color,'important');n.style.setProperty('-webkit-text-fill-color',color,'important');n.style.setProperty('opacity','1','important');n.style.setProperty('visibility','visible','important');n.style.setProperty('text-shadow','none','important');n.style.setProperty('mix-blend-mode','normal','important')};
+  paint(el);el.querySelectorAll('*').forEach(paint);
+ }
+ function surface(el,bg,fg){if(!el)return;el.style.setProperty('background',bg,'important');paintTree(el,fg)}
+ function apply(){
+  const root=document.getElementById('supportCenter');if(!root)return;
+  surface(root.querySelector('.support-center-heading'),'#155e70','#fff');
+  ['.support-ticket-list-panel','.support-conversation-panel','.support-new-ticket-panel'].forEach(s=>surface(root.querySelector(s),'#f4f7fa','#203548'));
+  root.querySelectorAll('.support-ticket-item').forEach(el=>surface(el,el.classList.contains('active')?'#e2f0f3':'#fff','#172b3d'));
+  const list=root.querySelector('#supportMessageList');
+  if(list){list.style.setProperty('background','#e7eef4','important');list.querySelectorAll('.support-message').forEach(el=>surface(el,el.classList.contains('mine')?'#176f83':'#fff',el.classList.contains('mine')?'#fff':'#172b3d'))}
+  surface(root.querySelector('#supportConversationEmpty'),'#fff','#203548');
+  ['#supportReplyText','#supportNewBody','#supportNewSubject','#supportNewCategory','#supportTicketStatus'].forEach(s=>{const el=root.querySelector(s);if(el){surface(el,'#fff','#172b3d');el.style.setProperty('caret-color','#172b3d','important')}});
+ }
+ function init(){const root=document.getElementById('supportCenter');if(!root)return;apply();new MutationObserver(apply).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});root.addEventListener('click',()=>requestAnimationFrame(apply));document.addEventListener('visibilitychange',()=>{if(!document.hidden)apply()})}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+</body>
 </html>
