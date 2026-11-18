@@ -3860,7 +3860,17 @@ html body #departmentEmployeeSearch #homeEmpSearch .home-employee-search-icon{
   };
 })();
 </script>
-<style id="admin-employee-search-controls">html body #employees .search-form input.search{font-size:16px!important;min-height:46px!important;padding:11px 14px!important}html body #employees .search-form .actions>button{font-size:16px!important;font-weight:700!important;min-height:46px!important;padding:11px 19px!important;border-radius:10px!important;line-height:1.5!important}html body #employees .admin-employee-search-icon{display:inline-block!important;width:21px!important;height:21px!important;min-width:21px!important;flex:0 0 21px!important;vertical-align:middle!important}html body #employees .search-form .actions>button[data-search-action="search"]{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}</style></head>
+<style id="admin-employee-search-controls">html body #employees .search-form input.search{font-size:16px!important;min-height:46px!important;padding:11px 14px!important}html body #employees .search-form .actions>button{font-size:16px!important;font-weight:700!important;min-height:46px!important;padding:11px 19px!important;border-radius:10px!important;line-height:1.5!important}html body #employees .admin-employee-search-icon{display:inline-block!important;width:21px!important;height:21px!important;min-width:21px!important;flex:0 0 21px!important;vertical-align:middle!important}html body #employees .search-form .actions>button[data-search-action="search"]{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}</style><style id="admin-employee-search-result-black">
+/* Keep all messages and returned employee details black in both super-admin employee-code searches. */
+html body #adminEmployeeSearches #adminOwnEmpResult,
+html body #adminEmployeeSearches #adminOwnEmpResult *,
+html body #adminEmployeeSearches #adminOfficeEmpResult,
+html body #adminEmployeeSearches #adminOfficeEmpResult *{
+ color:#000000!important;
+ -webkit-text-fill-color:#000000!important;
+}
+</style>
+</head>
 <body>
 <div class="wrap">
 <div id="institutionHeader" class="institution-heading" aria-label="ناونیشانی فەرمی دامەزراوە">
