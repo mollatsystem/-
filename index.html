@@ -4311,7 +4311,7 @@ let SUPPORT_TICKETS=[],SUPPORT_ACTIVE_TICKET=null,SUPPORT_CHANNEL=null;
 const supportStatusLabels={new:'نوێ',in_progress:'لەژێر چارەسەردایە',resolved:'چارەسەر کراوە'};
 const supportCategoryLabels={technical:'کێشەی تەکنیکی',data:'کێشەی زانیاری و تۆمار',suggestion:'پێشنیار و چاکسازی',other:'بابەتی تر'};
 function supportNotice(message,isError=false){const el=$('supportStatusMsg');if(!el)return;el.textContent=message;el.classList.remove('hidden');el.style.color='#000';el.style.background=isError?'#fff0f0':'#eef8f1';}
-function supportDate(value){try{return new Date(value).toLocaleString('ckb-IQ',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(e){return String(value||'')}}
+function supportDate(value){try{const date=new Date(value);if(!Number.isFinite(date.getTime()))return String(value||'');const datePart=date.getFullYear()+'/'+String(date.getMonth()+1).padStart(2,'0')+'/'+String(date.getDate()).padStart(2,'0');const timePart=date.toLocaleTimeString('ckb-IQ',{hour:'2-digit',minute:'2-digit'});return datePart+'، '+timePart}catch(e){return String(value||'')}}
 function supportCanUse(){return !!CURRENT_PROFILE&&((CURRENT_PROFILE.role==='super_admin')||(CURRENT_PROFILE.role==='department'&&!!CURRENT_PROFILE.organization_id))&&!OFFLINE_MODE&&navigator.onLine}
 function supportUnreadCount(readMap){return SUPPORT_TICKETS.filter(t=>t.last_message_by_role!==(CURRENT_PROFILE.role==='super_admin'?'super_admin':'department')&&(!readMap[t.id]||new Date(t.last_message_at)>new Date(readMap[t.id]))).length}
 async function loadSupportTickets(){
