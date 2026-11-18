@@ -3910,33 +3910,125 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportFloatingClose{white-space:nowrap}
 @media(max-width:600px){#supportCenter.support-floating-open{left:8px!important;bottom:78px!important;width:calc(100vw - 16px)!important;max-height:82vh!important;border-radius:14px!important}#supportCenter.support-floating-open .support-center-grid{grid-template-columns:1fr;padding:8px}#supportCenter.support-floating-open .support-ticket-list{max-height:170px}#supportCenter.support-floating-open .support-message-list{max-height:220px}#supportFloatingButton{left:16px;bottom:14px;width:54px;height:54px}}
 
-/* Support center: higher-contrast, readable conversation colors */
-#supportCenter.support-floating-open{background:#f1f5f9!important;color:#172b40!important;border-color:#8fa4b9!important}
-#supportCenter.support-floating-open .support-center-heading{background:#dce6ef!important;color:#172b40!important;border-bottom-color:#aebdcb!important}
-#supportCenter.support-floating-open .support-center-heading h2,
-#supportCenter.support-floating-open .support-center-heading p,
-#supportCenter .support-panel-title,
-#supportCenter .support-conversation-head{color:#172b40!important}
-#supportCenter .support-ticket-list-panel,
-#supportCenter .support-conversation-panel,
-#supportCenter .support-new-ticket-panel{background:#fff!important;color:#172b40!important;border:1px solid #cbd5e1!important;border-radius:13px!important;padding:13px!important;box-shadow:0 3px 12px rgba(25,45,65,.07)!important}
-#supportCenter .support-ticket-item{background:#f1f5f9!important;border-color:#c3cfdb!important;color:#172b40!important}
-#supportCenter .support-ticket-item.active{background:#d8edf0!important;border:2px solid #176f83!important;color:#103747!important}
-#supportCenter .support-ticket-item small{color:#42566b!important}
-#supportCenter .support-status-pill{background:#e2e8f0!important;color:#26384c!important;border:1px solid #c3cfdb!important}
-#supportCenter .support-message-list{background:#f1f5f9!important;border:1px solid #d3dde7!important;border-radius:12px!important}
-#supportCenter .support-message{background:#dce4ed!important;color:#172b40!important;border:1px solid #c1ccd8!important;box-shadow:0 1px 3px rgba(15,35,55,.08)!important}
-#supportCenter .support-message.mine{background:#176f83!important;color:#fff!important;border-color:#12596a!important}
-#supportCenter .support-message .support-message-meta{color:#42566b!important;font-weight:600!important}
-#supportCenter .support-message.mine .support-message-meta{color:#e5f5f7!important}
-#supportCenter .support-message .support-message-body{color:inherit!important;font-size:14px!important;line-height:1.9!important}
-#supportCenter .support-reply-form{border-top-color:#cbd5e1!important}
-#supportCenter .support-reply-form textarea,
-#supportCenter #supportNewBody,
-#supportCenter #supportTicketStatus{background:#fff!important;color:#172b40!important;border:1px solid #9aabba!important}
-#supportCenter .support-reply-form textarea::placeholder,
-#supportCenter #supportNewBody::placeholder{color:#64748b!important;opacity:1!important}
-#supportCenter .support-empty-state{color:#526579!important}
+/* Floating support center: balanced, calm teal-and-slate visual refresh */
+#supportCenter.support-floating-open{
+ background:linear-gradient(145deg,#e4ebf1 0%,#dce6ed 100%)!important;
+ color:#1b3042!important;
+ border:1px solid #9aafbf!important;
+ box-shadow:0 22px 60px rgba(22,43,61,.32)!important;
+}
+#supportCenter.support-floating-open .support-center-heading{
+ background:linear-gradient(120deg,#174e60 0%,#176f83 58%,#258b91 100%)!important;
+ color:#fff!important;
+ border:0!important;
+ border-bottom:1px solid #2c7785!important;
+ padding:18px 20px!important;
+}
+#supportCenter.support-floating-open .support-center-heading h2{color:#fff!important;font-size:19px;letter-spacing:.1px}
+#supportCenter.support-floating-open .support-center-heading p{color:#e3f0f2!important;line-height:1.9;margin-top:8px}
+#supportCenter.support-floating-open .support-center-heading .muted{color:#e3f0f2!important}
+#supportCenter.support-floating-open .support-center-heading #supportStatusMsg{background:#e7f4ee!important;color:#185b43!important;border:1px solid #b6d8c8!important;border-radius:10px;padding:9px 12px}
+#supportCenter.support-floating-open .support-center-grid{padding:14px;gap:14px}
+#supportCenter.support-floating-open .support-ticket-list-panel,
+#supportCenter.support-floating-open .support-conversation-panel,
+#supportCenter.support-floating-open .support-new-ticket-panel{
+ background:#f7f9fb!important;
+ color:#203447!important;
+ border:1px solid #bdcbd6!important;
+ border-radius:15px!important;
+ padding:15px!important;
+ box-shadow:0 5px 16px rgba(27,48,66,.08)!important;
+}
+#supportCenter.support-floating-open .support-panel-title,
+#supportCenter.support-floating-open .support-conversation-head{color:#203447!important}
+#supportCenter.support-floating-open .support-panel-title h2,
+#supportCenter.support-floating-open .support-conversation-head h2,
+#supportCenter.support-floating-open .support-new-ticket-panel h2{color:#1c4051!important;font-size:16px}
+#supportCenter.support-floating-open .support-ticket-list{gap:9px;padding:3px}
+#supportCenter.support-floating-open .support-ticket-item{
+ background:#fff!important;
+ color:#24394b!important;
+ border:1px solid #d0dbe3!important;
+ border-radius:12px!important;
+ padding:12px 13px!important;
+ box-shadow:0 2px 6px rgba(31,55,73,.045)!important;
+ transition:background .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+#supportCenter.support-floating-open .support-ticket-item:hover{background:#edf5f6!important;border-color:#8bb8bd!important;box-shadow:0 3px 10px rgba(23,89,101,.10)!important}
+#supportCenter.support-floating-open .support-ticket-item.active{background:#e2f0f1!important;border:1px solid #287d88!important;box-shadow:inset 3px 0 0 #176f83,0 3px 10px rgba(23,89,101,.09)!important;color:#163e4b!important}
+#supportCenter.support-floating-open .support-ticket-item strong{color:#1e3b4d!important;font-size:13px;line-height:1.7}
+#supportCenter.support-floating-open .support-ticket-item small{color:#5b6e7e!important;line-height:1.8}
+#supportCenter.support-floating-open .support-status-pill{background:#e8edf2!important;color:#405568!important;border:1px solid #d0d9e1!important;padding:3px 9px}
+#supportCenter.support-floating-open .support-unread-dot{background:#d58b2d;box-shadow:0 0 0 3px #f8ead7}
+#supportCenter.support-floating-open .support-message-list{
+ background:#e8eef3!important;
+ border:1px solid #d0dbe3!important;
+ border-radius:13px!important;
+ padding:14px!important;
+ gap:11px!important;
+}
+#supportCenter.support-floating-open .support-message{
+ background:#fff!important;
+ color:#263b4d!important;
+ border:1px solid #d3dde5!important;
+ border-radius:13px 13px 13px 4px!important;
+ box-shadow:0 2px 7px rgba(25,48,67,.07)!important;
+ padding:11px 13px!important;
+}
+#supportCenter.support-floating-open .support-message.mine{
+ background:linear-gradient(135deg,#176f83 0%,#1c7e89 100%)!important;
+ color:#fff!important;
+ border-color:#176477!important;
+ border-radius:13px 13px 4px 13px!important;
+}
+#supportCenter.support-floating-open .support-message .support-message-meta{color:#607487!important;font-weight:600!important}
+#supportCenter.support-floating-open .support-message.mine .support-message-meta{color:#d9eff0!important}
+#supportCenter.support-floating-open .support-message .support-message-body{color:inherit!important;font-size:14px!important;line-height:1.9!important}
+#supportCenter.support-floating-open .support-empty-state{background:#edf2f6!important;border:1px dashed #bdcbd6!important;border-radius:12px!important;padding:30px 16px!important;color:#536a7c!important;line-height:2}
+#supportCenter.support-floating-open .support-reply-form{border-top:1px solid #d5dfe6!important;margin-top:14px;padding-top:14px!important}
+#supportCenter.support-floating-open label{display:block;color:#344e61!important;font-weight:700;margin-bottom:6px}
+#supportCenter.support-floating-open input,
+#supportCenter.support-floating-open select,
+#supportCenter.support-floating-open textarea{
+ background:#fff!important;
+ color:#24394b!important;
+ border:1px solid #b8c8d4!important;
+ border-radius:10px!important;
+ box-shadow:inset 0 1px 2px rgba(24,48,66,.035)!important;
+}
+#supportCenter.support-floating-open input:focus,
+#supportCenter.support-floating-open select:focus,
+#supportCenter.support-floating-open textarea:focus{outline:2px solid rgba(23,111,131,.22)!important;border-color:#287f8d!important}
+#supportCenter.support-floating-open textarea{padding:10px 12px!important;line-height:1.8}
+#supportCenter.support-floating-open input::placeholder,
+#supportCenter.support-floating-open textarea::placeholder{color:#8494a2!important;opacity:1!important}
+#supportCenter.support-floating-open .btn{
+ background:linear-gradient(135deg,#176f83,#1b7e89)!important;
+ color:#fff!important;
+ border:1px solid #176477!important;
+ border-radius:9px!important;
+ box-shadow:0 2px 6px rgba(23,91,105,.14)!important;
+}
+#supportCenter.support-floating-open .btn:hover{filter:brightness(1.06)}
+#supportCenter.support-floating-open .btn.gray{
+ background:#e5ebf0!important;
+ color:#344c5f!important;
+ border:1px solid #c2ced8!important;
+ box-shadow:none!important;
+}
+#supportCenter.support-floating-open #supportFloatingClose{background:rgba(255,255,255,.13)!important;color:#fff!important;border:1px solid rgba(255,255,255,.42)!important}
+#supportCenter.support-floating-open #supportFloatingClose:hover{background:rgba(255,255,255,.22)!important}
+#supportCenter.support-floating-open #supportTicketStatus{min-width:155px}
+#supportCenter.support-floating-open .support-new-ticket-panel{margin:0 14px 14px!important}
+#supportCenter.support-floating-open .support-new-ticket-panel .grid{gap:12px}
+@media(max-width:600px){
+ #supportCenter.support-floating-open .support-center-heading{padding:14px!important}
+ #supportCenter.support-floating-open .support-center-heading h2{font-size:16px}
+ #supportCenter.support-floating-open .support-center-grid{padding:9px;gap:10px}
+ #supportCenter.support-floating-open .support-ticket-list-panel,
+ #supportCenter.support-floating-open .support-conversation-panel,
+ #supportCenter.support-floating-open .support-new-ticket-panel{padding:11px!important}
+}
 </style></head>
 <body>
 <div class="wrap">
