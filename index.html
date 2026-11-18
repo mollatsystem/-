@@ -4037,7 +4037,8 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportCenter.support-floating-open #supportNewBody{font-size:18px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:500!important;line-height:1.9!important;caret-color:#000000!important}
 
 /* Editing toolbar for the new support message field only. */
-#supportCenter.support-floating-open .support-new-body-tools{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 8px}
+#supportCenter.support-floating-open .support-new-body-tools{display:flex!important;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 8px;position:relative;z-index:5}
+#supportCenter.support-floating-open .support-new-body-tools button{pointer-events:auto!important;position:relative;z-index:6;touch-action:manipulation}
 #supportCenter.support-floating-open .support-new-body-tools button{min-height:34px;padding:5px 12px;border:1px solid #9aafbf;border-radius:8px;background:#edf3f7;color:#172b3d;font-size:14px;font-weight:700;cursor:pointer}
 #supportCenter.support-floating-open .support-new-body-tools button:hover{background:#dce8ef}
 #supportCenter.support-floating-open .support-new-body-tools .support-edit-tool{background:#176f83;color:#fff;border-color:#176477}
@@ -4523,21 +4524,41 @@ function setupSupportRealtime(){
 
 function setSupportNewBodyEditing(enabled){
  const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');if(!field||!button)return;
- field.readOnly=!enabled;button.setAttribute('aria-pressed',enabled?'true':'false');
+ field.readOnly=!enabled;
+ button.setAttribute('aria-pressed',enabled?'true':'false');
  button.textContent=enabled?'تەواوکردنی دەستکاری':'دەستکاری';
  field.placeholder=enabled?'تکایە کێشەکە بە ڕوونی باس بکە...':'بۆ نووسین، کلیک لەسەر «دەستکاری» بکە...';
- if(enabled)field.focus();
+ if(enabled){field.focus();field.selectionStart=field.selectionEnd=field.value.length}
 }
 function changeSupportNewBodyFont(delta){
  const field=$('supportNewBody'),indicator=$('supportNewBodyFontSize');if(!field)return;
- const current=parseInt(field.style.fontSize||'18',10)||18;
+ const computed=parseFloat(getComputedStyle(field).fontSize)||18;
+ const current=parseInt(field.dataset.supportFontSize||String(computed),10)||18;
  const next=Math.max(14,Math.min(30,current+delta));
- field.style.fontSize=next+'px';if(indicator)indicator.textContent=next+'px';
+ field.dataset.supportFontSize=String(next);
+ field.style.setProperty('font-size',next+'px','important');
+ if(indicator)indicator.textContent=next+'px';
 }
-$('supportNewBodyEditBtn')?.addEventListener('click',()=>setSupportNewBodyEditing($('supportNewBody')?.readOnly!==false));
-$('supportNewBodyFontUp')?.addEventListener('click',()=>changeSupportNewBodyFont(2));
-$('supportNewBodyFontDown')?.addEventListener('click',()=>changeSupportNewBodyFont(-2));
-$('supportNewTicketForm')?.addEventListener('reset',()=>setSupportNewBodyEditing(false));
+/* Delegate toolbar actions so they keep working if the floating panel is re-rendered. */
+document.addEventListener('click',function(event){
+ const control=event.target.closest('#supportNewBodyEditBtn,#supportNewBodyFontUp,#supportNewBodyFontDown');
+ if(!control)return;
+ event.preventDefault();
+ if(control.id==='supportNewBodyEditBtn'){
+  const field=$('supportNewBody');
+  if(field)setSupportNewBodyEditing(field.readOnly);
+ }else if(control.id==='supportNewBodyFontUp'){
+  changeSupportNewBodyFont(2);
+ }else if(control.id==='supportNewBodyFontDown'){
+  changeSupportNewBodyFont(-2);
+ }
+});
+$('supportNewTicketForm')?.addEventListener('reset',()=>{
+ const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');
+ if(field){field.readOnly=true;field.style.fontSize='18px'}
+ if(button){button.setAttribute('aria-pressed','false');button.textContent='دەستکاری'}
+ const indicator=$('supportNewBodyFontSize');if(indicator)indicator.textContent='18px';
+});
 $('supportNewTicketForm')?.addEventListener('submit',createSupportTicket);
 $('supportReplyForm')?.addEventListener('submit',sendSupportReply);
 $('supportRefreshBtn')?.addEventListener('click',loadSupportTickets);
