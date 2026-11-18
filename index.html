@@ -4030,6 +4030,21 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
  #supportCenter.support-floating-open .support-new-ticket-panel{padding:11px!important}
 }
 
+/* Private image attachments in support conversations. */
+#supportCenter .support-attachment-tools{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:10px 0}
+#supportCenter .support-attachment-tools button{min-height:40px}
+#supportCenter .support-attachment-hint{font-size:12px;color:#d8e5ef}
+#supportCenter .support-attachment-preview{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+#supportCenter .support-attachment-preview:empty{display:none}
+#supportCenter .support-attachment-thumb{position:relative;width:104px;height:104px;border:1px solid #9db2c6;border-radius:10px;overflow:hidden;background:#e8f0f7}
+#supportCenter .support-attachment-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+#supportCenter .support-attachment-remove{position:absolute;top:4px;left:4px;border:0;border-radius:50%;width:26px;height:26px;background:#9b2525;color:#fff;font-weight:900;cursor:pointer}
+#supportCenter .support-message-attachments{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+#supportCenter .support-message-attachments a{display:block;width:min(190px,42vw);border-radius:9px;overflow:hidden;border:1px solid #b7c9d8;background:#fff}
+#supportCenter .support-message-attachments img{display:block;width:100%;height:auto;max-height:240px;object-fit:contain}
+#supportCenter .support-message-attachments a:focus-visible{outline:3px solid #1c8190;outline-offset:2px}
+#supportCenter #supportReplyText{required:unset}
+@media(max-width:600px){#supportCenter .support-attachment-thumb{width:86px;height:86px}#supportCenter .support-message-attachments a{width:min(150px,44vw)}}
 /* Keep the department/category/date line in the floating conversation header white. */
 #supportCenter.support-floating-open #supportConversationMeta{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
 
@@ -4225,7 +4240,14 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
        <button type="button" id="supportReplyTextFontUp" aria-label="زیادکردنی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:40px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
        <span id="supportReplyTextFontSize" aria-live="polite" style="display:inline-block!important;visibility:visible!important;opacity:1!important;color:#d5e3ed;font-size:13px;min-width:42px">22px</span>
       </div>
-      <textarea id="supportReplyText" rows="3" maxlength="5000" required placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important"></textarea><div class="actions"><button type="submit" class="btn" id="supportSendReplyBtn">ناردنی نامە</button></div></form>
+      <textarea id="supportReplyText" rows="3" maxlength="5000" placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important"></textarea>
+      <div class="support-attachment-tools">
+       <input id="supportReplyImages" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+       <button type="button" class="btn gray" id="supportPickImagesBtn">📎 هاوپێچکردنی وێنە</button>
+       <span class="support-attachment-hint">تا ٥ وێنە، هەر یەکێک تا ٥ مێگابایت</span>
+      </div>
+      <div id="supportReplyImagePreview" class="support-attachment-preview" aria-live="polite"></div>
+      <div class="actions"><button type="submit" class="btn" id="supportSendReplyBtn">ناردنی نامە</button></div></form>
    </div>
   </div>
  </div>
@@ -4471,10 +4493,21 @@ async function openSupportTicket(id){
  $('supportTicketStatus').value=ticket.status;
  $('supportMessageList').innerHTML='<p class="muted">چاوەڕێ بکە...</p>';
  try{
-  const r=await db.from('support_messages').select('id,ticket_id,sender_id,sender_role,body,created_at').eq('ticket_id',id).order('created_at',{ascending:true});
+  const r=await db.from('support_messages').select('id,ticket_id,sender_id,sender_role,body,attachments,created_at').eq('ticket_id',id).order('created_at',{ascending:true});
   if(r.error)throw r.error;
   const {data:userData}=await db.auth.getUser(),myId=userData?.user?.id;
-  $('supportMessageList').innerHTML=(r.data||[]).map(m=>'<article class="support-message'+(m.sender_id===myId?' mine':'')+'"><div class="support-message-meta">'+(m.sender_role==='super_admin'?'سەرپەرشتیاری گشتی':(ticket.organizations?.name||'فەرمانگە'))+' · '+esc(supportDate(m.created_at))+'</div><div class="support-message-body">'+esc(m.body)+'</div></article>').join('')||'<p class="muted">هیچ نامەیەک نییە.</p>';
+  const messages=await Promise.all((r.data||[]).map(async m=>{
+   const files=Array.isArray(m.attachments)?m.attachments:[];
+   const urls=await Promise.all(files.map(async file=>{
+    if(!file||typeof file.path!=='string'||!file.path.startsWith(ticket.organization_id+'/'+ticket.id+'/'))return null;
+    const signed=await db.storage.from('support-attachments').createSignedUrl(file.path,3600);
+    if(signed.error)throw signed.error;
+    return {url:signed.data.signedUrl,name:file.name||'وێنە'};
+   }));
+   const images=urls.filter(Boolean).map(file=>'<a href="'+esc(file.url)+'" target="_blank" rel="noopener noreferrer" aria-label="کردنەوەی وێنە"><img src="'+esc(file.url)+'" alt="'+esc(file.name)+'" loading="lazy"></a>').join('');
+   return '<article class="support-message'+(m.sender_id===myId?' mine':'')+'"><div class="support-message-meta">'+(m.sender_role==='super_admin'?'سەرپەرشتیاری گشتی':(ticket.organizations?.name||'فەرمانگە'))+' · '+esc(supportDate(m.created_at))+'</div>'+(m.body?'<div class="support-message-body">'+esc(m.body)+'</div>':'')+(images?'<div class="support-message-attachments">'+images+'</div>':'')+'</article>';
+  }));
+  $('supportMessageList').innerHTML=messages.join('')||'<p class="muted">هیچ نامەیەک نییە.</p>';
   const box=$('supportMessageList');box.scrollTop=box.scrollHeight;
   await db.from('support_ticket_reads').upsert({ticket_id:id,user_id:myId,last_read_at:new Date().toISOString()},{onConflict:'ticket_id,user_id'});
   await loadSupportTickets();
@@ -4496,17 +4529,73 @@ async function createSupportTicket(ev){
  }catch(e){supportNotice('ناردنی داواکاری سەرکەوتوو نەبوو: '+(e?.message||String(e)),true)}
  finally{btn.disabled=false}
 }
+let SUPPORT_REPLY_FILES=[];
+function renderSupportReplyFiles(){
+ const box=$('supportReplyImagePreview');if(!box)return;
+ box.innerHTML=SUPPORT_REPLY_FILES.map((file,index)=>'<div class="support-attachment-thumb"><img src="'+esc(file.preview)+'" alt="'+esc(file.file.name)+'"><button type="button" class="support-attachment-remove" data-support-remove-image="'+index+'" aria-label="لابردنی وێنە">×</button></div>').join('');
+}
+function clearSupportReplyFiles(){
+ SUPPORT_REPLY_FILES.forEach(item=>URL.revokeObjectURL(item.preview));
+ SUPPORT_REPLY_FILES=[];const input=$('supportReplyImages');if(input)input.value='';
+ renderSupportReplyFiles();
+}
+function setupSupportImageAttachments(){
+ const input=$('supportReplyImages'),pick=$('supportPickImagesBtn'),preview=$('supportReplyImagePreview');
+ if(!input||!pick||pick.dataset.ready==='1')return;
+ pick.dataset.ready='1';
+ pick.addEventListener('click',()=>input.click());
+ input.addEventListener('change',()=>{
+  const chosen=Array.from(input.files||[]);
+  for(const file of chosen){
+   if(SUPPORT_REPLY_FILES.length>=5){supportNotice('تەنها تا ٥ وێنە دەتوانیت هاوپێچ بکەیت.',true);break}
+   if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type)){supportNotice('تەنها وێنەی JPG، PNG، WEBP یان GIF ڕێگەپێدراوە.',true);continue}
+   if(file.size>5*1024*1024){supportNotice('قەبارەی هەر وێنەیەک نابێت لە ٥ مێگابایت زیاتر بێت.',true);continue}
+   if(SUPPORT_REPLY_FILES.some(item=>item.file.name===file.name&&item.file.size===file.size))continue;
+   SUPPORT_REPLY_FILES.push({file,preview:URL.createObjectURL(file)});
+  }
+  input.value='';renderSupportReplyFiles();
+ });
+ preview.addEventListener('click',event=>{
+  const button=event.target.closest('[data-support-remove-image]');if(!button)return;
+  const index=Number(button.dataset.supportRemoveImage),item=SUPPORT_REPLY_FILES[index];
+  if(item)URL.revokeObjectURL(item.preview);
+  SUPPORT_REPLY_FILES.splice(index,1);renderSupportReplyFiles();
+ });
+ $('supportReplyForm')?.addEventListener('reset',()=>clearSupportReplyFiles());
+}
 async function sendSupportReply(ev){
  ev.preventDefault();if(!SUPPORT_ACTIVE_TICKET)return;
- const body=$('supportReplyText').value.trim();if(!body)return;
+ const body=$('supportReplyText').value.trim(),files=SUPPORT_REPLY_FILES.map(item=>item.file);
+ if(!body&&!files.length)return;
  const btn=$('supportSendReplyBtn');btn.disabled=true;
  try{
   const {data:userData}=await db.auth.getUser(),userId=userData?.user?.id;
-  const r=await db.from('support_messages').insert({ticket_id:SUPPORT_ACTIVE_TICKET.id,organization_id:SUPPORT_ACTIVE_TICKET.organization_id,sender_id:userId,sender_role:CURRENT_PROFILE.role,body});
-  if(r.error)throw r.error;
-  $('supportReplyText').value='';supportNotice('نامەکەت بە سەرکەوتوویی نێردرا.');
+  if(!userId)throw new Error('هەژماری بەکارهێنەر پشتڕاست نەکرایەوە.');
+  const uploaded=[];
+  try{
+   for(const file of files){
+    const ext=({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif' })[file.type];
+    const path=SUPPORT_ACTIVE_TICKET.organization_id+'/'+SUPPORT_ACTIVE_TICKET.id+'/'+userId+'/'+crypto.randomUUID()+'.'+ext;
+    const up=await db.storage.from('support-attachments').upload(path,file,{contentType:file.type,cacheControl:'3600',upsert:false});
+    if(up.error)throw up.error;
+    uploaded.push({path:up.data.path,name:file.name,type:file.type,size:file.size});
+   }
+   const r=await db.from('support_messages').insert({
+    ticket_id:SUPPORT_ACTIVE_TICKET.id,
+    organization_id:SUPPORT_ACTIVE_TICKET.organization_id,
+    sender_id:userId,
+    sender_role:CURRENT_PROFILE.role,
+    body:body||'وێنەی هاوپێچکراو',
+    attachments:uploaded
+   });
+   if(r.error)throw r.error;
+  }catch(uploadError){
+   if(uploaded.length)await db.storage.from('support-attachments').remove(uploaded.map(item=>item.path));
+   throw uploadError;
+  }
+  $('supportReplyText').value='';clearSupportReplyFiles();supportNotice('نامە و وێنەکان بە سەرکەوتوویی نێردران.');
   await loadSupportTickets();await openSupportTicket(SUPPORT_ACTIVE_TICKET.id);
- }catch(e){supportNotice('ناردنی وەڵام سەرکەوتوو نەبوو: '+(e?.message||String(e)),true)}
+ }catch(e){supportNotice('ناردنی نامە و وێنە سەرکەوتوو نەبوو: '+(e?.message||String(e)),true)}
  finally{btn.disabled=false}
 }
 async function updateSupportStatus(){
@@ -4589,6 +4678,7 @@ $('supportNewTicketForm')?.addEventListener('reset',()=>{
  const indicator=$('supportNewBodyFontSize');if(indicator)indicator.textContent='22px';
 });
 $('supportNewTicketForm')?.addEventListener('submit',createSupportTicket);
+setupSupportImageAttachments();
 $('supportReplyForm')?.addEventListener('submit',sendSupportReply);
 $('supportRefreshBtn')?.addEventListener('click',loadSupportTickets);
 $('supportTicketStatus')?.addEventListener('change',updateSupportStatus);
