@@ -7308,6 +7308,86 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
 /* Force readable close-button label in both page and floating modes */
 #supportFloatingClose,#supportCenter #supportFloatingClose,#supportCenter.support-floating-open #supportFloatingClose{color:#fff!important;-webkit-text-fill-color:#fff!important;background:#176f83!important;border-color:#125b6b!important;opacity:1!important;text-shadow:none!important}
 #supportFloatingClose:hover,#supportCenter #supportFloatingClose:hover{color:#fff!important;-webkit-text-fill-color:#fff!important;background:#125b6b!important}
+
+/* Definitive floating support text contrast: place AFTER every previous support theme. */
+html body #supportCenter.support-floating-open .support-ticket-list-panel,
+html body #supportCenter.support-floating-open .support-conversation-panel,
+html body #supportCenter.support-floating-open .support-new-ticket-panel{
+  background:#ffffff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;
+}
+html body #supportCenter.support-floating-open #supportTicketList,
+html body #supportCenter.support-floating-open #supportTicketList :where(p,span,strong,small,div,i),
+html body #supportCenter.support-floating-open .support-panel-title,
+html body #supportCenter.support-floating-open .support-panel-title :where(h2,span,small),
+html body #supportCenter.support-floating-open .support-conversation-head,
+html body #supportCenter.support-floating-open .support-conversation-head :where(h2,p,label,span,small),
+html body #supportCenter.support-floating-open .support-new-ticket-panel :where(h2,p,label,span,small,strong,div){
+  color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;opacity:1!important;text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item,
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item :where(*){
+  background:#f7fafc!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;
+  border-color:#bdcbd6!important;opacity:1!important;text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item.active,
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item.active :where(*){
+  background:#e3f1f4!important;color:#123b4b!important;-webkit-text-fill-color:#123b4b!important;border-color:#287f8d!important;
+}
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item .support-status-pill{
+  background:#e8eef3!important;color:#263e50!important;-webkit-text-fill-color:#263e50!important;border-color:#b8c7d2!important;
+}
+html body #supportCenter.support-floating-open #supportTicketList .support-ticket-item .support-unread-dot{
+  background:#d97706!important;
+}
+html body #supportCenter.support-floating-open #supportConversationEmpty,
+html body #supportCenter.support-floating-open #supportMessageList{
+  background:#eef3f7!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;border-color:#c4d0da!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message{
+  background:#ffffff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;
+  border:1px solid #bdcbd6!important;opacity:1!important;text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message :where(*){
+  color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;opacity:1!important;text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message .support-message-meta,
+html body #supportCenter.support-floating-open #supportMessageList .support-message .support-message-meta :where(*){
+  color:#40586b!important;-webkit-text-fill-color:#40586b!important;font-weight:700!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message .support-message-body,
+html body #supportCenter.support-floating-open #supportMessageList .support-message .support-message-body :where(*){
+  color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;font-size:16px!important;font-weight:700!important;
+  line-height:2!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message.mine{
+  background:#176f83!important;color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;border-color:#125b6b!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList .support-message.mine :where(*){
+  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+}
+html body #supportCenter.support-floating-open #supportMessageList>.muted{
+  color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;background:#ffffff!important;
+}
+html body #supportCenter.support-floating-open #supportConversationMeta,
+html body #supportCenter.support-floating-open .support-attachment-hint{
+  color:#40586b!important;-webkit-text-fill-color:#40586b!important;
+}
+html body #supportCenter.support-floating-open #supportReplyText,
+html body #supportCenter.support-floating-open #supportNewBody,
+html body #supportCenter.support-floating-open #supportNewSubject,
+html body #supportCenter.support-floating-open #supportNewCategory,
+html body #supportCenter.support-floating-open #supportTicketStatus{
+  background:#ffffff!important;color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;caret-color:#172b3d!important;opacity:1!important;
+}
+html body #supportCenter.support-floating-open .support-center-heading,
+html body #supportCenter.support-floating-open .support-center-heading :where(h2,p,span,label,button){
+  color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;
+}
+html body #supportCenter.support-floating-open .support-center-heading #supportStatusMsg,
+html body #supportCenter.support-floating-open .support-center-heading #supportStatusMsg :where(*){
+  background:#e7f4ee!important;color:#185b43!important;-webkit-text-fill-color:#185b43!important;
+}
+
 </style>
 
 
