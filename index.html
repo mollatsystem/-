@@ -4062,6 +4062,40 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportCenter.support-floating-open #supportNewBody:not(:read-only){background:#fff!important;cursor:text}
 #supportCenter.support-floating-open .support-reply-font-tools button{pointer-events:auto!important;position:relative;z-index:31;touch-action:manipulation}
 #supportCenter.support-floating-open #supportReplyText{font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important}
+
+
+/* Support center: explicit contrast for every status, heading and conversation element. */
+#supportCenter.support-floating-open,
+#supportCenter.support-floating-open .support-center-grid{color:#e8f1f7!important;-webkit-text-fill-color:#e8f1f7}
+#supportCenter.support-floating-open .support-center-heading h2,
+#supportCenter.support-floating-open .support-panel-title h2,
+#supportCenter.support-floating-open .support-conversation-head h2,
+#supportCenter.support-floating-open .support-new-ticket-panel h2,
+#supportCenter.support-floating-open #supportConversationTitle{color:#f4fbff!important;-webkit-text-fill-color:#f4fbff!important}
+#supportCenter.support-floating-open .muted,
+#supportCenter.support-floating-open .support-empty-state,
+#supportCenter.support-floating-open #supportConversationMeta,
+#supportCenter.support-floating-open .support-font-size-indicator{color:#dce9f2!important;-webkit-text-fill-color:#dce9f2!important;opacity:1!important}
+#supportCenter.support-floating-open .support-ticket-item,
+#supportCenter.support-floating-open .support-ticket-item strong,
+#supportCenter.support-floating-open .support-ticket-item small{color:#f1f7fb!important;-webkit-text-fill-color:#f1f7fb!important;opacity:1!important}
+#supportCenter.support-floating-open .support-ticket-item.active,
+#supportCenter.support-floating-open .support-ticket-item.active strong,
+#supportCenter.support-floating-open .support-ticket-item.active small{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
+#supportCenter.support-floating-open #supportMessageList{color:#eaf3f8!important}
+#supportCenter.support-floating-open #supportMessageList .support-message{color:#f1f6fa!important;-webkit-text-fill-color:#f1f6fa!important}
+#supportCenter.support-floating-open #supportMessageList .support-message.mine{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
+#supportCenter.support-floating-open #supportMessageList .support-message-meta{color:#d2e0e9!important;-webkit-text-fill-color:#d2e0e9!important}
+#supportCenter.support-floating-open #supportMessageList .support-message-body{color:inherit!important;-webkit-text-fill-color:inherit!important;font-size:15px!important;font-weight:600!important;line-height:2!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;opacity:1!important}
+#supportCenter.support-floating-open .support-feedback{display:block!important;padding:13px 14px!important;margin:8px 0!important;border-radius:10px!important;font-size:14px!important;font-weight:800!important;line-height:1.9!important;white-space:normal!important;overflow-wrap:anywhere!important;opacity:1!important;visibility:visible!important}
+#supportCenter.support-floating-open .support-feedback-error{background:#512f3a!important;border:1px solid #bd7785!important;color:#fff1f2!important;-webkit-text-fill-color:#fff1f2!important}
+#supportCenter.support-floating-open .support-feedback:not(.support-feedback-error){background:#30485d!important;border:1px solid #7890a3!important;color:#f0f6fa!important;-webkit-text-fill-color:#f0f6fa!important}
+#supportCenter.support-floating-open #supportStatusMsg{color:#185b43!important;-webkit-text-fill-color:#185b43!important;font-weight:800!important}
+#supportCenter.support-floating-open .support-reply-form label,
+#supportCenter.support-floating-open #supportStatusControl label{color:#e4eff6!important;-webkit-text-fill-color:#e4eff6!important}
+#supportCenter.support-floating-open #supportTicketStatus{color:#20394b!important;-webkit-text-fill-color:#20394b!important;background:#fff!important}
+#supportCenter.support-floating-open .support-attachment-hint{color:#dce9f2!important;-webkit-text-fill-color:#dce9f2!important}
+#supportCenter.support-floating-open .support-message-attachments a{background:#fff!important;border-color:#91aabd!important}
 </style></head>
 <body>
 <div class="wrap">
@@ -4468,9 +4502,16 @@ async function loadSupportTickets(){
   let query=db.from('support_tickets').select('id,organization_id,created_by,subject,category,status,created_at,updated_at,last_message_at,last_message_by_role,organizations(name)').order('last_message_at',{ascending:false}).limit(150);
   const result=await query;if(result.error)throw result.error;
   SUPPORT_TICKETS=result.data||[];
-  const reads=await db.from('support_ticket_reads').select('ticket_id,last_read_at').eq('user_id',(await db.auth.getUser()).data.user.id);
-  if(reads.error)throw reads.error;
-  const readMap=Object.fromEntries((reads.data||[]).map(x=>[x.ticket_id,x.last_read_at]));
+  const authResult=await db.auth.getUser();
+  if(authResult.error)throw authResult.error;
+  const currentUserId=authResult.data?.user?.id;
+  let readRows=[];
+  if(currentUserId){
+   const reads=await db.from('support_ticket_reads').select('ticket_id,last_read_at').eq('user_id',currentUserId);
+   /* Read receipts are supplementary: their failure must never hide real tickets. */
+   if(!reads.error)readRows=reads.data||[];
+  }
+  const readMap=Object.fromEntries(readRows.map(x=>[x.ticket_id,x.last_read_at]));
   const unread=supportUnreadCount(readMap),badge=$('supportUnreadBadge');
   if(badge){badge.textContent=String(unread);badge.style.display=unread?'inline-block':'none'}const floatingBadge=$('supportFloatingUnreadBadge');if(floatingBadge){floatingBadge.textContent=String(unread);floatingBadge.style.display=unread?'block':'none'}
   if(!SUPPORT_TICKETS.length){list.innerHTML='<p class="muted">هێشتا هیچ نامە و داواکارییەک تۆمار نەکراوە.</p>';return}
@@ -4481,7 +4522,7 @@ async function loadSupportTickets(){
   }).join('');
   list.querySelectorAll('[data-support-ticket]').forEach(b=>b.addEventListener('click',()=>openSupportTicket(b.dataset.supportTicket)));
   if(SUPPORT_ACTIVE_TICKET&&!SUPPORT_TICKETS.some(t=>t.id===SUPPORT_ACTIVE_TICKET.id)){SUPPORT_ACTIVE_TICKET=null;$('supportConversation').style.display='none';$('supportConversationEmpty').style.display='block'}
- }catch(e){list.innerHTML='<p class="muted">نەتوانرا نامەکان وەربگیرێن: '+esc(e?.message||String(e))+'</p>'}
+ }catch(e){list.innerHTML='<p class="support-feedback support-feedback-error" role="alert">نەتوانرا لیستی داواکارییەکان وەربگیرێت: '+esc(e?.message||String(e))+'</p>'}
 }
 async function openSupportTicket(id){
  const ticket=SUPPORT_TICKETS.find(t=>t.id===id);if(!ticket)return;
@@ -4500,9 +4541,14 @@ async function openSupportTicket(id){
    const files=Array.isArray(m.attachments)?m.attachments:[];
    const urls=await Promise.all(files.map(async file=>{
     if(!file||typeof file.path!=='string'||!file.path.startsWith(ticket.organization_id+'/'+ticket.id+'/'))return null;
-    const signed=await db.storage.from('support-attachments').createSignedUrl(file.path,3600);
-    if(signed.error)throw signed.error;
-    return {url:signed.data.signedUrl,name:file.name||'وێنە'};
+    try{
+     const signed=await db.storage.from('support-attachments').createSignedUrl(file.path,3600);
+     if(signed.error||!signed.data?.signedUrl)return null;
+     return {url:signed.data.signedUrl,name:file.name||'وێنە'};
+    }catch(imageError){
+     /* A broken attachment must not prevent the text conversation from loading. */
+     return null;
+    }
    }));
    const images=urls.filter(Boolean).map(file=>'<a href="'+esc(file.url)+'" target="_blank" rel="noopener noreferrer" aria-label="کردنەوەی وێنە"><img src="'+esc(file.url)+'" alt="'+esc(file.name)+'" loading="lazy"></a>').join('');
    return '<article class="support-message'+(m.sender_id===myId?' mine':'')+'"><div class="support-message-meta">'+(m.sender_role==='super_admin'?'سەرپەرشتیاری گشتی':(ticket.organizations?.name||'فەرمانگە'))+' · '+esc(supportDate(m.created_at))+'</div>'+(m.body?'<div class="support-message-body">'+esc(m.body)+'</div>':'')+(images?'<div class="support-message-attachments">'+images+'</div>':'')+'</article>';
@@ -4511,7 +4557,7 @@ async function openSupportTicket(id){
   const box=$('supportMessageList');box.scrollTop=box.scrollHeight;
   await db.from('support_ticket_reads').upsert({ticket_id:id,user_id:myId,last_read_at:new Date().toISOString()},{onConflict:'ticket_id,user_id'});
   await loadSupportTickets();
- }catch(e){$('supportMessageList').innerHTML='<p class="muted">هەڵە لە خوێندنەوەی نامەکان: '+esc(e?.message||String(e))+'</p>'}
+ }catch(e){$('supportMessageList').innerHTML='<p class="support-feedback support-feedback-error" role="alert">هەڵە لە خوێندنەوەی پەیامەکان: '+esc(e?.message||String(e))+'</p>'}
 }
 async function createSupportTicket(ev){
  ev.preventDefault();if(CURRENT_PROFILE?.role!=='department')return;
