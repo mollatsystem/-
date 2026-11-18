@@ -6299,6 +6299,29 @@ html body section#app #changePasswordPanel #signedInConfirmPassword:focus{
 }
 </style>
 
+<script id="global-enter-search-handler">
+/* Run the nearby search action when Enter is pressed in a search/code field. */
+document.addEventListener('keydown',function(event){
+ if(event.key!=='Enter'||event.isComposing)return;
+ const field=event.target;
+ if(!field||!field.matches||!field.matches('input:not([type="button"]):not([type="submit"]):not([type="hidden"]),textarea'))return;
+ /* Inputs inside real forms already submit through their native submit handler. */
+ if(field.closest('form'))return;
+ const searchArea=field.closest('.search-form');
+ let searchButton=null;
+ if(searchArea){
+  searchButton=searchArea.querySelector('button[data-search-action="search"],button[id$="Now"]');
+ }
+ if(!searchButton){
+  const fieldArea=field.closest('.field');
+  if(fieldArea)searchButton=fieldArea.querySelector('button.leave-employee-search-btn,button.perm-employee-search-btn,button.long-employee-search-btn');
+ }
+ if(searchButton&&!searchButton.disabled){
+  event.preventDefault();
+  searchButton.click();
+ }
+},true);
+</script>
 </body>
 <style id="admin-office-employee-search-result-black-text">
 /* Scope directly to the actual result element; do not depend on wrapper structure. */
