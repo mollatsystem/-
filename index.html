@@ -4034,7 +4034,7 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportCenter.support-floating-open #supportConversationMeta{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important}
 
 /* New support message field: larger, clearly readable black text. */
-#supportCenter.support-floating-open #supportNewBody{font-size:18px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:500!important;line-height:1.9!important;caret-color:#000000!important}
+#supportCenter.support-floating-open .support-new-ticket-panel textarea#supportNewBody{font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important}
 
 /* Editing toolbar for the new support message field only. */
 #supportCenter.support-floating-open .support-new-body-tools{display:flex!important;align-items:center;flex-wrap:wrap;gap:7px;margin:0 0 8px;position:relative;z-index:5}
@@ -4233,9 +4233,9 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
      <button type="button" class="support-edit-tool" id="supportNewBodyEditBtn" aria-pressed="false">دەستکاری</button>
      <button type="button" class="support-font-tool" id="supportNewBodyFontDown" aria-label="کەمکردنەوەی قەبارەی فۆنت" title="کەمکردنەوەی قەبارەی فۆنت">A−</button>
      <button type="button" class="support-font-tool" id="supportNewBodyFontUp" aria-label="زیادکردنی قەبارەی فۆنت" title="زیادکردنی قەبارەی فۆنت">A+</button>
-     <span id="supportNewBodyFontSize" class="support-font-size-indicator" aria-live="polite">18px</span>
+     <span id="supportNewBodyFontSize" class="support-font-size-indicator" aria-live="polite">22px</span>
     </div>
-    <textarea id="supportNewBody" rows="4" maxlength="5000" required readonly placeholder="بۆ نووسین، کلیک لەسەر «دەستکاری» بکە..."></textarea>
+    <textarea id="supportNewBody" rows="4" maxlength="5000" required readonly placeholder="بۆ نووسین، کلیک لەسەر «دەستکاری» بکە..." style="font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important"></textarea>
    </div>
    <div class="actions"><button type="submit" class="btn" id="supportCreateTicketBtn">ناردنی داواکاری</button></div>
   </form>
@@ -4532,11 +4532,13 @@ function setSupportNewBodyEditing(enabled){
 }
 function changeSupportNewBodyFont(delta){
  const field=$('supportNewBody'),indicator=$('supportNewBodyFontSize');if(!field)return;
- const computed=parseFloat(getComputedStyle(field).fontSize)||18;
- const current=parseInt(field.dataset.supportFontSize||String(computed),10)||18;
- const next=Math.max(14,Math.min(30,current+delta));
+ const computed=parseFloat(getComputedStyle(field).fontSize)||22;
+ const current=parseInt(field.dataset.supportFontSize||String(computed),10)||22;
+ const next=Math.max(18,Math.min(34,current+delta));
  field.dataset.supportFontSize=String(next);
  field.style.setProperty('font-size',next+'px','important');
+ field.style.setProperty('color','#000000','important');
+ field.style.setProperty('-webkit-text-fill-color','#000000','important');
  if(indicator)indicator.textContent=next+'px';
 }
 /* Delegate toolbar actions so they keep working if the floating panel is re-rendered. */
@@ -4555,9 +4557,9 @@ document.addEventListener('click',function(event){
 });
 $('supportNewTicketForm')?.addEventListener('reset',()=>{
  const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');
- if(field){field.readOnly=true;field.style.fontSize='18px'}
+ if(field){field.readOnly=true;field.dataset.supportFontSize='22';field.style.setProperty('font-size','22px','important');field.style.setProperty('color','#000000','important');field.style.setProperty('-webkit-text-fill-color','#000000','important')}
  if(button){button.setAttribute('aria-pressed','false');button.textContent='دەستکاری'}
- const indicator=$('supportNewBodyFontSize');if(indicator)indicator.textContent='18px';
+ const indicator=$('supportNewBodyFontSize');if(indicator)indicator.textContent='22px';
 });
 $('supportNewTicketForm')?.addEventListener('submit',createSupportTicket);
 $('supportReplyForm')?.addEventListener('submit',sendSupportReply);
