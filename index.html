@@ -7119,143 +7119,109 @@ html body #app #adminOrgPanel #adminOrgSearchMsg.admin-org-search-message.is-fou
 
 
 </style>
-<style id="support-center-contrast-unified-v12">
-/* One consistent light-surface palette for the entire support center. */
-#supportCenter{background:#eef3f7!important;color:#203548!important;color-scheme:light}
-#supportCenter *{
- background-color:transparent!important;
- color:#203548!important;
- -webkit-text-fill-color:#203548!important;
- opacity:1!important;visibility:visible!important;
- text-shadow:none!important;mix-blend-mode:normal!important;
-}
-#supportCenter .support-center-heading{
- background:#155e70!important;color:#fff!important;
- border:1px solid #2b7886!important;
-}
-#supportCenter .support-center-heading *,
-#supportCenter .support-center-heading #supportFloatingClose{
- color:#fff!important;-webkit-text-fill-color:#fff!important;
-}
-#supportCenter .support-center-heading #supportStatusMsg,
-#supportCenter #supportStatusMsg{
- background:#e7f4ee!important;color:#185b43!important;
- -webkit-text-fill-color:#185b43!important;border:1px solid #b6d8c8!important;
-}
-#supportCenter #supportStatusMsg *{
- color:#185b43!important;-webkit-text-fill-color:#185b43!important;
-}
-#supportCenter .support-ticket-list-panel,
-#supportCenter .support-conversation-panel,
-#supportCenter .support-new-ticket-panel{
- background:#fff!important;color:#203548!important;
- border:1px solid #c5d1dc!important;
-}
-#supportCenter .support-ticket-list-panel *,
-#supportCenter .support-conversation-panel *,
-#supportCenter .support-new-ticket-panel *{
- color:#203548!important;-webkit-text-fill-color:#203548!important;
-}
-#supportCenter .support-ticket-item{
- background:#fff!important;color:#172b3d!important;
- border:1px solid #b7c7d3!important;
-}
-#supportCenter .support-ticket-item *,
-#supportCenter .support-ticket-item strong,
-#supportCenter .support-ticket-item small{
- color:#172b3d!important;-webkit-text-fill-color:#172b3d!important;
-}
-#supportCenter .support-ticket-item.active{
- background:#e2f0f3!important;border-color:#247b89!important;
-}
-#supportCenter .support-status-pill{
- background:#e7eef3!important;color:#203548!important;
- -webkit-text-fill-color:#203548!important;border:1px solid #b7c7d3!important;
-}
-#supportCenter #supportConversationEmpty{
- background:#f8fafc!important;color:#203548!important;
- -webkit-text-fill-color:#203548!important;border:1px dashed #9aafbf!important;
-}
-#supportCenter #supportMessageList{
- background:#edf2f6!important;color:#203548!important;
- border:1px solid #c5d1dc!important;
-}
-#supportCenter #supportMessageList .support-message{
- background:#fff!important;color:#172b3d!important;
- -webkit-text-fill-color:#172b3d!important;border:1px solid #b7c7d3!important;
-}
-#supportCenter #supportMessageList .support-message *,
-#supportCenter #supportMessageList .support-message .support-message-body{
- background-color:transparent!important;color:#172b3d!important;
- -webkit-text-fill-color:#172b3d!important;
-}
-#supportCenter #supportMessageList .support-message .support-message-meta{
- color:#526779!important;-webkit-text-fill-color:#526779!important;
-}
-#supportCenter #supportMessageList .support-message.mine{
- background:#176f83!important;color:#fff!important;
- -webkit-text-fill-color:#fff!important;border-color:#125b6d!important;
-}
-#supportCenter #supportMessageList .support-message.mine *,
-#supportCenter #supportMessageList .support-message.mine .support-message-meta,
-#supportCenter #supportMessageList .support-message.mine .support-message-body{
- background-color:transparent!important;color:#fff!important;
- -webkit-text-fill-color:#fff!important;
-}
-#supportCenter #supportMessageList .support-message.mine .support-message-meta{
- color:#e4f3f5!important;-webkit-text-fill-color:#e4f3f5!important;
-}
-#supportCenter input:not([type="file"]),
-#supportCenter select,
-#supportCenter textarea{
- background:#fff!important;color:#172b3d!important;
- -webkit-text-fill-color:#172b3d!important;caret-color:#172b3d!important;
- opacity:1!important;filter:none!important;
-}
-#supportCenter input::placeholder,
-#supportCenter textarea::placeholder{
- color:#687b8b!important;-webkit-text-fill-color:#687b8b!important;opacity:1!important;
-}
-#supportCenter label,
-#supportCenter .support-attachment-hint,
-#supportCenter .support-font-size-indicator,
-#supportCenter #supportReplyTextFontSize,
-#supportCenter #supportNewBodyFontSize{
- color:#40586b!important;-webkit-text-fill-color:#40586b!important;
-}
-#supportCenter .btn,
-#supportCenter .support-reply-font-tools button,
-#supportCenter .support-new-body-tools button{
- background:#e5ebf0!important;color:#203548!important;
- -webkit-text-fill-color:#203548!important;border:1px solid #c2ced8!important;
-}
-#supportCenter #supportFloatingClose{
- background:rgba(255,255,255,.13)!important;color:#fff!important;
- -webkit-text-fill-color:#fff!important;border:1px solid rgba(255,255,255,.55)!important;
-}
-#supportCenter .support-reply-form button[type="submit"],
-#supportCenter #supportNewTicketForm button[type="submit"]{
- background:#176f83!important;color:#fff!important;
- -webkit-text-fill-color:#fff!important;border-color:#125b6d!important;
-}
-#supportCenter .support-feedback{
- background:#fff!important;color:#203548!important;
- -webkit-text-fill-color:#203548!important;border:1px solid #b7c7d3!important;
-}
-#supportCenter .support-feedback-error{
- background:#fff0f0!important;color:#8b1f2b!important;
- -webkit-text-fill-color:#8b1f2b!important;border-color:#c87979!important;
-}
-#supportCenter .support-attachment-thumb{
- background:#fff!important;border:1px solid #b7c7d3!important;
-}
-#supportCenter .support-attachment-remove{
- background:#8b1f2b!important;color:#fff!important;
- -webkit-text-fill-color:#fff!important;
-}
-#supportCenter .support-message-attachments a{
- background:#fff!important;border-color:#b7c7d3!important;
-}
+
+
+<style id="support-center-contrast-adaptive-v13">
+#supportCenter [data-support-placeholder-contrast="light"]::placeholder{color:#111!important;-webkit-text-fill-color:#111!important;opacity:1!important}
+#supportCenter [data-support-placeholder-contrast="dark"]::placeholder{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
 </style>
+<script id="support-center-contrast-adaptive-v13-script">
+(function(){
+ 'use strict';
+ const ROOT_ID='supportCenter';
+ const TRANSPARENT=/^rgba?\(\s*[^,]+\s*,\s*[^,]+\s*,\s*[^,]+\s*(?:,\s*0(?:\.0*)?\s*)?\)$/i;
+ function parseColor(value){
+  if(!value)return null;
+  const v=value.trim().toLowerCase();
+  if(v==='transparent')return null;
+  let m=v.match(/^#([0-9a-f]{3,8})$/i);
+  if(m){
+   let h=m[1];
+   if(h.length===3||h.length===4)h=h.split('').map(x=>x+x).join('');
+   if(h.length===6||h.length===8){
+    const a=h.length===8?parseInt(h.slice(6,8),16)/255:1;
+    if(a<0.04)return null;
+    return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];
+   }
+  }
+  m=v.match(/^rgba?\(\s*([\d.]+)[, ]+([\d.]+)[, ]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i);
+  if(m){
+   const alpha=m[4]===undefined?1:(m[4].endsWith('%')?parseFloat(m[4])/100:parseFloat(m[4]));
+   if(alpha<0.04)return null;
+   return [Math.min(255,+m[1]),Math.min(255,+m[2]),Math.min(255,+m[3])];
+  }
+  return null;
+ }
+ function luminance(rgb){
+  const channels=rgb.map(x=>{x/=255;return x<=0.04045?x/12.92:Math.pow((x+0.055)/1.055,2.4)});
+  return .2126*channels[0]+.7152*channels[1]+.0722*channels[2];
+ }
+ function gradientColors(image){
+  if(!image||image==='none'||!/(gradient)\(/i.test(image))return [];
+  const found=[];
+  const re=/(#[0-9a-f]{3,8}\b|rgba?\([^)]*\))/ig;
+  let m;
+  while((m=re.exec(image))!==null){const rgb=parseColor(m[0]);if(rgb)found.push(rgb)}
+  return found;
+ }
+ function surfaceLuminance(el,root){
+  for(let n=el;n&&n!==root.parentElement;n=n.parentElement){
+   const cs=getComputedStyle(n);
+   const gradient=gradientColors(cs.backgroundImage);
+   if(gradient.length)return gradient.reduce((sum,c)=>sum+luminance(c),0)/gradient.length;
+   const rgb=parseColor(cs.backgroundColor);
+   if(rgb)return luminance(rgb);
+   if(n===root)break;
+  }
+  const base=parseColor(getComputedStyle(root).backgroundColor);
+  return base?luminance(base):1;
+ }
+ function setImportant(el,prop,value){
+  if(el.style.getPropertyValue(prop)!==value||el.style.getPropertyPriority(prop)!=='important'){
+   el.style.setProperty(prop,value,'important');
+  }
+ }
+ function apply(){
+  const root=document.getElementById(ROOT_ID);
+  if(!root)return;
+  const nodes=[root,...root.querySelectorAll('*')];
+  for(const el of nodes){
+   if(el.namespaceURI==='http://www.w3.org/2000/svg')continue;
+   const tag=el.tagName;
+   const isControl=/^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(tag);
+   const hasDirectText=Array.from(el.childNodes).some(n=>n.nodeType===3&&n.nodeValue.trim().length);
+   if(!isControl&&!hasDirectText)continue;
+   const dark=surfaceLuminance(el,root)<0.43;
+   const color=dark?'#ffffff':'#111111';
+   setImportant(el,'color',color);
+   setImportant(el,'-webkit-text-fill-color',color);
+   if(tag==='INPUT'||tag==='TEXTAREA'){
+    const placeholderMode=dark?'dark':'light';
+    if(el.getAttribute('data-support-placeholder-contrast')!==placeholderMode)
+      el.setAttribute('data-support-placeholder-contrast',placeholderMode);
+   }
+  }
+ }
+ let queued=false;
+ function schedule(){
+  if(queued)return;
+  queued=true;
+  requestAnimationFrame(()=>{queued=false;apply()});
+ }
+ function init(){
+  const root=document.getElementById(ROOT_ID);
+  if(!root)return;
+  apply();
+  const observer=new MutationObserver(schedule);
+  observer.observe(root,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style','hidden']});
+  root.addEventListener('input',schedule,true);
+  root.addEventListener('change',schedule,true);
+  root.addEventListener('click',schedule,true);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+ else init();
+})();
+</script>
 </body>
 </html>
