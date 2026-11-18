@@ -3909,6 +3909,34 @@ html body #adminEmployeeSearches #adminOfficeEmpResult *{
 #supportFloatingUnreadBadge{position:absolute;top:-5px;right:-5px;min-width:21px;height:21px;padding:0 5px;border-radius:20px;background:#d94841;color:#fff;font-size:11px;font-weight:800;line-height:21px;text-align:center;border:2px solid #fff}
 #supportFloatingClose{white-space:nowrap}
 @media(max-width:600px){#supportCenter.support-floating-open{left:8px!important;bottom:78px!important;width:calc(100vw - 16px)!important;max-height:82vh!important;border-radius:14px!important}#supportCenter.support-floating-open .support-center-grid{grid-template-columns:1fr;padding:8px}#supportCenter.support-floating-open .support-ticket-list{max-height:170px}#supportCenter.support-floating-open .support-message-list{max-height:220px}#supportFloatingButton{left:16px;bottom:14px;width:54px;height:54px}}
+
+/* Support center: higher-contrast, readable conversation colors */
+#supportCenter.support-floating-open{background:#f1f5f9!important;color:#172b40!important;border-color:#8fa4b9!important}
+#supportCenter.support-floating-open .support-center-heading{background:#dce6ef!important;color:#172b40!important;border-bottom-color:#aebdcb!important}
+#supportCenter.support-floating-open .support-center-heading h2,
+#supportCenter.support-floating-open .support-center-heading p,
+#supportCenter .support-panel-title,
+#supportCenter .support-conversation-head{color:#172b40!important}
+#supportCenter .support-ticket-list-panel,
+#supportCenter .support-conversation-panel,
+#supportCenter .support-new-ticket-panel{background:#fff!important;color:#172b40!important;border:1px solid #cbd5e1!important;border-radius:13px!important;padding:13px!important;box-shadow:0 3px 12px rgba(25,45,65,.07)!important}
+#supportCenter .support-ticket-item{background:#f1f5f9!important;border-color:#c3cfdb!important;color:#172b40!important}
+#supportCenter .support-ticket-item.active{background:#d8edf0!important;border:2px solid #176f83!important;color:#103747!important}
+#supportCenter .support-ticket-item small{color:#42566b!important}
+#supportCenter .support-status-pill{background:#e2e8f0!important;color:#26384c!important;border:1px solid #c3cfdb!important}
+#supportCenter .support-message-list{background:#f1f5f9!important;border:1px solid #d3dde7!important;border-radius:12px!important}
+#supportCenter .support-message{background:#dce4ed!important;color:#172b40!important;border:1px solid #c1ccd8!important;box-shadow:0 1px 3px rgba(15,35,55,.08)!important}
+#supportCenter .support-message.mine{background:#176f83!important;color:#fff!important;border-color:#12596a!important}
+#supportCenter .support-message .support-message-meta{color:#42566b!important;font-weight:600!important}
+#supportCenter .support-message.mine .support-message-meta{color:#e5f5f7!important}
+#supportCenter .support-message .support-message-body{color:inherit!important;font-size:14px!important;line-height:1.9!important}
+#supportCenter .support-reply-form{border-top-color:#cbd5e1!important}
+#supportCenter .support-reply-form textarea,
+#supportCenter #supportNewBody,
+#supportCenter #supportTicketStatus{background:#fff!important;color:#172b40!important;border:1px solid #9aabba!important}
+#supportCenter .support-reply-form textarea::placeholder,
+#supportCenter #supportNewBody::placeholder{color:#64748b!important;opacity:1!important}
+#supportCenter .support-empty-state{color:#526579!important}
 </style></head>
 <body>
 <div class="wrap">
