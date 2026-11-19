@@ -4405,7 +4405,7 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
   <p class="muted">ئەم بەشە تەنها بۆ سەرپەرشتیاری گشتییە. وشەی نهێنییەکان لە کۆگای نهێنیی Supabase Vault پارێزراون و تەنها بە داواکارییەکی پشتڕاستکراوی سەرپەرشتیاری گشتی پیشان دەدرێن.</p>
   <div id="departmentCredentialMonitor" style="margin-top:14px">
    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0">
-    <button type="button" class="btn" id="refreshDepartmentCredentials">نوێکردنەوەی لیست</button>
+    <button type="button" class="btn" id="refreshDepartmentCredentials">نوێکردنەوەی لیست</button><button type="button" class="btn" id="manageDepartmentMonitorPin" style="background:#315f83">گۆڕینی PIN</button>
     <span id="departmentCredentialStatus" class="muted" role="status" aria-live="polite">ئامادەیە بۆ بارکردن.</span>
    </div>
    <div class="tablewrap"><table style="min-width:620px"><thead><tr><th>ناوی فەرمانگە</th><th>وشەی نهێنیی ئێستا</th><th>دوایین نوێکردنەوە</th></tr></thead><tbody id="departmentCredentialRows"><tr><td colspan="3">لیست بارنەکراوە.</td></tr></table></div>
@@ -5014,8 +5014,83 @@ function closeSupportFloating(event){if(event){event.preventDefault();event.stop
 $('supportFloatingButton')?.addEventListener('click',openSupportFloating);
 const supportCloseButton=$('supportFloatingClose');if(supportCloseButton){supportCloseButton.addEventListener('click',closeSupportFloating);supportCloseButton.onclick=closeSupportFloating;}
 document.addEventListener('keydown',event=>{if(event.key==='Escape')closeSupportFloating()});
-function page(id){if(id==='supportCenter'&&(!supportCanUse()))return;if(id==='supportCenter')loadSupportTickets();if((id==='longLeaveWatch'||id==='departmentCredentialMonitorPage')&&CURRENT_PROFILE?.role!=='super_admin')return;if(id==='departmentCredentialMonitorPage')refreshDepartmentCredentialMonitor();document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
-document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page(b.dataset.page);if(b.dataset.page==='printPermissions')requestAnimationFrame(()=>$('printPermMainCode')?.focus());if(b.dataset.page==='printLeave')requestAnimationFrame(()=>$('printLeaveMainCode')?.focus());if(b.dataset.page==='leaves')requestAnimationFrame(()=>$('leaveMainCode')?.focus());if(b.dataset.page==='permissions')requestAnimationFrame(()=>$('permMainCode')?.focus());if(b.dataset.page==='longLeaves')requestAnimationFrame(()=>$('ltMainCode')?.focus())});
+
+let DEPARTMENT_MONITOR_SESSION='';
+let DEPARTMENT_MONITOR_SESSION_EXPIRES=0;
+function departmentMonitorSessionValid(){return !!DEPARTMENT_MONITOR_SESSION&&Date.now()<DEPARTMENT_MONITOR_SESSION_EXPIRES}
+function departmentMonitorDialog(titleText,description,fieldLabels){
+ return new Promise(resolve=>{
+  const overlay=document.createElement('div');overlay.id='departmentMonitorPinDialog';overlay.style.cssText='position:fixed;inset:0;z-index:2147483646;background:rgba(12,24,42,.78);display:flex;align-items:center;justify-content:center;padding:18px;direction:rtl';
+  const form=document.createElement('form');form.style.cssText='width:min(420px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.4);border-top:6px solid #315f83;color:#173b60';
+  const title=document.createElement('h3');title.textContent=titleText;title.style.cssText='margin:0 0 10px;font-size:20px;text-align:center';
+  const desc=document.createElement('p');desc.textContent=description;desc.style.cssText='margin:0 0 16px;line-height:1.9;text-align:center;color:#475569;font-size:14px';
+  const fields=[];
+  fieldLabels.forEach((labelText,index)=>{
+   const wrap=document.createElement('div');wrap.style.cssText='margin:12px 0';
+   const label=document.createElement('label');label.textContent=labelText;label.style.cssText='display:block;margin-bottom:6px;font-weight:800;font-size:14px';
+   const input=document.createElement('input');input.type='password';input.inputMode='numeric';input.autocomplete='new-password';input.maxLength=4;input.pattern='[0-9٠-٩۰-۹]{4}';input.required=true;input.dir='ltr';input.placeholder='••••';input.style.cssText='width:100%;box-sizing:border-box;border:1px solid #94a3b8;border-radius:10px;padding:13px;font-size:22px;letter-spacing:9px;text-align:center;color:#0f172a';
+   input.addEventListener('input',()=>{const start=input.selectionStart;const val=normalizePasswordDigits(input.value).replace(/[^0-9]/g,'').slice(0,4);if(input.value!==val){input.value=val;try{input.setSelectionRange(Math.min(start,val.length),Math.min(start,val.length))}catch(e){}}});
+   wrap.append(label,input);form.append(wrap);fields.push(input);
+  });
+  const actions=document.createElement('div');actions.style.cssText='display:flex;gap:9px;justify-content:center;margin-top:18px;flex-wrap:wrap';
+  const submit=document.createElement('button');submit.type='submit';submit.textContent='پشتڕاستکردنەوە';submit.className='btn';
+  const cancel=document.createElement('button');cancel.type='button';cancel.textContent='پاشگەزبوونەوە';cancel.className='btn';cancel.style.background='#64748b';
+  actions.append(submit,cancel);form.prepend(title,desc);form.append(actions);overlay.append(form);document.body.append(overlay);
+  const finish=value=>{overlay.remove();resolve(value)};
+  cancel.onclick=()=>finish(null);overlay.addEventListener('click',e=>{if(e.target===overlay)finish(null)});
+  form.onsubmit=e=>{e.preventDefault();const values=fields.map(x=>normalizePasswordDigits(x.value));if(values.some(x=>!/^\\d{4}$/.test(x))){showAdminMessageModal('error','PIN دەبێت تەنها لە چوار ژمارە پێک بێت.');return}finish(values)};
+  fields[0]?.focus();
+ });
+}
+async function invokeDepartmentMonitor(action,extra={}){
+ const {data,error}=await db.functions.invoke('department-credentials',{body:{action,...extra}});
+ if(error)throw error;if(data?.error)throw new Error(data.error);return data;
+}
+async function verifyDepartmentMonitorPin(pin){
+ const data=await invokeDepartmentMonitor('verify_pin',{pin});
+ DEPARTMENT_MONITOR_SESSION=data.monitor_session||'';
+ DEPARTMENT_MONITOR_SESSION_EXPIRES=Date.now()+Math.max(0,Number(data.expires_in||600)-10)*1000;
+ return data;
+}
+async function openDepartmentMonitorGate(){
+ if(CURRENT_PROFILE?.role!=='super_admin')return;
+ try{
+  const status=await invokeDepartmentMonitor('pin_status');
+  if(!status.configured){
+   const values=await departmentMonitorDialog('دانانی PIN ـی پاراستن','بۆ یەکەم جار PIN ـێکی چوار ژمارەیی دابنێ و دووبارەی بکەرەوە. ئەم PIN ـە تەنها لەلایەن سەرپەرشتیاری گشتییەوە بەکاردەهێنرێت.',['PIN ـی نوێ','دووبارەکردنەوەی PIN']);
+   if(!values)return;
+   if(values[0]!==values[1]){showAdminMessageModal('error','دوو PIN ـەکە یەک ناگرن. تکایە دووبارە هەوڵ بدەرەوە.');return}
+   await invokeDepartmentMonitor('set_pin',{pin:values[0]});
+   await verifyDepartmentMonitorPin(values[0]);
+   showAdminMessageModal('success','PIN بە سەرکەوتوویی دانرا. بەشی چاودێری فەرمانگەکان کراوەتەوە.');
+  }else{
+   const values=await departmentMonitorDialog('پاراستنی چاودێری فەرمانگەکان','بۆ کردنەوەی ئەم بەشە، PIN ـی چوار ژمارەیی داخڵ بکە.',['PIN ـی پاراستن']);
+   if(!values)return;
+   await verifyDepartmentMonitorPin(values[0]);
+  }
+  page('departmentCredentialMonitorPage');
+ }catch(e){
+  DEPARTMENT_MONITOR_SESSION='';DEPARTMENT_MONITOR_SESSION_EXPIRES=0;
+  showAdminMessageModal('error',e?.message||'پشتڕاستکردنەوەی PIN سەرکەوتوو نەبوو.');
+ }
+}
+async function manageDepartmentMonitorPin(){
+ if(!departmentMonitorSessionValid()){showAdminMessageModal('error','ماوەی دەستگەیشتنی PIN تەواو بووە؛ تکایە بەشی چاودێری دووبارە بکەرەوە.');return}
+ try{
+  const current=await departmentMonitorDialog('پشتڕاستکردنەوەی PIN ـی ئێستا','بۆ گۆڕینی PIN، سەرەتا PIN ـی ئێستا بنووسە.',['PIN ـی ئێستا']);
+  if(!current)return;
+  await verifyDepartmentMonitorPin(current[0]);
+  const next=await departmentMonitorDialog('گۆڕینی PIN','PIN ـی نوێی چوار ژمارەیی دابنێ و دووبارەی بکەرەوە.',['PIN ـی نوێ','دووبارەکردنەوەی PIN']);
+  if(!next)return;
+  if(next[0]===current[0]){showAdminMessageModal('error','PIN ـی نوێ نابێت هەمان PIN ـی پێشوو بێت.');return}
+  if(next[0]!==next[1]){showAdminMessageModal('error','دوو PIN ـەکە یەک ناگرن.');return}
+  await invokeDepartmentMonitor('set_pin',{pin:next[0],monitor_session:DEPARTMENT_MONITOR_SESSION});
+  await verifyDepartmentMonitorPin(next[0]);
+  showAdminMessageModal('success','PIN ـی پاراستن بە سەرکەوتوویی گۆڕدرا.');
+ }catch(e){showAdminMessageModal('error',e?.message||'گۆڕینی PIN سەرکەوتوو نەبوو.')}
+}
+function page(id){if(id==='supportCenter'&&(!supportCanUse()))return;if(id==='supportCenter')loadSupportTickets();if((id==='longLeaveWatch'||id==='departmentCredentialMonitorPage')&&CURRENT_PROFILE?.role!=='super_admin')return;if(id==='departmentCredentialMonitorPage'&&!departmentMonitorSessionValid())return;if(id==='departmentCredentialMonitorPage')refreshDepartmentCredentialMonitor();document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=CURRENT_PROFILE?.role==='super_admin'?'':'none';if(id==='longLeaveWatch'&&CURRENT_PROFILE?.role==='super_admin'){renderLongTermLeaveWatch();showExpiredLongLeaveAlert()}}
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{if(b.dataset.page==='departmentCredentialMonitorPage'){openDepartmentMonitorGate();return;}page(b.dataset.page);if(b.dataset.page==='printPermissions')requestAnimationFrame(()=>$('printPermMainCode')?.focus());if(b.dataset.page==='printLeave')requestAnimationFrame(()=>$('printLeaveMainCode')?.focus());if(b.dataset.page==='leaves')requestAnimationFrame(()=>$('leaveMainCode')?.focus());if(b.dataset.page==='permissions')requestAnimationFrame(()=>$('permMainCode')?.focus());if(b.dataset.page==='longLeaves')requestAnimationFrame(()=>$('ltMainCode')?.focus())});
 
 function recordEmployeeName(x){return arabicDigits(x.employee_main_code||'')+' — '+(x.employee_name||'—')}
 function normalizeMainCode(v){return latinDigits(v||'').replace(/\s+/g,'').trim().toLowerCase()}
@@ -5795,7 +5870,7 @@ async function refreshDepartmentCredentialMonitor(){
  panel.style.display='block';status.textContent='لیست بار دەکرێت...';
  rows.replaceChildren();
  try{
-  const {data,error}=await db.functions.invoke('department-credentials',{body:{action:'list'}});
+  if(!departmentMonitorSessionValid())throw new Error('ماوەی دەستگەیشتنی PIN تەواو بووە؛ بەشەکە دابخە و دووبارە PIN داخڵ بکە.');\n  const {data,error}=await db.functions.invoke('department-credentials',{body:{action:'list',monitor_session:DEPARTMENT_MONITOR_SESSION}});
   if(error)throw error;
   if(data?.error)throw new Error(data.error);
   const departments=Array.isArray(data?.departments)?data.departments:[];
@@ -5816,7 +5891,7 @@ async function refreshDepartmentCredentialMonitor(){
   status.textContent='پشکنین سەرکەوتوو نەبوو.';
  }
 }
-$('refreshDepartmentCredentials').onclick=refreshDepartmentCredentialMonitor;
+$('refreshDepartmentCredentials').onclick=refreshDepartmentCredentialMonitor;\n$('manageDepartmentMonitorPin').onclick=manageDepartmentMonitorPin;
 
 $('adminCreateOrgForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('createOrgBtn'),msg=$('adminOrgMsg');if(CURRENT_PROFILE?.role!=='super_admin'){msg.classList.remove('hidden');msg.textContent='تەنها سەرپەرشتیاری گشتی مۆڵەتی دروستکردنی هەژماری فەرمانگەی هەیە.';return;}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.classList.remove('hidden');msg.textContent='دروستکردنی هەژمار...';try{const {data,error}=await db.functions.invoke('create-department-account',{body:{organization_name:$('newOrgName').value.trim(),email:$('newOrgEmail').value.trim(),password:normalizePasswordDigits($('newOrgPassword').value)}});if(error)throw error;if(data?.error)throw new Error(data.error);$('adminCreateOrgForm').reset();await refreshOrganizations();await refreshDepartmentCredentialMonitor();msg.style.whiteSpace='pre-line';msg.textContent='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا. ناوی چوونەژوورەوە: '+data.login_name+' — وشەی نهێنییەکە بە شێوەیەکی پارێزراو بگەیەنە بە فەرمانگەکە. بۆ بینینی ناوی فەرمانگەکان، لە خانەی گەڕان ناوی فەرمانگە بنووسە.'}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژماری فەرمانگە'}});
 async function deleteDepartmentAccount(organizationId, organizationName, ownAccount, preconfirmedName){
