@@ -5871,7 +5871,8 @@ async function refreshDepartmentCredentialMonitor(){
  panel.style.display='block';status.textContent='لیست بار دەکرێت...';
  rows.replaceChildren();
  try{
-  if(!departmentMonitorSessionValid())throw new Error('ماوەی دەستگەیشتنی PIN تەواو بووە؛ بەشەکە دابخە و دووبارە PIN داخڵ بکە.');\n  const {data,error}=await db.functions.invoke('department-credentials',{body:{action:'list',monitor_session:DEPARTMENT_MONITOR_SESSION}});
+  if(!departmentMonitorSessionValid())throw new Error('ماوەی دەستگەیشتنی PIN تەواو بووە؛ بەشەکە دابخە و دووبارە PIN داخڵ بکە.');
+  const {data,error}=await db.functions.invoke('department-credentials',{body:{action:'list',monitor_session:DEPARTMENT_MONITOR_SESSION}});
   if(error)throw error;
   if(data?.error)throw new Error(data.error);
   const departments=Array.isArray(data?.departments)?data.departments:[];
