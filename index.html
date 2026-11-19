@@ -6005,7 +6005,7 @@ const checkRegularLeaveMonthlyLimit=async(d,id)=>{
    if(days){records.push(row);usedDays+=days}
   }
   const requestedDays=leaveOverlapDays(d.start_date,d.end_date,monthStart,monthEnd),totalDays=usedDays+requestedDays;
-  if(totalDays>3)violations.push({year:y,month:m+1,usedDays,requestedDays,totalDays,records});
+  if(totalDays>3)violations.push({year:y,month:m+1,usedDays,requestedDays,totalDays,records,leaveHistory:old.filter(row=>Number.isFinite(isoUTCDate(row.start_date))&&Number.isFinite(isoUTCDate(row.end_date))).sort((a,b)=>isoUTCDate(a.start_date)-isoUTCDate(b.start_date)).slice(0,3)});
   cursor.setUTCMonth(cursor.getUTCMonth()+1);
  }
  console.info('[Leave monthly limit check]',{organization:org,employeeCode:code,leaveType:selectedType,existingRows:old.length,requestedStart:d.start_date,requestedEnd:d.end_date,violations:violations.map(v=>({month:v.month,year:v.year,usedDays:v.usedDays,requestedDays:v.requestedDays,totalDays:v.totalDays}))});
@@ -6035,6 +6035,39 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
  const employeeName=document.createElement('div');
  employeeName.textContent='ناوی فەرمانبەر: '+String(d?.employee_name||'—');
  employeeName.style.cssText='margin:0 0 16px!important;padding:12px 14px!important;border:1px solid #496176!important;border-radius:10px!important;background:#223b52!important;color:#fff!important;font-size:21px!important;font-weight:900!important;line-height:1.9!important;';
+ const employeeAddress=document.createElement('div');
+ employeeAddress.textContent='ناونیشانی فەرمانبەر: '+String(d?.employee_job_title||'—');
+ employeeAddress.style.cssText='margin:0 0 14px!important;padding:10px 14px!important;border:1px solid #496176!important;border-radius:10px!important;background:#223b52!important;color:#eaf2f8!important;font-size:15px!important;font-weight:700!important;line-height:1.9!important;';
+ const historyTitle=document.createElement('h3');
+ historyTitle.textContent='ماوەی مۆڵەتەکان:';
+ historyTitle.style.cssText='margin:4px 0 10px!important;color:#f8fafc!important;font-size:16px!important;font-weight:800!important;line-height:1.8!important;';
+ const historyWrap=document.createElement('div');
+ historyWrap.style.cssText='display:grid!important;gap:9px!important;margin:0 0 20px!important;';
+ const leaveHistory=Array.isArray(violation?.leaveHistory)?violation.leaveHistory:[];
+ for(let i=0;i<3;i++){
+  const row=leaveHistory[i];
+  const item=document.createElement('div');
+  item.style.cssText='display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;padding:10px!important;border:1px solid #496176!important;border-radius:10px!important;background:#20384f!important;box-sizing:border-box!important;';
+  const values=[
+   ['مۆڵەتی '+['یەکەم','دووەم','سێیەم'][i],row?'':'—'],
+   ['ماوەی مۆڵەت',row?String(row.duration??'—')+' ڕۆژ':'—'],
+   ['بەرواری دەستپێک',row?(typeof isoToDisplay==='function'?isoToDisplay(row.start_date):String(row.start_date||'—')):'—'],
+   ['بەرواری کۆتایی',row?(typeof isoToDisplay==='function'?isoToDisplay(row.end_date):String(row.end_date||'—')):'—']
+  ];
+  values.forEach(([label,value],index)=>{
+   const cell=document.createElement('div');
+   cell.style.cssText='min-width:0!important;display:flex!important;flex-direction:column!important;gap:3px!important;';
+   const caption=document.createElement('span');
+   caption.textContent=label;
+   caption.style.cssText='color:#a9c1d5!important;font-size:11px!important;font-weight:700!important;line-height:1.6!important;';
+   const valueEl=document.createElement('strong');
+   valueEl.textContent=index===0?(row?label:'—'):value;
+   valueEl.style.cssText='color:#fff!important;font-size:13px!important;font-weight:800!important;line-height:1.8!important;overflow-wrap:anywhere!important;';
+   cell.append(caption,valueEl);
+   item.appendChild(cell);
+  });
+  historyWrap.appendChild(item);
+ }
  const message=document.createElement('p');
  message.textContent='ئەم فەرمانبەرە لەم مانگەدا سنوری مۆڵەتی تێپەڕاندووە و بە ڕەزامەندی نەبێت ناتوانێت مۆڵەت وەربگرێت. ئەگەر ڕەزامەندیت بە پێدانی مۆڵەتەکە، تکایە کرتەیەک لە دوگمەی ڕێگەپێدان بدە.';
  message.style.cssText='margin:0 0 22px!important;color:#f1f5f9!important;font-size:15px!important;font-weight:600!important;line-height:2.1!important;white-space:normal!important;';
@@ -6057,7 +6090,7 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
   if(approve)await approve();
  });
  footer.append(approveButton,closeButton);
- card.append(title,warning,message,employeeName,footer);
+ card.append(title,warning,message,employeeName,employeeAddress,historyTitle,historyWrap,footer);
  modal.appendChild(card);
  modal.addEventListener('click',ev=>{if(ev.target===modal)closeLeaveLimitModal()});
  modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLeaveLimitModal()});
