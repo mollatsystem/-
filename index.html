@@ -5985,63 +5985,56 @@ const closeLeaveLimitModal=()=>{const modal=document.getElementById('leaveMonthl
 const showLeaveLimitModal=(d,violation,onApprove)=>{
  closeLeaveLimitModal();
  pendingLeaveApproval=onApprove;
- // Attach the modal stylesheet at runtime so it is present regardless of stylesheet order.
- const sourceStyle=document.getElementById('leave-monthly-limit-modal-v10');
- if(sourceStyle&&!document.getElementById('leave-monthly-limit-modal-live')){
-  const liveStyle=document.createElement('style');
-  liveStyle.id='leave-monthly-limit-modal-live';
-  liveStyle.textContent=sourceStyle.textContent;
-  document.head.appendChild(liveStyle);
- }
  const modal=document.createElement('div');
  modal.id='leaveMonthlyLimitModal';
  modal.setAttribute('role','presentation');
- modal.style.cssText='position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important;background:rgba(8,22,39,.72)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important;box-sizing:border-box!important;visibility:visible!important;opacity:1!important;';
- const date=v=>{try{return typeof displayDate==='function'?displayDate(v):String(v||'').slice(0,10).replace(/-/g,'/')}catch(_){return String(v||'').slice(0,10).replace(/-/g,'/')}};
- const month=String(violation.month).padStart(2,'0')+'/'+violation.year;
- const previous=(violation.records||[]).slice().sort((a,b)=>String(a.start_date).localeCompare(String(b.start_date)));
- const previousMarkup=previous.map((row,index)=>{
-  const days=leaveOverlapDays(row.start_date,row.end_date,Date.UTC(violation.year,violation.month-1,1),Date.UTC(violation.year,violation.month,0));
-  return '<article class="expired-alert-item"><div><div class="expired-alert-name">مۆڵەتی پێشوو '+arabicDigits(String(index+1))+'</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(row.start_date))+'　|　بەرواری کۆتایی: '+esc(date(row.end_date))+'</div></div><div class="expired-alert-date">ماوە<br>'+arabicDigits(String(days))+' ڕۆژ</div></article>';
- }).join('');
- const requestedDays=Number(violation.requestedDays??d.duration??0);
- const employeeDetails=[
-  ['کۆدی سەرەکی',d.employee_main_code],
-  ['ناوی فەرمانبەر',d.employee_name],
-  ['ناونیشانی فەرمانبەری',d.employee_job_title],
-  ['هۆبە',d.employee_department],
-  ['جۆری میلاک',d.employee_employment_type],
-  ['جۆری مۆڵەت',d.employee_default_leave_type||'مۆڵەتی ئاسایی']
- ].filter(([,value])=>value!==null&&value!==undefined&&String(value).trim()!=='');
- modal.innerHTML='<div class="expired-alert-card" role="dialog" aria-modal="true" aria-labelledby="leaveLimitTitle">'+
-  '<div class="expired-alert-head"><div class="expired-alert-icon" aria-hidden="true">!</div><div class="expired-alert-heading"><div class="expired-alert-role">ئاگاداری سیستەم</div><h2 id="leaveLimitTitle">سنووری مۆڵەتی ئاسایی تێپەڕێندراوە</h2><p class="expired-alert-sub">مانگی '+esc(month)+' · فەرمانبەر: '+esc(d.employee_name||'—')+'</p></div></div>'+
-  '<div class="expired-alert-count">کۆی مۆڵەت: '+arabicDigits(String(violation.totalDays))+' ڕۆژ　|　سنووری مانگانە: ٣ ڕۆژ　|　زیادەڕۆیی: '+arabicDigits(String(Math.max(0,violation.totalDays-3)))+' ڕۆژ</div>'+
-  '<div class="expired-alert-list">'+
-   '<article class="expired-alert-item"><div><div class="expired-alert-name">زانیاری فەرمانبەر</div><div class="expired-alert-meta">'+employeeDetails.map(([label,value])=>esc(label)+': '+esc(String(value))).join('　·　')+'</div></div><div class="expired-alert-date">کۆدی سەرەکی<br>'+esc(arabicDigits(String(d.employee_main_code||'—')))+'</div></article>'+
-   (previousMarkup||'<article class="expired-alert-item"><div><div class="expired-alert-name">مۆڵەتە پێشووترەکان</div><div class="expired-alert-meta">هیچ مۆڵەتێکی پێشوو تۆمار نەکراوە</div></div></article>')+
-   '<article class="expired-alert-item"><div><div class="expired-alert-name">داواکاریی نوێی مۆڵەتی ئاسایی</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(d.start_date))+'　|　بەرواری کۆتایی: '+esc(date(d.end_date))+'</div></div><div class="expired-alert-date">ماوەی داواکراو<br>'+arabicDigits(String(requestedDays))+' ڕۆژ</div></article>'+
-  '</div>'+
-  '<div class="expired-alert-footer"><button type="button" class="expired-alert-close secondary" id="closeLeaveOverLimit">داخستن</button><button type="button" class="expired-alert-approve" id="approveLeaveOverLimit">ڕێگەپێدان و پاشەکەوتکردن</button></div></div>';
- document.body.appendChild(modal);
- const closeButton=modal.querySelector('#closeLeaveOverLimit');
- const approveButton=modal.querySelector('#approveLeaveOverLimit');
- if(closeButton)closeButton.addEventListener('click',closeLeaveLimitModal);
- if(approveButton)approveButton.addEventListener('click',async()=>{
+ modal.style.cssText='position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:16px!important;background:rgba(8,22,39,.72)!important;box-sizing:border-box!important;visibility:visible!important;opacity:1!important;direction:rtl!important;';
+ const card=document.createElement('section');
+ card.setAttribute('role','alertdialog');
+ card.setAttribute('aria-modal','true');
+ card.setAttribute('aria-labelledby','leaveLimitTitle');
+ card.style.cssText='width:min(520px,100%)!important;max-height:85vh!important;overflow:auto!important;box-sizing:border-box!important;background:#fff!important;color:#111!important;border:1px solid #d5dbe3!important;border-radius:16px!important;padding:24px!important;box-shadow:0 20px 60px rgba(0,0,0,.3)!important;text-align:right!important;';
+ const title=document.createElement('h2');
+ title.id='leaveLimitTitle';
+ title.textContent='پەیامی سەرپەرشتیاری گشتی';
+ title.style.cssText='margin:0 0 16px!important;padding:0 0 12px!important;border-bottom:1px solid #e5e7eb!important;color:#111!important;font-size:20px!important;font-weight:800!important;line-height:1.8!important;';
+ const warning=document.createElement('p');
+ warning.textContent='ئاگاداری: سنوری مۆڵەتی مانگانە ( 3 ) ڕۆژ.';
+ warning.style.cssText='margin:0 0 14px!important;color:#dc2626!important;font-size:17px!important;font-weight:800!important;line-height:2!important;';
+ const message=document.createElement('p');
+ message.textContent='ئەم فەرمانبەرە لەم مانگەدا سنوری مۆڵەتی تێپەڕاندووە و بە ڕەزامەندی نەبێت ناتوانێت مۆڵەت وەربگرێت. ئەگەر ڕەزامەندیت بە پێدانی مۆڵەتەکە، تکایە کرتەیەک لە دوگمەی ڕێگەپێدان بدە.';
+ message.style.cssText='margin:0 0 22px!important;color:#111!important;font-size:15px!important;font-weight:600!important;line-height:2.1!important;white-space:normal!important;';
+ const footer=document.createElement('div');
+ footer.style.cssText='display:flex!important;flex-wrap:wrap!important;gap:10px!important;justify-content:flex-start!important;align-items:center!important;margin-top:8px!important;';
+ const approveButton=document.createElement('button');
+ approveButton.type='button';
+ approveButton.textContent='ڕێگەپێدان';
+ approveButton.style.cssText='min-width:130px!important;min-height:44px!important;padding:10px 20px!important;border:0!important;border-radius:9px!important;background:#16a34a!important;color:#fff!important;font:inherit!important;font-size:15px!important;font-weight:800!important;cursor:pointer!important;';
+ const closeButton=document.createElement('button');
+ closeButton.type='button';
+ closeButton.textContent='داخستن';
+ closeButton.style.cssText='min-width:110px!important;min-height:44px!important;padding:10px 20px!important;border:0!important;border-radius:9px!important;background:#dc2626!important;color:#fff!important;font:inherit!important;font-size:15px!important;font-weight:800!important;cursor:pointer!important;';
+ closeButton.addEventListener('click',closeLeaveLimitModal);
+ approveButton.addEventListener('click',async()=>{
   const approve=pendingLeaveApproval;
   approveButton.disabled=true;
   approveButton.textContent='پاشەکەوتکردن دەکرێت...';
   closeLeaveLimitModal();
   if(approve)await approve();
  });
+ footer.append(approveButton,closeButton);
+ card.append(title,warning,message,footer);
+ modal.appendChild(card);
  modal.addEventListener('click',ev=>{if(ev.target===modal)closeLeaveLimitModal()});
  modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLeaveLimitModal()});
- if(closeButton)closeButton.focus();
+ document.body.appendChild(modal);
+ closeButton.focus();
 };
 if(!window._leaveLimitEscapeBound){window._leaveLimitEscapeBound=true;document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&document.getElementById('leaveMonthlyLimitModal'))closeLeaveLimitModal()})}
 let violations;
 try{violations=await checkRegularLeaveMonthlyLimit(d,id)}
 catch(error){console.error('Monthly ordinary leave limit check failed:',error);return say(error.message||'پشکنینی سنووری مۆڵەتی مانگانە سەرکەوتوو نەبوو؛ مۆڵەت پاشەکەوت نەکرا.')}
-if(violations.length){const v=violations[0];say('ئاگاداری: ئەم فەرمانبەرە لە مانگی '+String(v.month).padStart(2,'0')+'/'+v.year+'دا '+v.usedDays+' ڕۆژی مۆڵەتی ئاسایی وەرگرتووە؛ بە داواکارییە نوێیەکە دەبێتە '+v.totalDays+' ڕۆژ. تکایە ئاگادارییەکە بخوێنەرەوە.');showLeaveLimitModal(d,v,()=>saveLeaveRecord(d,id));return}
+if(violations.length){const v=violations[0];showLeaveLimitModal(d,v,()=>saveLeaveRecord(d,id));return}
 await saveLeaveRecord(d,id)};
 $('permDate').addEventListener('input',()=>formatISODateInput('permDate'));$('permDate').addEventListener('blur',()=>{let iso=displayToISO($('permDate').value);if(iso)$('permDate').value=isoToDisplay(iso)});document.querySelectorAll('.date-iso').forEach(el=>{el.addEventListener('input',()=>{el.value=arabicDigits(latinDigits(el.value).replace(/[^0-9/\-]/g,''))});el.addEventListener('blur',()=>normalizeDateField(el));el.addEventListener('change',()=>normalizeDateField(el));el.addEventListener('keydown',ev=>{if(ev.key==='Enter'){normalizeDateField(el);el.blur()}})});document.addEventListener('focusout',ev=>{if(ev.target&&ev.target.classList&&ev.target.classList.contains('date-iso'))normalizeDateField(ev.target)},true);
 $('permForm').onsubmit=async ev=>{ev.preventDefault();let e=fillEmployeeSnapshot('perm');if(!e)return say('فەرمانبەر بە کۆدی سەرەکی نەدۆزرایەوە.');let d={employee_id:null,employee_main_code:e.main_code,employee_name:e.full_name,employee_job_title:e.job_title||null,employee_gender:$('permGender').value||null,employee_employment_type:$('permEmploymentType').value||null,employee_department:$('permDepartment').value||null,sequence_no:latinDigits($('permSeq').value),permission_date:displayToISO($('permDate').value),time_from:formatTimeHHMM($('timeFrom').value),time_to:formatTimeHHMM($('timeTo').value),permission_type:$('permType').value,notes:$('permNotes').value||null};if(!d.permission_date)return say('بەروار بە شێوازی ڕۆژ/مانگ/ساڵ بنووسە، بۆ نموونە 12/11/2026.');if(!/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(d.time_from)||!/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(d.time_to))return say('کات بە شێوازی کاتژمێر:خولەک بنووسە، بۆ نموونە ٠٩:٣٠.');if(d.time_to<=d.time_from)return say('کاتی کۆتایی دەبێت دوای کاتی دەستپێک بێت.');let id=$('permId').value;if(id&&!window._permEditAction)return say('بۆ نوێکردنەوە دوگمەی دەستکاری بەکاربهێنە.');if(!id&&window._permEditAction)return say('سەرەتا تۆمارێک لە لیستی سەماحی ڕۆژانە هەڵبژێرە بۆ دەستکاری.');let r=await mutateData('daily_permissions',id?'update':'insert',d,id);if(r.error)return say(r.error.message);clear(['permId','permMainCode','permEmployeeName','permJobTitle','permGender','permEmploymentType','permDepartment','permSeq','permDate','timeFrom','timeTo','permType','permNotes']);await load();say('سەماح پاشەکەوت کرا.')};
