@@ -6058,7 +6058,7 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
    const cell=document.createElement('div');
    cell.style.cssText='min-width:0!important;display:flex!important;flex-direction:column!important;gap:3px!important;';
    const caption=document.createElement('span');
-   caption.textContent=label;
+   caption.textContent=index===0?'':label;
    caption.style.cssText='color:#a9c1d5!important;font-size:11px!important;font-weight:700!important;line-height:1.6!important;';
    const valueEl=document.createElement('strong');
    valueEl.textContent=index===0?(row?label:'—'):value;
