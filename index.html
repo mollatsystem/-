@@ -5653,7 +5653,7 @@ function showAdminMessageModal(kind,detail){
  title.textContent='پەیامی سەرپەرشتیاری گشتی';
  title.style.cssText='display:block!important;margin:0 0 14px!important;font-size:20px!important;line-height:1.6!important;font-weight:800!important;color:#173b60!important';
  const message=document.createElement('p');
- message.textContent=String(detail??'');
+ message.textContent=String(detail??'').replace(/[٠-٩۰-۹]/g,ch=>String(ch.charCodeAt(0)-(ch.charCodeAt(0)>=0x06F0?0x06F0:0x0660)));
  message.style.cssText='display:block!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;margin:0 0 22px!important;line-height:2!important;font-size:16px!important;font-weight:700!important;color:'+(kind==='success'?'#166534':kind==='pending'?'#1d4ed8':'#b91c1c')+'!important';
  const close=document.createElement('button');
  close.type='button';
@@ -5877,18 +5877,18 @@ $('deleteDepartmentFromLogin').onclick=async()=>{
   const warning='ئاگاداری گرنگ: بە سڕینەوەی هەژماری «'+name+'»، هەموو زانیارییەکانی ئەم فەرمانگەیەش بە تەواوی دەسڕدرێنەوە. ئەم کردارە ناگەڕێتەوە. دڵنیایت؟';
   if(!window.confirm(warning))return;
   const typed=window.prompt('بۆ پشتڕاستکردنەوە، ناوی فەرمانگەکە بنووسە: '+name);
-  const normalize=value=>String(value??'').normalize('NFKC').replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g,'').replace(/[\u0640]/g,'').replace(/\s+/g,' ').trim();
-  if(normalize(typed)!==normalize(name)){msg.textContent='ناوی فەرمانگەکە یەکسان نییە؛ هیچ زانیارییەک نەسڕدرایەوە.';return}
+  const normalize=value=>String(value??'').normalize('NFKC').replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g,'').replace(/[\u0640]/g,'').replace(/[٠-٩۰-۹]/g,ch=>String(ch.charCodeAt(0)-(ch.charCodeAt(0)>=0x06F0?0x06F0:0x0660))).replace(/\s+/g,' ').trim();
+  if(normalize(typed)!==normalize(name)){showAdminMessageModal('error','ناوی فەرمانگەکە یەکسان نییە؛ هیچ زانیارییەک نەسڕدرایەوە.');return}
   button.textContent='سڕینەوە دەکرێت...';
   const result=await db.functions.invoke('delete-department-account',{body:{}});
   if(result.error)throw result.error;
   if(result.data?.error)throw new Error(result.data.error);
   if(result.data?.data_cleanup_pending||result.data?.auth_cleanup_pending)throw new Error(result.data.error||'پاککردنەوەی داتا تەواو نەبوو؛ پەیوەندی بە سەرپەرشتیاری گشتی بکە.');
-  await clearOfflineOrganization(profile.data.organization_id);await db.auth.signOut();signedIn=false;
-  alert('هەژماری فەرمانگە و زانیارییەکانی بە سەرکەوتوویی سڕدرانەوە.');
-  location.reload();
+  await clearOfflineOrganization(profile.data.organization_id);
+  await db.auth.signOut();signedIn=false;
+  showAdminMessageModal('success','هەژماری فەرمانگە و هەموو زانیارییەکانی بە سەرکەوتوویی سڕدرانەوە.');
  }catch(e){
-  msg.textContent='سڕینەوە سەرکەوتوو نەبوو: '+(e?.message||String(e));
+  showAdminMessageModal('error','سڕینەوەی هەژماری فەرمانگە سەرکەوتوو نەبوو. وردەکاری: '+(e?.message||String(e)));
  }finally{
   if(signedIn){try{await db.auth.signOut()}catch(e){}}
   button.disabled=false;button.textContent='سڕینەوەی هەژماری فەرمانگە';
