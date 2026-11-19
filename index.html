@@ -5608,6 +5608,12 @@ function showAdminMessageModal(kind,detail){
  document.body.appendChild(overlay);
  if(kind!=='pending')close.focus();
 }
+// Replace native browser alert boxes with the app-wide on-screen supervisor message.
+window.alert=function(detail){
+ const message=String(detail??'');
+ const kind=/سەرکەوتوو|بە سەرکەوتوویی|دروستکرا|گۆڕدرا|سڕدرایەوە/.test(message)?'success':'error';
+ showAdminMessageModal(kind,message);
+};
 function setRecoveryMessage(kind,detail){
  const msg=$('recoveryMsg');
  if(msg){msg.classList.add('hidden');msg.textContent='';}
