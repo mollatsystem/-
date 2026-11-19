@@ -5893,7 +5893,8 @@ async function refreshDepartmentCredentialMonitor(){
   status.textContent='پشکنین سەرکەوتوو نەبوو.';
  }
 }
-$('refreshDepartmentCredentials').onclick=refreshDepartmentCredentialMonitor;\n$('manageDepartmentMonitorPin').onclick=manageDepartmentMonitorPin;
+$('refreshDepartmentCredentials').onclick=refreshDepartmentCredentialMonitor;
+$('manageDepartmentMonitorPin').onclick=manageDepartmentMonitorPin;
 
 $('adminCreateOrgForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('createOrgBtn'),msg=$('adminOrgMsg');if(CURRENT_PROFILE?.role!=='super_admin'){msg.classList.remove('hidden');msg.textContent='تەنها سەرپەرشتیاری گشتی مۆڵەتی دروستکردنی هەژماری فەرمانگەی هەیە.';return;}btn.disabled=true;btn.textContent='چاوەڕێ بکە...';msg.classList.remove('hidden');msg.textContent='دروستکردنی هەژمار...';try{const {data,error}=await db.functions.invoke('create-department-account',{body:{organization_name:$('newOrgName').value.trim(),email:$('newOrgEmail').value.trim(),password:normalizePasswordDigits($('newOrgPassword').value)}});if(error)throw error;if(data?.error)throw new Error(data.error);$('adminCreateOrgForm').reset();await refreshOrganizations();await refreshDepartmentCredentialMonitor();msg.style.whiteSpace='pre-line';msg.textContent='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا. ناوی چوونەژوورەوە: '+data.login_name+' — وشەی نهێنییەکە بە شێوەیەکی پارێزراو بگەیەنە بە فەرمانگەکە. بۆ بینینی ناوی فەرمانگەکان، لە خانەی گەڕان ناوی فەرمانگە بنووسە.'}catch(e){msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.message||String(e))}finally{btn.disabled=false;btn.textContent='دروستکردنی هەژماری فەرمانگە'}});
 async function deleteDepartmentAccount(organizationId, organizationName, ownAccount, preconfirmedName){
