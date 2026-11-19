@@ -7808,5 +7808,17 @@ html body #app #registeredOrganizations .registered-org-list li{
 }
 </style>
 
+
+<style id="registered-org-readable-text-fix">
+/* Keep department names and status labels readable, including highlighted search results. */
+html body #app #registeredOrganizations .registered-org-list li .registered-org-name,
+html body #app #registeredOrganizations .registered-org-list li .registered-org-status,
+html body #app #registeredOrganizations .registered-org-list li.is-search-match .registered-org-name,
+html body #app #registeredOrganizations .registered-org-list li.is-search-match .registered-org-status{
+  color:#000000!important;
+  -webkit-text-fill-color:#000000!important;
+  opacity:1!important;
+}
+</style>
 </body>
 </html>
