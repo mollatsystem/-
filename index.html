@@ -6057,7 +6057,7 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
   if(approve)await approve();
  });
  footer.append(approveButton,closeButton);
- card.append(title,warning,employeeName,message,footer);
+ card.append(title,warning,message,employeeName,footer);
  modal.appendChild(card);
  modal.addEventListener('click',ev=>{if(ev.target===modal)closeLeaveLimitModal()});
  modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLeaveLimitModal()});
