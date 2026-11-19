@@ -5977,26 +5977,55 @@ const closeLeaveLimitModal=()=>{const modal=document.getElementById('leaveMonthl
 const showLeaveLimitModal=(d,violation,onApprove)=>{
  closeLeaveLimitModal();
  pendingLeaveApproval=onApprove;
+ // Attach the modal stylesheet at runtime so it is present regardless of stylesheet order.
+ const sourceStyle=document.getElementById('leave-monthly-limit-modal-v10');
+ if(sourceStyle&&!document.getElementById('leave-monthly-limit-modal-live')){
+  const liveStyle=document.createElement('style');
+  liveStyle.id='leave-monthly-limit-modal-live';
+  liveStyle.textContent=sourceStyle.textContent;
+  document.head.appendChild(liveStyle);
+ }
  const modal=document.createElement('div');
  modal.id='leaveMonthlyLimitModal';
- modal.className='leave-limit-overlay';modal.style.cssText='position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:18px!important;background:rgba(5,17,31,.82)!important;backdrop-filter:blur(5px)!important;visibility:visible!important;opacity:1!important;';
- const date=v=>String(v||'').slice(0,10).replace(/-/g,'/');
+ modal.setAttribute('role','presentation');
+ modal.style.cssText='position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important;background:rgba(8,22,39,.72)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important;box-sizing:border-box!important;visibility:visible!important;opacity:1!important;';
+ const date=v=>{try{return typeof displayDate==='function'?displayDate(v):String(v||'').slice(0,10).replace(/-/g,'/')}catch(_){return String(v||'').slice(0,10).replace(/-/g,'/')}};
  const month=String(violation.month).padStart(2,'0')+'/'+violation.year;
- const rows=(violation.records||[]).slice().sort((a,b)=>String(a.start_date).localeCompare(String(b.start_date))).map(row=>{
+ const previous=(violation.records||[]).slice().sort((a,b)=>String(a.start_date).localeCompare(String(b.start_date)));
+ const previousMarkup=previous.map((row,index)=>{
   const days=leaveOverlapDays(row.start_date,row.end_date,Date.UTC(violation.year,violation.month-1,1),Date.UTC(violation.year,violation.month,0));
-  return '<tr><td>'+esc(String(days)+' ڕۆژ')+'</td><td>'+esc(date(row.start_date))+'</td><td>'+esc(date(row.end_date))+'</td></tr>';
+  return '<article class="expired-alert-item"><div><div class="expired-alert-name">مۆڵەتی پێشوو '+arabicDigits(String(index+1))+'</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(row.start_date))+'　|　بەرواری کۆتایی: '+esc(date(row.end_date))+'</div></div><div class="expired-alert-date">ماوە<br>'+arabicDigits(String(days))+' ڕۆژ</div></article>';
  }).join('');
+ const requestedDays=Number(violation.requestedDays??d.duration??0);
+ const employeeDetails=[
+  ['کۆدی سەرەکی',d.employee_main_code],
+  ['ناوی فەرمانبەر',d.employee_name],
+  ['ناونیشانی فەرمانبەری',d.employee_job_title],
+  ['هۆبە',d.employee_department],
+  ['جۆری میلاک',d.employee_employment_type],
+  ['جۆری مۆڵەت',d.employee_default_leave_type||'مۆڵەتی ئاسایی']
+ ].filter(([,value])=>value!==null&&value!==undefined&&String(value).trim()!=='');
  modal.innerHTML='<div class="expired-alert-card" role="dialog" aria-modal="true" aria-labelledby="leaveLimitTitle">'+
-  '<div class="expired-alert-head"><div class="expired-alert-icon" aria-hidden="true">!</div><div><div class="expired-alert-role">ئاگاداری سیستەم</div><h2 id="leaveLimitTitle">سنووری مۆڵەتی ئاسایی تێپەڕێندراوە</h2><p class="expired-alert-sub">فەرمانبەر: '+esc(d.employee_name||'—')+' · مانگی '+esc(month)+'</p></div></div>'+
-  '<div class="expired-alert-count">کۆی مۆڵەت: '+esc(String(violation.totalDays))+' ڕۆژ · سنووری مانگانە: ٣ ڕۆژ</div>'+
-  '<div class="expired-alert-list">'+
-  (violation.records||[]).slice().sort((a,b)=>String(a.start_date).localeCompare(String(b.start_date))).map(row=>{const days=leaveOverlapDays(row.start_date,row.end_date,Date.UTC(violation.year,violation.month-1,1),Date.UTC(violation.year,violation.month,0));return '<article class="expired-alert-item"><div><div class="expired-alert-name">مۆڵەتی پێشوو · '+esc(String(days))+' ڕۆژ</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(row.start_date))+' · بەرواری کۆتایی: '+esc(date(row.end_date))+'</div></div><div class="expired-alert-date">تۆمارکراو<br>'+esc(String(days))+' ڕۆژ</div></article>'}).join('')+
-  '<article class="expired-alert-item"><div><div class="expired-alert-name">داواکاریی نوێ · '+esc(String(d.duration))+' ڕۆژ</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(d.start_date))+' · بەرواری کۆتایی: '+esc(date(d.end_date))+'</div></div><div class="expired-alert-date">داواکاریی نوێ<br>'+esc(String(d.duration))+' ڕۆژ</div></article></div>'+
+  '<div class="expired-alert-head"><div class="expired-alert-icon" aria-hidden="true">!</div><div class="expired-alert-heading"><div class="expired-alert-role">ئاگاداری سیستەم</div><h2 id="leaveLimitTitle">سنووری مۆڵەتی ئاسایی تێپەڕێندراوە</h2><p class="expired-alert-sub">مانگی '+esc(month)+' · فەرمانبەر: '+esc(d.employee_name||'—')+'</p></div></div>'+
+  '<div class="expired-alert-count">کۆی مۆڵەت: '+arabicDigits(String(violation.totalDays))+' ڕۆژ　|　سنووری مانگانە: ٣ ڕۆژ　|　زیادەڕۆیی: '+arabicDigits(String(Math.max(0,violation.totalDays-3)))+' ڕۆژ</div>'+
+  '<section class="leave-limit-employee-section"><h3>زانیاری فەرمانبەر</h3><div class="leave-limit-employee-grid">'+employeeDetails.map(([label,value])=>'<div class="leave-limit-employee-field"><span>'+esc(label)+'</span><b>'+esc(String(value))+'</b></div>').join('')+'</div></section>'+
+  '<section class="leave-limit-record-section"><h3>مۆڵەتە تۆمارکراوەکانی ئەم مانگە</h3><div class="expired-alert-list">'+(previousMarkup||'<article class="expired-alert-item"><div class="expired-alert-name">هیچ مۆڵەتێکی پێشوو تۆمار نەکراوە</div></article>')+'</div></section>'+
+  '<section class="leave-limit-record-section"><h3>داواکاریی نوێ</h3><div class="expired-alert-list"><article class="expired-alert-item"><div><div class="expired-alert-name">داواکاریی مۆڵەتی ئاسایی</div><div class="expired-alert-meta">بەرواری دەستپێک: '+esc(date(d.start_date))+'　|　بەرواری کۆتایی: '+esc(date(d.end_date))+'</div></div><div class="expired-alert-date">ماوەی داواکراو<br>'+arabicDigits(String(requestedDays))+' ڕۆژ</div></article></div></section>'+
   '<div class="expired-alert-footer"><button type="button" class="expired-alert-close secondary" id="closeLeaveOverLimit">داخستن</button><button type="button" class="expired-alert-approve" id="approveLeaveOverLimit">ڕێگەپێدان و پاشەکەوتکردن</button></div></div>';
  document.body.appendChild(modal);
- modal.querySelector('#closeLeaveOverLimit').onclick=closeLeaveLimitModal;
- modal.querySelector('#approveLeaveOverLimit').onclick=async()=>{const approve=pendingLeaveApproval;closeLeaveLimitModal();if(approve)await approve()};
+ const closeButton=modal.querySelector('#closeLeaveOverLimit');
+ const approveButton=modal.querySelector('#approveLeaveOverLimit');
+ if(closeButton)closeButton.addEventListener('click',closeLeaveLimitModal);
+ if(approveButton)approveButton.addEventListener('click',async()=>{
+  const approve=pendingLeaveApproval;
+  approveButton.disabled=true;
+  approveButton.textContent='پاشەکەوتکردن دەکرێت...';
+  closeLeaveLimitModal();
+  if(approve)await approve();
+ });
  modal.addEventListener('click',ev=>{if(ev.target===modal)closeLeaveLimitModal()});
+ modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLeaveLimitModal()});
+ if(closeButton)closeButton.focus();
 };
 if(!window._leaveLimitEscapeBound){window._leaveLimitEscapeBound=true;document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&document.getElementById('leaveMonthlyLimitModal'))closeLeaveLimitModal()})}
 let violations;
@@ -7631,6 +7660,17 @@ html body #supportCenter:is(.active,.support-floating-open) #supportFloatingClos
 #leaveMonthlyLimitModal .expired-alert-close:hover,#leaveMonthlyLimitModal .expired-alert-approve:hover{filter:brightness(1.12)!important}
 #leaveMonthlyLimitModal .expired-alert-close.secondary{background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #49657d!important;color:#e6eef5!important;box-shadow:none!important}
 @media(max-width:560px){#leaveMonthlyLimitModal{padding:10px!important}#leaveMonthlyLimitModal .expired-alert-card{padding:16px!important;max-height:88vh!important;border-radius:17px!important}#leaveMonthlyLimitModal .expired-alert-head{align-items:flex-start!important;gap:11px!important}#leaveMonthlyLimitModal .expired-alert-icon{width:45px!important;height:45px!important;flex-basis:45px!important;font-size:23px!important;border-radius:13px!important}#leaveMonthlyLimitModal h2{font-size:17px!important}#leaveMonthlyLimitModal .expired-alert-count{font-size:12px!important}#leaveMonthlyLimitModal .expired-alert-item{grid-template-columns:1fr!important;padding:11px!important}#leaveMonthlyLimitModal .expired-alert-date{text-align:right!important;white-space:normal!important}#leaveMonthlyLimitModal .expired-alert-footer{display:grid!important;grid-template-columns:1fr 1fr!important}#leaveMonthlyLimitModal .expired-alert-footer button{min-width:0!important;padding:10px 6px!important;font-size:12px!important}}
+</style>
+<style id="leave-monthly-limit-modal-v10-layout">
+#leaveMonthlyLimitModal .leave-limit-employee-section,#leaveMonthlyLimitModal .leave-limit-record-section{display:block!important;margin:14px 0!important;padding:14px!important;background:linear-gradient(145deg,#1b3044,#17283a)!important;border:1px solid #435d73!important;border-radius:13px!important;box-sizing:border-box!important}
+#leaveMonthlyLimitModal .leave-limit-employee-section h3,#leaveMonthlyLimitModal .leave-limit-record-section h3{display:flex!important;align-items:center!important;gap:8px!important;margin:0 0 11px!important;padding:0 0 9px!important;border-bottom:1px solid #435267!important;color:#ffb18e!important;font-size:15px!important;font-weight:900!important}
+#leaveMonthlyLimitModal .leave-limit-employee-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+#leaveMonthlyLimitModal .leave-limit-employee-field{display:flex!important;flex-direction:column!important;gap:4px!important;min-width:0!important;padding:10px 11px!important;background:linear-gradient(145deg,#263b50,#203247)!important;border:1px solid #435d73!important;border-radius:10px!important}
+#leaveMonthlyLimitModal .leave-limit-employee-field span{color:#bdcddd!important;font-size:11px!important}
+#leaveMonthlyLimitModal .leave-limit-employee-field b{color:#f5f8fc!important;font-size:13px!important;overflow-wrap:anywhere!important}
+#leaveMonthlyLimitModal .expired-alert-heading{min-width:0!important}
+#leaveMonthlyLimitModal button:disabled{opacity:.65!important;cursor:wait!important}
+@media(max-width:560px){#leaveMonthlyLimitModal .leave-limit-employee-grid{grid-template-columns:1fr!important}#leaveMonthlyLimitModal .leave-limit-employee-section,#leaveMonthlyLimitModal .leave-limit-record-section{padding:11px!important}}
 </style>
 
 </body>
