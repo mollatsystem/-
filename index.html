@@ -5964,7 +5964,7 @@ $('leaveForm').onsubmit=async ev=>{ev.preventDefault();let e=fillEmployeeSnapsho
  document.body.appendChild(overlay);
  close.focus();
 };
-const saveLeaveRecord=async(d,id)=>{let r=await mutateData('leave_records',id?'update':'insert',d,id);if(r.error)return say(r.error.message);clear(['leaveId','leaveMainCode','leaveEmployeeName','leaveJobTitle','leaveGender','leaveEmploymentType','leaveDepartment','leaveDefaultLeaveType','leaveSeq','leaveDuration','leaveFrom','leaveTo','leaveDaily']);say('مۆڵەت پاشەکەوت کرا.');showLeaveSaveSuccessModal()};
+const saveLeaveRecord=async(d,id)=>{let r=await mutateData('leave_records',id?'update':'insert',d,id);if(r.error)return say(r.error.message);clear(['leaveId','leaveMainCode','leaveEmployeeName','leaveJobTitle','leaveGender','leaveEmploymentType','leaveDepartment','leaveDefaultLeaveType','leaveSeq','leaveDuration','leaveFrom','leaveTo','leaveDaily']);updateSequenceFields();say('مۆڵەت پاشەکەوت کرا.');showLeaveSaveSuccessModal()};
 const normalizeLeaveType=value=>String(value||'').normalize('NFKC').toLocaleLowerCase().replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]+/g,'').trim();
 const isRegularLeaveType=value=>{const v=normalizeLeaveType(value);return v.includes('ئاسایی')||v.includes('مۆڵەتیئاسایی')};
 const isoUTCDate=value=>{const raw=String(value||'').trim().slice(0,10),m=raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return NaN;const y=Number(m[1]),mo=Number(m[2])-1,d=Number(m[3]),stamp=Date.UTC(y,mo,d),check=new Date(stamp);return check.getUTCFullYear()===y&&check.getUTCMonth()===mo&&check.getUTCDate()===d?stamp:NaN};
