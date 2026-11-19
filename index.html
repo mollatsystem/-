@@ -5040,7 +5040,7 @@ function departmentMonitorDialog(titleText,description,fieldLabels){
   actions.append(submit,cancel);form.prepend(title,desc);form.append(actions);overlay.append(form);document.body.append(overlay);
   const finish=value=>{overlay.remove();resolve(value)};
   cancel.onclick=()=>finish(null);overlay.addEventListener('click',e=>{if(e.target===overlay)finish(null)});
-  form.onsubmit=e=>{e.preventDefault();const values=fields.map(x=>normalizePasswordDigits(x.value));if(values.some(x=>!/^\\d{4}$/.test(x))){showAdminMessageModal('error','PIN دەبێت تەنها لە چوار ژمارە پێک بێت.');return}finish(values)};
+  form.onsubmit=e=>{e.preventDefault();const values=fields.map(x=>normalizePasswordDigits(x.value));if(values.some(x=>!/^\d{4}$/.test(x))){showAdminMessageModal('error','PIN دەبێت تەنها لە چوار ژمارە پێک بێت.');return}finish(values)};
   fields[0]?.focus();
  });
 }
