@@ -5582,6 +5582,7 @@ document.addEventListener('click',ev=>{
  try{input.setSelectionRange(0,0)}catch(e){}
 });
 
+$('signupForm').noValidate=true;
 $('signupForm').addEventListener('submit',async ev=>{
  ev.preventDefault();
  const btn=$('signupSubmit'),msg=$('signupMsg');
@@ -5590,6 +5591,7 @@ $('signupForm').addEventListener('submit',async ev=>{
  const password=$('signupPassword').value;
  const confirmPassword=$('signupPasswordConfirm').value;
  if(!name){msg.textContent='تکایە ناوی تەواوی فەرمانگە بنووسە.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ تکایە خانەی ناوی فەرمانگە پڕ بکەرەوە.');$('signupOrgName').focus();return}
+ if(email&&!$('signupEmail').checkValidity()){msg.textContent='ناونیشانی ئیمەیڵ دروست نییە.';showAdminMessageModal('error','زانیارییەکانی فۆرم دروست نین؛ تکایە ناونیشانی ئیمەیڵ بە شێوەیەکی دروست بنووسە یان خانەکە بەتاڵ بهێڵەوە.');$('signupEmail').focus();return}
  if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ دوو وشەی نهێنییەکە یەک ناگرن. تکایە خانەکان بپشکنە.');$('signupPasswordConfirm').focus();return}
  if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.');$('signupPassword').focus();return}
  btn.disabled=true;
