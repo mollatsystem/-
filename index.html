@@ -5793,7 +5793,7 @@ async function refreshDepartmentCredentialMonitor(){
    for(const item of departments){
     const tr=document.createElement('tr');
     const name=document.createElement('td');name.textContent=String(item.organization_name||'—');
-    const password=document.createElement('td');password.dir='ltr';password.style.textAlign='left';password.style.fontFamily='monospace';password.style.fontWeight='800';password.style.userSelect='text';password.textContent=String(item.password||'');
+    const password=document.createElement('td');password.dir='ltr';password.style.textAlign='left';password.style.fontFamily='monospace';password.style.fontWeight='800';password.style.userSelect='text';password.textContent=item.password?String(item.password):'پێویستە وشەی نهێنیی نوێ دابنرێت';if(!item.password){password.style.color='#9a3412';password.style.fontFamily='inherit';}
     const updated=document.createElement('td');updated.textContent=item.updated_at?new Date(item.updated_at).toLocaleString('ku-IQ'):'—';
     tr.append(name,password,updated);rows.append(tr);
    }
