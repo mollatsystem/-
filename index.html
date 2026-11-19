@@ -6032,6 +6032,9 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
  const warning=document.createElement('p');
  warning.textContent='ئاگاداری: سنوری مۆڵەتی مانگانە ( 3 ) ڕۆژ.';
  warning.style.cssText='margin:0 0 10px!important;color:#ff5b64!important;font-size:17px!important;font-weight:800!important;line-height:2!important;';
+ const employeeName=document.createElement('div');
+ employeeName.textContent='ناوی فەرمانبەر: '+String(d?.employee_name||'—');
+ employeeName.style.cssText='margin:0 0 16px!important;padding:12px 14px!important;border:1px solid #496176!important;border-radius:10px!important;background:#223b52!important;color:#fff!important;font-size:21px!important;font-weight:900!important;line-height:1.9!important;';
  const message=document.createElement('p');
  message.textContent='ئەم فەرمانبەرە لەم مانگەدا سنوری مۆڵەتی تێپەڕاندووە و بە ڕەزامەندی نەبێت ناتوانێت مۆڵەت وەربگرێت. ئەگەر ڕەزامەندیت بە پێدانی مۆڵەتەکە، تکایە کرتەیەک لە دوگمەی ڕێگەپێدان بدە.';
  message.style.cssText='margin:0 0 22px!important;color:#f1f5f9!important;font-size:15px!important;font-weight:600!important;line-height:2.1!important;white-space:normal!important;';
@@ -6054,7 +6057,7 @@ const showLeaveLimitModal=(d,violation,onApprove)=>{
   if(approve)await approve();
  });
  footer.append(approveButton,closeButton);
- card.append(title,warning,message,footer);
+ card.append(title,warning,employeeName,message,footer);
  modal.appendChild(card);
  modal.addEventListener('click',ev=>{if(ev.target===modal)closeLeaveLimitModal()});
  modal.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLeaveLimitModal()});
