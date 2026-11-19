@@ -5867,6 +5867,7 @@ async function refreshDepartmentCredentialMonitor(){
  const panel=$('departmentCredentialMonitor'),rows=$('departmentCredentialRows'),status=$('departmentCredentialStatus');
  if(!panel||!rows||!status)return;
  if(CURRENT_PROFILE?.role!=='super_admin'){panel.style.display='none';return;}
+ if(!departmentMonitorSessionValid()){status.textContent='بۆ بینینی زانیارییەکان PIN داخڵ بکە.';return;}
  panel.style.display='block';status.textContent='لیست بار دەکرێت...';
  rows.replaceChildren();
  try{
