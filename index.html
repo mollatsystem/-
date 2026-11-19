@@ -5906,7 +5906,7 @@ $('adminOrgSearchInput').addEventListener('input',()=>{$('adminOrgSearchMsg').cl
 function renderRegisteredOrganizations(rows,highlightIds){
  const list=$('registeredOrgNamesList');if(!list)return;
  const offices=rows||window.ADMIN_ORGANIZATIONS||[];
- list.innerHTML=offices.length?'<ol>'+offices.map(o=>'<li'+(highlightIds&&highlightIds.has(String(o.id))?' class="is-search-match"':'')+'><span class="registered-org-name">'+esc(o.name)+'</span><span class="registered-org-status '+(o.is_active?'is-active':'is-inactive')+'" title="دۆخی چالاکی هەژمار">'+(o.is_active?'چالاکە':'ناچالاکە')+'</span></li>').join('')+'</ol>':'<div class="registered-org-empty">هیچ فەرمانگەیەکی تۆمارکراو نییە.</div>';
+ list.innerHTML=offices.length?'<ol>'+offices.map(o=>'<li'+(highlightIds&&highlightIds.has(String(o.id))?' class="is-search-match"':'')+'><span class="registered-org-name" style="color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;text-shadow:none!important">'+esc(o.name)+'</span><span class="registered-org-status '+(o.is_active?'is-active':'is-inactive')+'" style="color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;text-shadow:none!important" title="دۆخی چالاکی هەژمار">'+(o.is_active?'چالاکە':'ناچالاکە')+'</span></li>').join('')+'</ol>':'<div class="registered-org-empty">هیچ فەرمانگەیەکی تۆمارکراو نییە.</div>';
 }
 function searchRegisteredOrganization(){
  const input=$('registeredOrgSearchInput'),msg=$('registeredOrgSearchMsg');if(!input||!msg)return;
@@ -7818,6 +7818,14 @@ html body #app #registeredOrganizations .registered-org-list li.is-search-match 
   color:#000000!important;
   -webkit-text-fill-color:#000000!important;
   opacity:1!important;
+}
+</style>
+<style id="registered-org-final-black-text-override">
+html body #app section#registeredOrganizations .registered-org-list ol li .registered-org-name,
+html body #app section#registeredOrganizations .registered-org-list ol li .registered-org-status,
+html body #app section#registeredOrganizations .registered-org-list ol li.is-search-match .registered-org-name,
+html body #app section#registeredOrganizations .registered-org-list ol li.is-search-match .registered-org-status{
+ color:#000!important;-webkit-text-fill-color:#000!important;opacity:1!important;text-shadow:none!important;
 }
 </style>
 </body>
