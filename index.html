@@ -5018,7 +5018,7 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape')closeSupport
 let DEPARTMENT_MONITOR_SESSION='';
 let DEPARTMENT_MONITOR_SESSION_EXPIRES=0;
 let DEPARTMENT_MONITOR_LOCK_TIMER=null;
-function lockDepartmentMonitor(){DEPARTMENT_MONITOR_SESSION='';DEPARTMENT_MONITOR_SESSION_EXPIRES=0;if(DEPARTMENT_MONITOR_LOCK_TIMER)clearTimeout(DEPARTMENT_MONITOR_LOCK_TIMER);DEPARTMENT_MONITOR_LOCK_TIMER=null;$('departmentCredentialRows')?.replaceChildren();const status=$('departmentCredentialStatus');if(status)status.textContent='بۆ بینینی زانیارییەکان PIN داخڵ بکە.';const monitorPage=$('departmentCredentialMonitorPage');if(monitorPage?.classList.contains('active'))page('home');}
+function lockDepartmentMonitor(){DEPARTMENT_MONITOR_SESSION='';DEPARTMENT_MONITOR_SESSION_EXPIRES=0;if(DEPARTMENT_MONITOR_LOCK_TIMER)clearTimeout(DEPARTMENT_MONITOR_LOCK_TIMER);DEPARTMENT_MONITOR_LOCK_TIMER=null;$('departmentCredentialRows')?.replaceChildren();const status=$('departmentCredentialStatus');if(status)status.textContent='بۆ بینینی زانیارییەکان PIN داخڵ بکە.';const monitorPage=$('departmentCredentialMonitorPage');if(monitorPage?.classList.contains('active')){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='home'));document.querySelectorAll('[data-page]').forEach(x=>x.classList.remove('active'));}}
 function departmentMonitorSessionValid(){return !!DEPARTMENT_MONITOR_SESSION&&Date.now()<DEPARTMENT_MONITOR_SESSION_EXPIRES}
 function departmentMonitorDialog(titleText,description,fieldLabels){
  return new Promise(resolve=>{
