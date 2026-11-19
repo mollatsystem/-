@@ -5589,19 +5589,23 @@ $('signupForm').addEventListener('submit',async ev=>{
  const email=$('signupEmail').value.trim().toLowerCase();
  const password=$('signupPassword').value;
  const confirmPassword=$('signupPasswordConfirm').value;
- if(!name){msg.textContent='تکایە ناوی تەواوی فەرمانگە بنووسە.';return}
- if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';return}
- if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';return}
+ if(!name){msg.textContent='تکایە ناوی تەواوی فەرمانگە بنووسە.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ تکایە خانەی ناوی فەرمانگە پڕ بکەرەوە.');$('signupOrgName').focus();return}
+ if(password!==confirmPassword){msg.textContent='دوو وشەی نهێنییەکە یەک ناگرن.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ دوو وشەی نهێنییەکە یەک ناگرن. تکایە خانەکان بپشکنە.');$('signupPasswordConfirm').focus();return}
+ if(password.length<8){msg.textContent='وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.';showAdminMessageModal('error','دروستکردنی هەژمار سەرکەوتوو نەبوو؛ وشەی نهێنی دەبێت لانیکەم ٨ پیت بێت.');$('signupPassword').focus();return}
  btn.disabled=true;
  btn.textContent='چاوەڕێ بکە...';
+ msg.textContent='تکایە چاوەڕێ بکە؛ دروستکردنی هەژماری فەرمانگە لە ئامادەکردندایە...';
+ showAdminMessageModal('pending','تکایە چاوەڕێ بکە؛ هەژماری فەرمانگە دروست دەکرێت...');
  try{
   if(email){
    msg.textContent='دروستکردنی هەژمار و ناردنی ئیمەیڵی پشتڕاستکردنەوە...';
    const {data,error}=await db.auth.signUp({email,password,options:{data:{organization_name:name},emailRedirectTo:'https://mollatsystem.github.io/-/'}});
    if(error)throw error;
    if(data?.session){await db.auth.signOut();throw new Error('پشتڕاستکردنەوەی ئیمەیڵ چالاک نییە. تکایە پەیوەندی بە بەڕێوەبەری سیستەم بکە.')}
-   msg.textContent='داواکاری هەژمار نێردرا. تکایە سندوقی ئیمەیڵەکەت بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە؛ پاشان بە ئیمەیڵ و وشەی نهێنی بچۆ ژوورەوە.';
+   const successMessage='داواکاری هەژمار نێردرا. تکایە سندوقی ئیمەیڵەکەت بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە؛ پاشان بە ئیمەیڵ و وشەی نهێنی بچۆ ژوورەوە.';
+   msg.textContent=successMessage;
    $('signupForm').reset();
+   showAdminMessageModal('success',successMessage);
   }else{
    msg.textContent='دروستکردنی هەژمار بەبێ ئیمەیڵ...';
    const {data,error}=await db.functions.invoke('public-department-signup',{body:{organization_name:name,password}});
@@ -5610,11 +5614,15 @@ $('signupForm').addEventListener('submit',async ev=>{
    if(!data?.session?.access_token||!data?.session?.refresh_token)throw new Error('هەژمار دروستکرا، بەڵام نەتوانرا چوونەژوورەوەی خۆکار بکرێت. تکایە بە ناوی فەرمانگە و وشەی نهێنی بچۆ ژوورەوە.');
    const {error:sessionError}=await db.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});
    if(sessionError)throw new Error('هەژمار دروستکرا، بەڵام چوونەژوورەوە سەرکەوتوو نەبوو: '+sessionError.message);
-   msg.textContent='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا و چوویتە ژوورەوە. لە داهاتوودا بە ناوی فەرمانگە و وشەی نهێنی بچۆ ژوورەوە؛ ئیمەیڵی فەرمی پێویست نییە.';
+   const successMessage='هەژماری فەرمانگە بە سەرکەوتوویی دروستکرا و چوویتە ژوورەوە. لە داهاتوودا بە ناوی فەرمانگە و وشەی نهێنی بچۆ ژوورەوە؛ ئیمەیڵی فەرمی پێویست نییە.';
+   msg.textContent=successMessage;
    $('signupForm').reset();
+   showAdminMessageModal('success',successMessage);
   }
  }catch(e){
-  msg.textContent='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.context?.status?('HTTP '+e.context.status+' — '):'')+(e?.message||String(e));
+  const errorMessage='دروستکردنی هەژمار سەرکەوتوو نەبوو: '+(e?.context?.status?('HTTP '+e.context.status+' — '):'')+(e?.message||String(e));
+  msg.textContent=errorMessage;
+  showAdminMessageModal('error',errorMessage+' تکایە زانیارییەکان و خانەکانی فۆرم بپشکنە و دووبارە هەوڵ بدە.');
  }finally{
   btn.disabled=false;
   btn.textContent='دروستکردنی هەژمار';
