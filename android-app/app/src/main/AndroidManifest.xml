@@ -4,8 +4,8 @@
     <application
         android:allowBackup="false"
         android:label="سیستەمی مۆڵەت"
-        android:icon="@android:drawable/ic_menu_my_calendar"
-        android:roundIcon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false">
