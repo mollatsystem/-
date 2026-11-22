@@ -4871,8 +4871,10 @@ async function createSupportTicket(ev){
  ev.preventDefault();
  const role=CURRENT_PROFILE?.role;
  if(role!=='department'&&role!=='super_admin')return;
- const organizationId=$('supportTargetOrganization')?.value||CURRENT_PROFILE.organization_id;
+ const selectedOrganizationId=$('supportTargetOrganization')?.value;
+ const organizationId=selectedOrganizationId||CURRENT_PROFILE.organization_id;
  const btn=$('supportCreateTicketBtn'),subject=$('supportNewSubject').value.trim(),body=$('supportNewBody').value.trim();
+ if(role==='super_admin'&&!selectedOrganizationId)return supportNotice('تکایە فەرمانگەی مەبەست هەڵبژێرە.',true);
  if(!organizationId)return supportNotice('تکایە فەرمانگەی مەبەست هەڵبژێرە.',true);
  if(subject.length<3||!body)return supportNotice('تکایە بابەت و وردەکاریی نامەکە بە تەواوی بنووسە.',true);
  btn.disabled=true;
