@@ -7559,6 +7559,43 @@ document.addEventListener('keydown',function(event){
 },true);
 </script>
 
+<script id="leave-records-search-click-fix">
+/* Independent click binding: works even when inline onclick attributes are blocked. */
+(function(){
+ function bindLeaveRecordsSearch(){
+  const button=document.getElementById('searchLeaveNow');
+  if(!button||button.dataset.leaveSearchBound==='yes')return;
+  button.dataset.leaveSearchBound='yes';
+  button.addEventListener('click',function(event){
+   event.preventDefault();
+   event.stopImmediatePropagation();
+   const input=document.getElementById('searchLeave');
+   const query=String(input&&input.value||'').trim();
+   if(!query){
+    const hint=document.getElementById('leaveSearchHint');
+    if(hint)hint.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە و دووبارە گەڕان بکە.';
+    if(input)input.focus();
+    return;
+   }
+   try{
+    if(typeof window.searchLeaveEmployeeHistorySafe==='function'){
+     window.searchLeaveEmployeeHistorySafe();
+    }else if(typeof window.searchLeaveEmployeeHistory==='function'){
+     window.searchLeaveEmployeeHistory();
+    }else{
+     alert('فەرمانی گەڕان بارنەبووە. پەڕەکە داخە و دووبارە بیکەرەوە.');
+    }
+   }catch(error){
+    console.error('Leave records search click failed:',error);
+    alert('هەڵە لە گەڕان: '+(error&&error.message?error.message:String(error)));
+   }
+  },true);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindLeaveRecordsSearch,{once:true});
+ else bindLeaveRecordsSearch();
+})();
+</script>
+
 <style id="admin-office-employee-search-result-black-text">
 /* Scope directly to the actual result element; do not depend on wrapper structure. */
 html body #adminOfficeEmpResult,
