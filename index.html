@@ -5283,6 +5283,19 @@ function renderEmployeeCodeStats(){
   employeeLongNextCode:nextCode(longRows)
  };
  Object.entries(values).forEach(([id,value])=>{const node=$(id);if(node)node.textContent=arabicDigits(value)});
+ // Each employee section owns its own code sequence. Prefill only new/empty forms;
+ // never overwrite a code the user is currently editing.
+ const suggestions=[
+  ['leaveEmpId','leaveEmpCode',nextCode(leaveRows)],
+  ['permEmpId','permEmpCode',nextCode(permissionRows)],
+  ['longEmpId','longEmpCode',nextCode(longRows)]
+ ];
+ suggestions.forEach(([idField,codeField,next])=>{
+  const idNode=$(idField),codeNode=$(codeField);
+  if(idNode&&codeNode&&!idNode.value&&!String(codeNode.value||'').trim()){
+   codeNode.value=arabicDigits(next);
+  }
+ });
 }
 function render(){
 const isGlobalAdmin=CURRENT_PROFILE?.role==='super_admin';
