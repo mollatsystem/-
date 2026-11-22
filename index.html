@@ -5271,7 +5271,7 @@ function renderEmployeeCodeStats(){
  const leaveRows=scoped(EL),permissionRows=scoped(EP),longRows=scoped(ET);
  const allCodes=[...leaveRows,...permissionRows,...longRows]
   .map(row=>latinDigits(String(row.main_code||'')).trim())
-  .filter(code=>/^\\d+$/.test(code))
+  .filter(code=>/^\d+$/.test(code))
   .map(Number).filter(Number.isSafeInteger);
  const firstNext=allCodes.reduce((maximum,code)=>Math.max(maximum,code),0)+1;
  const values={
