@@ -5332,7 +5332,7 @@ function searchLeaveEmployeeHistory(){
  const addPerson=(code,name,source)=>{const key=normalizeMainCode(code),personOrg=String(source?.organization_id||orgId);if(!key)return;const mapKey=personOrg+'::'+key;const current=people.get(mapKey)||{organization_id:personOrg,main_code:code,full_name:name||'',job_title:'',gender:'',employment_type:'',department:'',default_leave_type:''};Object.keys(current).forEach(field=>{if(!current[field]&&source?.[field])current[field]=source[field]});if(!current.full_name&&name)current.full_name=name;people.set(mapKey,current)};
  EL.filter(inScope).forEach(row=>addPerson(row.main_code,row.full_name,row));
  L.filter(inScope).forEach(row=>addPerson(row.employee_main_code,row.employee_name,{...row,main_code:row.employee_main_code,full_name:row.employee_name,job_title:row.employee_job_title,gender:row.employee_gender,employment_type:row.employee_employment_type,department:row.employee_department,default_leave_type:row.employee_default_leave_type}));
- const matches=[...people.values()].filter(person=>normalizeMainCode(person.main_code).includes(qCode)||String(person.full_name||'').toLocaleLowerCase().includes(qName));
+ const matches=[...people.values()].filter(person=>{const codeMatch=!!qCode&&normalizeMainCode(person.main_code).includes(qCode);const nameMatch=!!qName&&String(person.full_name||'').toLocaleLowerCase().includes(qName);return codeMatch||nameMatch});
  if(!matches.length){closeLeaveHistoryModal();const modal=document.createElement('div');modal.id='leaveHistoryModal';modal.setAttribute('role','presentation');const card=document.createElement('section');card.className='leave-history-card';card.setAttribute('role','dialog');card.setAttribute('aria-modal','true');const heading=document.createElement('div');heading.className='leave-history-heading';const title=document.createElement('h2');title.textContent='ئەنجامی گەڕان';const close=document.createElement('button');close.type='button';close.className='leave-history-close';close.textContent='داخستن';close.onclick=closeLeaveHistoryModal;heading.append(title,close);const note=document.createElement('p');note.className='leave-history-empty';note.textContent='هیچ فەرمانبەرێک بەو کۆد یان ناوە نەدۆزرایەوە. تکایە کۆدی سەرەکی یان ناوەکە بپشکنە.';card.append(heading,note);modal.appendChild(card);document.body.appendChild(modal);close.focus();return}
  if(matches.length===1){showLeaveHistoryModalForEmployee(matches[0]);return}
  closeLeaveHistoryModal();const modal=document.createElement('div');modal.id='leaveHistoryModal';modal.setAttribute('role','presentation');const card=document.createElement('section');card.className='leave-history-card';card.setAttribute('role','dialog');card.setAttribute('aria-modal','true');
@@ -8089,6 +8089,32 @@ html body #app #home #adminOrgPanel #toggleNewOrgPassword{
 #leaveHistoryModal button{font:inherit!important;cursor:pointer!important}
 @media(max-width:650px){#leaveHistoryModal{padding:8px!important}#leaveHistoryModal .leave-history-card{padding:12px!important;max-height:94vh!important;border-radius:14px!important}#leaveHistoryModal .leave-history-heading h2{font-size:17px!important}#leaveHistoryModal .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#leaveHistoryModal .leave-history-person-choice{align-items:flex-start!important;flex-direction:column!important}#leaveHistoryModal .leave-history-person-choice button{width:100%!important}}
 @media(max-width:390px){#leaveHistoryModal .leave-history-grid{grid-template-columns:1fr!important}}
+</style>
+<script id="leave-history-search-final-delegation">
+(function(){
+ if(window.__leaveHistoryFinalClickBound)return;
+ window.__leaveHistoryFinalClickBound=true;
+ document.addEventListener('click',function(event){
+  var button=event.target&&event.target.closest?event.target.closest('#searchLeaveNow'):null;
+  if(!button)return;
+  event.preventDefault();
+  event.stopPropagation();
+  if(event.stopImmediatePropagation)event.stopImmediatePropagation();
+  var input=document.getElementById('searchLeave');
+  if(typeof window.searchLeaveEmployeeHistorySafe==='function'){
+   window.searchLeaveEmployeeHistorySafe();
+  }else{
+   var old=document.getElementById('leaveHistoryModal');if(old)old.remove();
+   var modal=document.createElement('div');modal.id='leaveHistoryModal';
+   var card=document.createElement('section');card.className='leave-history-card';
+   var title=document.createElement('h2');title.textContent='کێشەی تەکنیکی';
+   var detail=document.createElement('p');detail.className='leave-history-empty';detail.textContent='فەرمانی گەڕانی مێژووی مۆڵەت بارنەبووە. تکایە پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.';
+   var close=document.createElement('button');close.type='button';close.className='leave-history-close';close.textContent='داخستن';close.onclick=function(){modal.remove()};
+   card.append(title,detail,close);modal.appendChild(card);document.body.appendChild(modal);
+  }
+ },true);
+})();
+</script>
 </style>
 </body>
 </html>
