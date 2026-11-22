@@ -8421,5 +8421,37 @@ html body #supportCenter.support-floating-open #supportConversationMeta::after {
 }
 </style>
 
+
+<style>
+/* Highest-priority floating-only styling for the reply composer label "نامەی نوێ". */
+html body #supportCenter.support-floating-open #supportConversation #supportReplyForm.support-reply-form > label[for="supportReplyText"] {
+  color:#000000!important;
+  -webkit-text-fill-color:#000000!important;
+  background:none!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+/* Remove any background, badge, or pseudo-decoration behind conversation metadata. */
+html body #supportCenter.support-floating-open #supportConversation .support-conversation-head,
+html body #supportCenter.support-floating-open #supportConversation #supportConversationMeta,
+html body #supportCenter.support-floating-open #supportConversation #supportConversationMeta * {
+  background:none!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportConversation #supportConversationMeta::before,
+html body #supportCenter.support-floating-open #supportConversation #supportConversationMeta::after {
+  content:none!important;
+  display:none!important;
+}
+</style>
+
 </body>
 </html>
