@@ -8088,5 +8088,97 @@ html body #app #home #adminOrgPanel #toggleNewOrgPassword{
 @media(max-width:390px){#leaveHistoryModal .leave-history-grid{grid-template-columns:1fr!important}}
 </style>
 <!-- Leave-history search is bound directly on #searchLeaveNow. -->
+<script id="leave-history-search-independent-handler">
+(function(){
+  const button=document.getElementById('searchLeaveNow');
+  const input=document.getElementById('searchLeave');
+  const clearButton=document.getElementById('clearSearchLeave');
+  const hint=document.getElementById('leaveSearchHint');
+  if(!button||!input)return;
+
+  function showSearchError(error){
+    console.error('Independent leave-history search failed:',error);
+    let modal=document.getElementById('leaveHistorySearchError');
+    if(!modal){
+      modal=document.createElement('div');
+      modal.id='leaveHistorySearchError';
+      modal.setAttribute('role','alertdialog');
+      modal.setAttribute('aria-modal','true');
+      modal.style.cssText='position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:18px;direction:rtl';
+      const card=document.createElement('div');
+      card.style.cssText='width:min(560px,100%);background:#fff;color:#172338;border-radius:14px;padding:22px;box-shadow:0 20px 60px #0008;font-family:inherit';
+      const title=document.createElement('h2');
+      title.textContent='هەڵە لە گەڕانی مێژووی مۆڵەت';
+      title.style.cssText='margin:0 0 12px;font-size:18px';
+      const detail=document.createElement('p');
+      detail.id='leaveHistorySearchErrorText';
+      detail.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;margin:0 0 16px';
+      const close=document.createElement('button');
+      close.type='button';
+      close.textContent='داخستن';
+      close.style.cssText='border:0;border-radius:8px;background:#1d4ed8;color:#fff;padding:10px 22px;font:inherit;cursor:pointer';
+      close.onclick=()=>modal.remove();
+      card.append(title,detail,close);
+      modal.appendChild(card);
+      document.body.appendChild(modal);
+      close.focus();
+    }
+    const detail=document.getElementById('leaveHistorySearchErrorText');
+    if(detail)detail.textContent=String(error&&error.message||error||'هەڵەیەکی نەناسراو ڕوویدا.');
+  }
+
+  window.searchLeaveEmployeeHistorySafe=function(){
+    const query=String(input.value||'').trim();
+    if(!query){
+      if(hint)hint.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە و دووبارە گەڕان بکە.';
+      input.focus();
+      return;
+    }
+    if(typeof searchLeaveEmployeeHistory!=='function'){
+      showSearchError('فەرمانی سەرەکی گەڕان بارنەبووە. پەڕەکە بە دروستی سکریپتەکەی نەخوێندووەتەوە.');
+      return;
+    }
+    try{
+      const oldText=button.textContent;
+      button.disabled=true;
+      button.setAttribute('aria-busy','true');
+      button.textContent='گەڕان...';
+      searchLeaveEmployeeHistory();
+      if(hint)hint.textContent='گەڕان تەواو بوو.';
+      button.textContent=oldText||'گەڕان';
+    }catch(error){
+      showSearchError(error);
+      button.textContent='گەڕان';
+    }finally{
+      button.disabled=false;
+      button.removeAttribute('aria-busy');
+    }
+  };
+
+  button.onclick=function(event){
+    if(event)event.preventDefault();
+    window.searchLeaveEmployeeHistorySafe();
+    return false;
+  };
+  input.addEventListener('keydown',function(event){
+    if(event.key==='Enter'){
+      event.preventDefault();
+      window.searchLeaveEmployeeHistorySafe();
+    }
+  });
+  if(clearButton){
+    clearButton.onclick=function(event){
+      if(event)event.preventDefault();
+      input.value='';
+      if(typeof closeLeaveHistoryModal==='function')closeLeaveHistoryModal();
+      const oldError=document.getElementById('leaveHistorySearchError');
+      if(oldError)oldError.remove();
+      if(hint)hint.textContent='بۆ بینینی مێژووی تەواوی مۆڵەتەکانی فەرمانبەر، کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە و کرتە لە «گەڕان» بکە.';
+      input.focus();
+      return false;
+    };
+  }
+})();
+</script>
 </body>
 </html>
