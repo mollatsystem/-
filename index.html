@@ -5269,18 +5269,18 @@ function renderEmployeeCodeStats(){
  const org=String(CURRENT_PROFILE?.organization_id||'');
  const scoped=rows=>rows.filter(row=>String(row.organization_id||'')===org);
  const leaveRows=scoped(EL),permissionRows=scoped(EP),longRows=scoped(ET);
- const allCodes=[...leaveRows,...permissionRows,...longRows]
-  .map(row=>latinDigits(String(row.main_code||'')).trim())
-  .filter(code=>/^\d+$/.test(code))
-  .map(Number).filter(Number.isSafeInteger);
- const firstNext=allCodes.reduce((maximum,code)=>Math.max(maximum,code),0)+1;
+ const nextCode=rows=>{
+  const codes=rows.map(row=>latinDigits(String(row.main_code||'')).trim())
+   .filter(code=>/^\\d+$/.test(code)).map(Number).filter(Number.isSafeInteger);
+  return codes.reduce((maximum,code)=>Math.max(maximum,code),0)+1;
+ };
  const values={
   employeeLeaveCodeCount:leaveRows.length,
   employeePermissionCodeCount:permissionRows.length,
   employeeLongCodeCount:longRows.length,
-  employeeLeaveNextCode:firstNext,
-  employeePermissionNextCode:firstNext+1,
-  employeeLongNextCode:firstNext+2
+  employeeLeaveNextCode:nextCode(leaveRows),
+  employeePermissionNextCode:nextCode(permissionRows),
+  employeeLongNextCode:nextCode(longRows)
  };
  Object.entries(values).forEach(([id,value])=>{const node=$(id);if(node)node.textContent=arabicDigits(value)});
 }
