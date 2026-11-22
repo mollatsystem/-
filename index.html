@@ -5284,7 +5284,7 @@ function renderEmployeeCodeStats(){
   .map(row=>latinDigits(String(row.main_code||'')).trim())
   .filter(code=>/^\d+$/.test(code))
   .map(Number).filter(Number.isSafeInteger);
- const next=(allCodes.length?Math.max(...allCodes):0)+1;
+ const next=allCodes.reduce((maximum,code)=>Math.max(maximum,code),0)+1;
  const ids=['employeeLeaveCodeCount','employeePermissionCodeCount','employeeLongCodeCount','employeeNextGlobalCode'];
  [ ...counts,next ].forEach((value,index)=>{const node=$(ids[index]);if(node)node.textContent=arabicDigits(value)});
  const note=$('employeeCodeStatsNote');
