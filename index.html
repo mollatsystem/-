@@ -1083,7 +1083,38 @@ html body #supportCenter.support-floating-open .support-new-body-tools .support-
 html body #supportCenter.support-floating-open .support-feedback-error{background:#fff0f0!important;color:#8b1f2b!important;-webkit-text-fill-color:#8b1f2b!important}
 html body #supportCenter.support-floating-open .support-feedback:not(.support-feedback-error){background:#e7f4ee!important;color:#185b43!important;-webkit-text-fill-color:#185b43!important}
 
-.employee-section-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}.employee-section-stats .stat{min-width:0;background:#f8faff;border:1px solid #e4eaf2;border-radius:12px;padding:12px}.employee-section-stats .stat strong{display:block;font-size:25px;color:#243b65;margin-top:4px}@media(max-width:540px){.employee-section-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.employee-section-stats .stat{padding:9px}.employee-section-stats .stat strong{font-size:21px}}</style>
+.employee-section-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}.employee-section-stats .stat{min-width:0;background:#f8faff;border:1px solid #e4eaf2;border-radius:12px;padding:12px}.employee-section-stats .stat strong{display:block;font-size:25px;color:#243b65;margin-top:4px}@media(max-width:540px){.employee-section-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.employee-section-stats .stat{padding:9px}.employee-section-stats .stat strong{font-size:21px}}
+/* Final requested support-center refinements for both super-admin and department accounts. */
+html body #supportCenter.support-floating-open #supportNewTicketPanel #supportNewTicketHeading,
+html body #supportCenter.support-floating-open #supportNewTicketPanel h2#supportNewTicketHeading {
+  color:#000000!important;
+  -webkit-text-fill-color:#000000!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open .support-conversation-head #supportConversationMeta,
+html body #supportCenter.support-floating-open #supportConversationMeta {
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+}
+html body #supportCenter.support-floating-open #supportConversationMeta::before,
+html body #supportCenter.support-floating-open #supportConversationMeta::after {
+  background:transparent!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+
+</style>
 <style>
 /* Final signed-in header layout: title, centered logo, then a wider email frame. */
 body:has(#app:not(.hidden)) #app .top{
