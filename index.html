@@ -5282,7 +5282,7 @@ function renderEmployeeCodeStats(){
  const counts=[scoped(EL).length,scoped(EP).length,scoped(ET).length];
  const allCodes=[...scoped(EL),...scoped(EP),...scoped(ET)]
   .map(row=>latinDigits(String(row.main_code||'')).trim())
-  .filter(code=>/^\\d+$/.test(code))
+  .filter(code=>/^\d+$/.test(code))
   .map(Number).filter(Number.isSafeInteger);
  const next=(allCodes.length?Math.max(...allCodes):0)+1;
  const ids=['employeeLeaveCodeCount','employeePermissionCodeCount','employeeLongCodeCount','employeeNextGlobalCode'];
