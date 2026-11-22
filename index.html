@@ -4518,6 +4518,7 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
       <div class="support-reply-font-tools" role="toolbar" aria-label="قەبارەی نووسینی نامە" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;gap:8px;margin:0 0 8px;position:relative;z-index:30">
        <button type="button" id="supportReplyTextFontDown" aria-label="کەمکردنەوەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:40px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A−</button>
        <button type="button" id="supportReplyTextFontUp" aria-label="زیادکردنی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:40px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
+       <button type="button" class="support-clear-text-btn" id="supportReplyTextClear" aria-label="پاککردنەوەی نامە" title="پاککردنەوەی نامە">پاککردنەوە</button>
        <span id="supportReplyTextFontSize" aria-live="polite" style="display:inline-block!important;visibility:visible!important;opacity:1!important;color:#d5e3ed;font-size:13px;min-width:42px">22px</span>
       </div>
       <textarea id="supportReplyText" rows="3" maxlength="5000" placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000!important;-webkit-text-fill-color:#000!important;font-weight:600!important;line-height:1.9!important;background:#fff!important;opacity:1!important;text-shadow:none!important"></textarea>
@@ -4543,6 +4544,7 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
     <div class="support-new-body-tools" role="toolbar" aria-label="ئامرازەکانی دەستکاری نامە" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;position:relative;z-index:20;min-height:38px">
      <button type="button" class="support-font-tool" id="supportNewBodyFontDown" aria-label="کەمکردنەوەی قەبارەی فۆنت" title="کەمکردنەوەی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A−</button>
      <button type="button" class="support-font-tool" id="supportNewBodyFontUp" aria-label="زیادکردنی قەبارەی فۆنت" title="زیادکردنی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
+     <button type="button" class="support-clear-text-btn" id="supportNewBodyClear" aria-label="پاککردنەوەی نامە" title="پاککردنەوەی نامە">پاککردنەوە</button>
      <span id="supportNewBodyFontSize" class="support-font-size-indicator" aria-live="polite">22px</span>
     </div>
     <textarea id="supportNewBody" rows="4" maxlength="5000" required placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important"></textarea>
@@ -5004,10 +5006,13 @@ function changeSupportReplyTextFont(delta){
 }
 /* Delegate toolbar actions so they keep working if the floating panel is re-rendered. */
 document.addEventListener('click',function(event){
- const control=event.target.closest('#supportNewBodyFontUp,#supportNewBodyFontDown,#supportReplyTextFontUp,#supportReplyTextFontDown');
+ const control=event.target.closest('#supportNewBodyFontUp,#supportNewBodyFontDown,#supportReplyTextFontUp,#supportReplyTextFontDown,#supportNewBodyClear,#supportReplyTextClear');
  if(!control)return;
  event.preventDefault();
- if(control.id==='supportNewBodyFontUp'){
+ if(control.id==='supportNewBodyClear'||control.id==='supportReplyTextClear'){
+  const field=$(control.id==='supportNewBodyClear'?'supportNewBody':'supportReplyText');
+  if(field){field.value='';field.focus();field.dispatchEvent(new Event('input',{bubbles:true}))}
+ }else if(control.id==='supportNewBodyFontUp'){
   changeSupportNewBodyFont(2);
  }else if(control.id==='supportNewBodyFontDown'){
   changeSupportNewBodyFont(-2);
