@@ -4871,9 +4871,9 @@ async function createSupportTicket(ev){
  ev.preventDefault();
  const role=CURRENT_PROFILE?.role;
  if(role!=='department'&&role!=='super_admin')return;
- const organizationId=role==='super_admin'?$('supportTargetOrganization')?.value:CURRENT_PROFILE.organization_id;
+ const organizationId=$('supportTargetOrganization')?.value||CURRENT_PROFILE.organization_id;
  const btn=$('supportCreateTicketBtn'),subject=$('supportNewSubject').value.trim(),body=$('supportNewBody').value.trim();
- if(role==='super_admin'&&!organizationId)return supportNotice('تکایە فەرمانگەی مەبەست هەڵبژێرە.',true);
+ if(!organizationId)return supportNotice('تکایە فەرمانگەی مەبەست هەڵبژێرە.',true);
  if(subject.length<3||!body)return supportNotice('تکایە بابەت و وردەکاریی نامەکە بە تەواوی بنووسە.',true);
  btn.disabled=true;
  try{
@@ -4883,7 +4883,7 @@ async function createSupportTicket(ev){
   if(created.error)throw created.error;
   const sent=await db.from('support_messages').insert({ticket_id:created.data.id,organization_id:organizationId,sender_id:userId,sender_role:role,body});
   if(sent.error)throw sent.error;
-  $('supportNewTicketForm').reset();supportNotice(role==='super_admin'?'نامەکەت بە سەرکەوتوویی بۆ فەرمانگەکە نێردرا.':'داواکارییەکەت بە سەرکەوتوویی نێردرا. سەرپەرشتیاری گشتی دەتوانێت وەڵامت بداتەوە.');
+  $('supportNewTicketForm').reset();supportNotice(role==='super_admin'?'نامەکەت بە سەرکەوتوویی بۆ فەرمانگەکە نێردرا.':(organizationId===CURRENT_PROFILE.organization_id?'داواکارییەکەت بە سەرکەوتوویی نێردرا. سەرپەرشتیاری گشتی دەتوانێت وەڵامت بداتەوە.':'نامەکەت بە سەرکەوتوویی بۆ فەرمانگەی هەڵبژێردراو نێردرا.'));
   await loadSupportTickets();await openSupportTicket(created.data.id);
  }catch(e){supportNotice('ناردنی نامە سەرکەوتوو نەبوو: '+(e?.message||String(e)),true)}
  finally{btn.disabled=false}
@@ -5962,7 +5962,7 @@ document.querySelectorAll('#recovery .recovery-password-toggle').forEach(button=
 $('recoveryBackToLogin').onclick=()=>{$('recoveryForm').reset();$('recoveryMsg').textContent='';$('loginMsg').textContent='';showAuthPanel('login');};
 // Legacy email-session password reset handler removed; recovery now uses the secure recovery-code Edge Function.
 db.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'){showAuthPanel('recovery')}});
-async function enter(s){if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(!s||!s.user){$('loginMsg').textContent='زانیاری هەژمار وەرنەگیرا. تکایە دووبارە بچۆ ژوورەوە.';return}let email=s.user.email||'';if(!email){try{let current=await db.auth.getUser();email=current?.data?.user?.email||''}catch(e){}}const pr=await db.from('user_profiles').select('role,organization_id,display_name').eq('user_id',s.user.id).single();if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(pr.error||!pr.data){await db.auth.signOut();$('loginMsg').textContent='ئەم هەژمارە لە هیچ فەرمانگەیەکدا تۆمار نەکراوە. تکایە پەیوەندی بە سەرپەرشتیاری گشتی بکە.';return}CURRENT_PROFILE=pr.data;const supportLauncher=$('supportFloatingButton');if(supportLauncher)supportLauncher.style.display=['super_admin','department'].includes(pr.data.role)?'inline-flex':'none';const backupButton=$('backup');if(backupButton)backupButton.textContent=pr.data.role==='super_admin'?'داگرتن و پاشەکەوتی داتای سەرپەرشتیار (JSON)':'داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)';const restoreControls=$('restorePreviewBtn')?.parentElement;if(restoreControls)restoreControls.style.display='';if(restoreControls?.nextElementSibling)restoreControls.nextElementSibling.style.display='';$('who').textContent=pr.data.role==='super_admin'?(email||'هەژماری بەکارهێنەر')+' — سەرپەرشتیاری گشتی':(email?email+' — ':'')+(pr.data.display_name||'فەرمانگە');$('who').style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;color:#173b60!important;font-weight:700!important;margin-inline-end:10px';$('login').classList.add('hidden');$('app').classList.remove('hidden');const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=pr.data.role==='super_admin'?'':'none';$('adminOrgPanel').style.display=pr.data.role==='super_admin'?'block':'none';const delPanel=document.querySelector('.global-delete-panel');if(delPanel)delPanel.style.display='block';const manageDepartmentAccounts=$('manageDepartmentAccounts');if(manageDepartmentAccounts)manageDepartmentAccounts.style.display=pr.data.role==='super_admin'?'inline-block':'none';const registeredOrganizationsNav=$('registeredOrganizationsNav');if(registeredOrganizationsNav)registeredOrganizationsNav.style.display=pr.data.role==='super_admin'?'':'none';const credentialNav=$('departmentCredentialMonitorNav');if(credentialNav)credentialNav.style.display=pr.data.role==='super_admin'?'':'none';await load();await refreshStorageMonitor();if(pr.data.role==='department'||pr.data.role==='super_admin')$('supportNewTicketPanel').style.display='block';else $('supportNewTicketPanel').style.display='none';const targetField=$('supportTargetOrganizationField'),targetSelect=$('supportTargetOrganization'),newHeading=$('supportNewTicketHeading');if(targetField)targetField.style.display=pr.data.role==='super_admin'?'block':'none';if(newHeading)newHeading.textContent=pr.data.role==='super_admin'?'ناردنی نامە بۆ فەرمانگەکان':'تۆمارکردنی کێشە یان پێشنیاری نوێ';if(pr.data.role==='super_admin'&&targetSelect){const orgs=await db.from('organizations').select('id,name').eq('is_active',true).order('name');if(orgs.error)supportNotice('نەتوانرا لیستی فەرمانگەکان باربکرێت: '+orgs.error.message,true);else targetSelect.innerHTML='<option value="">فەرمانگە هەڵبژێرە...</option>'+(orgs.data||[]).filter(org=>{const name=(org.name||'').trim().toLocaleLowerCase();return !(name.includes('گشتی')&&(name.includes('بەرێوەبەر')||name.includes('بەڕێوەبەر')))}).map(org=>'<option value="'+esc(org.id)+'">'+esc(org.name)+'</option>').join('')}await loadSupportTickets();setupSupportRealtime();if(pr.data.role==='department'&&navigator.onLine){try{await saveOfflineProfile(pr.data,email)}catch(cacheError){console.warn('Offline profile cache unavailable',cacheError)}}if(pr.data.role==='super_admin'){await refreshOrganizations()}else{const credentialNav=$('departmentCredentialMonitorNav');if(credentialNav)credentialNav.style.display='none';if(navigator.onLine)syncOfflineQueue()}}
+async function enter(s){if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(!s||!s.user){$('loginMsg').textContent='زانیاری هەژمار وەرنەگیرا. تکایە دووبارە بچۆ ژوورەوە.';return}let email=s.user.email||'';if(!email){try{let current=await db.auth.getUser();email=current?.data?.user?.email||''}catch(e){}}const pr=await db.from('user_profiles').select('role,organization_id,display_name').eq('user_id',s.user.id).single();if(isPasswordRecoveryFlow){$('app').classList.add('hidden');return}if(pr.error||!pr.data){await db.auth.signOut();$('loginMsg').textContent='ئەم هەژمارە لە هیچ فەرمانگەیەکدا تۆمار نەکراوە. تکایە پەیوەندی بە سەرپەرشتیاری گشتی بکە.';return}CURRENT_PROFILE=pr.data;const supportLauncher=$('supportFloatingButton');if(supportLauncher)supportLauncher.style.display=['super_admin','department'].includes(pr.data.role)?'inline-flex':'none';const backupButton=$('backup');if(backupButton)backupButton.textContent=pr.data.role==='super_admin'?'داگرتن و پاشەکەوتی داتای سەرپەرشتیار (JSON)':'داگرتنی پاشەکەوتی داتای فەرمانگە (JSON)';const restoreControls=$('restorePreviewBtn')?.parentElement;if(restoreControls)restoreControls.style.display='';if(restoreControls?.nextElementSibling)restoreControls.nextElementSibling.style.display='';$('who').textContent=pr.data.role==='super_admin'?(email||'هەژماری بەکارهێنەر')+' — سەرپەرشتیاری گشتی':(email?email+' — ':'')+(pr.data.display_name||'فەرمانگە');$('who').style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;color:#173b60!important;font-weight:700!important;margin-inline-end:10px';$('login').classList.add('hidden');$('app').classList.remove('hidden');const emailButton=$('changeAccountEmail');if(emailButton)emailButton.style.display=pr.data.role==='super_admin'?'':'none';$('adminOrgPanel').style.display=pr.data.role==='super_admin'?'block':'none';const delPanel=document.querySelector('.global-delete-panel');if(delPanel)delPanel.style.display='block';const manageDepartmentAccounts=$('manageDepartmentAccounts');if(manageDepartmentAccounts)manageDepartmentAccounts.style.display=pr.data.role==='super_admin'?'inline-block':'none';const registeredOrganizationsNav=$('registeredOrganizationsNav');if(registeredOrganizationsNav)registeredOrganizationsNav.style.display=pr.data.role==='super_admin'?'':'none';const credentialNav=$('departmentCredentialMonitorNav');if(credentialNav)credentialNav.style.display=pr.data.role==='super_admin'?'':'none';await load();await refreshStorageMonitor();if(pr.data.role==='department'||pr.data.role==='super_admin')$('supportNewTicketPanel').style.display='block';else $('supportNewTicketPanel').style.display='none';const targetField=$('supportTargetOrganizationField'),targetSelect=$('supportTargetOrganization'),newHeading=$('supportNewTicketHeading');if(targetField)targetField.style.display='block';if(newHeading)newHeading.textContent=pr.data.role==='super_admin'?'ناردنی نامە بۆ فەرمانگەکان':'تۆمارکردنی کێشە یان پێشنیاری نوێ';if(targetSelect){const orgs=await db.from('organizations').select('id,name').eq('is_active',true).order('name');if(orgs.error)supportNotice('نەتوانرا لیستی فەرمانگەکان باربکرێت: '+orgs.error.message,true);else targetSelect.innerHTML='<option value="">فەرمانگە هەڵبژێرە...</option>'+(orgs.data||[]).map(org=>'<option value="'+esc(org.id)+'">'+esc(org.name)+'</option>').join('');targetSelect.value=pr.data.role==='department'?pr.data.organization_id:''}await loadSupportTickets();setupSupportRealtime();if(pr.data.role==='department'&&navigator.onLine){try{await saveOfflineProfile(pr.data,email)}catch(cacheError){console.warn('Offline profile cache unavailable',cacheError)}}if(pr.data.role==='super_admin'){await refreshOrganizations()}else{const credentialNav=$('departmentCredentialMonitorNav');if(credentialNav)credentialNav.style.display='none';if(navigator.onLine)syncOfflineQueue()}}
 $('changeAccountEmail').onclick=async()=>{try{const {data,error}=await db.auth.getUser();if(error||!data?.user)return say('تکایە سەرەتا بچۆ ژوورەوە.');if((data.user.email||'').toLowerCase()===TARGET_ACCOUNT_EMAIL)return say('ئەم ئیمەیڵە پێشتر لە هەژمارەکەتدا بەکاردەهێنرێت.');if(!confirm('ئایا دڵنیایت ئیمەیڵی چوونەژوورەوە بگۆڕیت بۆ '+TARGET_ACCOUNT_EMAIL+'؟ لینکی پشتڕاستکردنەوە بۆ ئیمەیڵە نوێیەکە دەنێردرێت.'))return;const r=await db.auth.updateUser({email:TARGET_ACCOUNT_EMAIL},{emailRedirectTo:'https://mollatsystem.github.io/-/'});if(r.error)return say('داواکاری گۆڕینی ئیمەیڵ سەرکەوتوو نەبوو: '+r.error.message);say('داواکاری گۆڕینی ئیمەیڵ نێردرا. تکایە سندوقی پۆستی '+TARGET_ACCOUNT_EMAIL+' بپشکنە و لینکی پشتڕاستکردنەوە بکەرەوە. تا پشتڕاستکردنەوە تەواو نەبێت، ئیمەیڵی هەژمار ناگۆڕێت.')}catch(e){say('هەڵە لە گۆڕینی ئیمەیڵ: '+(e?.message||String(e)))}};
 $('logout').onclick=async()=>{if(!navigator.onLine||OFFLINE_MODE){OFFLINE_MODE=true;$('app').classList.add('hidden');$('login').classList.remove('hidden');$('loginMsg').textContent='لە دۆخی ئۆفلاین دەرچوویت؛ لە هەمان ئامێرەوە دەتوانیت بەبێ ئیمەیڵ و وشەی نهێنی بەردەوام بیت.';updateConnectionStatus('ئۆفلاین');if($('offlineContinue'))$('offlineContinue').style.display='block';return}if(CURRENT_PROFILE?.organization_id)await idbRequest('profiles','readwrite','delete',String(CURRENT_PROFILE.organization_id));await db.auth.signOut();CURRENT_PROFILE=null;OFFLINE_MODE=false;closeSupportFloating();location.reload()};
 async function refreshOrganizations(){
@@ -8235,6 +8235,40 @@ html body #supportCenter #supportNewTicketPanel #supportNewTicketHeading{
 html body #supportCenter #supportNewTicketPanel textarea#supportNewBody{
  pointer-events:auto!important;
  cursor:text!important;
+}
+
+/* Support center: clear-message actions and robust floating-window stacking/scrolling. */
+#supportCenter .support-clear-text-btn{
+ display:inline-flex!important;align-items:center;justify-content:center;
+ min-width:92px;min-height:40px;padding:6px 13px;
+ border:1px solid #b94b4b!important;border-radius:8px!important;
+ background:#fff0f0!important;color:#a32626!important;
+ -webkit-text-fill-color:#a32626!important;font-size:14px!important;
+ font-weight:800!important;cursor:pointer!important;position:relative;z-index:5;
+}
+#supportCenter .support-clear-text-btn:hover{background:#ffe0e0!important}
+#supportCenter.support-floating-open{
+ isolation:isolate!important;overflow-x:hidden!important;overflow-y:auto!important;
+ overscroll-behavior:contain!important;scrollbar-gutter:stable!important;
+}
+#supportCenter.support-floating-open .support-center-heading{
+ position:sticky!important;top:0!important;z-index:1000!important;isolation:isolate!important;
+}
+#supportCenter.support-floating-open .support-center-grid{position:relative!important;z-index:1!important}
+#supportCenter.support-floating-open .support-new-body-tools,
+#supportCenter.support-floating-open .support-reply-font-tools{position:relative!important;z-index:5!important}
+#supportCenter.support-floating-open #supportConversationMeta{
+ background:transparent!important;background-color:transparent!important;
+ border:0!important;box-shadow:none!important;padding:0!important;
+}
+#supportCenter.support-floating-open #supportReplyForm>label{
+ color:#111111!important;-webkit-text-fill-color:#111111!important;
+ background:transparent!important;background-color:transparent!important;
+ border:0!important;box-shadow:none!important;padding:0!important;
+}
+#supportCenter.support-floating-open #supportNewTicketPanel #supportNewTicketHeading{
+ color:#111111!important;-webkit-text-fill-color:#111111!important;
+ background:transparent!important;background-color:transparent!important;
 }
 </style>
 </body>
