@@ -8127,38 +8127,35 @@ html body #app #home #adminOrgPanel #toggleNewOrgPassword{
 
   function forceVisible(modal){
     if(!modal)return null;
-    // Use the browser top layer so the history window cannot be trapped behind app overlays.
-    if(!(modal instanceof HTMLDialogElement)){
-      const dialog=document.createElement('dialog');
-      dialog.id='leaveHistoryModal';
-      dialog.setAttribute('role','presentation');
-      while(modal.firstChild)dialog.appendChild(modal.firstChild);
-      modal.replaceWith(dialog);
-      modal=dialog;
-      modal.addEventListener('click',function(event){if(event.target===modal)closeLeaveHistoryModal()});
-      modal.addEventListener('cancel',function(event){event.preventDefault();closeLeaveHistoryModal()});
-      if(typeof modal.showModal==='function')modal.showModal();
-      else throw new Error('ئەم وێبگەڕە پشتیوانی پەنجەرەی سەرەوەیی ناکات.');
+    // Keep the existing DIV in the document and force it to cover the viewport.
+    // Do not convert it to <dialog>: browser dialog defaults can constrain its size.
+    const modalStyles={
+      position:'fixed',inset:'0',zIndex:'2147483647',display:'flex',
+      flexDirection:'column',alignItems:'stretch',justifyContent:'stretch',
+      visibility:'visible',opacity:'1',background:'rgba(7,20,36,.98)',
+      padding:'0',margin:'0',border:'0',borderRadius:'0',overflow:'hidden',
+      boxSizing:'border-box',direction:'rtl',width:'100vw',height:'100vh',
+      maxWidth:'none',maxHeight:'none'
+    };
+    Object.entries(modalStyles).forEach(([key,value])=>modal.style.setProperty(
+      key.replace(/[A-Z]/g,letter=>'-'+letter.toLowerCase()),value,'important'
+    ));
+    modal.style.setProperty('height','100dvh','important');
+    const card=modal.querySelector('.leave-history-card');
+    if(card){
+      const cardStyles={
+        display:'block',position:'relative',zIndex:'1',width:'100vw',
+        height:'100%',minWidth:'100%',minHeight:'100%',maxWidth:'none',
+        maxHeight:'none',margin:'0',border:'0',borderRadius:'0',
+        padding:'clamp(14px,2vw,30px)',overflow:'auto',
+        boxSizing:'border-box',background:'linear-gradient(145deg,#10283e,#172f45)',
+        color:'#f2f7fb',boxShadow:'none'
+      };
+      Object.entries(cardStyles).forEach(([key,value])=>card.style.setProperty(
+        key.replace(/[A-Z]/g,letter=>'-'+letter.toLowerCase()),value,'important'
+      ));
+      card.style.setProperty('height','100dvh','important');
     }
-    modal.style.setProperty('position','fixed','important');
-    modal.style.setProperty('inset','0','important');
-    modal.style.setProperty('z-index','2147483647','important');
-    modal.style.setProperty('display','flex','important');
-    modal.style.setProperty('visibility','visible','important');
-    modal.style.setProperty('opacity','1','important');
-    modal.style.setProperty('align-items','stretch','important');
-    modal.style.setProperty('justify-content','stretch','important');
-    modal.style.setProperty('background','rgba(7,20,36,.88)','important');
-    modal.style.setProperty('padding','0','important');
-    modal.style.setProperty('box-sizing','border-box','important');
-    modal.style.setProperty('direction','rtl','important');
-    modal.style.setProperty('width','100vw','important');
-    modal.style.setProperty('height','100vh','important');
-    modal.style.setProperty('max-width','none','important');
-    modal.style.setProperty('max-height','none','important');
-    modal.style.setProperty('margin','0','important');
-    modal.style.setProperty('border','0','important');
-    modal.style.setProperty('overflow','auto','important');
     return modal;
   }
   function showMessage(titleText,messageText){
