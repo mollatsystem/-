@@ -4816,7 +4816,15 @@ function applySupportConversationContrast(){
  root.querySelectorAll('.support-panel-title h2,.support-conversation-head h2,#supportConversationTitle').forEach(el=>set(el,{'color':'#102a3c','-webkit-text-fill-color':'#102a3c','font-weight':'800','opacity':'1'}));
  set($('supportConversationMeta'),{'color':'#40586b','-webkit-text-fill-color':'#40586b','font-weight':'700','opacity':'1'});
  set(root.querySelector('.support-conversation-panel'),{'background':'#ffffff','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da'});
- set(root.querySelector('.support-conversation-head'),{'background':'#e8f0f5','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da','border-radius':'12px','padding':'13px'});
+ const conversationHead=root.querySelector('.support-conversation-head');
+ set(conversationHead,{'background':CURRENT_PROFILE?.role==='department'?'transparent':'#e8f0f5','background-color':CURRENT_PROFILE?.role==='department'?'transparent':'#e8f0f5','background-image':'none','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':CURRENT_PROFILE?.role==='department'?'0':'1px solid #c4d0da','border-radius':'12px','padding':'13px','box-shadow':'none'});
+ if(CURRENT_PROFILE?.role==='department'){
+  set($('supportConversationMeta'),{'background':'transparent','background-color':'transparent','background-image':'none','border':'0','box-shadow':'none','text-shadow':'none'});
+ }
+ if(root.classList.contains('support-floating-open')){
+  const replyLabel=root.querySelector('#supportReplyForm>label[for="supportReplyText"]');
+  set(replyLabel,{'color':'#000000','-webkit-text-fill-color':'#000000','background':'transparent','background-color':'transparent','background-image':'none','border':'0','box-shadow':'none','text-shadow':'none','opacity':'1'});
+ }
  set($('supportMessageList'),{'background':'#edf2f7','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da','border-radius':'12px','padding':'14px'});
  root.querySelectorAll('#supportMessageList .support-message').forEach(article=>{
   const mine=article.classList.contains('mine'),bg=mine?'#176f83':'#ffffff',ink=mine?'#ffffff':'#172b3d',meta=mine?'#eaf7fa':'#40586b';
