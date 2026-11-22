@@ -5320,7 +5320,7 @@ function showLeaveHistoryModalForEmployee(employee){
  const totalBadge=document.createElement('div');totalBadge.className='leave-history-total';totalBadge.textContent='کۆی گشتی مۆڵەتە تۆمارکراوەکان: '+arabicDigits(totalDays)+' ڕۆژ';summary.appendChild(totalBadge);card.appendChild(summary);
  const history=document.createElement('section');history.className='leave-history-section';history.innerHTML='<h3>هەموو تۆمارەکانی مۆڵەت ('+arabicDigits(records.length)+')</h3>';
  if(!records.length){const empty=document.createElement('p');empty.className='leave-history-empty';empty.textContent='هیچ تۆمارێکی مۆڵەت بۆ ئەم فەرمانبەرە نەدۆزرایەوە.';history.appendChild(empty)}
- else{const wrap=document.createElement('div');wrap.className='leave-history-table-wrap';wrap.innerHTML='<table><thead><tr><th>زنجیرە</th><th>ماوە</th><th>بەرواری دەستپێک</th><th>بەرواری کۆتایی</th><th>سەماحی ڕۆژانە</th><th>کردار</th></tr></thead><tbody>'+records.map(row=>'<tr><td>'+esc(arabicDigits(row.sequence_no||'—'))+'</td><td>'+esc(arabicDigits(row.duration||'—'))+' ڕۆژ</td><td>'+esc(displayDate(row.start_date))+'</td><td>'+esc(displayDate(row.end_date))+'</td><td>'+esc(arabicDigits(row.daily_permission||'—'))+'</td><td>'+editButton('leave',row.id)+' '+deleteButton('leave',row.id)+' <button type="button" class="btn gray" onclick="printRecord(&quot;leave&quot;,&quot;'+esc(row.id)+'&quot;)">چاپ</button></td></tr>').join('')+'</tbody></table>';history.appendChild(wrap)}
+ else{const wrap=document.createElement('div');wrap.className='leave-history-table-wrap';wrap.innerHTML='<table><thead><tr><th>زنجیرە</th><th>جۆری مۆڵەت</th><th>ماوەی مۆڵەت</th><th>بەرواری دەستپێک</th><th>بەرواری کۆتایی</th><th>سەماحی ڕۆژانە</th><th>کردارەکان</th></tr></thead><tbody>'+records.map(row=>'<tr><td>'+esc(arabicDigits(row.sequence_no||'—'))+'</td><td>'+esc(row.employee_default_leave_type||profile.default_leave_type||'—')+'</td><td>'+esc(arabicDigits(row.duration||'—'))+' ڕۆژ</td><td>'+esc(displayDate(row.start_date))+'</td><td>'+esc(displayDate(row.end_date))+'</td><td>'+esc(arabicDigits(row.daily_permission||'—'))+'</td><td class="leave-history-actions">'+editButton('leave',row.id)+' '+deleteButton('leave',row.id)+' <button type="button" class="btn gray" onclick="printRecord(&quot;leave&quot;,&quot;'+esc(row.id)+'&quot;)">چاپ</button></td></tr>').join('')+'</tbody></table>';history.appendChild(wrap)}
  card.appendChild(history);modal.appendChild(card);
  modal.addEventListener('click',event=>{if(event.target===modal)closeLeaveHistoryModal()});modal.addEventListener('keydown',event=>{if(event.key==='Escape')closeLeaveHistoryModal()});
  document.body.appendChild(modal);close.focus();
@@ -8086,6 +8086,20 @@ html body #app #home #adminOrgPanel #toggleNewOrgPassword{
 #leaveHistoryModal button{font:inherit!important;cursor:pointer!important}
 @media(max-width:650px){#leaveHistoryModal{padding:8px!important}#leaveHistoryModal .leave-history-card{padding:12px!important;max-height:94vh!important;border-radius:14px!important}#leaveHistoryModal .leave-history-heading h2{font-size:17px!important}#leaveHistoryModal .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#leaveHistoryModal .leave-history-person-choice{align-items:flex-start!important;flex-direction:column!important}#leaveHistoryModal .leave-history-person-choice button{width:100%!important}}
 @media(max-width:390px){#leaveHistoryModal .leave-history-grid{grid-template-columns:1fr!important}}
+
+/* Full-screen leave history window */
+#leaveHistoryModal[open]{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;box-sizing:border-box!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(7,20,36,.96)!important;color:#f2f7fb!important;z-index:2147483647!important}
+#leaveHistoryModal[open]::backdrop{background:rgba(3,12,24,.94)!important;backdrop-filter:blur(4px)!important}
+#leaveHistoryModal[open] .leave-history-card{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-height:100%!important;margin:0!important;padding:clamp(14px,2vw,30px)!important;border:0!important;border-radius:0!important;overflow:auto!important;box-sizing:border-box!important;background:linear-gradient(145deg,#10283e,#172f45)!important;box-shadow:none!important}
+#leaveHistoryModal[open] .leave-history-heading{position:sticky!important;top:calc(-1 * clamp(14px,2vw,30px))!important;z-index:5!important;background:#142d43!important;padding:12px 0 16px!important}
+#leaveHistoryModal[open] .leave-history-section{margin:16px 0!important;padding:clamp(12px,1.5vw,22px)!important}
+#leaveHistoryModal[open] .leave-history-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))!important}
+#leaveHistoryModal[open] .leave-history-table-wrap{max-height:none!important;overflow:auto!important}
+#leaveHistoryModal[open] table{min-width:980px!important;font-size:14px!important}
+#leaveHistoryModal[open] th,#leaveHistoryModal[open] td{padding:13px 12px!important}
+#leaveHistoryModal[open] .leave-history-actions{white-space:nowrap!important;min-width:210px!important}
+#leaveHistoryModal[open] .leave-history-actions button{margin:3px!important;min-width:58px!important}
+@media(max-width:650px){#leaveHistoryModal[open] .leave-history-card{padding:10px!important}#leaveHistoryModal[open] .leave-history-heading{top:-10px!important}#leaveHistoryModal[open] .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#leaveHistoryModal[open] table{min-width:900px!important}}
 </style>
 <!-- Leave-history search is bound directly on #searchLeaveNow. -->
 <script id="leave-history-search-independent-handler">
