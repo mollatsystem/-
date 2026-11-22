@@ -7560,39 +7560,36 @@ document.addEventListener('keydown',function(event){
 </script>
 
 <script id="leave-records-search-click-fix">
-/* Independent click binding: works even when inline onclick attributes are blocked. */
+/* Capture the Leave Records search click at document level, including clicks on the icon or label. */
 (function(){
- function bindLeaveRecordsSearch(){
-  const button=document.getElementById('searchLeaveNow');
-  if(!button||button.dataset.leaveSearchBound==='yes')return;
-  button.dataset.leaveSearchBound='yes';
-  button.addEventListener('click',function(event){
-   event.preventDefault();
-   event.stopImmediatePropagation();
-   const input=document.getElementById('searchLeave');
-   const query=String(input&&input.value||'').trim();
-   if(!query){
-    const hint=document.getElementById('leaveSearchHint');
-    if(hint)hint.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە و دووبارە گەڕان بکە.';
-    if(input)input.focus();
-    return;
+ document.addEventListener('click',function(event){
+  const target=event.target;
+  const button=target&&target.closest?target.closest('#searchLeaveNow'):null;
+  if(!button)return;
+  event.preventDefault();
+  event.stopPropagation();
+  const input=document.getElementById('searchLeave');
+  const hint=document.getElementById('leaveSearchHint');
+  const query=String(input&&input.value||'').trim();
+  if(!query){
+   if(hint)hint.textContent='تکایە کۆدی سەرەکی یان ناوی فەرمانبەر بنووسە و دووبارە گەڕان بکە.';
+   if(input)input.focus();
+   return;
+  }
+  try{
+   if(typeof window.searchLeaveEmployeeHistorySafe==='function'){
+    window.searchLeaveEmployeeHistorySafe();
+   }else if(typeof window.searchLeaveEmployeeHistory==='function'){
+    window.searchLeaveEmployeeHistory();
+   }else{
+    if(hint)hint.textContent='فەرمانی گەڕان بارنەبووە. پەڕەکە نوێ بکەرەوە و ئەگەر کێشەکە بەردەوام بوو، پێویستە سکریپتی سەرەکی بپشکنرێت.';
+    console.error('Leave Records search function is unavailable.');
    }
-   try{
-    if(typeof window.searchLeaveEmployeeHistorySafe==='function'){
-     window.searchLeaveEmployeeHistorySafe();
-    }else if(typeof window.searchLeaveEmployeeHistory==='function'){
-     window.searchLeaveEmployeeHistory();
-    }else{
-     alert('فەرمانی گەڕان بارنەبووە. پەڕەکە داخە و دووبارە بیکەرەوە.');
-    }
-   }catch(error){
-    console.error('Leave records search click failed:',error);
-    alert('هەڵە لە گەڕان: '+(error&&error.message?error.message:String(error)));
-   }
-  },true);
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindLeaveRecordsSearch,{once:true});
- else bindLeaveRecordsSearch();
+  }catch(error){
+   console.error('Leave Records search click failed:',error);
+   if(hint)hint.textContent='هەڵە لە گەڕان: '+(error&&error.message?error.message:String(error));
+  }
+ },true);
 })();
 </script>
 
