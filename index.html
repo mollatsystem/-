@@ -6411,6 +6411,7 @@ function clearLeaveForm(){
   el.dispatchEvent(new Event('change',{bubbles:true}));
  });
  window._leaveEditAction=false;
+ setRecordEmployeeFieldsEditable('leave',false);
  try{updateSequenceFields()}catch(e){}
  try{updateSequenceFields()}catch(e){}
  const code=document.getElementById('leaveMainCode');
@@ -6431,6 +6432,7 @@ function clearPermForm(){
   el.dispatchEvent(new Event('change',{bubbles:true}));
  });
  window._permEditAction=false;
+ setRecordEmployeeFieldsEditable('perm',false);
  try{document.getElementById('permSeq').value=nextSequence(P)}catch(e){}
  const code=document.getElementById('permMainCode');
  if(code)code.focus();
