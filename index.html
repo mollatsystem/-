@@ -4849,7 +4849,7 @@ async function deleteSupportTicket(id){
  try{
   const messageResult=await db.from('support_messages').select('attachments').eq('ticket_id',id);
   if(messageResult.error)throw messageResult.error;
-  const paths=[...new Set((messageResult.data||[]).flatMap(row=>(Array.isArray(row.attachments)?row.attachments:[]).map(file=>file?.path).filter(path=>typeof path==='string'&&path.startsWith(ticket.organization_id+'/'+ticket.id+'/')))];
+  const paths=[...new Set((messageResult.data||[]).flatMap(row=>(Array.isArray(row.attachments)?row.attachments:[]).map(file=>file?.path).filter(path=>typeof path==='string'&&path.startsWith(ticket.organization_id+'/'+ticket.id+'/'))))];
   if(paths.length){
    const removed=await db.storage.from('support-attachments').remove(paths);
    if(removed.error)throw new Error('سڕینەوەی وێنە هاوپێچەکان سەرکەوتوو نەبوو: '+removed.error.message);
