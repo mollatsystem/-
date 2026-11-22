@@ -8087,20 +8087,35 @@ html body #app #home #adminOrgPanel #toggleNewOrgPassword{
 @media(max-width:650px){#leaveHistoryModal{padding:8px!important}#leaveHistoryModal .leave-history-card{padding:12px!important;max-height:94vh!important;border-radius:14px!important}#leaveHistoryModal .leave-history-heading h2{font-size:17px!important}#leaveHistoryModal .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#leaveHistoryModal .leave-history-person-choice{align-items:flex-start!important;flex-direction:column!important}#leaveHistoryModal .leave-history-person-choice button{width:100%!important}}
 @media(max-width:390px){#leaveHistoryModal .leave-history-grid{grid-template-columns:1fr!important}}
 
-/* Full-screen leave history window */
-#leaveHistoryModal[open]{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;box-sizing:border-box!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(7,20,36,.96)!important;color:#f2f7fb!important;z-index:2147483647!important}
-#leaveHistoryModal[open]::backdrop{background:rgba(3,12,24,.94)!important;backdrop-filter:blur(4px)!important}
-#leaveHistoryModal[open] .leave-history-card{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-height:100%!important;margin:0!important;padding:clamp(14px,2vw,30px)!important;border:0!important;border-radius:0!important;overflow:auto!important;box-sizing:border-box!important;background:linear-gradient(145deg,#10283e,#172f45)!important;box-shadow:none!important}
-#leaveHistoryModal[open] .leave-history-heading{position:sticky!important;top:calc(-1 * clamp(14px,2vw,30px))!important;z-index:5!important;background:#142d43!important;padding:12px 0 16px!important}
-#leaveHistoryModal[open] .leave-history-section{margin:16px 0!important;padding:clamp(12px,1.5vw,22px)!important}
-#leaveHistoryModal[open] .leave-history-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))!important}
-#leaveHistoryModal[open] .leave-history-table-wrap{max-height:none!important;overflow:auto!important}
-#leaveHistoryModal[open] table{min-width:980px!important;font-size:14px!important}
-#leaveHistoryModal[open] th,#leaveHistoryModal[open] td{padding:13px 12px!important}
-#leaveHistoryModal[open] .leave-history-actions{white-space:nowrap!important;min-width:210px!important}
-#leaveHistoryModal[open] .leave-history-actions button{margin:3px!important;min-width:58px!important}
-@media(max-width:650px){#leaveHistoryModal[open] .leave-history-card{padding:10px!important}#leaveHistoryModal[open] .leave-history-heading{top:-10px!important}#leaveHistoryModal[open] .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#leaveHistoryModal[open] table{min-width:900px!important}}
-</style>
+/* Full-screen leave history window: the modal is a DIV, not a dialog, so do not use [open] selectors. */
+#leaveHistoryModal{
+ position:fixed!important;inset:0!important;z-index:2147483647!important;
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;
+ width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+ margin:0!important;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;
+ box-sizing:border-box!important;direction:rtl!important;background:rgba(7,20,36,.98)!important;
+}
+#leaveHistoryModal .leave-history-card{
+ display:flex!important;flex:1 1 auto!important;flex-direction:column!important;align-self:stretch!important;
+ width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;
+ max-width:none!important;max-height:none!important;margin:0!important;padding:clamp(14px,2vw,30px)!important;
+ border:0!important;border-radius:0!important;overflow:auto!important;box-sizing:border-box!important;
+ background:linear-gradient(145deg,#10283e,#172f45)!important;box-shadow:none!important;
+}
+#leaveHistoryModal .leave-history-heading{position:sticky!important;top:calc(-1 * clamp(14px,2vw,30px))!important;z-index:5!important;background:#142d43!important;padding:12px 0 16px!important}
+#leaveHistoryModal .leave-history-section{margin:16px 0!important;padding:clamp(12px,1.5vw,22px)!important}
+#leaveHistoryModal .leave-history-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))!important}
+#leaveHistoryModal .leave-history-table-wrap{max-height:none!important;overflow:auto!important}
+#leaveHistoryModal table{min-width:980px!important;font-size:14px!important}
+#leaveHistoryModal th,#leaveHistoryModal td{padding:13px 12px!important}
+#leaveHistoryModal .leave-history-actions{white-space:nowrap!important;min-width:210px!important}
+#leaveHistoryModal .leave-history-actions button{margin:3px!important;min-width:58px!important}
+@media(max-width:650px){
+ #leaveHistoryModal .leave-history-card{padding:10px!important}
+ #leaveHistoryModal .leave-history-heading{top:-10px!important}
+ #leaveHistoryModal .leave-history-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #leaveHistoryModal table{min-width:900px!important}
+}</style>
 <!-- Leave-history search is bound directly on #searchLeaveNow. -->
 <script id="leave-history-search-independent-handler">
 (function(){
