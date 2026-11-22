@@ -4822,8 +4822,7 @@ function applySupportConversationContrast(){
   set($('supportConversationMeta'),{'background':'transparent','background-color':'transparent','background-image':'none','border':'0','box-shadow':'none','text-shadow':'none'});
  }
  if(root.classList.contains('support-floating-open')){
-  const replyLabel=root.querySelector('#supportReplyForm>label[for="supportReplyText"]');
-  set(replyLabel,{'color':'#000000','-webkit-text-fill-color':'#000000','background':'transparent','background-color':'transparent','background-image':'none','border':'0','box-shadow':'none','text-shadow':'none','opacity':'1'});
+  root.querySelectorAll('#supportReplyForm>label[for="supportReplyText"]').forEach(replyLabel=>set(replyLabel,{'color':'#000000','-webkit-text-fill-color':'#000000','background':'transparent','background-color':'transparent','background-image':'none','border':'0','box-shadow':'none','text-shadow':'none','opacity':'1'}));
  }
  set($('supportMessageList'),{'background':'#edf2f7','color':'#172b3d','-webkit-text-fill-color':'#172b3d','border':'1px solid #c4d0da','border-radius':'12px','padding':'14px'});
  root.querySelectorAll('#supportMessageList .support-message').forEach(article=>{
@@ -4831,7 +4830,7 @@ function applySupportConversationContrast(){
   set(article,{'background':bg,'color':ink,'-webkit-text-fill-color':ink,'border':'1px solid '+(mine?'#125b6b':'#bdcbd6'),'opacity':'1','text-shadow':'none','border-radius':'13px'});
   const metaEl=article.querySelector('.support-message-meta');
   set(metaEl,{'color':meta,'-webkit-text-fill-color':meta,'font-weight':'800','opacity':'1'});
-  if(metaEl?.classList.contains('support-message-admin-meta'))set(metaEl,{'background':'transparent','background-color':'transparent','border':'0','box-shadow':'none','padding':'0','border-radius':'0'});
+  if(CURRENT_PROFILE?.role==='department'||metaEl?.classList.contains('support-message-admin-meta'))set(metaEl,{'background':'transparent','background-color':'transparent','background-image':'none','border':'0','outline':'0','box-shadow':'none','text-shadow':'none','padding':'0','border-radius':'0'});
   set(article.querySelector('.support-message-body'),{'display':'block','background':'transparent','color':ink,'-webkit-text-fill-color':ink,'font-size':'16px','font-weight':'700','line-height':'2','white-space':'pre-wrap','overflow-wrap':'anywhere','opacity':'1','text-shadow':'none'});
  });
  root.querySelectorAll('#supportTicketList .support-ticket-item').forEach(button=>{
@@ -4872,7 +4871,7 @@ async function openSupportTicket(id){
    const messageBg=mine?'#176f83':'#ffffff',messageInk=mine?'#ffffff':'#172b3d',metaInk=mine?'#eaf7fa':'#40586b';
    const messageStyle='background:'+messageBg+'!important;color:'+messageInk+'!important;-webkit-text-fill-color:'+messageInk+'!important;border:1px solid '+(mine?'#125b6b':'#bdcbd6')+'!important;opacity:1!important;text-shadow:none!important;';
    const bodyStyle='display:block!important;background:transparent!important;color:'+messageInk+'!important;-webkit-text-fill-color:'+messageInk+'!important;font-size:16px!important;font-weight:700!important;line-height:2!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;opacity:1!important;text-shadow:none!important;';
-   const adminMetaStyle=m.sender_role==='super_admin'?'background:transparent!important;background-color:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;':'';
+   const adminMetaStyle=(CURRENT_PROFILE?.role==='department'||m.sender_role==='super_admin')?'background:transparent!important;background-color:transparent!important;background-image:none!important;border:0!important;outline:0!important;box-shadow:none!important;text-shadow:none!important;padding:0!important;border-radius:0!important;':'';
    return '<article class="support-message'+(mine?' mine':'')+'" style="'+messageStyle+'"><div class="support-message-meta'+(m.sender_role==='super_admin'?' support-message-admin-meta':'')+'" style="'+adminMetaStyle+'color:'+metaInk+'!important;-webkit-text-fill-color:'+metaInk+'!important;font-size:12px!important;font-weight:800!important;opacity:1!important">'+(m.sender_role==='super_admin'?'سەرپەرشتیاری گشتی':(ticket.organizations?.name||'فەرمانگە'))+' · '+esc(supportDate(m.created_at))+'</div>'+(m.body?'<div class="support-message-body" style="'+bodyStyle+'">'+esc(m.body)+'</div>':'')+(images?'<div class="support-message-attachments">'+images+'</div>':'')+'</article>';
   }));
   $('supportMessageList').innerHTML=messages.join('')||'<p class="muted">هیچ نامەیەک نییە.</p>';
