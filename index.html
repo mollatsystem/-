@@ -5982,7 +5982,7 @@ async function refreshDepartmentCredentialMonitor(){
     const tr=document.createElement('tr');
     const name=document.createElement('td');name.textContent=String(item.organization_name||'—');
     const password=document.createElement('td');password.dir='ltr';password.style.textAlign='left';password.style.fontFamily='monospace';password.style.fontWeight='800';password.style.userSelect='text';password.textContent=item.password?String(item.password):'پێویستە وشەی نهێنیی نوێ دابنرێت';if(!item.password){password.style.color='#9a3412';password.style.fontFamily='inherit';}
-    const updated=document.createElement('td');updated.textContent=item.updated_at?new Date(item.updated_at).toLocaleString('ku-IQ'):'—';
+    const updated=document.createElement('td');if(item.updated_at){const updatedAt=new Date(item.updated_at);const datePart=updatedAt.getFullYear()+'/'+String(updatedAt.getMonth()+1).padStart(2,'0')+'/'+String(updatedAt.getDate()).padStart(2,'0');const timePart=updatedAt.toLocaleTimeString('ku-IQ',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});updated.textContent=datePart+', '+timePart;}else{updated.textContent='—'}
     tr.append(name,password,updated);rows.append(tr);
    }
   }
