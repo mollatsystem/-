@@ -4541,12 +4541,11 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
    </div>
    <div class="field"><label for="supportNewBody">وردەکاریی کێشە یان پەیام</label>
     <div class="support-new-body-tools" role="toolbar" aria-label="ئامرازەکانی دەستکاری نامە" style="display:flex!important;visibility:visible!important;opacity:1!important;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;position:relative;z-index:20;min-height:38px">
-     <button type="button" class="support-edit-tool" id="supportNewBodyEditBtn" aria-pressed="false">دەستکاری</button>
      <button type="button" class="support-font-tool" id="supportNewBodyFontDown" aria-label="کەمکردنەوەی قەبارەی فۆنت" title="کەمکردنەوەی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A−</button>
      <button type="button" class="support-font-tool" id="supportNewBodyFontUp" aria-label="زیادکردنی قەبارەی فۆنت" title="زیادکردنی قەبارەی فۆنت" style="display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;min-width:48px;min-height:38px;padding:6px 14px;background:#edf3f7;color:#172b3d;border:1px solid #9aafbf;border-radius:8px;font-size:19px!important;font-weight:800;cursor:pointer">A+</button>
      <span id="supportNewBodyFontSize" class="support-font-size-indicator" aria-live="polite">22px</span>
     </div>
-    <textarea id="supportNewBody" rows="4" maxlength="5000" required readonly placeholder="بۆ نووسین، کلیک لەسەر «دەستکاری» بکە..." style="font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important"></textarea>
+    <textarea id="supportNewBody" rows="4" maxlength="5000" required placeholder="نامەکەت لێرە بنووسە..." style="font-size:22px!important;color:#000000!important;-webkit-text-fill-color:#000000!important;font-weight:600!important;line-height:2!important;caret-color:#000000!important;background:#ffffff!important;opacity:1!important;text-shadow:none!important"></textarea>
    </div>
    <div class="actions"><button type="submit" class="btn" id="supportCreateTicketBtn">ناردنی نامە</button></div>
   </form>
@@ -4979,14 +4978,6 @@ function setupSupportRealtime(){
   }).subscribe();
 }
 
-function setSupportNewBodyEditing(enabled){
- const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');if(!field||!button)return;
- field.readOnly=!enabled;
- button.setAttribute('aria-pressed',enabled?'true':'false');
- button.textContent=enabled?'تەواوکردنی دەستکاری':'دەستکاری';
- field.placeholder=enabled?'تکایە کێشەکە بە ڕوونی باس بکە...':'بۆ نووسین، کلیک لەسەر «دەستکاری» بکە...';
- if(enabled){field.focus();field.selectionStart=field.selectionEnd=field.value.length}
-}
 function changeSupportNewBodyFont(delta){
  const field=$('supportNewBody'),indicator=$('supportNewBodyFontSize');if(!field)return;
  const computed=parseFloat(getComputedStyle(field).fontSize)||22;
@@ -5011,13 +5002,10 @@ function changeSupportReplyTextFont(delta){
 }
 /* Delegate toolbar actions so they keep working if the floating panel is re-rendered. */
 document.addEventListener('click',function(event){
- const control=event.target.closest('#supportNewBodyEditBtn,#supportNewBodyFontUp,#supportNewBodyFontDown,#supportReplyTextFontUp,#supportReplyTextFontDown');
+ const control=event.target.closest('#supportNewBodyFontUp,#supportNewBodyFontDown,#supportReplyTextFontUp,#supportReplyTextFontDown');
  if(!control)return;
  event.preventDefault();
- if(control.id==='supportNewBodyEditBtn'){
-  const field=$('supportNewBody');
-  if(field)setSupportNewBodyEditing(field.readOnly);
- }else if(control.id==='supportNewBodyFontUp'){
+ if(control.id==='supportNewBodyFontUp'){
   changeSupportNewBodyFont(2);
  }else if(control.id==='supportNewBodyFontDown'){
   changeSupportNewBodyFont(-2);
@@ -5032,9 +5020,8 @@ $('supportReplyForm')?.addEventListener('reset',()=>{
  const indicator=$('supportReplyTextFontSize');if(indicator)indicator.textContent='22px';
 });
 $('supportNewTicketForm')?.addEventListener('reset',()=>{
- const field=$('supportNewBody'),button=$('supportNewBodyEditBtn');
- if(field){field.readOnly=true;field.dataset.supportFontSize='22';field.style.setProperty('font-size','22px','important');field.style.setProperty('color','#000000','important');field.style.setProperty('-webkit-text-fill-color','#000000','important')}
- if(button){button.setAttribute('aria-pressed','false');button.textContent='دەستکاری'}
+ const field=$('supportNewBody');
+ if(field){field.readOnly=false;field.dataset.supportFontSize='22';field.style.setProperty('font-size','22px','important');field.style.setProperty('color','#000000','important');field.style.setProperty('-webkit-text-fill-color','#000000','important')}
  const indicator=$('supportNewBodyFontSize');if(indicator)indicator.textContent='22px';
 });
 $('supportNewTicketForm')?.addEventListener('submit',createSupportTicket);
@@ -8238,6 +8225,16 @@ html body #supportCenter #supportReplyTextFontSize {
  -webkit-text-fill-color:#ffffff!important;
  opacity:1!important;
  text-shadow:none!important;
+}
+
+/* Keep the new support-message heading white and let users type immediately. */
+html body #supportCenter #supportNewTicketPanel #supportNewTicketHeading{
+ color:#ffffff!important;
+ -webkit-text-fill-color:#ffffff!important;
+}
+html body #supportCenter #supportNewTicketPanel textarea#supportNewBody{
+ pointer-events:auto!important;
+ cursor:text!important;
 }
 </style>
 </body>
