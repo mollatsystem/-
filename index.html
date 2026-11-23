@@ -5193,7 +5193,8 @@ async function renderOfficeStatistics(){
    const permission=P.filter(x=>String(x.organization_id||'')===id).length;
    const long=T.filter(x=>String(x.organization_id||'')===id).length;
    totals.leave+=leave;totals.permission+=permission;totals.long+=long;
-   return '<tr><td>'+esc(org.name||'—')+'</td><td>'+arabicDigits(leave)+'</td><td>'+arabicDigits(permission)+'</td><td>'+arabicDigits(long)+'</td></tr>';
+   const displayName=String(org.name||'—').replace(/ب[ەێ]ڕ?ێوەبەرایەتی گشتی/g,'بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی');
+   return '<tr><td>'+esc(displayName)+'</td><td>'+arabicDigits(leave)+'</td><td>'+arabicDigits(permission)+'</td><td>'+arabicDigits(long)+'</td></tr>';
   });
   body.innerHTML=rows.length?rows.join(''):'<tr><td colspan="4">هیچ فەرمانگەیەک تۆمار نەکراوە.</td></tr>';
   $('officeStatisticsLeaveTotal').textContent=arabicDigits(totals.leave);
