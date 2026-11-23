@@ -4364,6 +4364,31 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
   background:#125b6b!important;
 }
 </style>
+<style>
+/* Modern office statistics chart */
+#officeStatistics .office-chart-card{margin-top:22px;padding:20px;border:1px solid #c4d3e2;border-radius:17px;background:linear-gradient(145deg,#f9fcff 0%,#eaf2f9 100%);box-shadow:0 8px 22px rgba(25,57,88,.09)}
+#officeStatistics .office-chart-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+#officeStatistics .office-chart-heading h3{margin:0;color:#173d60;font-size:17px;font-weight:900}
+#officeStatistics .office-chart-heading p{margin:5px 0 0;color:#60758b;font-size:12px;line-height:1.8}
+#officeStatistics .office-chart-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border-radius:13px;background:linear-gradient(145deg,#174b70,#16828a);color:white;font-size:25px;box-shadow:0 5px 12px rgba(20,88,111,.2)}
+#officeStatistics .office-chart-legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin:0 0 16px;padding:11px 13px;border-radius:11px;background:#e1ebf4;border:1px solid #cfdae6}
+#officeStatistics .office-chart-legend span{display:inline-flex;align-items:center;gap:7px;color:#29445f;font-size:12px;font-weight:800}
+#officeStatistics .office-chart-legend i{display:inline-block;width:10px;height:10px;border-radius:3px}
+#officeStatistics .office-chart-legend i.leave{background:#2675b9}
+#officeStatistics .office-chart-legend i.permission{background:#14a39a}
+#officeStatistics .office-chart-legend i.long{background:#e3a23b}
+#officeStatistics .office-chart{display:grid;gap:13px}
+#officeStatistics .office-chart-row{display:grid;grid-template-columns:minmax(125px,205px) minmax(100px,1fr) 45px;align-items:center;gap:12px}
+#officeStatistics .office-chart-name{color:#233e5b;font-size:12px;font-weight:800;line-height:1.7;overflow-wrap:anywhere}
+#officeStatistics .office-chart-track{height:22px;display:flex;overflow:hidden;border-radius:7px;background:#dce5ee;box-shadow:inset 0 1px 3px rgba(23,51,78,.12);direction:ltr}
+#officeStatistics .office-chart-segment{height:100%;min-width:0;transition:width .45s ease}
+#officeStatistics .office-chart-segment.leave{background:linear-gradient(90deg,#1e65a3,#398bc9)}
+#officeStatistics .office-chart-segment.permission{background:linear-gradient(90deg,#0b887f,#24b6a8)}
+#officeStatistics .office-chart-segment.long{background:linear-gradient(90deg,#c88725,#f0b84f)}
+#officeStatistics .office-chart-total{color:#173d60;font-size:13px;font-weight:900;text-align:left;font-variant-numeric:tabular-nums}
+#officeStatistics .office-chart-empty{padding:18px;border:1px dashed #aebfd0;border-radius:11px;color:#60758b;text-align:center;font-size:13px}
+@media(max-width:650px){#officeStatistics .office-chart-card{padding:13px}#officeStatistics .office-chart-row{grid-template-columns:minmax(90px,115px) minmax(60px,1fr) 32px;gap:7px}#officeStatistics .office-chart-name{font-size:11px}#officeStatistics .office-chart-total{font-size:11px}#officeStatistics .office-chart-track{height:18px}#officeStatistics .office-chart-legend{gap:8px 12px}#officeStatistics .office-chart-legend span{font-size:11px}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -4525,6 +4550,11 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
     <tbody id="officeStatisticsRows"><tr><td colspan="4">بارکردنی ئامارەکان...</td></tr></tbody>
     <tfoot><tr><th>کۆی گشتی</th><th id="officeStatisticsLeaveTotal">0</th><th id="officeStatisticsPermissionTotal">0</th><th id="officeStatisticsLongTotal">0</th></tr></tfoot>
    </table>
+  </div>
+  <div class="office-chart-card">
+   <div class="office-chart-heading"><div><h3>چارتی ئاماری فەرمانگەکان</h3><p>بەراوردی ژمارەی مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن لە نێوان فەرمانگەکاندا</p></div><span class="office-chart-icon" aria-hidden="true">▥</span></div>
+   <div class="office-chart-legend"><span><i class="leave"></i>مۆڵەت</span><span><i class="permission"></i>سەماحی ڕۆژانە</span><span><i class="long"></i>مۆڵەتی درێژخایەن</span></div>
+   <div id="officeStatisticsChart" class="office-chart" role="img" aria-label="چارتی ستوونی ئاماری فەرمانگەکان"><p class="muted">بارکردنی چارت...</p></div>
   </div>
   <p id="officeStatisticsStatus" class="muted" role="status" aria-live="polite"></p>
  </div>
@@ -5187,6 +5217,7 @@ async function renderOfficeStatistics(){
   if(result.error)throw result.error;
   const offices=(result.data||[]).filter(x=>x&&x.id);
   const totals={leave:0,permission:0,long:0};
+  const chartRows=[];
   const rows=offices.map(org=>{
    const id=String(org.id);
    const leave=L.filter(x=>String(x.organization_id||'')===id).length;
@@ -5194,9 +5225,21 @@ async function renderOfficeStatistics(){
    const long=T.filter(x=>String(x.organization_id||'')===id).length;
    totals.leave+=leave;totals.permission+=permission;totals.long+=long;
    const displayName=String(org.name||'—').replace(/ب[ەێ]ڕ?ێوەبەرایەتی گشتی/g,'بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی');
+   chartRows.push({name:displayName,leave,permission,long,total:leave+permission+long});
    return '<tr><td>'+esc(displayName)+'</td><td>'+arabicDigits(leave)+'</td><td>'+arabicDigits(permission)+'</td><td>'+arabicDigits(long)+'</td></tr>';
   });
   body.innerHTML=rows.length?rows.join(''):'<tr><td colspan="4">هیچ فەرمانگەیەک تۆمار نەکراوە.</td></tr>';
+  const chart=$('officeStatisticsChart');
+  if(chart){
+   const maxTotal=Math.max(1,...chartRows.map(x=>x.total));
+   chart.innerHTML=chartRows.length?chartRows.map(x=>{
+    const width=x.total?Math.max(0,Math.min(100,x.total/maxTotal*100)):0;
+    const leaveWidth=x.total?x.leave/x.total*width:0;
+    const permissionWidth=x.total?x.permission/x.total*width:0;
+    const longWidth=x.total?x.long/x.total*width:0;
+    return '<div class="office-chart-row"><div class="office-chart-name">'+esc(x.name)+'</div><div class="office-chart-track" title="مۆڵەت: '+arabicDigits(x.leave)+' | سەماح: '+arabicDigits(x.permission)+' | درێژخایەن: '+arabicDigits(x.long)+'"><span class="office-chart-segment leave" style="width:'+leaveWidth+'%"></span><span class="office-chart-segment permission" style="width:'+permissionWidth+'%"></span><span class="office-chart-segment long" style="width:'+longWidth+'%"></span></div><div class="office-chart-total">'+arabicDigits(x.total)+'</div></div>';
+   }).join(''):'<div class="office-chart-empty">هیچ زانیارییەک بۆ دروستکردنی چارت نییە.</div>';
+  }
   $('officeStatisticsLeaveTotal').textContent=arabicDigits(totals.leave);
   $('officeStatisticsPermissionTotal').textContent=arabicDigits(totals.permission);
   $('officeStatisticsLongTotal').textContent=arabicDigits(totals.long);
