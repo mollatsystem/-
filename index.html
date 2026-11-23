@@ -8663,5 +8663,31 @@ html body #app #officeStatistics .office-chart-card .office-chart-empty{
   color:#071a2d!important;-webkit-text-fill-color:#071a2d!important;
 }
 </style>
+
+<style id="office-chart-black-text-fix-v3">
+/* Make every written label in the office statistics chart pure black. */
+html body .wrap section#officeStatistics .office-chart-card .office-chart-heading h3,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-heading p,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-legend span,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-row .office-chart-name,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-row .office-chart-total,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-empty,
+html body .wrap section#officeStatistics .office-chart-card #officeStatisticsChart,
+html body .wrap section#officeStatistics .office-chart-card #officeStatisticsChart *:not(.office-chart-segment) {
+  color:#000000 !important;
+  -webkit-text-fill-color:#000000 !important;
+  text-shadow:none !important;
+  opacity:1 !important;
+  visibility:visible !important;
+}
+html body .wrap section#officeStatistics .office-chart-card .office-chart-row .office-chart-name,
+html body .wrap section#officeStatistics .office-chart-card .office-chart-row .office-chart-total {
+  background:#ffffff !important;
+  border:1px solid #c5c5c5 !important;
+  border-radius:6px !important;
+  padding:4px 7px !important;
+  font-weight:900 !important;
+}
+</style>
 </body>
 </html>
