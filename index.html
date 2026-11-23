@@ -4366,6 +4366,20 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
 </style>
 <style>
 /* Modern office statistics chart */
+/* Readability fix: enforce high-contrast typography inside the chart */
+#officeStatistics .office-chart-card,
+#officeStatistics .office-chart-card *{text-shadow:none}
+#officeStatistics .office-chart-heading h3{color:#102f4b!important}
+#officeStatistics .office-chart-heading p{color:#405a73!important}
+#officeStatistics .office-chart-legend span{color:#183650!important}
+#officeStatistics .office-chart-name{color:#102f4b!important;background:transparent!important}
+#officeStatistics .office-chart-total{color:#102f4b!important;background:transparent!important}
+#officeStatistics .office-chart-empty{color:#29445f!important;background:#f4f8fc!important}
+#officeStatistics .office-chart-track{background:#d5e0ea!important;border:1px solid #b8c9d8}
+#officeStatistics .office-chart-segment.leave{background:#1765a5!important}
+#officeStatistics .office-chart-segment.permission{background:#087f76!important}
+#officeStatistics .office-chart-segment.long{background:#b87512!important}
+
 #officeStatistics .office-chart-card{margin-top:22px;padding:20px;border:1px solid #c4d3e2;border-radius:17px;background:linear-gradient(145deg,#f9fcff 0%,#eaf2f9 100%);box-shadow:0 8px 22px rgba(25,57,88,.09)}
 #officeStatistics .office-chart-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
 #officeStatistics .office-chart-heading h3{margin:0;color:#173d60;font-size:17px;font-weight:900}
