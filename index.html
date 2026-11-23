@@ -4567,9 +4567,9 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
     <tfoot><tr><th>کۆی گشتی</th><th id="officeStatisticsLeaveTotal">0</th><th id="officeStatisticsPermissionTotal">0</th><th id="officeStatisticsLongTotal">0</th></tr></tfoot>
    </table>
   </div>
-  <div class="office-chart-card">
-   <div class="office-chart-heading"><div><h3>چارتی ئاماری فەرمانگەکان</h3><p>بەراوردی ژمارەی مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن لە نێوان فەرمانگەکاندا</p></div><span class="office-chart-icon" aria-hidden="true">▥</span></div>
-   <div class="office-chart-legend"><span><i class="leave"></i>مۆڵەت</span><span><i class="permission"></i>سەماحی ڕۆژانە</span><span><i class="long"></i>مۆڵەتی درێژخایەن</span></div>
+  <div class="office-chart-card" style="background:#ffffff!important;color:#000000!important;">
+   <div class="office-chart-heading"><div><h3 style="color:#000000!important;-webkit-text-fill-color:#000000!important;">چارتی ئاماری فەرمانگەکان</h3><p style="color:#000000!important;-webkit-text-fill-color:#000000!important;">بەراوردی ژمارەی مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن لە نێوان فەرمانگەکاندا</p></div><span class="office-chart-icon" aria-hidden="true">▥</span></div>
+   <div class="office-chart-legend" style="background:#ffffff!important;"><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="leave"></i>مۆڵەت</span><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="permission"></i>سەماحی ڕۆژانە</span><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="long"></i>مۆڵەتی درێژخایەن</span></div>
    <div id="officeStatisticsChart" class="office-chart" role="img" aria-label="چارتی ستوونی ئاماری فەرمانگەکان"><p class="muted">بارکردنی چارت...</p></div>
   </div>
   <p id="officeStatisticsStatus" class="muted" role="status" aria-live="polite"></p>
@@ -5253,8 +5253,8 @@ async function renderOfficeStatistics(){
     const leaveWidth=x.total?x.leave/x.total*width:0;
     const permissionWidth=x.total?x.permission/x.total*width:0;
     const longWidth=x.total?x.long/x.total*width:0;
-    return '<div class="office-chart-row"><div class="office-chart-name">'+esc(x.name)+'</div><div class="office-chart-track" title="مۆڵەت: '+arabicDigits(x.leave)+' | سەماح: '+arabicDigits(x.permission)+' | درێژخایەن: '+arabicDigits(x.long)+'"><span class="office-chart-segment leave" style="width:'+leaveWidth+'%"></span><span class="office-chart-segment permission" style="width:'+permissionWidth+'%"></span><span class="office-chart-segment long" style="width:'+longWidth+'%"></span></div><div class="office-chart-total">'+arabicDigits(x.total)+'</div></div>';
-   }).join(''):'<div class="office-chart-empty">هیچ زانیارییەک بۆ دروستکردنی چارت نییە.</div>';
+    return '<div class="office-chart-row"><div class="office-chart-name" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;font-weight:900!important">'+esc(x.name)+'</div><div class="office-chart-track" title="مۆڵەت: '+arabicDigits(x.leave)+' | سەماح: '+arabicDigits(x.permission)+' | درێژخایەن: '+arabicDigits(x.long)+'"><span class="office-chart-segment leave" style="width:'+leaveWidth+'%"></span><span class="office-chart-segment permission" style="width:'+permissionWidth+'%"></span><span class="office-chart-segment long" style="width:'+longWidth+'%"></span></div><div class="office-chart-total" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;font-weight:900!important">'+arabicDigits(x.total)+'</div></div>';
+   }).join(''):'<div class="office-chart-empty" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;">هیچ زانیارییەک بۆ دروستکردنی چارت نییە.</div>';
   }
   $('officeStatisticsLeaveTotal').textContent=arabicDigits(totals.leave);
   $('officeStatisticsPermissionTotal').textContent=arabicDigits(totals.permission);
