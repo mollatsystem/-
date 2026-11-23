@@ -4403,6 +4403,59 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
 #officeStatistics .office-chart-empty{padding:18px;border:1px dashed #aebfd0;border-radius:11px;color:#60758b;text-align:center;font-size:13px}
 @media(max-width:650px){#officeStatistics .office-chart-card{padding:13px}#officeStatistics .office-chart-row{grid-template-columns:minmax(90px,115px) minmax(60px,1fr) 32px;gap:7px}#officeStatistics .office-chart-name{font-size:11px}#officeStatistics .office-chart-total{font-size:11px}#officeStatistics .office-chart-track{height:18px}#officeStatistics .office-chart-legend{gap:8px 12px}#officeStatistics .office-chart-legend span{font-size:11px}}
 </style>
+
+<style id="office-chart-final-contrast-fix">
+/* Final, isolated contrast override for every readable text element in the office chart. */
+html body #officeStatistics .office-chart-card,
+html body #officeStatistics .office-chart-card *{
+  text-shadow:none!important;
+  opacity:1!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-heading h3,
+html body #officeStatistics .office-chart-card .office-chart-heading p,
+html body #officeStatistics .office-chart-card .office-chart-legend,
+html body #officeStatistics .office-chart-card .office-chart-legend span,
+html body #officeStatistics .office-chart-card .office-chart-name,
+html body #officeStatistics .office-chart-card .office-chart-total,
+html body #officeStatistics .office-chart-card .office-chart-empty,
+html body #officeStatistics .office-chart-card #officeStatisticsChart,
+html body #officeStatistics .office-chart-card #officeStatisticsChart p{
+  color:#102a43!important;
+  -webkit-text-fill-color:#102a43!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-heading p{
+  color:#344f68!important;
+  -webkit-text-fill-color:#344f68!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-legend{
+  background:#e4edf6!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-legend span{
+  color:#102a43!important;
+  -webkit-text-fill-color:#102a43!important;
+  font-weight:900!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-name,
+html body #officeStatistics .office-chart-card .office-chart-total{
+  color:#102a43!important;
+  -webkit-text-fill-color:#102a43!important;
+  background:transparent!important;
+  font-weight:900!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-track{
+  background:#d4e0ec!important;
+  border:1px solid #9fb2c6!important;
+}
+html body #officeStatistics .office-chart-card .office-chart-segment.leave{background:#145b96!important}
+html body #officeStatistics .office-chart-card .office-chart-segment.permission{background:#08766e!important}
+html body #officeStatistics .office-chart-card .office-chart-segment.long{background:#a96508!important}
+html body #officeStatistics .office-chart-card .office-chart-empty{
+  background:#edf3f9!important;
+  border:1px dashed #91a8bf!important;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
