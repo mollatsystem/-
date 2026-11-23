@@ -4405,6 +4405,31 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
 </style>
 
 
+
+<style>
+/* Aggregate circular chart for all leave-system records */
+#officeStatistics .office-total-chart-card{background:linear-gradient(145deg,#ffffff 0%,#f1f7fc 100%)!important;border:1px solid #cbd9e6!important;border-radius:22px!important;padding:clamp(16px,3vw,28px)!important;box-shadow:0 12px 32px rgba(25,61,92,.10)!important}
+#officeStatistics .office-total-chart-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 24px}
+#officeStatistics .office-total-chart-heading h3{margin:0;color:#102f4b!important;-webkit-text-fill-color:#102f4b!important;font-size:clamp(16px,2.2vw,21px);font-weight:900;line-height:1.9}
+#officeStatistics .office-total-chart-heading p{margin:5px 0 0;color:#526b80!important;-webkit-text-fill-color:#526b80!important;font-size:13px;line-height:1.9}
+#officeStatistics .office-total-chart-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#174b70,#168b8a);color:#fff;font-size:29px;box-shadow:0 7px 16px rgba(20,88,111,.2)}
+#officeStatistics .office-total-chart-layout{display:flex;align-items:center;justify-content:center;gap:clamp(24px,6vw,70px);padding:10px 4px 4px}
+#officeStatistics .office-total-donut-wrap{flex:0 0 auto;display:grid;place-items:center}
+#officeStatistics .office-total-donut{width:clamp(210px,28vw,285px);height:clamp(210px,28vw,285px);border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 12px 28px rgba(28,67,100,.14);border:1px solid rgba(20,50,80,.08)}
+#officeStatistics .office-total-donut-hole{width:66%;height:66%;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:inset 0 0 0 1px #e2eaf1,0 2px 9px rgba(20,50,80,.06);padding:10px}
+#officeStatistics .office-total-donut-hole span{font-size:14px;color:#526b80!important;-webkit-text-fill-color:#526b80!important;font-weight:800}
+#officeStatistics .office-total-donut-hole strong{font-size:clamp(29px,5vw,43px);line-height:1.35;color:#102f4b!important;-webkit-text-fill-color:#102f4b!important;font-weight:950;font-variant-numeric:tabular-nums}
+#officeStatistics .office-total-donut-hole small{font-size:11px;color:#71869a!important;-webkit-text-fill-color:#71869a!important}
+#officeStatistics .office-total-chart-details{width:min(100%,390px);display:flex;flex-direction:column;gap:12px}
+#officeStatistics .office-total-chart-item{display:flex;align-items:center;gap:12px;padding:14px 15px;background:#fff;border:1px solid #e0e8ef;border-radius:14px;box-shadow:0 3px 10px rgba(20,50,80,.035)}
+#officeStatistics .office-total-chart-dot{width:13px;height:13px;flex:0 0 13px;border-radius:50%;box-shadow:0 0 0 4px rgba(30,70,100,.06)}
+#officeStatistics .office-total-chart-label{flex:1;display:flex;flex-direction:column;gap:3px;color:#173b58!important;-webkit-text-fill-color:#173b58!important;font-size:14px;font-weight:900}
+#officeStatistics .office-total-chart-label small{color:#71869a!important;-webkit-text-fill-color:#71869a!important;font-size:11px;font-weight:700}
+#officeStatistics .office-total-chart-item strong{color:#102f4b!important;-webkit-text-fill-color:#102f4b!important;font-size:20px;font-weight:950;font-variant-numeric:tabular-nums}
+#officeStatistics .office-total-chart-footnote{padding:8px 3px 0;color:#657b8e!important;-webkit-text-fill-color:#657b8e!important;font-size:11px;line-height:1.8;text-align:center}
+@media(max-width:650px){#officeStatistics .office-total-chart-layout{flex-direction:column;gap:22px}#officeStatistics .office-total-chart-details{width:100%}#officeStatistics .office-total-donut{width:220px;height:220px}#officeStatistics .office-total-chart-heading{align-items:flex-start}}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -4567,10 +4592,9 @@ html body #supportCenter:is(.active,.support-floating-open) #supportPickImagesBt
     <tfoot><tr><th>کۆی گشتی</th><th id="officeStatisticsLeaveTotal">0</th><th id="officeStatisticsPermissionTotal">0</th><th id="officeStatisticsLongTotal">0</th></tr></tfoot>
    </table>
   </div>
-  <div class="office-chart-card" style="background:#ffffff!important;color:#000000!important;">
-   <div class="office-chart-heading"><div><h3 style="color:#000000!important;-webkit-text-fill-color:#000000!important;">چارتی ئاماری فەرمانگەکان</h3><p style="color:#000000!important;-webkit-text-fill-color:#000000!important;">بەراوردی ژمارەی مۆڵەت و سەماحی ڕۆژانە و مۆڵەتی درێژخایەن لە نێوان فەرمانگەکاندا</p></div><span class="office-chart-icon" aria-hidden="true">▥</span></div>
-   <div class="office-chart-legend" style="background:#ffffff!important;"><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="leave"></i>مۆڵەت</span><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="permission"></i>سەماحی ڕۆژانە</span><span style="color:#000000!important;-webkit-text-fill-color:#000000!important;"><i class="long"></i>مۆڵەتی درێژخایەن</span></div>
-   <div id="officeStatisticsChart" class="office-chart" role="img" aria-label="چارتی ستوونی ئاماری فەرمانگەکان"><p class="muted">بارکردنی چارت...</p></div>
+  <div class="office-chart-card office-total-chart-card">
+   <div class="office-total-chart-heading"><div><h3>ئاماری سیستەمی مۆڵەت لە بەرێوەبەرایەتی ئاوی دەوروبەری سلێمانی.</h3><p>کۆی گشتی مۆڵەت، سەماحی ڕۆژانە و مۆڵەتی درێژخایەن لە سەرجەم فەرمانگەکان</p></div><span class="office-total-chart-icon" aria-hidden="true">◉</span></div>
+   <div id="officeStatisticsChart" class="office-total-chart" role="img" aria-label="چارتی بازنەیی کۆی گشتی ئاماری سیستەمی مۆڵەت"><p class="muted">بارکردنی چارت...</p></div>
   </div>
   <p id="officeStatisticsStatus" class="muted" role="status" aria-live="polite"></p>
  </div>
@@ -5247,14 +5271,23 @@ async function renderOfficeStatistics(){
   body.innerHTML=rows.length?rows.join(''):'<tr><td colspan="4">هیچ فەرمانگەیەک تۆمار نەکراوە.</td></tr>';
   const chart=$('officeStatisticsChart');
   if(chart){
-   const maxTotal=Math.max(1,...chartRows.map(x=>x.total));
-   chart.innerHTML=chartRows.length?chartRows.map(x=>{
-    const width=x.total?Math.max(0,Math.min(100,x.total/maxTotal*100)):0;
-    const leaveWidth=x.total?x.leave/x.total*width:0;
-    const permissionWidth=x.total?x.permission/x.total*width:0;
-    const longWidth=x.total?x.long/x.total*width:0;
-    return '<div class="office-chart-row"><div class="office-chart-name" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;font-weight:900!important">'+esc(x.name)+'</div><div class="office-chart-track" title="مۆڵەت: '+arabicDigits(x.leave)+' | سەماح: '+arabicDigits(x.permission)+' | درێژخایەن: '+arabicDigits(x.long)+'"><span class="office-chart-segment leave" style="width:'+leaveWidth+'%"></span><span class="office-chart-segment permission" style="width:'+permissionWidth+'%"></span><span class="office-chart-segment long" style="width:'+longWidth+'%"></span></div><div class="office-chart-total" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;font-weight:900!important">'+arabicDigits(x.total)+'</div></div>';
-   }).join(''):'<div class="office-chart-empty" style="color:#000000!important;-webkit-text-fill-color:#000000!important;background:#ffffff!important;">هیچ زانیارییەک بۆ دروستکردنی چارت نییە.</div>';
+   const grandTotal=totals.leave+totals.permission+totals.long;
+   const parts=[
+    {key:'leave',label:'مۆڵەت',value:totals.leave,color:'#2878c7'},
+    {key:'permission',label:'سەماحی ڕۆژانە',value:totals.permission,color:'#0b9485'},
+    {key:'long',label:'مۆڵەتی درێژخایەن',value:totals.long,color:'#e3a12f'}
+   ];
+   let angle=0;
+   const stops=parts.map(part=>{
+    const start=angle;
+    angle+=grandTotal?part.value/grandTotal*360:0;
+    return part.color+' '+start+'deg '+angle+'deg';
+   });
+   const gradient=grandTotal?'conic-gradient('+stops.join(',')+')':'conic-gradient(#dce5ed 0deg 360deg)';
+   chart.innerHTML='<div class="office-total-chart-layout"><div class="office-total-donut-wrap"><div class="office-total-donut" style="background:'+gradient+'"><div class="office-total-donut-hole"><span>کۆی گشتی</span><strong>'+arabicDigits(grandTotal)+'</strong><small>هەموو تۆمارەکان</small></div></div></div><div class="office-total-chart-details">'+parts.map(part=>{
+    const percent=grandTotal?(part.value/grandTotal*100):0;
+    return '<div class="office-total-chart-item"><span class="office-total-chart-dot" style="background:'+part.color+'"></span><div class="office-total-chart-label">'+part.label+'<small>'+arabicDigits(percent.toFixed(1))+'٪</small></div><strong>'+arabicDigits(part.value)+'</strong></div>';
+   }).join('')+'<div class="office-total-chart-footnote">کۆی ژمارەکان لە هەموو فەرمانگەکانەوە کۆکراونەتەوە.</div></div></div>';
   }
   $('officeStatisticsLeaveTotal').textContent=arabicDigits(totals.leave);
   $('officeStatisticsPermissionTotal').textContent=arabicDigits(totals.permission);
