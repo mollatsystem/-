@@ -6021,7 +6021,7 @@ $('forgotPassword').onclick=()=>{ $('recoveryForm').reset(); $('recoveryMsg').te
 $('recoveryAccountType').addEventListener('change',()=>{const isDepartment=$('recoveryAccountType').value==='department';$('recoveryOrgField').style.display=isDepartment?'':'none';$('recoveryOrgName').required=isDepartment;});
 $('recoveryCode').addEventListener('input',()=>{const field=$('recoveryCode');const start=field.selectionStart;const before=field.value;const normalized=normalizePasswordDigits(before).replace(/\s+/g,'').toUpperCase();if(before!==normalized){field.value=normalized;try{field.setSelectionRange(Math.min(start,normalized.length),Math.min(start,normalized.length));}catch(e){}}});
 $('recoveryForm').noValidate=true;
-function showAdminMessageModal(kind,detail){
+function showAdminMessageModal(kind,detail,titleText){
  const previous=document.getElementById('adminMessageModal');
  if(previous)previous.remove();
  const overlay=document.createElement('div');
@@ -6035,7 +6035,7 @@ function showAdminMessageModal(kind,detail){
  dialog.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;box-sizing:border-box!important;width:min(480px,100%)!important;max-height: min(80vh,680px)!important;overflow:auto!important;background:#fff!important;color:#172b45!important;border:1px solid #dbe4ee!important;border-radius:18px!important;padding:26px 24px!important;box-shadow:0 24px 75px rgba(0,0,0,.42)!important;text-align:center!important;border-top:6px solid '+(kind==='success'?'#16a34a':kind==='pending'?'#2563eb':'#dc2626')+'!important';
  const title=document.createElement('h3');
  title.id='adminMessageModalTitle';
- title.textContent='پەیامی سەرپەرشتیاری گشتی';
+ title.textContent=titleText||'پەیامی سەرپەرشتیاری گشتی';
  title.style.cssText='display:block!important;margin:0 0 14px!important;font-size:20px!important;line-height:1.6!important;font-weight:800!important;color:#173b60!important';
  const message=document.createElement('p');
  message.textContent=String(detail??'').replace(/[٠-٩۰-۹]/g,ch=>String(ch.charCodeAt(0)-(ch.charCodeAt(0)>=0x06F0?0x06F0:0x0660)));
@@ -6380,12 +6380,41 @@ document.querySelector('[data-page="registeredOrganizations"]').addEventListener
 /* Department deletion is managed by the existing control in the upper section. */
 
 
+function sectionEmployeeDuplicate(kind){
+ const cfg={
+  empLeave:{table:'leave_employees',codeId:'leaveEmpCode',idId:'leaveEmpId'},
+  empPerm:{table:'permission_employees',codeId:'permEmpCode',idId:'permEmpId'},
+  empLong:{table:'long_leave_employees',codeId:'longEmpCode',idId:'longEmpId'}
+ }[kind];
+ if(!cfg)return false;
+ const input=$(cfg.codeId),code=normalizeMainCode(input?.value||''),id=String($(cfg.idId)?.value||'');
+ if(!input||!code){if(input)input.dataset.duplicateWarningCode='';return false;}
+ const orgId=String(CURRENT_PROFILE?.organization_id||'');
+ const duplicate=rowsForTable(cfg.table).some(row=>
+  String(row.organization_id||'')===orgId&&
+  String(row.id||'')!==id&&
+  normalizeMainCode(row.main_code)===code
+ );
+ if(!duplicate){input.dataset.duplicateWarningCode='';return false;}
+ if(input.dataset.duplicateWarningCode!==code){
+  input.dataset.duplicateWarningCode=code;
+  showAdminMessageModal('error','ئاگاداربە! تكایە ئاگاداربە ئەم كۆدی سەرەكی فەرمانبەرە دووبارەیە، كۆدەكان بەپێی ریزبەندی رێكخراوە.','سەرپەرشتیاری گشتی');
+ }
+ return true;
+}
+['empLeave','empPerm','empLong'].forEach(kind=>{
+ const codeId=kind==='empLeave'?'leaveEmpCode':kind==='empPerm'?'permEmpCode':'longEmpCode';
+ const input=$(codeId);
+ if(input)input.addEventListener('change',()=>sectionEmployeeDuplicate(kind));
+});
+
 async function saveSectionEmployee(kind){
  const cfg={empLeave:{table:'leave_employees',ids:['leaveEmpId','leaveEmpCode','leaveEmpName','leaveEmpJob','leaveEmpGender','leaveEmpType','leaveEmpDepartment','leaveEmpNotes'],extra:{default_leave_type:'leaveEmpLeaveType'},label:'فەرمانبەری بەشی مۆڵەت'},empPerm:{table:'permission_employees',ids:['permEmpId','permEmpCode','permEmpName','permEmpJob','permEmpGender','permEmpType','permEmpDepartment','permEmpNotes'],extra:{},label:'فەرمانبەری بەشی سەماح'},empLong:{table:'long_leave_employees',ids:['longEmpId','longEmpCode','longEmpName','longEmpJob','longEmpGender','longEmpType','longEmpDepartment','longEmpNotes'],extra:{},label:'فەرمانبەری مۆڵەتی درێژخایەن'}}[kind];
  if(!cfg)return say('جۆری فۆرمی فەرمانبەر ناسراو نییە.');
  if(!CURRENT_PROFILE?.organization_id)return say('ناسنامەی فەرمانگە نەدۆزرایەوە؛ تکایە دووبارە بچۆ ژوورەوە.');
  const id=$(cfg.ids[0]).value,code=latinDigits($(cfg.ids[1]).value.trim());
  if(!code)return say('کۆدی سەرەکی بنووسە.');
+ if(sectionEmployeeDuplicate(kind))return;
  const d={main_code:code,full_name:$(cfg.ids[2]).value.trim(),job_title:$(cfg.ids[3]).value.trim()||null,gender:$(cfg.ids[4]).value||null,employment_type:$(cfg.ids[5]).value.trim()||null,department:$(cfg.ids[6]).value||null,notes:$(cfg.ids[7]).value.trim()||null};
  for(const [field,idField] of Object.entries(cfg.extra))d[field]=$(idField).value||null;
  if(!d.full_name)return say('ناوی فەرمانبەر بنووسە.');
