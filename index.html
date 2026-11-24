@@ -6021,7 +6021,7 @@ $('forgotPassword').onclick=()=>{ $('recoveryForm').reset(); $('recoveryMsg').te
 $('recoveryAccountType').addEventListener('change',()=>{const isDepartment=$('recoveryAccountType').value==='department';$('recoveryOrgField').style.display=isDepartment?'':'none';$('recoveryOrgName').required=isDepartment;});
 $('recoveryCode').addEventListener('input',()=>{const field=$('recoveryCode');const start=field.selectionStart;const before=field.value;const normalized=normalizePasswordDigits(before).replace(/\s+/g,'').toUpperCase();if(before!==normalized){field.value=normalized;try{field.setSelectionRange(Math.min(start,normalized.length),Math.min(start,normalized.length));}catch(e){}}});
 $('recoveryForm').noValidate=true;
-function showAdminMessageModal(kind,detail,titleText){
+function showAdminMessageModal(kind,detail,titleText,onDismiss){
  const previous=document.getElementById('adminMessageModal');
  if(previous)previous.remove();
  const overlay=document.createElement('div');
@@ -6045,7 +6045,7 @@ function showAdminMessageModal(kind,detail,titleText){
  close.textContent=kind==='pending'?'تکایە چاوەڕێ بکە':'داخستن';
  close.disabled=kind==='pending';
  close.style.cssText='display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:120px!important;padding:10px 24px!important;border:0!important;border-radius:10px!important;background:#075b78!important;color:#fff!important;font-size:15px!important;font-weight:800!important;cursor:pointer!important';
- const dismiss=()=>{if(kind!=='pending')overlay.remove();};
+ const dismiss=()=>{if(kind!=='pending'){overlay.remove();if(typeof onDismiss==='function')onDismiss();}};
  close.addEventListener('click',dismiss);
  overlay.addEventListener('click',ev=>{if(ev.target===overlay)dismiss();});
  dialog.append(title,message,close);
@@ -6398,7 +6398,12 @@ function sectionEmployeeDuplicate(kind){
  if(!duplicate){input.dataset.duplicateWarningCode='';return false;}
  if(input.dataset.duplicateWarningCode!==code){
   input.dataset.duplicateWarningCode=code;
-  showAdminMessageModal('error','ئاگاداربە! تكایە ئاگاداربە ئەم كۆدی سەرەكی فەرمانبەرە دووبارەیە، كۆدەكان بەپێی ریزبەندی رێكخراوە.','سەرپەرشتیاری گشتی');
+  showAdminMessageModal('error','ئاگاداربە! تكایە ئاگاداربە ئەم كۆدی سەرەكی فەرمانبەرە دووبارەیە، كۆدەكان بەپێی ریزبەندی رێكخراوە.','سەرپەرشتیاری گشتی',()=>{
+   input.value='';
+   input.dataset.duplicateWarningCode='';
+   renderEmployeeCodeStats();
+   input.focus();
+  });
  }
  return true;
 }
