@@ -6405,7 +6405,7 @@ function sectionEmployeeDuplicate(kind){
 ['empLeave','empPerm','empLong'].forEach(kind=>{
  const codeId=kind==='empLeave'?'leaveEmpCode':kind==='empPerm'?'permEmpCode':'longEmpCode';
  const input=$(codeId);
- if(input)input.addEventListener('change',()=>sectionEmployeeDuplicate(kind));
+ if(input)input.addEventListener('input',()=>sectionEmployeeDuplicate(kind));
 });
 
 async function saveSectionEmployee(kind){
